@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - To Do List Shebam{% endblock %}
+
+
+{%  block content %}
+    <h1>Inscription</h1>
+{% if notification %}
+
+	<hr>
+	    <div class="alert alert-info">{{ notification }}</div>
+    <hr>
+    
+{% endif %}
+
+    <div class="was-validated">
+        <div class="row">
+            <div class="col-6">
+                {{ form_start(form) }}
+            </div>
+        </div>
+    {{ form_end(form) }}
+    <a href="{{ path('account_password') }}" class=" btn btn-small btn-primary">Déjà inscrit ? Connectez-vous</a>
+    </div>
+
+{%  endblock %}
+
+

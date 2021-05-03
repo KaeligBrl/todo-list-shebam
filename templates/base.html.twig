@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{%  block title %}To Do List Shebam - Pour mieux nous organiser{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    {% endblock %}
+
+    {% block javascripts1 %}{% endblock %}
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/root.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/motdepasse.css') }}" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top bg-white-shebam mx-auto ">
+            <a href="{{ path('home') }}">
+                <img class="navbar-img " src="{{ asset('assets/images/logo-to-do-list-hor.png') }}" alt="Logo de la to do list Shebam!">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    {# <li class="nav-item active">
+                        <a class="nav-link" href="#">Liste des Tâches</a>
+                    </li> #}
+                </ul> 
+                <ul class="navbar-nav">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" href="{{ path('admin')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" href="{{ path('account') }}">Compte</a> <a class="navbar-text color-blue-dark-shebam" href="{{ path('app_logout') }}">Déconnexion</a>
+                {% else %}
+                <a class="navbar-text color-blue-dark-shebam" href="{{ path('app_login') }}">Connexion</a> <a class="navbar-text color-blue-dark-shebam" href="{{ path('register') }}">Inscription</a>
+                {% endif %}
+
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+
+        <div class="container marketing" style="margin-top: 150px;">
+            {% block content %}{% endblock %}
+        </div>
+    
+
+    <!-- FOOTER -->
+   {# <footer class="container">
+        <p class="float-right"><a href="#">Back to top</a></p>
+        <p>&copy; 2017-2021 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+    </footer> #}
+
+</main>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
+<script src="{{ asset('assets/js/motdepasse.js') }}"></script>
+
+{% block javascripts2 %}{% endblock %}
+
+</body>
+</html>

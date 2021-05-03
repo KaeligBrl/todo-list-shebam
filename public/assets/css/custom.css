@@ -1,0 +1,31 @@
+/* Custom */
+@font-face {font-family: "Gotham";src: url("/fonts/Gotham-Bold.otf") format("truetype");}
+h4{color: var(--color-white)}
+.label-custom {color: var(--yellow-shebam) !important}
+.notification-success-custom{color: var(--blue-shebam) !important}
+.btn-blue-shebam{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none;}
+.btn-blue-shebam:hover{background: var(--color-white);color: var(--blue-dark-shebam); transition: ease 0.5s;}
+.btn-yellow-shebam{background: var(--yellow-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none;}
+.btn-yellow-shebam:hover{background: var(--color-white);color: var(--yellow-shebam); transition: ease 0.5s;}
+
+/* Navbar */
+.navbar{height: 92px;}
+.navbar-text{padding: .5rem 1rem;font-weight: 500;}
+.navbar-text:hover {text-decoration: none; color: var(--yellow-shebam)}
+/* To do List Table*/
+.table-yellow{background-color:var(--yellow-shebam);color: var(--color-white);}
+.table-pink{background-color:var(--pink-shebam);color: var(--color-white);}
+.table-blue{background-color:var(--blue-light-shebam);color: var(--color-white);}
+.table-green{background-color:var(--green-light-shebam);color: var(--color-white);}
+
+/* Connexion Page */
+.form-signin {width: 100%;max-width: 450px;padding: 70px;margin: 0 auto;border-radius: 15px;}
+.form-signin .checkbox {font-weight: 400;}
+.form-signin .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 16px;}
+.form-signin .form-control:focus {z-index: 2;}
+.form-signin input[type="email"] {margin-bottom: -1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
+.form-signin input[type="password"] {margin-bottom: 10px;border-top-left-radius: 0;border-top-right-radius: 0;}
+
+/* Account Page */
+.form-front {width: 100%;max-width: 350px;}
+.form-front input::placeholder{color: var(--yellow-shebam)}

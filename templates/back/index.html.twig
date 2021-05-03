@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+		<title>
+			{% block title %}Tableau de bord - Administration
+			{% endblock %}
+		</title>
+
+		<!-- Bootstrap CSS CDN -->
+		<link
+		rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+		<!-- Our Custom CSS -->
+		<link rel="stylesheet" href="{{ asset('assets/css/admin-template.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/root.css') }}">
+
+		<!-- Font Awesome JS -->
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+		
+
+	</head>
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar" class="bg-yellow-shebam">
+				<div class="sidebar-header bg-white-shebam">
+					<a href="{{ path('admin') }}"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }}"></a> 
+
+				</div>
+
+				<ul class="list-unstyled components color-white-shebam">
+					<li>
+						<a href="{{ path('admin') }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+					</li>
+					<li>
+						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-tasks"></i> Liste des tâches</a>
+						<ul class="collapse list-unstyled" id="homeSubmenu">
+							<li>
+								<a href="{{ path('task_list_admin') }}">La liste</a>
+							</li>
+							<li>
+								<a href="{{ path('task_list_add_admin') }}">Ajouter une tâche (P1)</a>
+							</li>
+							<li>
+								<a href="{{ path('task_appointment_add_admin') }}">Ajouter un rendez-vous</a>
+							</li>
+							<li>
+								<a href="{{ path('task_quote_add_admin') }}">Ajouter un devis</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#StatutSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-signal"></i> Statuts</a>
+						<ul class="collapse list-unstyled" id="StatutSubmenu">
+							<li>
+								<a href="{{ path('status_list_admin') }}">Liste des Statuts</a>
+							</li>
+							<li>
+								<a href="{{ path('status_add_admin') }}">Ajouter un statut</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#ClientSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-user-tie"></i> Clients</a>
+						<ul class="collapse list-unstyled" id="ClientSubmenu">
+							<li>
+								<a href="{{ path('customer_list_admin') }}">Les Clients</a>
+							</li>
+							<li>
+								<a href="{{ path('customer_add_admin') }}">Ajouter un client</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Utilisateurs</a>
+						<ul class="collapse list-unstyled" id="pageSubmenu">
+							<li>
+								<a href="{{ path('user_admin') }}">Équipe</a>
+							</li>
+							<li>
+								<a href="{{ path('user_add_admin') }}">Ajouter une personne</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+			
+
+			<!-- Page Content Holder -->
+			<div id="content">
+				<nav class="navbar navbar-expand-lg bg-white-shebam">
+					<div class="container-fluid">
+
+						<button type="button" id="sidebarCollapse" class="navbar-btn">
+							<span	></span>
+							<span></span>
+							<span></span>
+						</button>
+						<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<i class="fas fa-align-justify"></i>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="nav navbar-nav ml-auto">
+								<li class="nav-item active">
+									<a class="nav-link" href="{{ path('account') }}" title="Aller sur mon compte">{{app.user.firstname}}
+										{{app.user.lastname}}</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" target="blank_" href="{{ path('home') }}">
+										<i class="fas fa-home" title="Aller sur la page d'accueil"></i>
+									</a>
+								</li>
+								<li class"nav-item">
+									<a class="nav-link" href="{{ path('app_logout') }}">
+										<i class="fas fa-sign-out-alt" title="Se déconnecter"></i>
+									</i>
+								</li>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="container mb-5">
+			<h4 class="color-white-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
+
+		</div>
+		<div class="container mb-5">
+			{% block admin_utilisateur %}
+			{% endblock %}
+		</div>
+
+		<!-- jQuery CDN - Slim version (=without AJAX) -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script><!-- Popper.JS -->
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous">
+		</script><!-- Bootstrap JS -->
+		
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">$(document).ready(function () {
+		$('#sidebarCollapse').on('click', function () {
+		$('#sidebar').toggleClass('active');
+		$(this).toggleClass('active');});
+		});
+		</script>
+
+	</body>
+</html>

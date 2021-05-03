@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Le made in france 100% français">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>{%  block title %}To dos list - Shebam{% endblock %}</title>
+    </style>
+</head>
+<body>
+    <header>
+		<div class="container">
+		    <h1 class="mb-4 d-flex justify-content-center color-white-shebam"> Liste de nos tâches </h1>
+			<table class="table table-striped table-light table-hover">
+				  <thead>
+					<tr>
+						<th colspan="6" class="bg-yellow-shebam color-white-shebam">PRIORITÉ 1</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Client</th>
+						<th scope="col">Sujet</th>
+						<th scope="col">Personne(s) Désignée(s)</th>
+						<th scope="col">Statut</th>
+						<th scope="col">Remarque</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+					{% for tache in tache %}
+						<tr>
+							<td>{{tache.customer}}</td> <br>
+							</td>
+							<td>{{tache.subject}}</td>
+							<td>
+							{% for tache in tache.users %}
+								{{ tache.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{tache.status.name}}</td>
+							<td>{{tache.comment}}</td>
+							<td>
+								<a href="{{ path('task_list_modify_admin', {"id": tache.id}) }}"><i class="fas fa-cog"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				  <thead>
+					<tr>
+						<th colspan="6" class="bg-pink-shebam color-white-shebam">RENDEZ-VOUS</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+						<tr>
+							<th scope="col">Entreprise</th>
+							<th scope="col">Sujet</th>
+							<th>Personne(s) Désignée(s)</th>
+							<th scope="col">Statut</th>
+							<th scope="col">Date et heure</th>
+							<th scope="col">Action</th>
+						</tr>
+					{% for rendezvous in rendezvous %}
+						<tr>
+							<td>{{rendezvous.name}}</td>
+							<td>{{rendezvous.sujet}}</td>
+							<td>
+							{% for rendezvous in rendezvous.utilisateur %}
+								{{ rendezvous.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{rendezvous.statut}}</td>
+							<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
+							<td>
+								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</thead>
+				<thead>
+					<tr>
+						<th colspan="6" class="bg-green-light-shebam color-white-shebam">DEVIS</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Client</th>
+						<th scope="col">Sujet</th>
+						<th>Personne(s) Désignée(s)</th>
+						<th scope="col">Statut</th>
+						<th scope="col">Remarque</th>
+						<th scope="col">Action</th>
+					</tr>
+					{% for quote in quote %}
+						<tr>
+							<td>{{ quote.enterprise }}</td>
+							<td>{{ quote.subject }}</td>
+							<td>
+							{% for quote in quote.person %}
+								{{ quote.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{ quote.status }}</td>
+							<td>{{ quote.comment }}</td>
+							<td>
+								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</thead>
+				
+			</table>
+		</div>
+    </header>
+</body>
+</html>
+{%  endblock %}

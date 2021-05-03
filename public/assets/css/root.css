@@ -1,0 +1,32 @@
+/* Generic Tag */
+:root{
+    --color-white: #ffffff;
+    --color-black: #000000;
+    --yellow-shebam: #FFD600;
+    --blue-light-shebam: #34BDE8;
+    --blue-dark-shebam: #00263A;
+    --pink-shebam: #DE99C3;
+    --green-light-shebam: #6CBFA5;
+}
+
+/* Texts and Backgrounds */
+.color-white-shebam{color: var(--color-white)}
+.color-black-shebam{color: var(--color-black)}
+.color-yellow-shebam{color: var(--yellow-shebam)}
+.color-blue-light-shebam{color: var(--blue-light-shebam)}
+.color-blue-dark-shebam{color: var(--blue-dark-shebam)}
+.color-pink-shebam{color: var(--pink-shebam)}
+.color-green-light-shebam{color: var(--green-light-shebam)}
+
+.bg-white-shebam{background: var(--color-white)}
+.bg-black-shebam{background: var(--color-black)}
+.bg-yellow-shebam{background: var(--yellow-shebam)}
+.bg-blue-light-shebam{background: var(--blue-light-shebam)}
+.bg-blue-dark-shebam{background: var(--blue-dark-shebam)}
+.bg-pink-shebam{background: var(--pink-shebam)}
+.bg-green-light-shebam{background: var(--green-light-shebam)}
+
+/* Administration */
+body{background: var(--blue-dark-shebam);}
+.table td, .table th {text-align: center;border:none}
+.img-admin{height: 150px;width: 148px;margin-left: 17%;}

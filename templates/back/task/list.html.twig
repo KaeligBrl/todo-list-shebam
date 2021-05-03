@@ -1,0 +1,126 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Liste des tâches - Administration{% endblock %}
+
+{% block body %}
+
+		<link rel="stylesheet" href="{{ asset('assets/js/custom.js') }}">
+
+	<div>
+		{% block titre_admin_page %}Liste de nos tâches{% endblock %}
+	</div>
+	{% block admin_utilisateur %}
+		<div class="container">
+			<div class="d-flex flex-row-reverse">
+				<a href="{{ path('task_quote_add_admin') }}" type="button" class="btn btn-outline-light mb-3"><i class="fas fa-cart-plus"></i></a>
+				|	
+				<a href="{{ path('task_appointment_add_admin') }}" type="button" class="btn btn-outline-light mb-3"><i class="fas fa-calendar-plus"></i></a>
+				|
+				<a href="{{ path('task_list_add_admin') }}" type="button" class="btn btn-outline-light mb-3">
+					<i class="fas fa-plus-circle"></i>
+				</a>
+			</div>
+			<table class="table table-striped table-light table-hover">
+				  <thead>
+					<tr>
+						<th colspan="6" class="bg-yellow-shebam color-white-shebam">PRIORITÉ 1</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Client</th>
+						<th scope="col">Sujet</th>
+						<th scope="col">Personne(s) Désignée(s)</th>
+						<th scope="col">Statut</th>
+						<th scope="col">Remarque</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+					{% for tache in taches %}
+						<tr>
+							<td>{{tache.customer}}</td> <br>
+							</td>
+							<td>{{tache.subject}}</td>
+							<td>
+							{% for tache in tache.users %}
+								{{ tache.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{tache.status.name}}</td>
+							<td>{{tache.comment}}</td>
+							<td>
+								<a href="{{ path('task_list_modify_admin', {"id": tache.id}) }}"><i class="fas fa-cog"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				  <thead>
+					<tr>
+						<th colspan="6" class="bg-pink-shebam color-white-shebam">RENDEZ-VOUS</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+						<tr>
+							<th scope="col">Entreprise</th>
+							<th scope="col">Sujet</th>
+							<th>Personne(s) Désignée(s)</th>
+							<th scope="col">Statut</th>
+							<th scope="col">Date et heure</th>
+							<th scope="col">Action</th>
+						</tr>
+					{% for rendezvous in rendezvous %}
+						<tr>
+							<td>{{rendezvous.name}}</td>
+							<td>{{rendezvous.sujet}}</td>
+							<td>
+							{% for rendezvous in rendezvous.utilisateur %}
+								{{ rendezvous.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{rendezvous.statut}}</td>
+							<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
+							<td>
+								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
+								|
+								<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</thead>
+				<thead>
+					<tr>
+						<th colspan="6" class="bg-green-light-shebam color-white-shebam">DEVIS</th>
+					</tr>
+				</thead>
+				<thead class="thead-light">
+					<tr>
+						<th scope="col">Client</th>
+						<th scope="col">Sujet</th>
+						<th>Personne(s) Désignée(s)</th>
+						<th scope="col">Statut</th>
+						<th scope="col">Remarque</th>
+						<th scope="col">Action</th>
+					</tr>
+					{% for quote in quote %}
+						<tr>
+							<td>{{ quote.enterprise }}</td>
+							<td>{{ quote.subject }}</td>
+							<td>
+							{% for quote in quote.person %}
+								{{ quote.firstname }} <br>
+							{% endfor %}
+							</td>
+							<td>{{ quote.status }}</td>
+							<td>{{ quote.comment }}</td>
+							<td>
+								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+								|
+								<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</thead>
+				
+			</table>
+		</div>
+	{% endblock %}
+{% endblock %}

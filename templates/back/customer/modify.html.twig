@@ -1,0 +1,28 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Modifier le client - Administration{% endblock %}
+
+{% block body %}
+	<div>
+		{% block titre_admin_page %}Client - Modifier{% endblock %}
+	</div>
+	{% block admin_utilisateur %}
+		<div class="container">
+			{% if notification %}
+				<hr>
+					<div class="alert alert-success">{{ notification }}<br>
+						<hr>
+						<a href="{{ path('customer_list_admin') }}">Retourner sur la liste des clients</a>
+					</div>
+				<hr>
+			{% endif %}
+		<div class="was-validated">
+			<div class="row">
+				<div class="col-6">
+					{{ form(form_customer_modify_admin) }}
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+	</div>
+{% endblock %}
