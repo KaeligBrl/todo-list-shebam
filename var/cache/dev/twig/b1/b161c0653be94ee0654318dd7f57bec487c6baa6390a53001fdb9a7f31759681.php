@@ -148,7 +148,7 @@ class __TwigTemplate_566fa1a5510f616a4e2a95409d6073e90c8193cc42f194629449968b9ac
 \t\t\t\t</a>
 \t\t\t</div>
 
-\t\t\t<table class=\"table table-striped table-light\">
+\t\t\t<table class=\"table table-striped table-light\" data-pagination=\"true\" data-toggle=\"table\" data-search=\"true\">
 \t\t\t\t<thead class=\"thead-light\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Nom</th>
@@ -275,7 +275,7 @@ $context["role"], "ROLE_ADMIN"))) {
 \t\t\t\t</a>
 \t\t\t</div>
 
-\t\t\t<table class=\"table table-striped table-light\">
+\t\t\t<table class=\"table table-striped table-light\" data-pagination=\"true\" data-toggle=\"table\" data-search=\"true\">
 \t\t\t\t<thead class=\"thead-light\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Nom</th>

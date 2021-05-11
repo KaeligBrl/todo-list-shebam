@@ -91,7 +91,7 @@ class __TwigTemplate_05b3df601720abbaf58919ef49eef6d6e560018c28b126a15723c54fed3
         echo "\t";
         if ((isset($context["error"]) || array_key_exists("error", $context) ? $context["error"] : (function () { throw new RuntimeError('Variable "error" does not exist.', 10, $this->source); })())) {
             // line 11
-            echo "\t\t<div class=\"alert alert-danger\">";
+            echo "\t\t<div class=\"message-error\">";
             echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\TranslationExtension']->trans(twig_get_attribute($this->env, $this->source, (isset($context["error"]) || array_key_exists("error", $context) ? $context["error"] : (function () { throw new RuntimeError('Variable "error" does not exist.', 11, $this->source); })()), "messageKey", [], "any", false, false, false, 11), twig_get_attribute($this->env, $this->source, (isset($context["error"]) || array_key_exists("error", $context) ? $context["error"] : (function () { throw new RuntimeError('Variable "error" does not exist.', 11, $this->source); })()), "messageData", [], "any", false, false, false, 11), "security"), "html", null, true);
             echo "</div><br>
 \t";
@@ -159,7 +159,7 @@ class __TwigTemplate_05b3df601720abbaf58919ef49eef6d6e560018c28b126a15723c54fed3
     <form class=\"form-signin text-center background-login was-validated bg-white-shebam was-validated align-middle\" method=\"post\">
       {# <img class=\"mb-4\" src=\"https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg\" alt=\"\" width=\"72\" height=\"72\"> #}
 \t{% if error %}
-\t\t<div class=\"alert alert-danger\">{{ error.messageKey|trans(error.messageData, 'security') }}</div><br>
+\t\t<div class=\"message-error\">{{ error.messageKey|trans(error.messageData, 'security') }}</div><br>
 \t{% endif %}
       \t<h1 class=\"h3 mb-3 font-weight-normal\">Connecte toi</h1>
 \t\t<div class=\"form-group mt-4\">

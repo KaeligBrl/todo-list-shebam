@@ -8,7 +8,7 @@
     <form class="form-signin text-center background-login was-validated bg-white-shebam was-validated align-middle" method="post">
       {# <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72"> #}
 	{% if error %}
-		<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div><br>
+		<div class="message-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div><br>
 	{% endif %}
       	<h1 class="h3 mb-3 font-weight-normal">Connecte toi</h1>
 		<div class="form-group mt-4">

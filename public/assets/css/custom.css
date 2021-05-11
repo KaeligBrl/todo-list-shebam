@@ -29,3 +29,6 @@ h4{color: var(--color-white)}
 /* Account Page */
 .form-front {width: 100%;max-width: 350px;}
 .form-front input::placeholder{color: var(--yellow-shebam)}
+
+/* Error Message */
+.message-error{background: var(--red);padding: 10px 20px; color: var(--color-white);border-radius: 5px;} 

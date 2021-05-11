@@ -84,7 +84,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
     <header>
 \t\t<div class=\"container\">
 \t\t    <h1 class=\"mb-4 d-flex justify-content-center color-white-shebam\"> Liste de nos tâches </h1>
-\t\t\t<table class=\"table table-striped table-light table-hover\">
+\t\t\t<table class=\"table table-striped table-light table-hover\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
 \t\t\t\t  <thead>
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th colspan=\"6\" class=\"bg-yellow-shebam color-white-shebam\">PRIORITÉ 1</th>
@@ -292,8 +292,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
         $context = array_intersect_key($context, $_parent) + $_parent;
         // line 113
         echo "\t\t\t\t</thead>
-\t\t\t\t
-\t\t\t</table>
+
 \t\t</div>
     </header>
 </body>
@@ -317,7 +316,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "title"));
 
-        echo "To dos list - Shebam";
+        echo "To dos list";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -338,7 +337,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 
     public function getDebugInfo()
     {
-        return array (  311 => 12,  294 => 113,  284 => 109,  279 => 107,  275 => 106,  272 => 105,  263 => 103,  259 => 102,  254 => 100,  250 => 99,  247 => 98,  243 => 97,  226 => 82,  216 => 78,  209 => 76,  205 => 75,  202 => 74,  193 => 72,  189 => 71,  184 => 69,  180 => 68,  177 => 67,  173 => 66,  157 => 52,  147 => 48,  142 => 46,  138 => 45,  135 => 44,  126 => 42,  122 => 41,  117 => 39,  112 => 37,  109 => 36,  105 => 35,  79 => 12,  69 => 4,  59 => 3,  36 => 1,);
+        return array (  310 => 12,  294 => 113,  284 => 109,  279 => 107,  275 => 106,  272 => 105,  263 => 103,  259 => 102,  254 => 100,  250 => 99,  247 => 98,  243 => 97,  226 => 82,  216 => 78,  209 => 76,  205 => 75,  202 => 74,  193 => 72,  189 => 71,  184 => 69,  180 => 68,  177 => 67,  173 => 66,  157 => 52,  147 => 48,  142 => 46,  138 => 45,  135 => 44,  126 => 42,  122 => 41,  117 => 39,  112 => 37,  109 => 36,  105 => 35,  79 => 12,  69 => 4,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -354,14 +353,14 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
     <meta name=\"description\" content=\"Le made in france 100% français\">
     <meta name=\"author\" content=\"Mark Otto, Jacob Thornton, and Bootstrap contributors\">
     <meta name=\"generator\" content=\"Jekyll v4.1.1\">
-    <title>{%  block title %}To dos list - Shebam{% endblock %}</title>
+    <title>{%  block title %}To dos list{% endblock %}</title>
     </style>
 </head>
 <body>
     <header>
 \t\t<div class=\"container\">
 \t\t    <h1 class=\"mb-4 d-flex justify-content-center color-white-shebam\"> Liste de nos tâches </h1>
-\t\t\t<table class=\"table table-striped table-light table-hover\">
+\t\t\t<table class=\"table table-striped table-light table-hover\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
 \t\t\t\t  <thead>
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th colspan=\"6\" class=\"bg-yellow-shebam color-white-shebam\">PRIORITÉ 1</th>
@@ -456,8 +455,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t</tr>
 \t\t\t\t\t{% endfor %}
 \t\t\t\t</thead>
-\t\t\t\t
-\t\t\t</table>
+
 \t\t</div>
     </header>
 </body>

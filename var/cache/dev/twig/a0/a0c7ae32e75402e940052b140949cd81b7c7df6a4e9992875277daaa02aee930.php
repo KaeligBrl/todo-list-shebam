@@ -116,7 +116,7 @@ class __TwigTemplate_f2d2346bf9d5367cee7c31fdd8a3ad68141920ccd17ede0673767bbb6c7
         echo "
     <span> Déjà inscrit? </span><a href=\"";
         // line 18
-        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("register");
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_login");
         echo "\" class=\"text-info\">Connectez-vous</a>
     </div>
 ";
@@ -162,7 +162,7 @@ class __TwigTemplate_f2d2346bf9d5367cee7c31fdd8a3ad68141920ccd17ede0673767bbb6c7
             {{ form_widget(form) }}
         </div>
             {{ form_end(form) }}
-    <span> Déjà inscrit? </span><a href=\"{{ path('register') }}\" class=\"text-info\">Connectez-vous</a>
+    <span> Déjà inscrit? </span><a href=\"{{ path('app_login') }}\" class=\"text-info\">Connectez-vous</a>
     </div>
 {%  endblock %}
 
