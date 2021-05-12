@@ -82,15 +82,29 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 </head>
 <body>
     <header>
-\t\t<div class=\"container\">
-\t\t    <h1 class=\"mb-4 d-flex justify-content-center color-white-shebam\"> Liste de nos tâches </h1>
-\t\t\t<table class=\"table table-striped table-light table-hover\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
-\t\t\t\t  <thead>
-\t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-yellow-shebam color-white-shebam\">PRIORITÉ 1</th>
-\t\t\t\t\t</tr>
-\t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
+\t\t\t\t<div class=\"container\">
+\t\t\t<div class=\"d-flex flex-row-reverse\">
+\t\t\t\t<a href=\"";
+        // line 19
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_quote_add_admin");
+        echo "\" type=\"button\" class=\"btn btn-outline-light mb-3\"><i class=\"fas fa-cart-plus\"></i></a>
+\t\t\t\t|\t
+\t\t\t\t<a href=\"";
+        // line 21
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_appointment_add_admin");
+        echo "\" type=\"button\" class=\"btn btn-outline-light mb-3\"><i class=\"fas fa-calendar-plus\"></i></a>
+\t\t\t\t|
+\t\t\t\t<a href=\"";
+        // line 23
+        echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_list_add_admin");
+        echo "\" type=\"button\" class=\"btn btn-outline-light mb-3\">
+\t\t\t\t\t<i class=\"fas fa-plus-circle\"></i>
+\t\t\t\t</a>
+\t\t\t</div>
+\t\t\t<div class=\"mb-2\"></div>
+\t\t\t<div class=\"text-center bg-yellow-shebam color-white-shebam p-3\">Priorité 1</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Client</th>
 \t\t\t\t\t\t<th scope=\"col\">Sujet</th>
@@ -100,121 +114,134 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
 \t\t\t\t</thead>
-\t\t\t\t\t";
-        // line 35
+\t\t\t\t<tbody>
+\t\t\t\t\t\t";
+        // line 41
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($context["tache"]);
         foreach ($context['_seq'] as $context["_key"] => $context["tache"]) {
-            // line 36
-            echo "\t\t\t\t\t\t<tr>
-\t\t\t\t\t\t\t<td>";
-            // line 37
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "customer", [], "any", false, false, false, 37), "html", null, true);
-            echo "</td> <br>
-\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t\t<td>";
-            // line 39
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "subject", [], "any", false, false, false, 39), "html", null, true);
+            // line 42
+            echo "\t\t\t\t\t<tr>
+\t\t\t\t\t\t<td>";
+            // line 43
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "customer", [], "any", false, false, false, 43), "html", null, true);
             echo "</td>
-\t\t\t\t\t\t\t<td>
-\t\t\t\t\t\t\t";
-            // line 41
+\t\t\t\t\t\t<td>";
+            // line 44
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "subject", [], "any", false, false, false, 44), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>";
+            // line 45
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["tache"], "users", [], "any", false, false, false, 41));
+            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["tache"], "users", [], "any", false, false, false, 45));
             foreach ($context['_seq'] as $context["_key"] => $context["tache"]) {
-                // line 42
+                // line 46
                 echo "\t\t\t\t\t\t\t\t";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "firstname", [], "any", false, false, false, 42), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "firstname", [], "any", false, false, false, 46), "html", null, true);
                 echo " <br>
 \t\t\t\t\t\t\t";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tache'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 44
-            echo "\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t\t<td>";
-            // line 45
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["tache"], "status", [], "any", false, false, false, 45), "name", [], "any", false, false, false, 45), "html", null, true);
-            echo "</td>
-\t\t\t\t\t\t\t<td>";
-            // line 46
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "comment", [], "any", false, false, false, 46), "html", null, true);
-            echo "</td>
-\t\t\t\t\t\t\t<td>
-\t\t\t\t\t\t\t\t<a href=\"";
             // line 48
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_list_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["tache"], "id", [], "any", false, false, false, 48)]), "html", null, true);
+            echo "\t\t\t\t\t\t</td>
+\t\t\t\t\t\t<td>";
+            // line 49
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["tache"], "status", [], "any", false, false, false, 49), "name", [], "any", false, false, false, 49), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>";
+            // line 50
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["tache"], "comment", [], "any", false, false, false, 50), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>
+\t\t\t\t\t\t\t<a href=\"";
+            // line 52
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_list_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["tache"], "id", [], "any", false, false, false, 52)]), "html", null, true);
             echo "\"><i class=\"fas fa-cog\"></i></a>
-\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t</tr>
-\t\t\t\t\t";
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t<a href=\"";
+            // line 54
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_list_detete_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["tache"], "id", [], "any", false, false, false, 54)]), "html", null, true);
+            echo "\" onclick=\"return confirm('Attention vous vous apprettez à supprimer une tâche')\"><i class=\"fas fa-trash\"></i></a>\t\t\t\t\t\t\t
+\t\t\t\t\t\t</td>
+\t\t\t\t\t</tr>
+\t\t\t\t\t\t";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['tache'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 52
-        echo "\t\t\t\t  <thead>
+        // line 58
+        echo "\t\t\t\t</tbody>
+\t\t\t</table>
+
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-pink-shebam color-white-shebam p-3\">Rendez-vous</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-pink-shebam color-white-shebam\">RENDEZ-VOUS</th>
+\t\t\t\t\t\t<th scope=\"col\">Entreprise</th>
+\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
+\t\t\t\t\t\t<th>Personne(s) Désignée(s)</th>
+\t\t\t\t\t\t<th scope=\"col\">Statut</th>
+\t\t\t\t\t\t<th scope=\"col\">Date et heure</th>
+\t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
 \t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
-\t\t\t\t\t\t<tr>
-\t\t\t\t\t\t\t<th scope=\"col\">Entreprise</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
-\t\t\t\t\t\t\t<th>Personne(s) Désignée(s)</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Statut</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Date et heure</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Action</th>
-\t\t\t\t\t\t</tr>
+\t\t\t\t<tbody>
 \t\t\t\t\t";
-        // line 66
+        // line 76
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($context["rendezvous"]);
         foreach ($context['_seq'] as $context["_key"] => $context["rendezvous"]) {
-            // line 67
+            // line 77
             echo "\t\t\t\t\t\t<tr>
 \t\t\t\t\t\t\t<td>";
-            // line 68
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "name", [], "any", false, false, false, 68), "html", null, true);
+            // line 78
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "name", [], "any", false, false, false, 78), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>";
-            // line 69
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "sujet", [], "any", false, false, false, 69), "html", null, true);
+            // line 79
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "sujet", [], "any", false, false, false, 79), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t";
-            // line 71
+            // line 81
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["rendezvous"], "utilisateur", [], "any", false, false, false, 71));
+            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["rendezvous"], "utilisateur", [], "any", false, false, false, 81));
             foreach ($context['_seq'] as $context["_key"] => $context["rendezvous"]) {
-                // line 72
+                // line 82
                 echo "\t\t\t\t\t\t\t\t";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "firstname", [], "any", false, false, false, 72), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "firstname", [], "any", false, false, false, 82), "html", null, true);
                 echo " <br>
 \t\t\t\t\t\t\t";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['rendezvous'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 74
+            // line 84
             echo "\t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t\t<td>";
-            // line 75
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "statut", [], "any", false, false, false, 75), "html", null, true);
+            // line 85
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "statut", [], "any", false, false, false, 85), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>";
-            // line 76
-            echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "heuredurendezvous", [], "any", false, false, false, 76), "j F Y"), "html", null, true);
+            // line 86
+            echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "heuredurendezvous", [], "any", false, false, false, 86), "j F Y"), "html", null, true);
             echo " à ";
-            echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "heuredurendezvous", [], "any", false, false, false, 76), "H:i"), "html", null, true);
+            echo twig_escape_filter($this->env, twig_date_format_filter($this->env, twig_get_attribute($this->env, $this->source, $context["rendezvous"], "heuredurendezvous", [], "any", false, false, false, 86), "H:i"), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t\t<a href=\"";
-            // line 78
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_appointment_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["rendezvous"], "id", [], "any", false, false, false, 78)]), "html", null, true);
+            // line 88
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_appointment_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["rendezvous"], "id", [], "any", false, false, false, 88)]), "html", null, true);
             echo "\"><i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t<a href=\"";
+            // line 90
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_appointment_detete_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["rendezvous"], "id", [], "any", false, false, false, 90)]), "html", null, true);
+            echo "\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un rendez-vous')\"><i class=\"fas fa-trash\"></i></a>
 \t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t</tr>
 \t\t\t\t\t";
@@ -222,14 +249,15 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['rendezvous'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 82
-        echo "\t\t\t\t</thead>
-\t\t\t\t<thead>
-\t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-green-light-shebam color-white-shebam\">DEVIS</th>
-\t\t\t\t\t</tr>
-\t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
+        // line 94
+        echo "\t\t\t\t</tbody>
+\t\t\t</table>
+
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-blue-light-shebam color-white-shebam p-3\">Devis</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Client</th>
 \t\t\t\t\t\t<th scope=\"col\">Sujet</th>
@@ -238,51 +266,58 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t<th scope=\"col\">Remarque</th>
 \t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
+\t\t\t\t</thead>
+\t\t\t\t<tbody>
 \t\t\t\t\t";
-        // line 97
+        // line 112
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($context["quote"]);
         foreach ($context['_seq'] as $context["_key"] => $context["quote"]) {
-            // line 98
+            // line 113
             echo "\t\t\t\t\t\t<tr>
 \t\t\t\t\t\t\t<td>";
-            // line 99
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "enterprise", [], "any", false, false, false, 99), "html", null, true);
+            // line 114
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "enterprise", [], "any", false, false, false, 114), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>";
-            // line 100
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "subject", [], "any", false, false, false, 100), "html", null, true);
+            // line 115
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "subject", [], "any", false, false, false, 115), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t";
-            // line 102
+            // line 117
             $context['_parent'] = $context;
-            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["quote"], "person", [], "any", false, false, false, 102));
+            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["quote"], "person", [], "any", false, false, false, 117));
             foreach ($context['_seq'] as $context["_key"] => $context["quote"]) {
-                // line 103
+                // line 118
                 echo "\t\t\t\t\t\t\t\t";
-                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "firstname", [], "any", false, false, false, 103), "html", null, true);
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "firstname", [], "any", false, false, false, 118), "html", null, true);
                 echo " <br>
 \t\t\t\t\t\t\t";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['quote'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 105
+            // line 120
             echo "\t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t\t<td>";
-            // line 106
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "status", [], "any", false, false, false, 106), "html", null, true);
+            // line 121
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "status", [], "any", false, false, false, 121), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>";
-            // line 107
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "comment", [], "any", false, false, false, 107), "html", null, true);
+            // line 122
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["quote"], "comment", [], "any", false, false, false, 122), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t\t<a href=\"";
-            // line 109
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_quote_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["quote"], "id", [], "any", false, false, false, 109)]), "html", null, true);
+            // line 124
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_quote_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["quote"], "id", [], "any", false, false, false, 124)]), "html", null, true);
             echo "\"><i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t<a href=\"";
+            // line 126
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_quote_detete_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["quote"], "id", [], "any", false, false, false, 126)]), "html", null, true);
+            echo "\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un devis')\"><i class=\"fas fa-trash\"></i></a>
 \t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t</tr>
 \t\t\t\t\t";
@@ -290,9 +325,82 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['quote'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 113
-        echo "\t\t\t\t</thead>
+        // line 130
+        echo "\t\t\t\t</tbody>
+\t\t\t</table>
 
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-blue-light-shebam color-white-shebam p-3\">Priorité 2</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
+\t\t\t\t\t<tr>
+\t\t\t\t\t\t<th scope=\"col\">Client</th>
+\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
+\t\t\t\t\t\t<th scope=\"col\">Personne(s) Désignée(s)</th>
+\t\t\t\t\t\t<th scope=\"col\">Statut</th>
+\t\t\t\t\t\t<th scope=\"col\">Remarque</th>
+\t\t\t\t\t\t<th scope=\"col\">Action</th>
+\t\t\t\t\t</tr>
+\t\t\t\t</thead>
+\t\t\t\t<tbody>
+\t\t\t\t\t ";
+        // line 148
+        $context['_parent'] = $context;
+        $context['_seq'] = twig_ensure_traversable($context["task2"]);
+        foreach ($context['_seq'] as $context["_key"] => $context["task2"]) {
+            // line 149
+            echo "\t\t\t\t\t\t<tr>
+\t\t\t\t\t\t<td>";
+            // line 150
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["task2"], "customer", [], "any", false, false, false, 150), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>";
+            // line 151
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["task2"], "subject", [], "any", false, false, false, 151), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>";
+            // line 152
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable(twig_get_attribute($this->env, $this->source, $context["task2"], "users", [], "any", false, false, false, 152));
+            foreach ($context['_seq'] as $context["_key"] => $context["task2"]) {
+                // line 153
+                echo "\t\t\t\t\t\t\t\t";
+                echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["task2"], "firstname", [], "any", false, false, false, 153), "html", null, true);
+                echo " <br>
+\t\t\t\t\t\t\t";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['task2'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 155
+            echo "\t\t\t\t\t\t</td>
+\t\t\t\t\t\t<td>";
+            // line 156
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, twig_get_attribute($this->env, $this->source, $context["task2"], "status", [], "any", false, false, false, 156), "name", [], "any", false, false, false, 156), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t<td>";
+            // line 157
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["task2"], "comment", [], "any", false, false, false, 157), "html", null, true);
+            echo "</td>
+\t\t\t\t\t\t\t<td>
+\t\t\t\t\t\t\t\t";
+            // line 159
+            echo "<i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t";
+            // line 161
+            echo "<i class=\"fas fa-trash\"></i></a>
+\t\t\t\t\t\t\t</td>
+\t\t\t\t\t\t</tr>
+\t\t\t\t\t";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_iterated'], $context['_key'], $context['task2'], $context['_parent'], $context['loop']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 165
+        echo "\t\t\t\t</tbody>
+\t\t\t</table>
 \t\t</div>
     </header>
 </body>
@@ -337,7 +445,7 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 
     public function getDebugInfo()
     {
-        return array (  310 => 12,  294 => 113,  284 => 109,  279 => 107,  275 => 106,  272 => 105,  263 => 103,  259 => 102,  254 => 100,  250 => 99,  247 => 98,  243 => 97,  226 => 82,  216 => 78,  209 => 76,  205 => 75,  202 => 74,  193 => 72,  189 => 71,  184 => 69,  180 => 68,  177 => 67,  173 => 66,  157 => 52,  147 => 48,  142 => 46,  138 => 45,  135 => 44,  126 => 42,  122 => 41,  117 => 39,  112 => 37,  109 => 36,  105 => 35,  79 => 12,  69 => 4,  59 => 3,  36 => 1,);
+        return array (  418 => 12,  402 => 165,  393 => 161,  389 => 159,  384 => 157,  380 => 156,  377 => 155,  368 => 153,  364 => 152,  360 => 151,  356 => 150,  353 => 149,  349 => 148,  329 => 130,  319 => 126,  314 => 124,  309 => 122,  305 => 121,  302 => 120,  293 => 118,  289 => 117,  284 => 115,  280 => 114,  277 => 113,  273 => 112,  253 => 94,  243 => 90,  238 => 88,  231 => 86,  227 => 85,  224 => 84,  215 => 82,  211 => 81,  206 => 79,  202 => 78,  199 => 77,  195 => 76,  175 => 58,  165 => 54,  160 => 52,  155 => 50,  151 => 49,  148 => 48,  139 => 46,  135 => 45,  131 => 44,  127 => 43,  124 => 42,  120 => 41,  99 => 23,  94 => 21,  89 => 19,  79 => 12,  69 => 4,  59 => 3,  36 => 1,);
     }
 
     public function getSourceContext()
@@ -358,15 +466,20 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 </head>
 <body>
     <header>
-\t\t<div class=\"container\">
-\t\t    <h1 class=\"mb-4 d-flex justify-content-center color-white-shebam\"> Liste de nos tâches </h1>
-\t\t\t<table class=\"table table-striped table-light table-hover\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
-\t\t\t\t  <thead>
-\t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-yellow-shebam color-white-shebam\">PRIORITÉ 1</th>
-\t\t\t\t\t</tr>
-\t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
+\t\t\t\t<div class=\"container\">
+\t\t\t<div class=\"d-flex flex-row-reverse\">
+\t\t\t\t<a href=\"{{ path('task_quote_add_admin') }}\" type=\"button\" class=\"btn btn-outline-light mb-3\"><i class=\"fas fa-cart-plus\"></i></a>
+\t\t\t\t|\t
+\t\t\t\t<a href=\"{{ path('task_appointment_add_admin') }}\" type=\"button\" class=\"btn btn-outline-light mb-3\"><i class=\"fas fa-calendar-plus\"></i></a>
+\t\t\t\t|
+\t\t\t\t<a href=\"{{ path('task_list_add_admin') }}\" type=\"button\" class=\"btn btn-outline-light mb-3\">
+\t\t\t\t\t<i class=\"fas fa-plus-circle\"></i>
+\t\t\t\t</a>
+\t\t\t</div>
+\t\t\t<div class=\"mb-2\"></div>
+\t\t\t<div class=\"text-center bg-yellow-shebam color-white-shebam p-3\">Priorité 1</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Client</th>
 \t\t\t\t\t\t<th scope=\"col\">Sujet</th>
@@ -376,37 +489,42 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
 \t\t\t\t</thead>
-\t\t\t\t\t{% for tache in tache %}
-\t\t\t\t\t\t<tr>
-\t\t\t\t\t\t\t<td>{{tache.customer}}</td> <br>
-\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t\t<td>{{tache.subject}}</td>
-\t\t\t\t\t\t\t<td>
-\t\t\t\t\t\t\t{% for tache in tache.users %}
+\t\t\t\t<tbody>
+\t\t\t\t\t\t{% for tache in tache %}
+\t\t\t\t\t<tr>
+\t\t\t\t\t\t<td>{{tache.customer}}</td>
+\t\t\t\t\t\t<td>{{tache.subject}}</td>
+\t\t\t\t\t\t<td>{% for tache in tache.users %}
 \t\t\t\t\t\t\t\t{{ tache.firstname }} <br>
 \t\t\t\t\t\t\t{% endfor %}
-\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t\t<td>{{tache.status.name}}</td>
-\t\t\t\t\t\t\t<td>{{tache.comment}}</td>
-\t\t\t\t\t\t\t<td>
-\t\t\t\t\t\t\t\t<a href=\"{{ path('task_list_modify_admin', {\"id\": tache.id}) }}\"><i class=\"fas fa-cog\"></i></a>
-\t\t\t\t\t\t\t</td>
-\t\t\t\t\t\t</tr>
-\t\t\t\t\t{% endfor %}
-\t\t\t\t  <thead>
+\t\t\t\t\t\t</td>
+\t\t\t\t\t\t<td>{{tache.status.name}}</td>
+\t\t\t\t\t\t<td>{{tache.comment}}</td>
+\t\t\t\t\t\t<td>
+\t\t\t\t\t\t\t<a href=\"{{ path('task_list_modify_admin', {\"id\": tache.id}) }}\"><i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t<a href=\"{{ path('task_list_detete_admin', {\"id\": tache.id}) }}\" onclick=\"return confirm('Attention vous vous apprettez à supprimer une tâche')\"><i class=\"fas fa-trash\"></i></a>\t\t\t\t\t\t\t
+\t\t\t\t\t\t</td>
+\t\t\t\t\t</tr>
+\t\t\t\t\t\t{% endfor %}
+\t\t\t\t</tbody>
+\t\t\t</table>
+
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-pink-shebam color-white-shebam p-3\">Rendez-vous</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-pink-shebam color-white-shebam\">RENDEZ-VOUS</th>
+\t\t\t\t\t\t<th scope=\"col\">Entreprise</th>
+\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
+\t\t\t\t\t\t<th>Personne(s) Désignée(s)</th>
+\t\t\t\t\t\t<th scope=\"col\">Statut</th>
+\t\t\t\t\t\t<th scope=\"col\">Date et heure</th>
+\t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
 \t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
-\t\t\t\t\t\t<tr>
-\t\t\t\t\t\t\t<th scope=\"col\">Entreprise</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
-\t\t\t\t\t\t\t<th>Personne(s) Désignée(s)</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Statut</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Date et heure</th>
-\t\t\t\t\t\t\t<th scope=\"col\">Action</th>
-\t\t\t\t\t\t</tr>
+\t\t\t\t<tbody>
 \t\t\t\t\t{% for rendezvous in rendezvous %}
 \t\t\t\t\t\t<tr>
 \t\t\t\t\t\t\t<td>{{rendezvous.name}}</td>
@@ -420,16 +538,19 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t\t<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t\t<a href=\"{{ path('task_appointment_modify_admin', {\"id\": rendezvous.id}) }}\"><i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t<a href=\"{{ path('task_appointment_detete_admin', {\"id\": rendezvous.id}) }}\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un rendez-vous')\"><i class=\"fas fa-trash\"></i></a>
 \t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t</tr>
 \t\t\t\t\t{% endfor %}
-\t\t\t\t</thead>
-\t\t\t\t<thead>
-\t\t\t\t\t<tr>
-\t\t\t\t\t\t<th colspan=\"6\" class=\"bg-green-light-shebam color-white-shebam\">DEVIS</th>
-\t\t\t\t\t</tr>
-\t\t\t\t</thead>
-\t\t\t\t<thead class=\"thead-light\">
+\t\t\t\t</tbody>
+\t\t\t</table>
+
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-blue-light-shebam color-white-shebam p-3\">Devis</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Client</th>
 \t\t\t\t\t\t<th scope=\"col\">Sujet</th>
@@ -438,6 +559,8 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t<th scope=\"col\">Remarque</th>
 \t\t\t\t\t\t<th scope=\"col\">Action</th>
 \t\t\t\t\t</tr>
+\t\t\t\t</thead>
+\t\t\t\t<tbody>
 \t\t\t\t\t{% for quote in quote %}
 \t\t\t\t\t\t<tr>
 \t\t\t\t\t\t\t<td>{{ quote.enterprise }}</td>
@@ -451,11 +574,48 @@ class __TwigTemplate_c24c41cde905754568d3a22e40961604408dedddaad1c2d9f35debcdd34
 \t\t\t\t\t\t\t<td>{{ quote.comment }}</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t\t<a href=\"{{ path('task_quote_modify_admin', {\"id\": quote.id}) }}\"><i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t<a href=\"{{ path('task_quote_detete_admin', {\"id\": quote.id}) }}\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un devis')\"><i class=\"fas fa-trash\"></i></a>
 \t\t\t\t\t\t\t</td>
 \t\t\t\t\t\t</tr>
 \t\t\t\t\t{% endfor %}
-\t\t\t\t</thead>
+\t\t\t\t</tbody>
+\t\t\t</table>
 
+\t\t\t<div class=\"mb-5\"></div>
+
+\t\t\t<div class=\"text-center bg-blue-light-shebam color-white-shebam p-3\">Priorité 2</div>
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\">
+\t\t\t\t<thead class=\"bg-yellow-dark color-white-shebam\">
+\t\t\t\t\t<tr>
+\t\t\t\t\t\t<th scope=\"col\">Client</th>
+\t\t\t\t\t\t<th scope=\"col\">Sujet</th>
+\t\t\t\t\t\t<th scope=\"col\">Personne(s) Désignée(s)</th>
+\t\t\t\t\t\t<th scope=\"col\">Statut</th>
+\t\t\t\t\t\t<th scope=\"col\">Remarque</th>
+\t\t\t\t\t\t<th scope=\"col\">Action</th>
+\t\t\t\t\t</tr>
+\t\t\t\t</thead>
+\t\t\t\t<tbody>
+\t\t\t\t\t {% for task2 in task2 %}
+\t\t\t\t\t\t<tr>
+\t\t\t\t\t\t<td>{{task2.customer}}</td>
+\t\t\t\t\t\t<td>{{task2.subject}}</td>
+\t\t\t\t\t\t<td>{% for task2 in task2.users %}
+\t\t\t\t\t\t\t\t{{ task2.firstname }} <br>
+\t\t\t\t\t\t\t{% endfor %}
+\t\t\t\t\t\t</td>
+\t\t\t\t\t\t<td>{{task2.status.name}}</td>
+\t\t\t\t\t\t<td>{{task2.comment}}</td>
+\t\t\t\t\t\t\t<td>
+\t\t\t\t\t\t\t\t{# <a href=\"{{ path('task_quote_modify_admin', {\"id\": quote.id}) }}\">#}<i class=\"fas fa-cog\"></i></a>
+\t\t\t\t\t\t\t\t|
+\t\t\t\t\t\t\t\t{#<a href=\"{{ path('task_quote_detete_admin', {\"id\": quote.id}) }}\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un devis')\">#}<i class=\"fas fa-trash\"></i></a>
+\t\t\t\t\t\t\t</td>
+\t\t\t\t\t\t</tr>
+\t\t\t\t\t{% endfor %}
+\t\t\t\t</tbody>
+\t\t\t</table>
 \t\t</div>
     </header>
 </body>

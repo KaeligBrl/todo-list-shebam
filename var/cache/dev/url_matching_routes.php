@@ -18,8 +18,9 @@ return [
         '/admin/client/ajouter' => [[['_route' => 'customer_add_admin', '_controller' => 'App\\Controller\\Back\\AdminCustomerController::index'], null, null, null, false, false, null]],
         '/admin/statut' => [[['_route' => 'status_list_admin', '_controller' => 'App\\Controller\\Back\\AdminStatusController::listStatus'], null, null, null, true, false, null]],
         '/admin/statut/ajouter' => [[['_route' => 'status_add_admin', '_controller' => 'App\\Controller\\Back\\AdminStatusController::addStatus'], null, null, null, false, false, null]],
+        '/admin/liste-des-taches-p2/ajouter' => [[['_route' => 'task2_list_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTask2Controller::index'], null, null, null, false, false, null]],
         '/admin/liste-des-taches' => [[['_route' => 'task_list_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::listTask'], null, null, null, true, false, null]],
-        '/admin/liste-des-taches/ajouter' => [[['_route' => 'task_list_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::index'], null, null, null, false, false, null]],
+        '/admin/liste-des-taches-p1/ajouter' => [[['_route' => 'task_list_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::index'], null, null, null, false, false, null]],
         '/admin/liste-des-taches/rendez-vous/ajouter' => [[['_route' => 'task_appointment_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::addTaskAppointment'], null, null, null, false, false, null]],
         '/admin/liste-des-taches/devis/ajouter' => [[['_route' => 'task_quote_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::addTaskQuote'], null, null, null, false, false, null]],
         '/admin/utilisateurs' => [[['_route' => 'user_admin', '_controller' => 'App\\Controller\\Back\\AdminUserController::index'], null, null, null, false, false, null]],
@@ -58,27 +59,33 @@ return [
                         .'|modifier(*:223)'
                     .')'
                     .'|statut/([^/]++)/supprimer(*:257)'
-                    .'|liste\\-des\\-taches/(?'
-                        .'|([^/]++)/(?'
-                            .'|supprimer(*:308)'
-                            .'|modifier(*:324)'
+                    .'|liste\\-des\\-taches(?'
+                        .'|\\-p2/([^/]++)/(?'
+                            .'|supprimer(*:312)'
+                            .'|modifier(*:328)'
                         .')'
-                        .'|rendez\\-vous/([^/]++)/(?'
-                            .'|modifier(*:366)'
-                            .'|supprimer(*:383)'
-                        .')'
-                        .'|devis/([^/]++)/(?'
-                            .'|modifier(*:418)'
-                            .'|supprimer(*:435)'
+                        .'|/(?'
+                            .'|([^/]++)/(?'
+                                .'|supprimer(*:362)'
+                                .'|modifier(*:378)'
+                            .')'
+                            .'|rendez\\-vous/([^/]++)/(?'
+                                .'|modifier(*:420)'
+                                .'|supprimer(*:437)'
+                            .')'
+                            .'|devis/([^/]++)/(?'
+                                .'|modifier(*:472)'
+                                .'|supprimer(*:489)'
+                            .')'
                         .')'
                     .')'
                     .'|utilisateurs/([^/]++)/(?'
-                        .'|supprimer(*:479)'
-                        .'|modifier(*:495)'
+                        .'|supprimer(*:534)'
+                        .'|modifier(*:550)'
                     .')'
                 .')'
-                .'|/delete/account/([^/]++)(*:529)'
-                .'|/connexion/reinitialiser\\-le\\-mot\\-de\\-passe/changer(?:/([^/]++))?(*:603)'
+                .'|/delete/account/([^/]++)(*:584)'
+                .'|/connexion/reinitialiser\\-le\\-mot\\-de\\-passe/changer(?:/([^/]++))?(*:658)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -92,16 +99,18 @@ return [
         207 => [[['_route' => 'customer_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminCustomerController::deleteStatut'], ['id'], null, null, false, false, null]],
         223 => [[['_route' => 'customer_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminCustomerController::modifyTask'], ['id'], null, null, false, false, null]],
         257 => [[['_route' => 'status_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminStatusController::deleteStatus'], ['id'], null, null, false, false, null]],
-        308 => [[['_route' => 'task_list_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteTask'], ['id'], null, null, false, false, null]],
-        324 => [[['_route' => 'task_list_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyTask'], ['id'], null, null, false, false, null]],
-        366 => [[['_route' => 'task_appointment_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyAppointment'], ['id'], null, null, false, false, null]],
-        383 => [[['_route' => 'task_appointment_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteQuote'], ['id'], null, null, false, false, null]],
-        418 => [[['_route' => 'task_quote_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyQuote'], ['id'], null, null, false, false, null]],
-        435 => [[['_route' => 'task_quote_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteAppointment'], ['id'], null, null, false, false, null]],
-        479 => [[['_route' => 'user_admin_delete', '_controller' => 'App\\Controller\\Back\\AdminUserController::deleteUser'], ['id'], null, null, false, false, null]],
-        495 => [[['_route' => 'user_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminUserController::modifyUser'], ['id'], null, null, false, false, null]],
-        529 => [[['_route' => 'delete_account', '_controller' => 'App\\Controller\\Front\\DeleteAccountController::deleteUserAction'], ['userId'], null, null, false, true, null]],
-        603 => [
+        312 => [[['_route' => 'task2_list_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTask2Controller::deleteTask2'], ['id'], null, null, false, false, null]],
+        328 => [[['_route' => 'task2_list_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTask2Controller::modifyTask2'], ['id'], null, null, false, false, null]],
+        362 => [[['_route' => 'task_list_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteTask'], ['id'], null, null, false, false, null]],
+        378 => [[['_route' => 'task_list_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyTask'], ['id'], null, null, false, false, null]],
+        420 => [[['_route' => 'task_appointment_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyAppointment'], ['id'], null, null, false, false, null]],
+        437 => [[['_route' => 'task_appointment_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteQuote'], ['id'], null, null, false, false, null]],
+        472 => [[['_route' => 'task_quote_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyQuote'], ['id'], null, null, false, false, null]],
+        489 => [[['_route' => 'task_quote_detete_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteAppointment'], ['id'], null, null, false, false, null]],
+        534 => [[['_route' => 'user_admin_delete', '_controller' => 'App\\Controller\\Back\\AdminUserController::deleteUser'], ['id'], null, null, false, false, null]],
+        550 => [[['_route' => 'user_modify_admin', '_controller' => 'App\\Controller\\Back\\AdminUserController::modifyUser'], ['id'], null, null, false, false, null]],
+        584 => [[['_route' => 'delete_account', '_controller' => 'App\\Controller\\Front\\DeleteAccountController::deleteUserAction'], ['userId'], null, null, false, true, null]],
+        658 => [
             [['_route' => 'app_reset_password', 'token' => null, '_controller' => 'App\\Controller\\Front\\ResetPasswordController::reset'], ['token'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

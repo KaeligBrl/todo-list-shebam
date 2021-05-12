@@ -114,7 +114,7 @@ class __TwigTemplate_6368e6107fa295dd19ab79320cdc346a78e18a7f92cb184b9b07c1de5eb
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "titre_admin_page"));
 
-        echo "Devis - Ajouter";
+        echo "Tâche P1 - Ajouter";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -146,24 +146,24 @@ class __TwigTemplate_6368e6107fa295dd19ab79320cdc346a78e18a7f92cb184b9b07c1de5eb
 \t\t\t\t\t\t<a href=\"";
             // line 14
             echo $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("task_list_admin");
-            echo "\">Retourner à la liste Devis</a>
+            echo "\">Retourner à la liste des tâches</a>
 \t\t\t\t\t</div>
 \t\t\t\t<hr>
 \t\t\t";
         }
         // line 18
         echo "\t\t\t\t";
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_admin_task_list_add"]) || array_key_exists("form_admin_task_list_add", $context) ? $context["form_admin_task_list_add"] : (function () { throw new RuntimeError('Variable "form_admin_task_list_add" does not exist.', 18, $this->source); })()), 'form_start');
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p1_add_admin"]) || array_key_exists("form_task_p1_add_admin", $context) ? $context["form_task_p1_add_admin"] : (function () { throw new RuntimeError('Variable "form_task_p1_add_admin" does not exist.', 18, $this->source); })()), 'form_start');
         echo "
 \t\t\t<div class=\"form-group\">
 \t\t\t\t";
         // line 20
-        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock((isset($context["form_admin_task_list_add"]) || array_key_exists("form_admin_task_list_add", $context) ? $context["form_admin_task_list_add"] : (function () { throw new RuntimeError('Variable "form_admin_task_list_add" does not exist.', 20, $this->source); })()), 'widget');
+        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock((isset($context["form_task_p1_add_admin"]) || array_key_exists("form_task_p1_add_admin", $context) ? $context["form_task_p1_add_admin"] : (function () { throw new RuntimeError('Variable "form_task_p1_add_admin" does not exist.', 20, $this->source); })()), 'widget');
         echo "
 \t\t\t</div>
 \t\t\t\t";
         // line 22
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_admin_task_list_add"]) || array_key_exists("form_admin_task_list_add", $context) ? $context["form_admin_task_list_add"] : (function () { throw new RuntimeError('Variable "form_admin_task_list_add" does not exist.', 22, $this->source); })()), 'form_end');
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p1_add_admin"]) || array_key_exists("form_task_p1_add_admin", $context) ? $context["form_task_p1_add_admin"] : (function () { throw new RuntimeError('Variable "form_task_p1_add_admin" does not exist.', 22, $this->source); })()), 'form_end');
         echo "
 \t\t</div>
 \t";
@@ -198,22 +198,22 @@ class __TwigTemplate_6368e6107fa295dd19ab79320cdc346a78e18a7f92cb184b9b07c1de5eb
 
 {% block body %}
 \t<div>
-\t\t{% block titre_admin_page %}Devis - Ajouter{% endblock %}
+\t\t{% block titre_admin_page %}Tâche P1 - Ajouter{% endblock %}
 \t</div>
 \t{% block admin_utilisateur %}
 \t\t<div class=\"was-validated form-back background-login is-valid\">
 \t\t\t{% if notification %}
 \t\t\t\t\t<div class=\"alert alert-success\">{{ notification }}<br>
 \t\t\t\t\t\t<hr>
-\t\t\t\t\t\t<a href=\"{{ path('task_list_admin') }}\">Retourner à la liste Devis</a>
+\t\t\t\t\t\t<a href=\"{{ path('task_list_admin') }}\">Retourner à la liste des tâches</a>
 \t\t\t\t\t</div>
 \t\t\t\t<hr>
 \t\t\t{% endif %}
-\t\t\t\t{{ form_start(form_admin_task_list_add) }}
+\t\t\t\t{{ form_start(form_task_p1_add_admin) }}
 \t\t\t<div class=\"form-group\">
-\t\t\t\t{{ form_widget(form_admin_task_list_add) }}
+\t\t\t\t{{ form_widget(form_task_p1_add_admin) }}
 \t\t\t</div>
-\t\t\t\t{{ form_end(form_admin_task_list_add) }}
+\t\t\t\t{{ form_end(form_task_p1_add_admin) }}
 \t\t</div>
 \t{% endblock %}
 {% endblock %}

@@ -6,18 +6,19 @@ use App\Entity\Quote;
 use App\Entity\Tache;
 use App\Entity\Statut;
 use App\Entity\Rendezvous;
-use App\Form\Back\AdminTaskQuoteAddType;
+use App\Form\Back\AdminTaskAddType;
 use App\Repository\QuoteRepository;
 use App\Repository\TacheRepository;
-use App\Form\Back\AdminTaskAddType;
+use App\Repository\Task2Repository;
 use App\Form\AdminTaskQuoteModifyType;
 use App\Form\Back\AdminTaskModifyType;
+use App\Form\Back\AdminTaskQuoteAddType;
 use App\Repository\RendezvousRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\AdminTaskAddStatutType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use App\Form\Back\AdminTaskAppointmentAddType;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Back\AdminTaskAppointmentModifyType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,29 +33,18 @@ class AdminTaskController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/", name="task_list_admin")
      */
-    public function listTask(TacheRepository $tacheAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin): Response
+    public function listTask(TacheRepository $tacheAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
     {
         return $this->render('back/task/list.html.twig', [
             'taches' => $tacheAdmin->findAll(),
             'rendezvous' => $rendezvousAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
+            'task2' => $task2Admin->findAll(),
         ]);
     }
 
     /**
-     * @Route("/admin/liste-des-taches/{id}/supprimer", name="task_list_detete_admin")
-     * @param Tache $tache
-     * return RedirectResponse
-     */
-    public function deleteTask(Tache $tache): RedirectResponse {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($tache);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_admin");
-    }
-    /**
-     * @Route("/admin/liste-des-taches/ajouter", name="task_list_add_admin")
+     * @Route("/admin/liste-des-taches-p1/ajouter", name="task_list_add_admin")
      */
     public function index(Request $request): Response {
         $tacheAdd = new Tache();
@@ -69,10 +59,23 @@ class AdminTaskController extends AbstractController
             $form = $this->createForm(AdminTaskAddType::class, $tacheAdd);
         }
             return $this->render('back/task/add.html.twig', [
-                'form_admin_task_list_add' => $form->createView(),
+                'form_task_p1_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
         }
+    
+    /**
+     * @Route("/admin/liste-des-taches/{id}/supprimer", name="task_list_detete_admin")
+     * @param Tache $tache
+     * return RedirectResponse
+     */
+    public function deleteTask(Tache $tache): RedirectResponse {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tache);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_admin");
+    }
 
     /**
      * @Route("/admin/liste-des-taches/{id}/modifier", name="task_list_modify_admin")
@@ -87,11 +90,11 @@ class AdminTaskController extends AbstractController
             $tacheModify = $form->getData();
             $this->entityManager->persist($tacheModify);
             $this->entityManager->flush();
-            $notification = 'Tâche mise à jour !';
+            $notification = 'Tâche P1 mise à jour !';
             $form = $this->createForm(AdminTaskModifyType::class, $tacheModify);
         }
         return $this->render('back/task/modify.html.twig',[
-            'form_task_list_modify_admin' => $form->createView(),
+            'form_task_p1_modify_admin' => $form->createView(),
             'notification' => $notification
         ]);   
     }

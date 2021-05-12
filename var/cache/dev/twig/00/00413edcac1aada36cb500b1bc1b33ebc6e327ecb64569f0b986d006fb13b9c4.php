@@ -117,7 +117,7 @@ class __TwigTemplate_1d36b6040aeb2d5f104186a7d50ef7327571907c3819ca810287c8bd23a
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02 = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "titre_admin_page"));
 
-        echo "Devis - Modifier";
+        echo "Tâche P1 - Modifier";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
 
@@ -162,7 +162,7 @@ class __TwigTemplate_1d36b6040aeb2d5f104186a7d50ef7327571907c3819ca810287c8bd23a
 \t\t\t\t<div class=\"col-6\">
 \t\t\t\t\t";
         // line 22
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_quote_modify_admin"]) || array_key_exists("form_task_quote_modify_admin", $context) ? $context["form_task_quote_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_quote_modify_admin" does not exist.', 22, $this->source); })()), 'form');
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p1_modify_admin"]) || array_key_exists("form_task_p1_modify_admin", $context) ? $context["form_task_p1_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_p1_modify_admin" does not exist.', 22, $this->source); })()), 'form');
         echo "
 \t\t\t\t</div>
 \t\t\t</div>
@@ -199,7 +199,7 @@ class __TwigTemplate_1d36b6040aeb2d5f104186a7d50ef7327571907c3819ca810287c8bd23a
 
 {% block body %}
 \t<div>
-\t\t{% block titre_admin_page %}Devis - Modifier{% endblock %}
+\t\t{% block titre_admin_page %}Tâche P1 - Modifier{% endblock %}
 \t</div>
 \t{% block admin_utilisateur %}
 \t\t<div class=\"container\">
@@ -214,7 +214,7 @@ class __TwigTemplate_1d36b6040aeb2d5f104186a7d50ef7327571907c3819ca810287c8bd23a
 \t\t<div class=\"was-validated\">
 \t\t\t<div class=\"row\">
 \t\t\t\t<div class=\"col-6\">
-\t\t\t\t\t{{ form(form_task_quote_modify_admin) }}
+\t\t\t\t\t{{ form(form_task_p1_modify_admin) }}
 \t\t\t\t</div>
 \t\t\t</div>
 \t\t</div>

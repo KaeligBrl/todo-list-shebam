@@ -144,8 +144,7 @@ class __TwigTemplate_99ca6f23afcb18a555306a4bcec88f8f5f638edfe37269ce6e3ab9daef7
 \t\t\t\t</a>
 \t\t\t</div>
 
-
-\t\t\t<table class=\"table table-striped table-light\">
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
 \t\t\t\t<thead class=\"thead-light\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Nom du client</th>
@@ -154,25 +153,25 @@ class __TwigTemplate_99ca6f23afcb18a555306a4bcec88f8f5f638edfe37269ce6e3ab9daef7
 \t\t\t\t</thead>
 \t\t\t\t<tbody>
 \t\t\t\t\t";
-        // line 26
+        // line 25
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable($context["customer"]);
         foreach ($context['_seq'] as $context["_key"] => $context["customer"]) {
-            // line 27
+            // line 26
             echo "\t\t\t\t\t\t<tr>
 \t\t\t\t\t\t\t<td>";
-            // line 28
-            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["customer"], "name", [], "any", false, false, false, 28), "html", null, true);
+            // line 27
+            echo twig_escape_filter($this->env, twig_get_attribute($this->env, $this->source, $context["customer"], "name", [], "any", false, false, false, 27), "html", null, true);
             echo "</td>
 \t\t\t\t\t\t\t<td>
 \t\t\t\t\t\t\t\t<a href=\"";
-            // line 30
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("customer_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["customer"], "id", [], "any", false, false, false, 30)]), "html", null, true);
+            // line 29
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("customer_modify_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["customer"], "id", [], "any", false, false, false, 29)]), "html", null, true);
             echo "\"><i class=\"fas fa-cog\"></i></a>
 \t\t\t\t\t\t\t\t|
 \t\t\t\t\t\t\t\t<a href=\"";
-            // line 32
-            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("customer_detete_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["customer"], "id", [], "any", false, false, false, 32)]), "html", null, true);
+            // line 31
+            echo twig_escape_filter($this->env, $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("customer_detete_admin", ["id" => twig_get_attribute($this->env, $this->source, $context["customer"], "id", [], "any", false, false, false, 31)]), "html", null, true);
             echo "\" onclick=\"return confirm('Attention vous vous apprettez à supprimer un client')\"><i class=\"fas fa-trash\"></i></a>
 \t\t\t\t\t\t\t\t
 \t\t\t\t\t\t\t</td>
@@ -182,7 +181,7 @@ class __TwigTemplate_99ca6f23afcb18a555306a4bcec88f8f5f638edfe37269ce6e3ab9daef7
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['customer'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 37
+        // line 36
         echo "\t\t\t\t</tbody>
 \t\t\t</table>
 \t\t</div>
@@ -207,7 +206,7 @@ class __TwigTemplate_99ca6f23afcb18a555306a4bcec88f8f5f638edfe37269ce6e3ab9daef7
 
     public function getDebugInfo()
     {
-        return array (  186 => 37,  175 => 32,  170 => 30,  165 => 28,  162 => 27,  158 => 26,  141 => 12,  137 => 10,  127 => 9,  108 => 7,  98 => 9,  95 => 8,  93 => 7,  90 => 6,  80 => 5,  61 => 3,  38 => 1,);
+        return array (  185 => 36,  174 => 31,  169 => 29,  164 => 27,  161 => 26,  157 => 25,  141 => 12,  137 => 10,  127 => 9,  108 => 7,  98 => 9,  95 => 8,  93 => 7,  90 => 6,  80 => 5,  61 => 3,  38 => 1,);
     }
 
     public function getSourceContext()
@@ -228,8 +227,7 @@ class __TwigTemplate_99ca6f23afcb18a555306a4bcec88f8f5f638edfe37269ce6e3ab9daef7
 \t\t\t\t</a>
 \t\t\t</div>
 
-
-\t\t\t<table class=\"table table-striped table-light\">
+\t\t\t<table class=\"table table-striped table-light\" data-toggle=\"table\" data-pagination=\"true\" data-search=\"true\">
 \t\t\t\t<thead class=\"thead-light\">
 \t\t\t\t\t<tr>
 \t\t\t\t\t\t<th scope=\"col\">Nom du client</th>

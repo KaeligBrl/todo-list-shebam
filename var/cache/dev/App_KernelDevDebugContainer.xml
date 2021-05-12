@@ -355,6 +355,14 @@
         <argument type="service" id=".service_locator.5nX7ca3.App\Controller\Back\AdminStatusController"/>
       </call>
     </service>
+    <service id="App\Controller\Back\AdminTask2Controller" class="App\Controller\Back\AdminTask2Controller" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.5nX7ca3.App\Controller\Back\AdminTask2Controller"/>
+      </call>
+    </service>
     <service id="App\Controller\Back\AdminTaskController" class="App\Controller\Back\AdminTaskController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
@@ -432,6 +440,12 @@
     <service id="App\Form\Back\AdminStatusAddType" class="App\Form\Back\AdminStatusAddType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
+    <service id="App\Form\Back\AdminTask2AddType" class="App\Form\Back\AdminTask2AddType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
+    <service id="App\Form\Back\AdminTask2ModifyType" class="App\Form\Back\AdminTask2ModifyType" autowire="true" autoconfigure="true">
+      <tag name="form.type"/>
+    </service>
     <service id="App\Form\Back\AdminTaskAddType" class="App\Form\Back\AdminTaskAddType" autowire="true" autoconfigure="true">
       <tag name="form.type"/>
     </service>
@@ -501,6 +515,10 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="App\Repository\TacheRepository" class="App\Repository\TacheRepository" autowire="true" autoconfigure="true">
+      <tag name="doctrine.repository_service"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="App\Repository\Task2Repository" class="App\Repository\Task2Repository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
@@ -985,6 +1003,8 @@
         <argument>App\Form\Back\AdminCustomerAddType</argument>
         <argument>App\Form\Back\AdminCustomerModifyType</argument>
         <argument>App\Form\Back\AdminStatusAddType</argument>
+        <argument>App\Form\Back\AdminTask2AddType</argument>
+        <argument>App\Form\Back\AdminTask2ModifyType</argument>
         <argument>App\Form\Back\AdminTaskAddType</argument>
         <argument>App\Form\Back\AdminTaskAppointmentAddType</argument>
         <argument>App\Form\Back\AdminTaskAppointmentModifyType</argument>
@@ -1356,7 +1376,7 @@
       <argument type="service" id="form.registry"/>
     </service>
     <service id="form.extension" class="Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension">
-      <argument type="service" id=".service_locator.rt8y4t6"/>
+      <argument type="service" id=".service_locator.f45RLOS"/>
       <argument type="collection">
         <argument key="Symfony\Component\Form\Extension\Core\Type\FormType" type="iterator">
           <argument type="service" id="form.type_extension.form.transformation_failure_handling"/>
@@ -3598,7 +3618,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.R.PIWC9"/>
+      <argument type="service" id=".service_locator.kqseBPF"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -5346,6 +5366,9 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Back\AdminStatusController" class="App\Controller\Back\AdminStatusController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Back\AdminStatusController" class="App\Controller\Back\AdminStatusController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Back\AdminStatusController" class="App\Controller\Back\AdminStatusController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Back\AdminTask2Controller" class="App\Controller\Back\AdminTask2Controller" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Back\AdminTask2Controller" class="App\Controller\Back\AdminTask2Controller" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\Back\AdminTask2Controller" class="App\Controller\Back\AdminTask2Controller" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\Back\AdminTaskController" class="App\Controller\Back\AdminTaskController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\Back\AdminTaskController" class="App\Controller\Back\AdminTaskController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\Back\AdminTaskController" class="App\Controller\Back\AdminTaskController" autowire="true" autoconfigure="true" abstract="true"/>
@@ -5379,6 +5402,10 @@
     <service id=".abstract.instanceof.App\Form\Back\AdminCustomerModifyType" class="App\Form\Back\AdminCustomerModifyType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Back\AdminStatusAddType" class="App\Form\Back\AdminStatusAddType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\Back\AdminStatusAddType" class="App\Form\Back\AdminStatusAddType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Back\AdminTask2AddType" class="App\Form\Back\AdminTask2AddType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\Back\AdminTask2AddType" class="App\Form\Back\AdminTask2AddType" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Back\AdminTask2ModifyType" class="App\Form\Back\AdminTask2ModifyType" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Form\Back\AdminTask2ModifyType" class="App\Form\Back\AdminTask2ModifyType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Back\AdminTaskAddType" class="App\Form\Back\AdminTaskAddType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\Back\AdminTaskAddType" class="App\Form\Back\AdminTaskAddType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\Back\AdminTaskAppointmentAddType" class="App\Form\Back\AdminTaskAppointmentAddType" autowire="true" abstract="true"/>
@@ -5421,6 +5448,8 @@
     <service id=".abstract.instanceof.App\Repository\StatusRepository" class="App\Repository\StatusRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\TacheRepository" class="App\Repository\TacheRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\TacheRepository" class="App\Repository\TacheRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\Task2Repository" class="App\Repository\Task2Repository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Repository\Task2Repository" class="App\Repository\Task2Repository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Repository\UserRepository" class="App\Repository\UserRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.Kbr2i2X" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -5712,12 +5741,25 @@
         <argument key="statutDelete" type="service" id=".errored..service_locator.zJXR4xe.App\Entity\Status"/>
       </argument>
     </service>
-    <service id=".service_locator.aTDFlVA" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.hcm3R5x" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="task2" type="service" id=".errored..service_locator.hcm3R5x.App\Entity\Task2"/>
+      </argument>
+    </service>
+    <service id=".service_locator.dlV5Fm5" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="task2Modify" type="service" id=".errored..service_locator.dlV5Fm5.App\Entity\Task2"/>
+      </argument>
+    </service>
+    <service id=".service_locator.L3mY7go" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="quoteAdmin" type="service" id="App\Repository\QuoteRepository"/>
         <argument key="rendezvousAdmin" type="service" id="App\Repository\RendezvousRepository"/>
         <argument key="tacheAdmin" type="service" id="App\Repository\TacheRepository"/>
+        <argument key="task2Admin" type="service" id="App\Repository\Task2Repository"/>
       </argument>
     </service>
     <service id=".service_locator.2lBK97_" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -5810,7 +5852,7 @@
         <argument key="authenticationUtils" type="service" id="security.authentication_utils"/>
       </argument>
     </service>
-    <service id=".service_locator.Y2dwexn" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.O6lDYkH" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\Back\AdminController::index" type="service" id=".service_locator.Wzu_FxE"/>
@@ -5819,10 +5861,12 @@
         <argument key="App\Controller\Back\AdminCustomerController::modifyTask" type="service" id=".service_locator.IFNi2vd"/>
         <argument key="App\Controller\Back\AdminStatusController::deleteStatus" type="service" id=".service_locator.zJXR4xe"/>
         <argument key="App\Controller\Back\AdminStatusController::listStatus" type="service" id=".service_locator.JhEs3x9"/>
+        <argument key="App\Controller\Back\AdminTask2Controller::deleteTask2" type="service" id=".service_locator.hcm3R5x"/>
+        <argument key="App\Controller\Back\AdminTask2Controller::modifyTask2" type="service" id=".service_locator.dlV5Fm5"/>
         <argument key="App\Controller\Back\AdminTaskController::deleteAppointment" type="service" id=".service_locator.Ht3vdiH"/>
         <argument key="App\Controller\Back\AdminTaskController::deleteQuote" type="service" id=".service_locator.531CKDe"/>
         <argument key="App\Controller\Back\AdminTaskController::deleteTask" type="service" id=".service_locator.2lBK97_"/>
-        <argument key="App\Controller\Back\AdminTaskController::listTask" type="service" id=".service_locator.aTDFlVA"/>
+        <argument key="App\Controller\Back\AdminTaskController::listTask" type="service" id=".service_locator.L3mY7go"/>
         <argument key="App\Controller\Back\AdminTaskController::modifyAppointment" type="service" id=".service_locator._kWW_ZV"/>
         <argument key="App\Controller\Back\AdminTaskController::modifyQuote" type="service" id=".service_locator.9CpGt2y"/>
         <argument key="App\Controller\Back\AdminTaskController::modifyTask" type="service" id=".service_locator.EKS65mz"/>
@@ -5832,7 +5876,7 @@
         <argument key="App\Controller\Back\AdminUserController::modifyUser" type="service" id=".service_locator.PCa85Br"/>
         <argument key="App\Controller\Front\AccountController::index" type="service" id=".service_locator.gPh6X_L"/>
         <argument key="App\Controller\Front\DeleteAccountController::deleteUserAction" type="service" id=".service_locator.gHm1lEF"/>
-        <argument key="App\Controller\Front\HomeController::index" type="service" id=".service_locator.aTDFlVA"/>
+        <argument key="App\Controller\Front\HomeController::index" type="service" id=".service_locator.L3mY7go"/>
         <argument key="App\Controller\Front\RegisterController::index" type="service" id=".service_locator.gPh6X_L"/>
         <argument key="App\Controller\Front\ResetPasswordController::request" type="service" id=".service_locator.CpaXrFh"/>
         <argument key="App\Controller\Front\ResetPasswordController::reset" type="service" id=".service_locator.pwZ6MTM"/>
@@ -5849,10 +5893,12 @@
         <argument key="App\Controller\Back\AdminCustomerController:modifyTask" type="service" id=".service_locator.IFNi2vd"/>
         <argument key="App\Controller\Back\AdminStatusController:deleteStatus" type="service" id=".service_locator.zJXR4xe"/>
         <argument key="App\Controller\Back\AdminStatusController:listStatus" type="service" id=".service_locator.JhEs3x9"/>
+        <argument key="App\Controller\Back\AdminTask2Controller:deleteTask2" type="service" id=".service_locator.hcm3R5x"/>
+        <argument key="App\Controller\Back\AdminTask2Controller:modifyTask2" type="service" id=".service_locator.dlV5Fm5"/>
         <argument key="App\Controller\Back\AdminTaskController:deleteAppointment" type="service" id=".service_locator.Ht3vdiH"/>
         <argument key="App\Controller\Back\AdminTaskController:deleteQuote" type="service" id=".service_locator.531CKDe"/>
         <argument key="App\Controller\Back\AdminTaskController:deleteTask" type="service" id=".service_locator.2lBK97_"/>
-        <argument key="App\Controller\Back\AdminTaskController:listTask" type="service" id=".service_locator.aTDFlVA"/>
+        <argument key="App\Controller\Back\AdminTaskController:listTask" type="service" id=".service_locator.L3mY7go"/>
         <argument key="App\Controller\Back\AdminTaskController:modifyAppointment" type="service" id=".service_locator._kWW_ZV"/>
         <argument key="App\Controller\Back\AdminTaskController:modifyQuote" type="service" id=".service_locator.9CpGt2y"/>
         <argument key="App\Controller\Back\AdminTaskController:modifyTask" type="service" id=".service_locator.EKS65mz"/>
@@ -5862,7 +5908,7 @@
         <argument key="App\Controller\Back\AdminUserController:modifyUser" type="service" id=".service_locator.PCa85Br"/>
         <argument key="App\Controller\Front\AccountController:index" type="service" id=".service_locator.gPh6X_L"/>
         <argument key="App\Controller\Front\DeleteAccountController:deleteUserAction" type="service" id=".service_locator.gHm1lEF"/>
-        <argument key="App\Controller\Front\HomeController:index" type="service" id=".service_locator.aTDFlVA"/>
+        <argument key="App\Controller\Front\HomeController:index" type="service" id=".service_locator.L3mY7go"/>
         <argument key="App\Controller\Front\RegisterController:index" type="service" id=".service_locator.gPh6X_L"/>
         <argument key="App\Controller\Front\ResetPasswordController:request" type="service" id=".service_locator.CpaXrFh"/>
         <argument key="App\Controller\Front\ResetPasswordController:reset" type="service" id=".service_locator.pwZ6MTM"/>
@@ -5931,12 +5977,14 @@
       <argument type="service" id="debug.argument_resolver.not_tagged_controller.inner"/>
       <argument type="service" id="debug.stopwatch"/>
     </service>
-    <service id=".service_locator.rt8y4t6" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.f45RLOS" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Form\Back\AdminCustomerAddType" type="service" id="App\Form\Back\AdminCustomerAddType"/>
         <argument key="App\Form\Back\AdminCustomerModifyType" type="service" id="App\Form\Back\AdminCustomerModifyType"/>
         <argument key="App\Form\Back\AdminStatusAddType" type="service" id="App\Form\Back\AdminStatusAddType"/>
+        <argument key="App\Form\Back\AdminTask2AddType" type="service" id="App\Form\Back\AdminTask2AddType"/>
+        <argument key="App\Form\Back\AdminTask2ModifyType" type="service" id="App\Form\Back\AdminTask2ModifyType"/>
         <argument key="App\Form\Back\AdminTaskAddType" type="service" id="App\Form\Back\AdminTaskAddType"/>
         <argument key="App\Form\Back\AdminTaskAppointmentAddType" type="service" id="App\Form\Back\AdminTaskAppointmentAddType"/>
         <argument key="App\Form\Back\AdminTaskAppointmentModifyType" type="service" id="App\Form\Back\AdminTaskAppointmentModifyType"/>
@@ -5970,7 +6018,7 @@
         <argument key="doctrine.orm.default_listeners.attach_entity_listeners" type="service" id="doctrine.orm.default_listeners.attach_entity_listeners"/>
       </argument>
     </service>
-    <service id=".service_locator.R.PIWC9" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.kqseBPF" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Repository\CustomerRepository" type="service" id="App\Repository\CustomerRepository"/>
@@ -5980,6 +6028,7 @@
         <argument key="App\Repository\ResetPasswordRequestRepository" type="service" id="App\Repository\ResetPasswordRequestRepository"/>
         <argument key="App\Repository\StatusRepository" type="service" id="App\Repository\StatusRepository"/>
         <argument key="App\Repository\TacheRepository" type="service" id="App\Repository\TacheRepository"/>
+        <argument key="App\Repository\Task2Repository" type="service" id="App\Repository\Task2Repository"/>
         <argument key="App\Repository\UserRepository" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
@@ -6201,6 +6250,12 @@
       <argument type="service" id="service_container"/>
       <factory service=".service_locator.5nX7ca3" method="withContext"/>
     </service>
+    <service id=".service_locator.5nX7ca3.App\Controller\Back\AdminTask2Controller" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator_context" id="App\Controller\Back\AdminTask2Controller"/>
+      <argument>App\Controller\Back\AdminTask2Controller</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.5nX7ca3" method="withContext"/>
+    </service>
     <service id=".service_locator.5nX7ca3.App\Controller\Back\AdminTaskController" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator_context" id="App\Controller\Back\AdminTaskController"/>
       <argument>App\Controller\Back\AdminTaskController</argument>
@@ -6417,12 +6472,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
-      <argument type="service" id=".service_locator.Y2dwexn"/>
+      <argument type="service" id=".service_locator.O6lDYkH"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
-      <argument type="service" id=".service_locator.Y2dwexn"/>
+      <argument type="service" id=".service_locator.O6lDYkH"/>
     </service>
     <service id=".debug.http_client.inner" class="Symfony\Contracts\HttpClient\HttpClientInterface">
       <argument type="collection"/>
@@ -6437,6 +6492,8 @@
     <service id=".errored..service_locator.FZb6ZsV.App\Entity\Customer" class="App\Entity\Customer"/>
     <service id=".errored..service_locator.IFNi2vd.App\Entity\Customer" class="App\Entity\Customer"/>
     <service id=".errored..service_locator.zJXR4xe.App\Entity\Status" class="App\Entity\Status"/>
+    <service id=".errored..service_locator.hcm3R5x.App\Entity\Task2" class="App\Entity\Task2"/>
+    <service id=".errored..service_locator.dlV5Fm5.App\Entity\Task2" class="App\Entity\Task2"/>
     <service id=".errored..service_locator.2lBK97_.App\Entity\Tache" class="App\Entity\Tache"/>
     <service id=".errored..service_locator.EKS65mz.App\Entity\Tache" class="App\Entity\Tache"/>
     <service id=".errored..service_locator._kWW_ZV.App\Entity\Rendezvous" class="App\Entity\Rendezvous"/>
@@ -6844,7 +6901,7 @@
     <service id="SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface" alias="symfonycasts.reset_password.helper"/>
     <service id="container.env_var_processors_locator" alias=".service_locator.Kbr2i2X" public="true"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.Y2dwexn"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.O6lDYkH"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="Psr\Log\LoggerInterface $requestLogger" alias="monolog.logger.request"/>
     <service id="Psr\Log\LoggerInterface $consoleLogger" alias="monolog.logger.console"/>

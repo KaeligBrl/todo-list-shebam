@@ -66,10 +66,10 @@ class Customer extends \App\Entity\Customer implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'tache', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'taches'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'tache', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'task2'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'tache', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'taches'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'tache', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Customer' . "\0" . 'task2'];
     }
 
     /**
@@ -277,6 +277,39 @@ class Customer extends \App\Entity\Customer implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeTach', [$tach]);
 
         return parent::removeTach($tach);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTask2(): \Doctrine\Common\Collections\Collection
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTask2', []);
+
+        return parent::getTask2();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addTask2(\App\Entity\Task2 $task2): \App\Entity\Customer
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addTask2', [$task2]);
+
+        return parent::addTask2($task2);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeTask2(\App\Entity\Task2 $task2): \App\Entity\Customer
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeTask2', [$task2]);
+
+        return parent::removeTask2($task2);
     }
 
 }

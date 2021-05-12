@@ -66,10 +66,10 @@ class Status extends \App\Entity\Status implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'quotes'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'quotes', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'task2s'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'quotes'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'name', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'taches', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'quotes', '' . "\0" . 'App\\Entity\\Status' . "\0" . 'task2s'];
     }
 
     /**
@@ -321,6 +321,39 @@ class Status extends \App\Entity\Status implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeQuote', [$quote]);
 
         return parent::removeQuote($quote);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTask2s(): \Doctrine\Common\Collections\Collection
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTask2s', []);
+
+        return parent::getTask2s();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addTask2(\App\Entity\Task2 $task2): \App\Entity\Status
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addTask2', [$task2]);
+
+        return parent::addTask2($task2);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeTask2(\App\Entity\Task2 $task2): \App\Entity\Status
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeTask2', [$task2]);
+
+        return parent::removeTask2($task2);
     }
 
 }

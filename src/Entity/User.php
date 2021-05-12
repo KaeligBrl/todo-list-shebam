@@ -68,11 +68,17 @@ class User implements UserInterface
      */
     private $quotes;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Task2::class, mappedBy="users")
+     */
+    private $task2s;
+
     public function __construct()
     {
         $this->taches = new ArrayCollection();
         $this->rendezvouses = new ArrayCollection();
         $this->quotes = new ArrayCollection();
+        $this->task2s = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -261,6 +267,33 @@ class User implements UserInterface
     {
         if ($this->quotes->removeElement($quote)) {
             $quote->removePerson($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task2[]
+     */
+    public function getTask2s(): Collection
+    {
+        return $this->task2s;
+    }
+
+    public function addTask2(Task2 $task2): self
+    {
+        if (!$this->task2s->contains($task2)) {
+            $this->task2s[] = $task2;
+            $task2->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask2(Task2 $task2): self
+    {
+        if ($this->task2s->removeElement($task2)) {
+            $task2->removeUser($this);
         }
 
         return $this;
