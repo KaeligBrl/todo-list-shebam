@@ -16,13 +16,11 @@
 					</div>
 				<hr>
 			{% endif %}
-		<div class="was-validated">
-			<div class="row">
-				<div class="col-6">
-					{{ form(form_task_p2_modify_admin) }}
-				</div>
+				{{ form_start(form_task_p2_modify_admin) }}
+			<div class="form-group">
+				{{ form_widget(form_task_p2_modify_admin) }}
 			</div>
-		</div>
+				{{ form_end(form_task_p2_modify_admin) }}
 	{% endblock %}
 	</div>
 {% endblock %}

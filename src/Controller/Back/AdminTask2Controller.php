@@ -66,7 +66,7 @@ class AdminTask2Controller extends AbstractController
             $task2Modify = $form->getData();
             $this->entityManager->persist($task2Modify);
             $this->entityManager->flush();
-            $notification = 'Tâche P2 mise à jour !';
+            $notification = 'Tâche P2 a bien été mise à jour !';
             $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
         }
         return $this->render('back/task2/modify.html.twig',[

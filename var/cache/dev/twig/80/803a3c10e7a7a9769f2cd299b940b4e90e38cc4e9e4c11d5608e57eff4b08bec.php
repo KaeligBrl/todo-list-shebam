@@ -96,7 +96,7 @@ class __TwigTemplate_bee7ee25138ce63817b248f62e05ecf4cafbc68c3522ba0e78ec27d30e0
 \t";
         // line 9
         $this->displayBlock('admin_utilisateur', $context, $blocks);
-        // line 27
+        // line 25
         echo "\t</div>
 ";
         
@@ -157,16 +157,19 @@ class __TwigTemplate_bee7ee25138ce63817b248f62e05ecf4cafbc68c3522ba0e78ec27d30e0
 \t\t\t";
         }
         // line 19
-        echo "\t\t<div class=\"was-validated\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-6\">
-\t\t\t\t\t";
-        // line 22
-        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p2_modify_admin"]) || array_key_exists("form_task_p2_modify_admin", $context) ? $context["form_task_p2_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_p2_modify_admin" does not exist.', 22, $this->source); })()), 'form');
+        echo "\t\t\t\t";
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p2_modify_admin"]) || array_key_exists("form_task_p2_modify_admin", $context) ? $context["form_task_p2_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_p2_modify_admin" does not exist.', 19, $this->source); })()), 'form_start');
         echo "
-\t\t\t\t</div>
+\t\t\t<div class=\"form-group\">
+\t\t\t\t";
+        // line 21
+        echo $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->searchAndRenderBlock((isset($context["form_task_p2_modify_admin"]) || array_key_exists("form_task_p2_modify_admin", $context) ? $context["form_task_p2_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_p2_modify_admin" does not exist.', 21, $this->source); })()), 'widget');
+        echo "
 \t\t\t</div>
-\t\t</div>
+\t\t\t\t";
+        // line 23
+        echo         $this->env->getRuntime('Symfony\Component\Form\FormRenderer')->renderBlock((isset($context["form_task_p2_modify_admin"]) || array_key_exists("form_task_p2_modify_admin", $context) ? $context["form_task_p2_modify_admin"] : (function () { throw new RuntimeError('Variable "form_task_p2_modify_admin" does not exist.', 23, $this->source); })()), 'form_end');
+        echo "
 \t";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -188,7 +191,7 @@ class __TwigTemplate_bee7ee25138ce63817b248f62e05ecf4cafbc68c3522ba0e78ec27d30e0
 
     public function getDebugInfo()
     {
-        return array (  165 => 22,  160 => 19,  153 => 15,  148 => 13,  145 => 12,  143 => 11,  140 => 10,  130 => 9,  111 => 7,  100 => 27,  98 => 9,  95 => 8,  93 => 7,  90 => 6,  80 => 5,  61 => 3,  38 => 1,);
+        return array (  171 => 23,  166 => 21,  160 => 19,  153 => 15,  148 => 13,  145 => 12,  143 => 11,  140 => 10,  130 => 9,  111 => 7,  100 => 25,  98 => 9,  95 => 8,  93 => 7,  90 => 6,  80 => 5,  61 => 3,  38 => 1,);
     }
 
     public function getSourceContext()
@@ -211,13 +214,11 @@ class __TwigTemplate_bee7ee25138ce63817b248f62e05ecf4cafbc68c3522ba0e78ec27d30e0
 \t\t\t\t\t</div>
 \t\t\t\t<hr>
 \t\t\t{% endif %}
-\t\t<div class=\"was-validated\">
-\t\t\t<div class=\"row\">
-\t\t\t\t<div class=\"col-6\">
-\t\t\t\t\t{{ form(form_task_p2_modify_admin) }}
-\t\t\t\t</div>
+\t\t\t\t{{ form_start(form_task_p2_modify_admin) }}
+\t\t\t<div class=\"form-group\">
+\t\t\t\t{{ form_widget(form_task_p2_modify_admin) }}
 \t\t\t</div>
-\t\t</div>
+\t\t\t\t{{ form_end(form_task_p2_modify_admin) }}
 \t{% endblock %}
 \t</div>
 {% endblock %}", "back/task2/modify.html.twig", "C:\\laragon\\www\\to-do-list-shebam\\templates\\back\\task2\\modify.html.twig");

@@ -45,6 +45,8 @@ class AdminTaskAppointmentModifyType extends AbstractType
             ->add('utilisateur', EntityType::class, array(
                 'required' => true,
                 'label' => 'Personne(s) Désigné(e): ',
+                'multiple' => true,
+                'expanded' => true,
                 'class' => User::class,
 
                 'expanded' => true,

@@ -32,3 +32,7 @@ h4{color: var(--color-white)}
 
 /* Error Message */
 .message-error{background: var(--red);padding: 10px 20px; color: var(--color-white);border-radius: 5px;} 
+
+.box {
+    flex-direction: row-reverse;
+  }

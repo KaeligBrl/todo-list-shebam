@@ -38,9 +38,9 @@ class AdminTaskAppointmentAddType extends AbstractType
                 'label' => 'Heure du rendez-vous ',
                 'label_attr' => ['class' => 'label-custom'],
                 'days' => range(1,31),
-                'years' => range(2021,2023),
+                'years' => range(2021,2022),
                 'hours' => range(7,18),
-                'placeholder' => ['january' => 'janvier'],
+                'minutes' => range(0,59),
             ])
             ->add('utilisateur', EntityType::class, array(
                 'required' => true,

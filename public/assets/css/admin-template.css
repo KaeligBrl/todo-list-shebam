@@ -52,3 +52,5 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 ----------------------------------------------------- */
 #content {width: 100%;padding: 20px;min-height: 100vh;transition: all 0.3s;}
 .label-custom {color: var(--yellow-shebam) !important}
+
+.add-icon-custom{margin-top: -20px;}

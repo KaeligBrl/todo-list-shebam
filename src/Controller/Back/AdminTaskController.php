@@ -115,7 +115,7 @@ class AdminTaskController extends AbstractController
             $form = $this->createForm(AdminTaskAppointmentAddType::class, $rendezvousAdd);
         }
             return $this->render('back/task/appointment/add.html.twig', [
-                'form_admin_task_appointment_add' => $form->createView(),
+                'form_appointment_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
         }
@@ -137,7 +137,7 @@ class AdminTaskController extends AbstractController
             $form = $this->createForm(AdminTaskAppointmentModifyType::class, $appointmentModify);
         }
         return $this->render('back/task/appointment/modify.html.twig',[
-            'form_task_appointment_admin' => $form->createView(),
+            'form_appointment_modify_admin' => $form->createView(),
             'notification' => $notification
         ]);   
     }
@@ -194,7 +194,7 @@ class AdminTaskController extends AbstractController
             $form = $this->createForm(AdminTaskQuoteModifyType::class, $quoteModify);
         }
         return $this->render('back/task/quote/modify.html.twig',[
-            'form_task_quote_modify_admin' => $form->createView(),
+            'form_quote_modify_admin' => $form->createView(),
             'notification' => $notification
         ]);   
     }
