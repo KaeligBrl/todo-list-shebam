@@ -3,15 +3,13 @@
 {% block title %}Mot de passe - To Do List Shebam{% endblock %}
 {% block content %}
     {% block body %}
-        <h1>Redéfinir le mot de passe</h1>
-<div class="was-validated">
-        {{ form_start(resetForm) }}
-            {{ form_row(resetForm.plainPassword) }}
-            <button class="btn btn-primary">Enregistrer</button>
-        {{ form_end(resetForm) }}
-</div>
-
+        <div class="was-validated form-signin text-center background-login bg-white-shebam is-valid">
+			<h3 class="mb-5">Changer le mot de passe</h3>
+				{{ form_start(resetForm) }}
+			<div class="form-group">
+				{{ form_widget(resetForm.plainPassword) }}
+			</div>
+				{{ form_end(resetForm) }}
+		</div>
     {% endblock %}
-
-
 {% endblock %}
