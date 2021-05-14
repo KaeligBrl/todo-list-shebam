@@ -25,9 +25,9 @@ class Status
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tache::class, mappedBy="status")
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="status")
      */
-    private $taches;
+    private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity=Quote::class, mappedBy="status")
@@ -41,8 +41,8 @@ class Status
 
     public function __construct()
     {
-        $this->tache = new ArrayCollection();
-        $this->taches = new ArrayCollection();
+        $this->task = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
         $this->quotes = new ArrayCollection();
         $this->task2s = new ArrayCollection();
     }
@@ -70,29 +70,29 @@ class Status
     }
 
     /**
-     * @return Collection|Tache[]
+     * @return Collection|Task[]
      */
     public function getTache(): Collection
     {
-        return $this->tache;
+        return $this->task;
     }
 
-    public function addTache(Tache $tache): self
+    public function addTache(Task $task): self
     {
-        if (!$this->tache->contains($tache)) {
-            $this->tache[] = $tache;
-            $tache->setStatus($this);
+        if (!$this->task->contains($task)) {
+            $this->task[] = $task;
+            $task->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeTache(Tache $tache): self
+    public function removeTache(Task $task): self
     {
-        if ($this->tache->removeElement($tache)) {
+        if ($this->task->removeElement($task)) {
             // set the owning side to null (unless already changed)
-            if ($tache->getStatus() === $this) {
-                $tache->setStatus(null);
+            if ($task->getStatus() === $this) {
+                $task->setStatus(null);
             }
         }
 
@@ -100,29 +100,29 @@ class Status
     }
 
     /**
-     * @return Collection|Tache[]
+     * @return Collection|Task[]
      */
     public function getTaches(): Collection
     {
-        return $this->taches;
+        return $this->tasks;
     }
 
-    public function addTach(Tache $tach): self
+    public function addTach(Task $tas): self
     {
-        if (!$this->taches->contains($tach)) {
-            $this->taches[] = $tach;
-            $tach->setStatus($this);
+        if (!$this->tasks->contains($tas)) {
+            $this->tasks[] = $tas;
+            $tas->setStatus($this);
         }
 
         return $this;
     }
 
-    public function removeTach(Tache $tach): self
+    public function removeTach(Task $tas): self
     {
-        if ($this->taches->removeElement($tach)) {
+        if ($this->tasks->removeElement($tas)) {
             // set the owning side to null (unless already changed)
-            if ($tach->getStatus() === $this) {
-                $tach->setStatus(null);
+            if ($tas->getStatus() === $this) {
+                $tas->setStatus(null);
             }
         }
 

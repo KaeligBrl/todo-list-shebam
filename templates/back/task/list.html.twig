@@ -30,20 +30,20 @@
 					</tr>
 				</thead>
 				<tbody>
-						{% for tache in taches %}
+						{% for task in task %}
 					<tr>
-						<td>{{tache.customer}}</td>
-						<td>{{tache.subject}}</td>
-						<td>{% for tache in tache.users %}
-								{{ tache.firstname }} <br>
+						<td>{{task.customer}}</td>
+						<td>{{task.subject}}</td>
+						<td>{% for task in task.users %}
+								{{ task.firstname }} <br>
 							{% endfor %}
 						</td>
-						<td>{{tache.status.name}}</td>
-						<td>{{tache.comment}}</td>
+						<td>{{task.status.name}}</td>
+						<td>{{task.comment}}</td>
 						<td>
-							<a href="{{ path('task_list_modify_admin', {"id": tache.id}) }}"><i class="fas fa-cog"></i></a>
+							<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 								|
-							<a href="{{ path('task_list_detete_admin', {"id": tache.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>							
+							<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>							
 						</td>
 					</tr>
 						{% endfor %}
@@ -168,12 +168,13 @@
 						<td>
 							<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
 								|
-							<a href="{{ path('task2_list_detete_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>							
+							<a href="{{ path('task2_list_detete_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>					
 						</td>
 					</tr>
 						{% endfor %}
 				</tbody>
 			</table>
+			<div class="mt-3 text-center btn-submit-admin-shebam btn"><a href="{{path('task_list_download_admin') }}">Télécharger la liste des tâches</a>
 		</div>
 	{% endblock %}
 {% endblock %}

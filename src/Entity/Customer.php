@@ -25,14 +25,14 @@ class Customer
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tache::class, inversedBy="customer")
+     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="customer")
      */
-    private $tache;
+    private $task;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tache::class, mappedBy="customer")
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="customer")
      */
-    private $taches;
+    private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity=Task2::class, mappedBy="customer")
@@ -41,7 +41,7 @@ class Customer
 
     public function __construct()
     {
-        $this->taches = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
         $this->task2 = new ArrayCollection();
     }
 
@@ -67,39 +67,39 @@ class Customer
     return $this->name;
     }
 
-    public function getTache(): ?Tache
+    public function getTache(): ?Task
     {
-        return $this->tache;
+        return $this->task;
     }
 
-    public function setTache(?Tache $tache): self
+    public function setTache(?Task $task): self
     {
-        $this->tache = $tache;
+        $this->task = $task;
 
         return $this;
     }
 
     /**
-     * @return Collection|Tache[]
+     * @return Collection|Task[]
      */
     public function getTaches(): Collection
     {
-        return $this->taches;
+        return $this->task;
     }
 
-    public function addTach(Tache $tach): self
+    public function addTach(Task $tach): self
     {
-        if (!$this->taches->contains($tach)) {
-            $this->taches[] = $tach;
+        if (!$this->tasks->contains($tach)) {
+            $this->tasks[] = $tach;
             $tach->setCustomer($this);
         }
 
         return $this;
     }
 
-    public function removeTach(Tache $tach): self
+    public function removeTach(task $tach): self
     {
-        if ($this->taches->removeElement($tach)) {
+        if ($this->taskS->removeElement($tach)) {
             // set the owning side to null (unless already changed)
             if ($tach->getCustomer() === $this) {
                 $tach->setCustomer(null);

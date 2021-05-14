@@ -9,25 +9,18 @@
     <meta name="description" content="Le made in france 100% français">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>{%  block title %}To dos list{% endblock %}</title>
+    <title>{%  block title %}Liste des tâches - Shebam{% endblock %}</title>
     </style>
 </head>
 <body>
     <header>
-				<div class="container">
-			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('task_quote_add_admin') }}" type="button" class="btn btn-outline-light mb-3"><i class="fas fa-cart-plus"></i></a>
-				|	
-				<a href="{{ path('task_appointment_add_admin') }}" type="button" class="btn btn-outline-light mb-3"><i class="fas fa-calendar-plus"></i></a>
-				|
-				<a href="{{ path('task_list_add_admin') }}" type="button" class="btn btn-outline-light mb-3">
-					<i class="fas fa-plus-circle"></i>
-				</a>
-			</div>
+		<div class="container">
 			<div class="mb-2"></div>
-			<div class="text-center bg-yellow-shebam color-white-shebam p-3">Priorité 1</div>
-			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-yellow-dark color-white-shebam">
+			<h1 class="text-center color-white-shebam mb-3">Liste des tâches - Shebam</h1>
+			<hr class="text-center mb-5 mt-5">
+			<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
+			<table class="table table-striped table-light mb-5" data-toggle="table">
+				<thead class="bg-yellow-dark color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
@@ -38,20 +31,18 @@
 					</tr>
 				</thead>
 				<tbody>
-						{% for tache in tache %}
+						{% for task in task %}
 					<tr>
-						<td>{{tache.customer}}</td>
-						<td>{{tache.subject}}</td>
-						<td>{% for tache in tache.users %}
-								{{ tache.firstname }} <br>
+						<td>{{task.customer}}</td>
+						<td>{{task.subject}}</td>
+						<td>{% for task in task.users %}
+								{{ task.firstname }} <br>
 							{% endfor %}
 						</td>
-						<td>{{tache.status.name}}</td>
-						<td>{{tache.comment}}</td>
+						<td>{{task.status.name}}</td>
+						<td>{{task.comment}}</td>
 						<td>
-							<a href="{{ path('task_list_modify_admin', {"id": tache.id}) }}"><i class="fas fa-cog"></i></a>
-								|
-							<a href="{{ path('task_list_detete_admin', {"id": tache.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>							
+							<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 						</td>
 					</tr>
 						{% endfor %}
@@ -60,7 +51,7 @@
 
 			<div class="mb-5"></div>
 
-			<div class="text-center bg-pink-shebam color-white-shebam p-3">Rendez-vous</div>
+			<div class="text-center bg-pink-shebam color-white-shebam p-3 font-weight-bold">Rendez-vous</div>
 			<table class="table table-striped table-light" data-toggle="table">
 				<thead class="bg-yellow-dark color-white-shebam">
 					<tr>
@@ -86,8 +77,6 @@
 							<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
 							<td>
 								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
-								|
-								<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
@@ -96,9 +85,9 @@
 
 			<div class="mb-5"></div>
 
-			<div class="text-center bg-blue-light-shebam color-white-shebam p-3">Devis</div>
+			<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Devis</div>
 			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-yellow-dark color-white-shebam">
+				<thead class="bg-yellow-dark color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
@@ -122,8 +111,6 @@
 							<td>{{ quote.comment }}</td>
 							<td>
 								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-								|
-								<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
@@ -132,9 +119,9 @@
 
 			<div class="mb-5"></div>
 
-			<div class="text-center bg-blue-light-shebam color-white-shebam p-3">Priorité 2</div>
+			<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Priorité 2</div>
 			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-yellow-dark color-white-shebam">
+				<thead class="bg-yellow-dark color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
@@ -156,9 +143,7 @@
 						<td>{{task2.status.name}}</td>
 						<td>{{task2.comment}}</td>
 							<td>
-								{# <a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}">#}<i class="fas fa-cog"></i></a>
-								|
-								{#<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')">#}<i class="fas fa-trash"></i></a>
+								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
 						</tr>
 					{% endfor %}

@@ -36,6 +36,7 @@ return [
     'task_quote_add_admin' => [[], ['_controller' => 'App\\Controller\\Back\\AdminTaskController::addTaskQuote'], [], [['text', '/admin/liste-des-taches/devis/ajouter']], [], []],
     'task_quote_modify_admin' => [['id'], ['_controller' => 'App\\Controller\\Back\\AdminTaskController::modifyQuote'], [], [['text', '/modifier'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/liste-des-taches/devis']], [], []],
     'task_quote_detete_admin' => [['id'], ['_controller' => 'App\\Controller\\Back\\AdminTaskController::deleteAppointment'], [], [['text', '/supprimer'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/liste-des-taches/devis']], [], []],
+    'task_list_download_admin' => [[], ['_controller' => 'App\\Controller\\Back\\AdminTaskController::taskDownload'], [], [['text', '/admin/liste-des-taches/telecharger']], [], []],
     'user_admin' => [[], ['_controller' => 'App\\Controller\\Back\\AdminUserController::index'], [], [['text', '/admin/utilisateurs']], [], []],
     'user_admin_delete' => [['id'], ['_controller' => 'App\\Controller\\Back\\AdminUserController::deleteUser'], [], [['text', '/supprimer'], ['variable', '/', '[^/]++', 'id', true], ['text', '/admin/utilisateurs']], [], []],
     'user_add_admin' => [[], ['_controller' => 'App\\Controller\\Back\\AdminUserController::addUser'], [], [['text', '/admin/utilisateurs/ajouter']], [], []],

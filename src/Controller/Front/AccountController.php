@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Form\ChangeCoordsType;
+use App\Repository\TacheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

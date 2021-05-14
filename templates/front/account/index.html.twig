@@ -6,12 +6,12 @@
 {% block content %}
 
 	<div class="container">
-		<h1 class="text-center color-white-shebam">Mon Compte</h1><br>
+		<h1 class="text-center color-white-shebam mb-4">Mon Compte</h1><br>
 		<div class="row text-center color-white-shebam">
 
 			<!-- Colonne de gauche -->
 			<div class="col text-left">
-				<h3 class="text-center"> Mes coordonnées</h3>
+				<h3> Mes coordonnées</h3>
 				<hr>
 				<p>Adresse mail: <span class="color-yellow-shebam">{{ app.user.email }}</span></p>
 				<p>Role:      <span class="color-yellow-shebam">{% for role in app.user.roles %}
@@ -31,7 +31,7 @@
 
 			<!-- Colonne de droite -->
 			<div class="col text-left">
-				<h3 class="text-center"> Modification des coordonnées</h3>
+				<h3> Modification des coordonnées</h3>
 			<hr>
 			<div class="was-validated form-front background-login is-valid">
 				{% if notification %}

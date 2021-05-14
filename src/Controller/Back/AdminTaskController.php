@@ -3,12 +3,12 @@
 namespace App\Controller\Back;
 
 use App\Entity\Quote;
-use App\Entity\Tache;
+use App\Entity\Task;
 use App\Entity\Statut;
 use App\Entity\Rendezvous;
 use App\Form\Back\AdminTaskAddType;
 use App\Repository\QuoteRepository;
-use App\Repository\TacheRepository;
+use App\Repository\TaskRepository;
 use App\Repository\Task2Repository;
 use App\Form\AdminTaskQuoteModifyType;
 use App\Form\Back\AdminTaskModifyType;
@@ -23,6 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Back\AdminTaskAppointmentModifyType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class AdminTaskController extends AbstractController
 {
@@ -33,10 +35,10 @@ class AdminTaskController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/", name="task_list_admin")
      */
-    public function listTask(TacheRepository $tacheAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
+    public function listTask(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
     {
         return $this->render('back/task/list.html.twig', [
-            'taches' => $tacheAdmin->findAll(),
+            'task' => $taskAdmin->findAll(),
             'rendezvous' => $rendezvousAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
@@ -47,16 +49,16 @@ class AdminTaskController extends AbstractController
      * @Route("/admin/liste-des-taches-p1/ajouter", name="task_list_add_admin")
      */
     public function index(Request $request): Response {
-        $tacheAdd = new Tache();
-        $form = $this->createForm(AdminTaskAddType::class, $tacheAdd);
+        $taskAdd = new Task();
+        $form = $this->createForm(AdminTaskAddType::class, $taskAdd);
         $notification = null;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($tacheAdd);
+            $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
             $notification = 'La tâche a bien été ajoutée';
-            $tacheAdd = new Tache();
-            $form = $this->createForm(AdminTaskAddType::class, $tacheAdd);
+            $taskAdd = new Task();
+            $form = $this->createForm(AdminTaskAddType::class, $taskAdd);
         }
             return $this->render('back/task/add.html.twig', [
                 'form_task_p1_add_admin' => $form->createView(),
@@ -66,12 +68,12 @@ class AdminTaskController extends AbstractController
     
     /**
      * @Route("/admin/liste-des-taches/{id}/supprimer", name="task_list_detete_admin")
-     * @param Tache $tache
+     * @param Task $task
      * return RedirectResponse
      */
-    public function deleteTask(Tache $tache): RedirectResponse {
+    public function deleteTask(Task $task): RedirectResponse {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($tache);
+        $em->remove($task);
         $em->flush();
 
         return $this->redirectToRoute("task_list_admin");
@@ -80,18 +82,18 @@ class AdminTaskController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/{id}/modifier", name="task_list_modify_admin")
      */
-    public function modifyTask(Request $request, Tache $tacheModify): Response
+    public function modifyTask(Request $request, Task $taskModify): Response
     {
-        $form = $this->createForm(AdminTaskModifyType::class, $tacheModify);
+        $form = $this->createForm(AdminTaskModifyType::class, $taskModify);
         $notification = null;
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $tacheModify = $form->getData();
-            $this->entityManager->persist($tacheModify);
+            $taskModify = $form->getData();
+            $this->entityManager->persist($taskModify);
             $this->entityManager->flush();
             $notification = 'Tâche P1 mise à jour !';
-            $form = $this->createForm(AdminTaskModifyType::class, $tacheModify);
+            $form = $this->createForm(AdminTaskModifyType::class, $taskModify);
         }
         return $this->render('back/task/modify.html.twig',[
             'form_task_p1_modify_admin' => $form->createView(),
@@ -103,16 +105,16 @@ class AdminTaskController extends AbstractController
      * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="task_appointment_add_admin")
      */
     public function addTaskAppointment(Request $request): Response {
-        $rendezvousAdd = new Rendezvous();
-        $form = $this->createForm(AdminTaskAppointmentAddType::class, $rendezvousAdd);
+        $appointmentAdd = new Rendezvous();
+        $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
         $notification = null;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($rendezvousAdd);
+            $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             $notification = 'Le rendez-vous a bien été ajoutée';
-            $rendezvousAdd = new Rendezvous();
-            $form = $this->createForm(AdminTaskAppointmentAddType::class, $rendezvousAdd);
+            $appointmentAdd = new Rendezvous();
+            $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
         }
             return $this->render('back/task/appointment/add.html.twig', [
                 'form_appointment_add_admin' => $form->createView(),
@@ -212,4 +214,36 @@ class AdminTaskController extends AbstractController
         return $this->redirectToRoute("task_list_admin");
         ;   
     }
+
+    /**
+     * @Route("/admin/liste-des-taches/telecharger", name="task_list_download_admin")
+     */
+    public function taskDownload(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
+    {
+        $pdfOptions = New Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->setIsRemoteEnabled(true);
+        // la partie ssl de la vidéo a été supprimé 
+        $dompdf = new Dompdf($pdfOptions);
+
+        $html = $this->renderView('back/task/download.html.twig', [
+            'task' => $taskAdmin->findAll(),
+            'rendezvous' => $rendezvousAdmin->findAll(),
+            'quote' => $quoteAdmin->findAll(),
+            'task2' => $task2Admin->findAll(),
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+        $file = 'liste-des-tâches' . '.pdf';
+
+        $dompdf->stream($file, [
+            'Attachment' => true
+        ]);
+
+        return new Response('', 200, [
+            'Content-Type' => 'application/pdf',
+          ]);
+    }
+
 }

@@ -3,7 +3,7 @@
 namespace App\Form\Back;
 
 use App\Entity\User;
-use App\Entity\Tache;
+use App\Entity\Task;
 use App\Entity\Status;
 use App\Entity\Statut;
 use App\Form\UserMultipleType;
@@ -66,7 +66,7 @@ class AdminTaskAddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Tache::class,
+            'data_class' => Task::class,
         ]);
     }
 }

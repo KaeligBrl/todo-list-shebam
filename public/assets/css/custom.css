@@ -1,6 +1,8 @@
 /* Custom */
 @font-face {font-family: "Gotham";src: url("/fonts/Gotham-Bold.otf") format("truetype");}
 h4{color: var(--color-white)}
+td,td a{color: var(--color-black)}
+hr{height: 3px;background: var(--color-yellow-dark); width: 25%;}
 .label-custom {color: var(--yellow-shebam) !important}
 .notification-success-custom{color: var(--blue-shebam) !important}
 .btn-blue-shebam{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none;}
@@ -31,8 +33,4 @@ h4{color: var(--color-white)}
 .form-front input::placeholder{color: var(--yellow-shebam)}
 
 /* Error Message */
-.message-error{background: var(--red);padding: 10px 20px; color: var(--color-white);border-radius: 5px;} 
-
-.box {
-    flex-direction: row-reverse;
-  }
+.message-error{background: var(--red);padding: 10px 20px; color: var(--color-white);border-radius: 5px;}

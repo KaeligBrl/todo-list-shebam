@@ -54,9 +54,9 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tache::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users")
      */
-    private $taches;
+    private $tasks;
 
     /**
      * @ORM\OneToMany(targetEntity=Rendezvous::class, mappedBy="utilisateur")
@@ -75,7 +75,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->taches = new ArrayCollection();
+        $this->tasks = new ArrayCollection();
         $this->rendezvouses = new ArrayCollection();
         $this->quotes = new ArrayCollection();
         $this->task2s = new ArrayCollection();
@@ -184,27 +184,27 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Tache[]
+     * @return Collection|Task[]
      */
     public function getTaches(): Collection
     {
-        return $this->taches;
+        return $this->tasks;
     }
 
-    public function addTach(Tache $tach): self
+    public function addTach(Task $tas): self
     {
-        if (!$this->taches->contains($tach)) {
-            $this->taches[] = $tach;
-            $tach->addUser($this);
+        if (!$this->tasks->contains($tas)) {
+            $this->tasks[] = $tas;
+            $tas->addUser($this);
         }
 
         return $this;
     }
 
-    public function removeTach(Tache $tach): self
+    public function removeTach(Task $tas): self
     {
-        if ($this->taches->removeElement($tach)) {
-            $tach->removeUser($this);
+        if ($this->tasks->removeElement($tas)) {
+            $tas->removeUser($this);
         }
 
         return $this;

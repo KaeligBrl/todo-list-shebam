@@ -23,6 +23,7 @@ return [
         '/admin/liste-des-taches-p1/ajouter' => [[['_route' => 'task_list_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::index'], null, null, null, false, false, null]],
         '/admin/liste-des-taches/rendez-vous/ajouter' => [[['_route' => 'task_appointment_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::addTaskAppointment'], null, null, null, false, false, null]],
         '/admin/liste-des-taches/devis/ajouter' => [[['_route' => 'task_quote_add_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::addTaskQuote'], null, null, null, false, false, null]],
+        '/admin/liste-des-taches/telecharger' => [[['_route' => 'task_list_download_admin', '_controller' => 'App\\Controller\\Back\\AdminTaskController::taskDownload'], null, null, null, false, false, null]],
         '/admin/utilisateurs' => [[['_route' => 'user_admin', '_controller' => 'App\\Controller\\Back\\AdminUserController::index'], null, null, null, false, false, null]],
         '/admin/utilisateurs/ajouter' => [[['_route' => 'user_add_admin', '_controller' => 'App\\Controller\\Back\\AdminUserController::addUser'], null, null, null, false, false, null]],
         '/compte' => [[['_route' => 'account', '_controller' => 'App\\Controller\\Front\\AccountController::index'], null, null, null, false, false, null]],
