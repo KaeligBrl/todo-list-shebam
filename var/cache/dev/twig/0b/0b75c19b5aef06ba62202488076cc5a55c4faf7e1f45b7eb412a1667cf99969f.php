@@ -85,12 +85,13 @@ class __TwigTemplate_370e2b4799b2de1ce9d68120d37e79f53f144a01fd557993df90efe6a49
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->enter($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "content"));
 
         // line 4
-        echo "<meta http-equiv=\"refresh\" content=\"7;url=http://localhost/public/index.php/\"/>
-
-\t<h1>Inscription Réussite</h1>
-    <hr>
-    <p>Nous vous confirmons que votre inscription a bien été enregistré.</p>
-    <p>Vous allez être rediré vers la page de connnexion d'ici un instant.</p>
+        echo "<meta http-equiv=\"refresh\" content=\"7;url=http://localhost/to-do-list-shebam/public/index.php/connexion\"/>
+<div class=\"form-signin text-center background-login was-validated bg-white-shebam was-validated align-middle\">
+\t<h2 class=\"mb-3\">Inscription Réussite</h2>
+    <hr class=\"mb-3\">
+    <p>Tu es bien inscrit sur la liste des tâches !</p>
+    <p>Tu vas être redirigé sur la page de connexion</p>
+</div>
 ";
         
         $__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02->leave($__internal_319393461309892924ff6e74d6d6e64287df64b63545b994e100d4ab223aed02_prof);
@@ -120,12 +121,13 @@ class __TwigTemplate_370e2b4799b2de1ce9d68120d37e79f53f144a01fd557993df90efe6a49
         return new Source("{% extends 'base.html.twig' %}
 {% block title %}Inscription Réussiste - To Do List Shebam{% endblock %}
 {% block content %}
-<meta http-equiv=\"refresh\" content=\"7;url=http://localhost/public/index.php/\"/>
-
-\t<h1>Inscription Réussite</h1>
-    <hr>
-    <p>Nous vous confirmons que votre inscription a bien été enregistré.</p>
-    <p>Vous allez être rediré vers la page de connnexion d'ici un instant.</p>
+<meta http-equiv=\"refresh\" content=\"7;url=http://localhost/to-do-list-shebam/public/index.php/connexion\"/>
+<div class=\"form-signin text-center background-login was-validated bg-white-shebam was-validated align-middle\">
+\t<h2 class=\"mb-3\">Inscription Réussite</h2>
+    <hr class=\"mb-3\">
+    <p>Tu es bien inscrit sur la liste des tâches !</p>
+    <p>Tu vas être redirigé sur la page de connexion</p>
+</div>
 {% endblock %}
 
 ", "front/register/register_message_success.twig", "C:\\laragon\\www\\to-do-list-shebam\\templates\\front\\register\\register_message_success.twig");
