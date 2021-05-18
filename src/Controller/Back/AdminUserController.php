@@ -4,16 +4,16 @@ namespace App\Controller\Back;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Form\Back\AdminUserAddType;
-use App\Form\Back\AdminUserModifyType;
+use App\Form\Back\User\AdminUserAddType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\User\AdminUserModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 
 class AdminUserController extends AbstractController

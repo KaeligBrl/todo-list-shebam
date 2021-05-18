@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Back\Quote;
 
 use App\Entity\User;
 use App\Entity\Quote;
@@ -11,14 +11,13 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminTaskQuoteModifyType extends AbstractType
+class AdminTaskQuoteAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enterprise',  TextType::class, [
+            ->add('enterprise', TextType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => [
@@ -34,11 +33,14 @@ class AdminTaskQuoteModifyType extends AbstractType
                     'class' => ' form-control is-invalid'
                 ]
             ])
-            ->add('comment', TextareaType::class, array(
+            ->add('comment', TextType::class, [
                 'required' => true,
                 'label' => false,
-                'attr' => ['placeholder' => 'Remarque'],
-            ))
+                'attr' => [
+                    'placeholder' => 'Remarque',
+                    'class' => ' form-control is-invalid'
+                ]
+            ])
             ->add('person', EntityType::class, array(
                 'required' => true,
                 'label' => 'Personne(s) Désigné(e): ',

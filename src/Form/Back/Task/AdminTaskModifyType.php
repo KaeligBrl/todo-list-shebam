@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form\Back;
+namespace App\Form\Back\Task;
 
 use App\Entity\User;
-use App\Entity\Task2;
+use App\Entity\Task;
 use App\Entity\Status;
 use App\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminTask2ModifyType extends AbstractType
+class AdminTaskModifyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -62,7 +62,7 @@ class AdminTask2ModifyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Task2::class,
+            'data_class' => Task::class,
         ]);
     }
 }

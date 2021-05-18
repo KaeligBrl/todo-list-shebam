@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back;
+namespace App\Form\Back\Appointment;
 
 use App\Entity\User;
 use App\Entity\Status;
@@ -35,7 +35,7 @@ class AdminTaskAppointmentAddType extends AbstractType
                 ]
             ])
             ->add('heuredurendezvous', DateTimeType::class, [
-                'label' => 'Heure du rendez-vous ',
+                'label' => 'Heure du rendez-vous :',
                 'label_attr' => ['class' => 'label-custom'],
                 'days' => range(1,31),
                 'years' => range(2021,2022),
@@ -44,7 +44,7 @@ class AdminTaskAppointmentAddType extends AbstractType
             ])
             ->add('utilisateur', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s) Désigné(e): ',
+                'label' => 'Personne(s) :',
                 'class' => User::class,
                 'multiple' => true,
                 'expanded' => true,

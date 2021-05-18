@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back;
+namespace App\Form\Back\Status;
 
 use App\Entity\Status;
 use Symfony\Component\Form\AbstractType;

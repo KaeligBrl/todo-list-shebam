@@ -1,19 +1,18 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Utilisateurs - Administration
+{% block title %}Liste de l'équipe - Administration
 {% endblock %}
 
 {% block body %}
 	<div class="d-flex flex-row">
-		{% block titre_admin_page %}Utilisateurs
-		{% endblock %}
+		{% block titre_admin_page %}Liste de l'équipe{% endblock %}
 	</div>
 
 
 	{% block admin_utilisateur %}
 		<div class="container">
-			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('user_add_admin') }}" type="button" class="btn btn-outline-light mb-3">
+			<div class="add-icon-custom d-flex flex-row-reverse">
+				<a href="{{ path('user_add_admin') }}" type="button" class="btn-outline-light mr-3 mb-2">
 					<i class="fas fa-plus-circle"></i>
 				</a>
 			</div>
@@ -24,7 +23,7 @@
 						<th scope="col">Nom</th>
 						<th scope="col">Prénom</th>
 						<th scope="col">Adresse Mail</th>
-						<th scope="col">Role</th>
+						<th scope="col">Rôle</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>

@@ -4,12 +4,12 @@ namespace App\Controller\Back;
 
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
-use App\Form\Back\AdminCustomerAddType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\AdminCustomerModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Back\Customer\AdminCustomerAddType;
+use App\Form\Back\Customer\AdminCustomerModifyType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

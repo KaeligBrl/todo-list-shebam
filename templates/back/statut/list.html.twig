@@ -4,12 +4,12 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Liste de nos tâches{% endblock %}
+		{% block titre_admin_page %}Liste des statuts{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">
-			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('status_add_admin') }}" type="button" class="btn btn-outline-light mb-3">
+			<div class="add-icon-custom d-flex flex-row-reverse">
+				<a href="{{ path('status_add_admin') }}" type="button" class=" btn-outline-light mr-3 mb-3">
 					<i class="fas fa-plus-circle"></i>
 				</a>
 			</div>

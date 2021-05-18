@@ -2,29 +2,28 @@
 
 namespace App\Controller\Back;
 
-use App\Entity\Quote;
-use App\Entity\Task;
-use App\Entity\Statut;
-use App\Entity\Rendezvous;
-use App\Form\Back\AdminTaskAddType;
-use App\Repository\QuoteRepository;
-use App\Repository\TaskRepository;
-use App\Repository\Task2Repository;
-use App\Form\AdminTaskQuoteModifyType;
-use App\Form\Back\AdminTaskModifyType;
-use App\Form\Back\AdminTaskQuoteAddType;
-use App\Repository\RendezvousRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\AdminTaskAddStatutType;
-use Symfony\Component\HttpFoundation\Request;
-use App\Form\Back\AdminTaskAppointmentAddType;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Back\AdminTaskAppointmentModifyType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Entity\Task;
+use App\Entity\Quote;
+use App\Entity\Statut;
+use App\Entity\Rendezvous;
+use App\Repository\TaskRepository;
+use App\Repository\QuoteRepository;
+use App\Repository\Task2Repository;
+use App\Form\Back\Task\AdminTaskAddType;
+use App\Repository\RendezvousRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\Task\AdminTaskModifyType;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\Back\Quote\AdminTaskQuoteAddType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Back\Quote\AdminTaskQuoteModifyType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Form\Back\Appointment\AdminTaskAppointmentAddType;
+use App\Form\Back\Appointment\AdminTaskAppointmentModifyType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminTaskController extends AbstractController
 {
@@ -221,11 +220,11 @@ class AdminTaskController extends AbstractController
     public function taskDownload(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
     {
         $pdfOptions = New Options();
-        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set('defaultFont', 'Gotham');
         $pdfOptions->setIsRemoteEnabled(true);
         // la partie ssl de la vidéo a été supprimé 
         $dompdf = new Dompdf($pdfOptions);
-
+        $html 	= '<img width="220" height="220" src="../assets/images/logo-to-do-list-vert.png">';
         $html = $this->renderView('back/task/download.html.twig', [
             'task' => $taskAdmin->findAll(),
             'rendezvous' => $rendezvousAdmin->findAll(),

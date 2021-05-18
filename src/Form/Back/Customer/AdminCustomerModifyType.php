@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back;
+namespace App\Form\Back\Customer;
 
 use App\Entity\Customer;
 use Symfony\Component\Form\AbstractType;

@@ -4,9 +4,9 @@ namespace App\Controller\Back;
 
 use App\Entity\Task2;
 use App\Repository\Task2Repository;
-use App\Form\Back\AdminTask2AddType;
-use App\Form\Back\AdminTask2ModifyType;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\Task2\AdminTask2AddType;
+use App\Form\Back\Task2\AdminTask2ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

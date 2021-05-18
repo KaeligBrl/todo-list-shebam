@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Form\Back;
+namespace App\Form\Back\Task;
 
 use App\Entity\User;
-use App\Entity\Task2;
+use App\Entity\Task;
 use App\Entity\Status;
 use App\Entity\Statut;
 use App\Form\UserMultipleType;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Customer;
 
-class AdminTask2AddType extends AbstractType
+class AdminTaskAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -39,7 +39,7 @@ class AdminTask2AddType extends AbstractType
         ])
         ->add('users', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s) Désigné(e): ',
+            'label' => 'Personne(s) :',
             'class' => User::class,
             'multiple' => true,
             'expanded' => true,
@@ -66,7 +66,7 @@ class AdminTask2AddType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Task2::class,
+            'data_class' => Task::class,
         ]);
     }
 }

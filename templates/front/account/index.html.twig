@@ -6,13 +6,14 @@
 {% block content %}
 
 	<div class="container">
-		<h1 class="text-center color-white-shebam mb-4">Mon Compte</h1><br>
+		<h1 class="text-center color-white-shebam mb-4">Mon Compte</h1>
+		<hr class="text-center mb-5 mt-5">
 		<div class="row text-center color-white-shebam">
 
 			<!-- Colonne de gauche -->
-			<div class="col text-left">
+			<div class="col text-lcenter">
 				<h3> Mes coordonnées</h3>
-				<hr>
+				<hr class="mt-4 mb-4" align="center">
 				<p>Adresse mail: <span class="color-yellow-shebam">{{ app.user.email }}</span></p>
 				<p>Role:      <span class="color-yellow-shebam">{% for role in app.user.roles %}
 								{% if role == "ROLE_USER" %}
@@ -24,28 +25,24 @@
 								{% endif %}
                         {% endfor %}</span></p>
 				<p>Nombre de tâche attribuée(s): </p>
-				<p>Nouvelle(s) tâche(s): </p>
-				<p>Statut en cours: </p>
-				<p>Tâche(s) terminée(s): </p>
 			</div>
 
 			<!-- Colonne de droite -->
-			<div class="col text-left">
+			<div class="col text-center">
 				<h3> Modification des coordonnées</h3>
-			<hr>
-			<div class="was-validated form-front background-login is-valid">
+			<hr class="mt-4 mb-4" align="center">
+			<div class="was-validated text-center is-valid">
 				{% if notification %}
 					<hr>
 						<div class="alert alert-info">{{ notification }}</div>
 					<hr>
 				{% endif %}
 					{{ form_start(form) }}
-				<div class="form-group">
+				<div class="form-group ">
 					{{ form_widget(form) }}
 				</div>
 					{{ form_end(form) }}
 			</div>
-			<hr>
 
 			<span> Aie c'est quoi déjà? - </span><a href="{{path('app_forgot_password_request')}}" class="text-info"> Mot de passe oublié</a>
 			</div>
