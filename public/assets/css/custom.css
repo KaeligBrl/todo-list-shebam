@@ -15,6 +15,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 25%;}
 .navbar{height: 92px;}
 .navbar-text{padding: .5rem 1rem;font-weight: 500;}
 .navbar-text:hover {text-decoration: none; color: var(--yellow-shebam)}
+
 /* To do List Table*/
 .table-yellow{background-color:var(--yellow-shebam);color: var(--color-white);}
 .table-pink{background-color:var(--pink-shebam);color: var(--color-white);}

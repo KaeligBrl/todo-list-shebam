@@ -54,3 +54,7 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .label-custom {color: var(--yellow-shebam) !important}
 
 .add-icon-custom{margin-top: -20px;}
+.page-link{color: var(--color-yellow-dark);border: none !important}
+.page-item.active .page-link {z-index: 1;color: var(--color-white);background-color: var(--color-yellow-dark) !important;border-color: var(--color-yellow-dark) !important; border: none !important;}
+.page-item.active .page-link:hover{color: var(--yellow-shebam);border-color: var(--color-yellow-dark) !important;border: none !important}
+.page-link:hover{color: var(--color-white) !important; background: var(--yellow-shebam) !important; border: none !important;}
