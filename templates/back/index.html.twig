@@ -7,18 +7,16 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<title>
-			{% block title %}Tableau de bord - Administration
-			{% endblock %}
+			{% block title %}Tableau de bord - Administration{% endblock %}
 		</title>
 
 		<!-- Bootstrap CSS CDN -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
 
 		<!-- Font Awesome JS -->
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
-
-		<link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
 		<!-- Custom CSS -->
 		<link rel="stylesheet" href="{{ asset('assets/css/admin-template.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/root.css') }}">		
@@ -28,10 +26,8 @@
 		<div class="wrapper">
 			<nav id="sidebar" class="bg-yellow-shebam">
 				<div class="sidebar-header bg-white-shebam">
-					<a href="{{ path('admin') }}"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }}"></a> 
-
+					<a href="{{ path('admin') }}"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }}"></a>
 				</div>
-
 				<ul class="list-unstyled components color-white-shebam">
 					<li>
 						<a href="{{ path('admin') }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
