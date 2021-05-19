@@ -127,10 +127,40 @@
 		</nav>
 		<div class="container mb-5">
 			<h4 class="color-white-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
-
 		</div>
-		<div class="container mb-5">
+		<div class="container text-center">
 			{% block admin_utilisateur %}
+			<div class="row mb-5">
+				<div class="col-sm">
+					<div class="framed">
+						<h3 class="mb-4">Récapitulatif -> Tâches</h3>
+						<p class="color-black-shebam"> Tâche P1: <span class="color-yellow-dark">{{ countTaskP1Board }}</span></p>
+						<p class="color-black-shebam"> Tâche P2: <span class="color-yellow-dark">{{ countTaskP2Board }}</span></p>
+						<p class="color-black-shebam"> Rendez-vous: <span class="color-yellow-dark">{{ countAppointment }}</span></p>
+						<p class="color-black-shebam"> Devis à faire: <span class="color-yellow-dark">{{ countQuote }}</span></p>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="framed">
+						<h3 class="mb-4">Récapitulatif -> Status</h3>
+						<p class="color-black-shebam"> statut: <span class="color-yellow-dark">{{ countStatus }}</span></p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm">
+					<div class="framed">
+						<h3 class="mb-4">Récapitulatif -> Clients</h3>
+						<p class="color-black-shebam"> Clients: <span class="color-yellow-dark">{{ countCustomer }}</span></p>
+					</div>
+				</div>
+				<div class="col-sm">
+					<div class="framed">
+						<h3 class="mb-4">Récapitulatif -> Équipe</h3>
+						<p class="color-black-shebam"> Personne dans l'équipe: <span class="color-yellow-dark">{{ countUser }}</span></p>
+					</div>
+				</div>
+			</div>
 			{% endblock %}
 		</div>
 

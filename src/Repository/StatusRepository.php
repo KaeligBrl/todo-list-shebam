@@ -19,6 +19,14 @@ class StatusRepository extends ServiceEntityRepository
         parent::__construct($registry, Status::class);
     }
 
+    //Count number of Status
+    public function countQuote(){
+        return $this->createQueryBuilder('s')
+        ->select('count(s.status) as count')
+        ->getQuery()
+        ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Status[] Returns an array of Status objects
     //  */

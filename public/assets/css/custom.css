@@ -3,6 +3,7 @@
 h4{color: var(--color-white)}
 td,td a{color: var(--color-black)}
 a, a:hover{text-decoration: none;}
+a:hover{transition: 0.25s ease;}
 hr{height: 3px;background: var(--color-yellow-dark); width: 25%;}
 .label-custom {color: var(--yellow-shebam) !important}
 .notification-success-custom{color: var(--blue-shebam) !important}
