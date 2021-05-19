@@ -33,7 +33,11 @@
 						{% for task in task %}
 					<tr>
 						<td>{{task.customer}}</td>
-						<td>{{task.subject}}</td>
+						<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
+							{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
+							{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
+							{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
+						</td>
 						<td>{% for task in task.users %}
 								{{ task.firstname }} <br>
 							{% endfor %}
@@ -106,7 +110,7 @@
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
-						<th>Personne(s) Désignée(s)</th>
+						<th>Personne(s)</th>
 						<th scope="col">Statut</th>
 						<th scope="col">Remarque</th>
 						<th scope="col">Action</th>
@@ -158,7 +162,11 @@
 						{% for task2 in task2 %}
 					<tr>
 						<td>{{task2.customer}}</td>
-						<td>{{task2.subject}}</td>
+						<td>{% if task2.subject is empty %}{% else %}{{task2.subject}}<br>{% endif %}
+							{% if task2.subsubject1 is empty %}{% else %}{{task2.subsubject1}}<br>{% endif %} 
+							{% if task2.subsubject2 is empty %}{% else %}{{task2.subsubject2}}<br>{% endif %}
+							{% if task2.subsubject3 is empty %}{% else %}{{task2.subsubject3}}<br>{% endif %}
+						</td>
 						<td>{% for task2 in task2.users %}
 								{{ task2.firstname }} <br>
 							{% endfor %}

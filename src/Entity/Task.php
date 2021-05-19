@@ -46,6 +46,21 @@ class Task
      */
     private $customer;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_subject1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_subject2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_subject3;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -136,6 +151,42 @@ class Task
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getSubSubject1(): ?string
+    {
+        return $this->sub_subject1;
+    }
+
+    public function setSubSubject1(?string $sub_subject1): self
+    {
+        $this->sub_subject1 = $sub_subject1;
+
+        return $this;
+    }
+
+    public function getSubSubject2(): ?string
+    {
+        return $this->sub_subject2;
+    }
+
+    public function setSubSubject2(?string $sub_subject2): self
+    {
+        $this->sub_subject2 = $sub_subject2;
+
+        return $this;
+    }
+
+    public function getSubSubject3(): ?string
+    {
+        return $this->sub_subject3;
+    }
+
+    public function setSubSubject3(?string $sub_subject3): self
+    {
+        $this->sub_subject3 = $sub_subject3;
 
         return $this;
     }

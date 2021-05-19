@@ -37,6 +37,30 @@ class AdminTaskAddType extends AbstractType
                 'class' => ' form-control is-invalid'
             ]
         ])
+        ->add('subsubject1',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 1',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
+        ->add('subsubject2',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 2',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
+        ->add('subsubject3',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 3',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
         ->add('users', EntityType::class, array(
             'required' => true,
             'label' => 'Personne(s) :',

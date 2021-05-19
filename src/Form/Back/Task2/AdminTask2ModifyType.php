@@ -5,27 +5,23 @@ namespace App\Form\Back\Task2;
 use App\Entity\User;
 use App\Entity\Task2;
 use App\Entity\Status;
-use App\Entity\Statut;
-use App\Form\UserMultipleType;
+use App\Entity\Customer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\WeekType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Entity\Customer;
 
-class AdminTask2AddType extends AbstractType
+class AdminTask2ModifyType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
         ->add('customer', EntityType::class, array(
             'required' => true,
-            'label' => 'Client :',
+            'label' => 'Client : ',
             'class' => Customer::class,
             'label_attr' => ['class' => 'label-custom'],
         ))
@@ -37,9 +33,33 @@ class AdminTask2AddType extends AbstractType
                 'class' => ' form-control is-invalid'
             ]
         ])
+        ->add('subsubject1',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 1',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
+        ->add('subsubject2',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 2',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
+        ->add('subsubject3',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Sous-Sujet 3',
+                'class' => ' form-control is-invalid'
+            ]
+        ])
         ->add('users', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s) :',
+            'label' => 'Personne(s) Désignée(s)',
             'class' => User::class,
             'multiple' => true,
             'expanded' => true,
@@ -47,7 +67,7 @@ class AdminTask2AddType extends AbstractType
         ))
         ->add('status', EntityType::class, array(
             'required' => true,
-            'label' => 'Statut :',
+            'label' => 'Statut',
             'class' => Status::class,
             'label_attr' => ['class' => 'label-custom'],
         ))
@@ -63,7 +83,7 @@ class AdminTask2AddType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Task2::class,
