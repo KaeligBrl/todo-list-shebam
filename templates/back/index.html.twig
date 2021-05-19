@@ -128,36 +128,61 @@
 		<div class="container mb-5">
 			<h4 class="color-white-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
 		</div>
-		<div class="container text-center">
+		<div class="container">
 			{% block admin_utilisateur %}
-			<div class="row mb-5">
+			<div class="row mb-5  text-center">
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Récapitulatif -> Tâches</h3>
-						<p class="color-black-shebam"> Tâche P1: <span class="color-yellow-dark">{{ countTaskP1Board }}</span></p>
-						<p class="color-black-shebam"> Tâche P2: <span class="color-yellow-dark">{{ countTaskP2Board }}</span></p>
-						<p class="color-black-shebam"> Rendez-vous: <span class="color-yellow-dark">{{ countAppointment }}</span></p>
-						<p class="color-black-shebam"> Devis à faire: <span class="color-yellow-dark">{{ countQuote }}</span></p>
+						{# Task P1 Condition #}
+						{% if countTaskP1Board <= 1 %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tache P1</p>
+						{% else %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> taches P1</p>
+						{% endif %}
+						{# Task P2 Condition #}
+						{% if countTaskP1Board <= 1 %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tache P2</p>
+						{% else %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> taches P2</p>
+						{% endif %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countAppointment }}</span> rendez-vous</p>
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countQuote }}</span>  devis à faire</p>
 					</div>
 				</div>
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Récapitulatif -> Status</h3>
-						<p class="color-black-shebam"> statut: <span class="color-yellow-dark">{{ countStatus }}</span></p>
+						{# Status Condition #}
+						{% if countStatus <= 1 %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countStatus }}</span> statut créé</p>
+						{% else %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countStatus }}</span> statuts créés</p>
+						{% endif %}
 					</div>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row  text-center">
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Récapitulatif -> Clients</h3>
-						<p class="color-black-shebam"> Clients: <span class="color-yellow-dark">{{ countCustomer }}</span></p>
+						{# User Condition #}
+						{% if countCustomer <= 1 %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countCustomer }}</span> client</p>
+						{% else %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countCustomer }}</span> clients</p>
+						{% endif %}
 					</div>
 				</div>
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Récapitulatif -> Équipe</h3>
-						<p class="color-black-shebam"> Personne dans l'équipe: <span class="color-yellow-dark">{{ countUser }}</span></p>
+						{# User Condition #}
+						{% if countStatus <= 1 %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personne dans l'équipe</p>
+						{% else %}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personnes dans l'équipe</p>
+						{% endif %}
 					</div>
 				</div>
 			</div>
