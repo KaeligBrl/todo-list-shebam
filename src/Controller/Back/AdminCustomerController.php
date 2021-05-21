@@ -24,8 +24,17 @@ class AdminCustomerController extends AbstractController
      */
     public function listCustomers(CustomerRepository $customerAdmin): Response
     {
+        //Count Customer
+        $em = $this->getDoctrine()->getManager();
+        $repoCustomer = $em->getRepository(Customer::class);
+        $totalCustomer = $repoCustomer->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
         return $this->render('back/customer/list.html.twig', [
-            'customer' => $customerAdmin->findAll(),
+            'customer' => $customerAdmin->findBy(array(), array('name' => 'ASC')),
+            'totalCustomer' => $totalCustomer
         ]);
     }
 
@@ -83,4 +92,5 @@ class AdminCustomerController extends AbstractController
             'notification' => $notification
         ]);   
     }
+    
 }

@@ -36,6 +36,7 @@ class AdminTaskController extends AbstractController
      */
     public function listTask(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
     {
+
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findAll(),
             'rendezvous' => $rendezvousAdmin->findAll(),
