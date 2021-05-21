@@ -2,7 +2,13 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\Task;
 use App\Entity\User;
+use App\Entity\Quote;
+use App\Entity\Task2;
+use App\Entity\Status;
+use App\Entity\Customer;
+use App\Entity\Rendezvous;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
 use App\Repository\QuoteRepository;
@@ -16,47 +22,70 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
+    
     /**
      * @Route("/admin", name="admin")
      */
-    public function index(UserRepository $userAdmin, TaskRepository $countTaskP1Board, Task2Repository $countTaskP2Board, RendezvousRepository $countAppointment, QuoteRepository $countQuote, StatusRepository $countStatus, UserRepository $countUser, CustomerRepository $countCustomer): Response
+    public function index(): Response
     {
-        //Count Task P1
-        $taskP1 = $countTaskP1Board->findAll();
-        $countTaskP1Board = count($taskP1);
+        $em = $this->getDoctrine()->getManager();
+        //Count Task
+        $repoTask = $em->getRepository(Task::class);
+        $totalTask = $repoTask->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count Task P2
-        $taskP2 = $countTaskP2Board->findAll();
-        $countTaskP2Board = count($taskP2);
+        $repoTaskP2 = $em->getRepository(Task2::class);
+        $totalTaskP2 = $repoTaskP2->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count Appointment
-        $appointment = $countAppointment->findAll();
-        $countAppointment = count($appointment);
+        $repoAppointment = $em->getRepository(Rendezvous::class);
+        $totalAppointment = $repoAppointment->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count Quote
-        $quote = $countQuote->findAll();
-        $countQuote = count($quote);
+        $repoQuote = $em->getRepository(Quote::class);
+        $totalQuote = $repoQuote->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count Statut
-        $status = $countStatus->findAll();
-        $countStatus = count($status);
+        $repoStatus = $em->getRepository(Status::class);
+        $totalStatus = $repoStatus->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count User
-        $user = $countUser->findAll();
-        $countUser = count($user);
+        $repoUser = $em->getRepository(User::class);
+        $totalUser = $repoUser->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         //Count Customer
-        $customer = $countCustomer->findAll();
-        $countCustomer = count($customer);
+        $repoCustomer = $em->getRepository(Customer::class);
+        $totalCustomer = $repoCustomer->createQueryBuilder('a')
+            ->select('count(a.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         return $this->render('back/index.html.twig', [
-            'countTaskP1Board' => $countTaskP1Board, 
-            'countTaskP2Board'=> $countTaskP2Board,
-            'countAppointment' => $countAppointment,            
-            'countQuote' => $countQuote,
-            'countStatus' => $countStatus,
-            'countUser' => $countUser,
-            'countCustomer' => $countCustomer
+            'countTaskP1Board' => $totalTask, 
+            'countTaskP2Board'=> $totalTaskP2,
+            'countAppointment' => $totalAppointment,            
+            'countQuote' => $totalQuote,
+            'countStatus' => $totalStatus,
+            'countUser' => $totalUser,
+            'countCustomer' => $totalCustomer
 
         ]);
     }

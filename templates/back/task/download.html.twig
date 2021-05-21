@@ -9,8 +9,8 @@
                 <th scope="col">Client</th>
                 <th scope="col">Sujet</th>
                 <th scope="col">Personne(s) Désignée(s)</th>
-                <th scope="col">Statut</th>
                 <th scope="col">Remarque</th>
+                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -22,8 +22,8 @@
                         {{ task.firstname }} <br>
                     {% endfor %}
                 </td>
-                <td>{{task.status.name}}</td>
                 <td>{{task.comment}}</td>
+                <td>{{task.status.name|raw}}</td>
             </tr>
                 {% endfor %}
         </tbody>
@@ -52,7 +52,7 @@
                         {{ rendezvous.firstname }} <br>
                     {% endfor %}
                     </td>
-                    <td>{{rendezvous.statut}}</td>
+                    <td>{{rendezvous.statut|raw}}</td>
                     <td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
                 </tr>
             {% endfor %}
@@ -68,8 +68,8 @@
                 <th scope="col">Client</th>
                 <th scope="col">Sujet</th>
                 <th>Personne(s) Désignée(s)</th>
-                <th scope="col">Statut</th>
                 <th scope="col">Remarque</th>
+                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -82,8 +82,8 @@
                         {{ quote.firstname }} <br>
                     {% endfor %}
                     </td>
-                    <td>{{ quote.status }}</td>
                     <td>{{ quote.comment }}</td>
+                    <td>{{ quote.status|raw }}</td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -98,8 +98,8 @@
                 <th scope="col">Client</th>
                 <th scope="col">Sujet</th>
                 <th scope="col">Personne(s) Désignée(s)</th>
-                <th scope="col">Statut</th>
                 <th scope="col">Remarque</th>
+                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -111,8 +111,8 @@
                         {{ task2.firstname }} <br>
                     {% endfor %}
                 </td>
-                <td>{{task2.status.name}}</td>
                 <td>{{task2.comment}}</td>
+                <td>{{task2.status.name|raw}}</td>
             </tr>
                 {% endfor %}
         </tbody>

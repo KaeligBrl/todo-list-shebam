@@ -18,15 +18,7 @@ class RendezvousRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Rendezvous::class);
     }
-
-    //Count number of Task
-    public function countAppointment(){
-        return $this->createQueryBuilder('d')
-        ->select('count(d.rendezvous) as count')
-        ->getQuery()
-        ->getSingleScalarResult();
-    }
-
+    
     // /**
     //  * @return Rendezvous[] Returns an array of Rendezvous objects
     //  */

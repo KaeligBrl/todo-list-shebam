@@ -7,6 +7,7 @@
 		{% block titre_admin_page %}Tâche P1 - Ajouter{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
+					{{ form_start(form_task_p1_add_admin) }}
 		<div class="was-validated form-back background-login is-valid">
 			{% if notification %}
 					<div class="alert alert-success">{{ notification }}<br>
@@ -15,12 +16,26 @@
 					</div>
 				<hr>
 			{% endif %}
-				{{ form_start(form_task_p1_add_admin) }}
-			<div class="form-group">
-				{{ form_widget(form_task_p1_add_admin) }}
+			<div class="form-row">
+				<div class="form-group">
+					{{ form_row(form_task_p1_add_admin.customer) }}
+					{{ form_row(form_task_p1_add_admin.subject) }}
+					{{ form_row(form_task_p1_add_admin.subsubject1) }}
+					{{ form_row(form_task_p1_add_admin.subsubject2) }}
+					{{ form_row(form_task_p1_add_admin.subsubject3) }}
+					{{ form_row(form_task_p1_add_admin.status|raw) }}
+					{{ form_row(form_task_p1_add_admin.users) }}
+					{{ form_row(form_task_p1_add_admin.comment) }}
+				</div>
 			</div>
-				{{ form_end(form_task_p1_add_admin) }}
+			<div class="form-row">
+				<div class="form-group">
+					{{ form_row(form_task_p1_add_admin.submit) }}
+				</div>
+			</div>
+		{{ form_end(form_task_p1_add_admin) }}
 		</div>
+
 	{% endblock %}
 {% endblock %}
 

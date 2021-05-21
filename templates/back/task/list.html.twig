@@ -23,9 +23,9 @@
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
-						<th scope="col">Personne(s) Désignée(s)</th>
-						<th scope="col">Statut</th>
+						<th scope="col">Personne(s)</th>
 						<th scope="col">Remarque</th>
+						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -42,8 +42,8 @@
 								{{ task.firstname }} <br>
 							{% endfor %}
 						</td>
-						<td>{{task.status.name}}</td>
 						<td>{{task.comment}}</td>
+						<td>{{task.status.name|raw}}</td>
 						<td>
 							<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 								|
@@ -68,9 +68,9 @@
 					<tr>
 						<th scope="col">Entreprise</th>
 						<th scope="col">Sujet</th>
-						<th>Personne(s) Désignée(s)</th>
-						<th scope="col">Statut</th>
+						<th>Personne(s)</th>
 						<th scope="col">Date et heure</th>
+						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -84,8 +84,8 @@
 								{{ rendezvous.firstname }} <br>
 							{% endfor %}
 							</td>
-							<td>{{rendezvous.statut}}</td>
 							<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
+							<td>{{rendezvous.statut|raw}}</td>
 							<td>
 								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
 								|
@@ -111,8 +111,8 @@
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
 						<th>Personne(s)</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Remarque</th>
+						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -125,9 +125,10 @@
 							{% for quote in quote.person %}
 								{{ quote.firstname }} <br>
 							{% endfor %}
-							</td>
+							</td>							
 							<td>{{ quote.status }}</td>
 							<td>{{ quote.comment }}</td>
+							<td>{{ quote.status|raw }}</td>
 							<td>
 								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 								|
@@ -152,9 +153,9 @@
 					<tr>
 						<th scope="col">Client</th>
 						<th scope="col">Sujet</th>
-						<th scope="col">Personne(s) Désignée(s)</th>
-						<th scope="col">Statut</th>
+						<th scope="col">Personne(s)</th>
 						<th scope="col">Remarque</th>
+						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -171,8 +172,8 @@
 								{{ task2.firstname }} <br>
 							{% endfor %}
 						</td>
-						<td>{{task2.status.name}}</td>
 						<td>{{task2.comment}}</td>
+						<td>{{task2.status.name|raw}}</td>
 						<td>
 							<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
 								|

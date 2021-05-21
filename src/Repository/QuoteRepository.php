@@ -19,14 +19,6 @@ class QuoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Quote::class);
     }
 
-    //Count number of Quote
-    public function countQuote(){
-        return $this->createQueryBuilder('d')
-        ->select('count(d.quote) as count')
-        ->getQuery()
-        ->getSingleScalarResult();
-    }
-
     // /**
     //  * @return Quote[] Returns an array of Quote objects
     //  */
