@@ -6,6 +6,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Task;
 use App\Entity\Quote;
+use App\Entity\Task2;
 use App\Entity\Statut;
 use App\Entity\Rendezvous;
 use App\Repository\TaskRepository;
@@ -14,7 +15,9 @@ use App\Repository\Task2Repository;
 use App\Form\Back\Task\AdminTaskAddType;
 use App\Repository\RendezvousRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\Task2\AdminTask2AddType;
 use App\Form\Back\Task\AdminTaskModifyType;
+use App\Form\Back\Task2\AdminTask2ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Quote\AdminTaskQuoteAddType;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,7 +28,7 @@ use App\Form\Back\Appointment\AdminTaskAppointmentAddType;
 use App\Form\Back\Appointment\AdminTaskAppointmentModifyType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminTaskController extends AbstractController
+class AdminTasksController extends AbstractController
 {
     private $entityManager;
     public function __construct(EntityManagerInterface $entityManager){
@@ -46,9 +49,27 @@ class AdminTaskController extends AbstractController
     }
 
     /**
+     * @Route("/admin/liste-des-taches/archives", name="task_list_archived_admin")
+     */
+    public function listTaskArchived(TaskRepository $taskArchivedAdmin, RendezvousRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
+    {
+
+        return $this->render('back/task/archived.html.twig', [
+            'task' => $taskArchivedAdmin->findAll(),
+            'rendezvous' => $appointmentArchivedAdmin->findAll(),
+            'quote' => $quoteArchivedAdmin->findAll(),
+            'task2' => $task2ArchivedAdmin->findAll()
+        ]);
+    }
+
+    // ------------------------------
+    // --------- Priority 1 ---------
+    // ------------------------------
+
+    /**
      * @Route("/admin/liste-des-taches-p1/ajouter", name="task_list_add_admin")
      */
-    public function index(Request $request): Response {
+    public function taskP1(Request $request): Response {
         $taskAdd = new Task();
         $form = $this->createForm(AdminTaskAddType::class, $taskAdd);
         $notification = null;
@@ -64,19 +85,6 @@ class AdminTaskController extends AbstractController
                 'form_task_p1_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
-        }
-    
-    /**
-     * @Route("/admin/liste-des-taches/{id}/supprimer", name="task_list_detete_admin")
-     * @param Task $task
-     * return RedirectResponse
-     */
-    public function deleteTask(Task $task): RedirectResponse {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_admin");
     }
 
     /**
@@ -100,10 +108,143 @@ class AdminTaskController extends AbstractController
             'notification' => $notification
         ]);   
     }
+    
+    /**
+     * @Route("/admin/liste-des-taches-p1/{id}/supprimer", name="task_list_detete_admin")
+     * @param Task $task
+     * return RedirectResponse
+     */
+    public function deleteTask(Task $task): RedirectResponse {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($task);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_admin");
+    }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="task_appointment_add_admin")
+    * @Route("/admin/liste-des-taches-p1/{id}/archiver", name="taskp1_archived_admin")
+    * return RedirectResponse
+    */
+    public function archivedTaskP1(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE task SET archived = 1';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_admin"); 
+    }
+
+    /**
+    * @Route("/admin/liste-des-taches-p1/{id}/desarchiver", name="taskp1_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function unarchivedTaskP1(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE task SET archived = 0';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
+    // ------------------------------
+    // --------- Priority 2 ---------
+    // ------------------------------
+
+    /**
+     * @Route("/admin/liste-des-taches-p2/ajouter", name="task2_list_add_admin")
      */
+    public function taskP2(Request $request): Response {
+        $task2Add = new Task2();
+        $form = $this->createForm(AdminTask2AddType::class, $task2Add);
+        $notification = null;
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($task2Add);
+            $this->entityManager->flush();
+            $notification = 'La tâche P2 a bien été ajoutée';
+            $task2Add = new Task2();
+            $form = $this->createForm(AdminTask2AddType::class, $task2Add);
+        }
+            return $this->render('back/task2/add.html.twig', [
+                'form_task_p2_add_admin' => $form->createView(),
+                'notification' => $notification
+            ]);
+        }
+
+    /**
+     * @Route("/admin/liste-des-taches-p2/{id}/supprimer", name="task2_list_detete_admin")
+     * @param Task2 $task2
+     * return RedirectResponse
+     */
+    public function deleteTask2(Task2 $task2): RedirectResponse {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($task2);
+        $em->flush();
+        return $this->redirectToRoute("task_list_admin");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches-p2/{id}/modifier", name="task2_list_modify_admin")
+     */
+    public function modifyTask2(Request $request, Task2 $task2Modify): Response
+    {
+        $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
+        $notification = null;
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $task2Modify = $form->getData();
+            $this->entityManager->persist($task2Modify);
+            $this->entityManager->flush();
+            $notification = 'Tâche P2 a bien été mise à jour !';
+            $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
+        }
+        return $this->render('back/task2/modify.html.twig',[
+            'form_task_p2_modify_admin' => $form->createView(),
+            'notification' => $notification
+        ]);   
+    }
+
+    /**
+    * @Route("/admin/liste-des-taches-p2/{id}/archiver", name="task2_archived_admin")
+    * return RedirectResponse
+    */
+    public function archivedTaskP2(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE task2 SET archived = 1';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_admin"); 
+    }
+
+    /**
+    * @Route("/admin/liste-des-taches-p2/{id}/desarchiver", name="task2_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function unarchivedTaskP2(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE task2 SET archived = 0';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
+
+    // ------------------------------
+    // -------- Appointment ---------
+    // ------------------------------
+
+    /**
+    * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="task_appointment_add_admin")
+    */
     public function addTaskAppointment(Request $request): Response {
         $appointmentAdd = new Rendezvous();
         $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
@@ -157,6 +298,38 @@ class AdminTaskController extends AbstractController
         return $this->redirectToRoute("task_list_admin");
         ;   
     }
+
+    /**
+    * @Route("/admin/liste-des-taches/rendez-vous/{id}/desarchiver", name="appointment_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function archivedAppointment(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE rendezvous SET archived = 0';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
+    /**
+    * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver", name="appointment_archived_admin")
+    * return RedirectResponse
+    */
+    public function unarchivedAppointment(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE rendezvous SET archived = 1';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_admin"); 
+    }
+
+    // ------------------------------
+    // ----------- Quote ------------
+    // ------------------------------
 
    /**
     * @Route("/admin/liste-des-taches/devis/ajouter", name="task_quote_add_admin")
@@ -215,7 +388,39 @@ class AdminTaskController extends AbstractController
         ;   
     }
 
+        /**
+    * @Route("/admin/liste-des-taches/devis/{id}/desarchiver", name="quote_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function archivedQuote(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE quote SET archived = 0';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
     /**
+    * @Route("/admin/liste-des-taches/devis/{id}/archiver", name="quote_archived_admin")
+    * return RedirectResponse
+    */
+    public function unarchivedQuote(): Response {
+
+        $em = $this->getDoctrine()->getManager();
+        $sql = 'UPDATE quote SET archived = 1';
+        $req = $em->getConnection()->prepare($sql);
+        $req->execute();
+    
+        return $this->redirectToRoute("task_list_admin"); 
+    }
+
+    // ------------------------------
+    // ------- Download Tasks -------
+    // ------------------------------
+
+        /**
      * @Route("/admin/liste-des-taches/telecharger", name="task_list_download_admin")
      */
     public function taskDownload(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)

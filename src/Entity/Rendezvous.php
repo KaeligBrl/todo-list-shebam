@@ -43,6 +43,11 @@ class Rendezvous
      */
     private $utilisateur;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $archived;
+
     public function __construct()
     {
         $this->utilisateur = new ArrayCollection();
@@ -121,6 +126,18 @@ class Rendezvous
     public function removeUtilisateur(User $utilisateur): self
     {
         $this->utilisateur->removeElement($utilisateur);
+
+        return $this;
+    }
+
+    public function getArchived(): ?bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(?bool $archived): self
+    {
+        $this->archived = $archived;
 
         return $this;
     }

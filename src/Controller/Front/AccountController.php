@@ -3,6 +3,7 @@
 namespace App\Controller\Front;
 
 use App\Form\ChangeCoordsType;
+use App\Repository\TaskRepository;
 use App\Repository\TacheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,8 @@ class AccountController extends AbstractController
 
     public function index(Request $request, UserPasswordEncoderInterface $encoder)
     {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('Gedmo\Loggable\Entity\LogEntry' );
         $user = $this->getUser();
         $form = $this->createForm(ChangeCoordsType::class, $user);
 

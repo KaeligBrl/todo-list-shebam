@@ -38,7 +38,7 @@ class Task
 
     /**
      * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="tasks")
-     */
+    */
     private $status;
 
     /**
@@ -60,6 +60,11 @@ class Task
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $sub_subject3;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $Archived;
 
     public function __construct()
     {
@@ -187,6 +192,18 @@ class Task
     public function setSubSubject3(?string $sub_subject3): self
     {
         $this->sub_subject3 = $sub_subject3;
+
+        return $this;
+    }
+
+    public function getArchived(): ?bool
+    {
+        return $this->Archived;
+    }
+
+    public function setArchived(?bool $Archived): self
+    {
+        $this->Archived = $Archived;
 
         return $this;
     }

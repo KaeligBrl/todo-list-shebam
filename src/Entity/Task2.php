@@ -59,6 +59,11 @@ class Task2
      */
     private $sub_subject3;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $archived;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -173,6 +178,18 @@ class Task2
     public function setSubSubject3(?string $sub_subject3): self
     {
         $this->sub_subject3 = $sub_subject3;
+
+        return $this;
+    }
+
+    public function getArchived(): ?bool
+    {
+        return $this->archived;
+    }
+
+    public function setArchived(?bool $archived): self
+    {
+        $this->archived = $archived;
 
         return $this;
     }
