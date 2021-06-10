@@ -45,7 +45,7 @@
                                             |
                                         <a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
                                             |
-                                        <a href="{{ path('taskp1_unarchived_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à enlever de l'archiver une tâche')"><i class="fas fa-folder"></i></a>							
+                                        <a href="{{ path('taskp1_unarchived_admin', {"id": task.id}) }}"><i class="fas fa-times"></i></i></a>							
                                     </td>
                                 </tr>
                             {% endif %}
@@ -85,7 +85,7 @@
 									|
 									<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>					
 										|
-									<a href="{{ path('appointment_unarchived_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter un rendez-vous à l'archive')"><i class="fas fa-folder"></i></a>
+									<a href="{{ path('appointment_unarchived_admin', {"id": rendezvous.id}) }}" ><i class="fas fa-times"></i></i></a>
 								</td>
 							</tr>
 						{% endif %}
@@ -125,7 +125,7 @@
 									|
 									<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 									|
-									<a href="{{ path('quote_unarchived_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter un devis à l'archive')"><i class="fas fa-folder"></i></a>
+									<a href="{{ path('quote_unarchived_admin', {"id": quote.id}) }}"><i class="fas fa-times"></i></i></a>
 								</td>
 							</tr>
 						{% endif %}
@@ -168,7 +168,7 @@
                                     |
                                     <a href="{{ path('task_list_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>	
                                     |
-                                    <a href="{{ path('task2_unarchived_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter une priorité à l'archive')"><i class="fas fa-folder"></i></a>				
+                                    <a href="{{ path('task2_unarchived_admin', {"id": task2.id}) }}"><i class="fas fa-times"></i></i></a>		
                                 </td>
                             </tr>
                         {% endif %}
@@ -177,16 +177,19 @@
 			</table>
 
 			<div class="mb-5"></div>
-
+			{% set taskbool = true %}
             {% for task in task %}
                 {% for rendezvous in rendezvous %}
                     {% for quote in quote %}
                         {% for task2 in task2 %}
-                            {% if task.archived is empty or rendezvous.archived is empty or quote.archived is empty %}
-                                <p class="color-white-shebam">Téléchargement indisponible</p>
-                            {% else %}
-                                <div class="mt-3 text-center btn-submit-admin-shebam btn"><a href="{{path('task_list_download_admin') }}">Télécharger la liste des tâches</a>
-                            {% endif %}
+							{% if taskbool %}
+                            	{% if task.archived is empty or rendezvous.archived is empty or quote.archived is empty or task2.archived is empty %}
+                                	<p class="color-white-shebam">Téléchargement indisponible</p>
+                            	{% else %}	
+                                	<div class="mt-3 text-center btn-submit-admin-shebam btn"><a href="{{path('task_list_download_admin') }}">Télécharger la liste des tâches</a></div>
+								{% endif %}
+							{% endif %}
+							{% set taskbool = false %}
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}

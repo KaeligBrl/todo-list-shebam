@@ -7,10 +7,10 @@
 		{% block titre_admin_page %}Rendez-vous - Modifier{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
-		<div class="was-validated form-back background-login is-valid">
+		<div class="was-validated form-back background-login is-valid text-center">
 			{% if notification %}
 				<hr>
-					<div class="alert alert-success">{{ notification }}<br>
+					<div class="alert alert-success ">{{ notification }}<br>
 						<hr>
 						<a href="{{ path('task_list_admin') }}">Retourner sur la liste des tâches</a>
 					</div>
