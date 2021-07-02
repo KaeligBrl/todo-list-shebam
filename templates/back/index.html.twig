@@ -129,14 +129,14 @@
 			</div>
 		</nav>
 		<div class="container mb-5">
-			<h4 class="color-white-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
+			<h4 class="color-blue-dark-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
 		</div>
 		<div class="container">
 			{% block admin_utilisateur %}
 			<div class="row mb-5  text-center">
 				<div class="col-sm">
 					<div class="framed">
-						<h3 class="mb-4">Récapitulatif -> Tâches</h3>
+						<h3 class="mb-4">Tâches</h3>
 						{# Task P1 Condition #}
 						{% if countTaskP1Board <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tache P1</p>
@@ -155,7 +155,7 @@
 				</div>
 				<div class="col-sm">
 					<div class="framed">
-						<h3 class="mb-4">Récapitulatif -> Status</h3>
+						<h3 class="mb-4">Status</h3>
 						{# Status Condition #}
 						{% if countStatus <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countStatus }}</span> statut créé</p>
@@ -168,7 +168,7 @@
 			<div class="row  text-center">
 				<div class="col-sm">
 					<div class="framed">
-						<h3 class="mb-4">Récapitulatif -> Clients</h3>
+						<h3 class="mb-4">Clients</h3>
 						{# Customer Condition #}
 						{% if countCustomer <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countCustomer }}</span> client</p>
@@ -179,7 +179,7 @@
 				</div>
 				<div class="col-sm">
 					<div class="framed">
-						<h3 class="mb-4">Récapitulatif -> Équipe</h3>
+						<h3 class="mb-4">Équipe</h3>
 						{# Status Condition #}
 						{% if countStatus <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personne dans l'équipe</p>

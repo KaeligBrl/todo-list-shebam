@@ -1,19 +1,21 @@
 /* Generic Tag */
 :root{
     --color-white: #ffffff;
+    --color-white-light: #f4f0f4;
     --color-black: #000000;
     --color-yellow-dark: #caa904;
     --color-grey: #b1a7a6;
     --color-red: #a4161a;
     --yellow-shebam: #FFD600;
     --blue-light-shebam: #34BDE8;
-    --blue-dark-shebam: #f4f0f4;
+    --blue-dark-shebam: #00263A;
     --pink-shebam: #DE99C3;
     --green-light-shebam: #6CBFA5;
 }
 
 /* Texts and Backgrounds */
 .color-white-shebam{color: var(--color-white)}
+.color-white-light-shebam{color: var(--color-white-light)}
 .color-black-shebam{color: var(--color-black)}
 .color-red{color: var(--color-grey)}
 .color-yellow-dark{color: var(--color-yellow-dark)}
@@ -25,6 +27,7 @@
 .color-green-light-shebam{color: var(--green-light-shebam)}
 
 .bg-white-shebam{background: var(--color-white)}
+.bg-white-light-shebam{background: var(--color-white-light)}
 .bg-black-shebam{background: var(--color-black)}
 .bg-red{background: var(--color-red)}
 .bg-yellow-dark{background: var(--color-yellow-dark)}
@@ -36,6 +39,6 @@
 .bg-green-light-shebam{background: var(--green-light-shebam)}
 
 /* Administration */
-body{background: var(--blue-dark-shebam);}
+body{background: var(--color-white-light);}
 .table td, .table th {text-align: center;border:none}
 .img-admin{height: 150px;width: 148px;margin-left: 17%;}
