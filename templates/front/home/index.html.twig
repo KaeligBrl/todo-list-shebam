@@ -73,7 +73,7 @@
 								{{ rendezvous.firstname }} <br>
 							{% endfor %}
 							</td>
-							<td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
+							<td>{{ rendezvous.heuredurendezvous|date("m/d/Y")  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
 							<td>{{rendezvous.statut|raw}}</td>
 							<td>
 								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
@@ -152,7 +152,6 @@
 			</table>
 		</div>
     </header>
-
 </body>
 </html>
 {%  endblock %}

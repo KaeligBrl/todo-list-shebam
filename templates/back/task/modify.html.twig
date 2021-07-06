@@ -18,7 +18,7 @@
 			{% endif %}
 				{{ form_start(form_task_p1_modify_admin) }}
 			<div class="form-group">
-				{{ form_widget(form_task_p1_modify_admin) }}
+				{{ form_widget(form_task_p1_modify_admin|raw) }}
 			</div>
 				{{ form_end(form_task_p1_modify_admin) }}
 	{% endblock %}
