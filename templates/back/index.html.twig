@@ -16,9 +16,10 @@
 
 		<!-- Font Awesome JS -->
 		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
-		<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.3.0/css/all.min.css" integrity="sha512-UJqci0ZyYcQ0AOJkcIkUCxLS2L6eNcOr7ZiypuInvEhO9uqIDi349MEFrqBzoy1QlfcjfURHl+WTMjEdWcv67A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 		<!-- Custom CSS -->
-		<link rel="stylesheet" href="{{ asset('assets/css/admin-template.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/back/admin-template.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/back/responsive.css') }}">
 		<link rel="stylesheet" href="{{ asset('assets/css/root.css') }}">		
 
 	</head>
@@ -98,9 +99,7 @@
 					<div class="container-fluid">
 
 						<button type="button" id="sidebarCollapse" class="navbar-btn">
-							<span	></span>
-							<span></span>
-							<span></span>
+							<i class="fas fa-times"></i>
 						</button>
 						<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 							<i class="fas fa-align-justify"></i>
@@ -129,7 +128,14 @@
 			</div>
 		</nav>
 		<div class="container mb-5">
-			<h4 class="color-blue-dark-shebam">{% block titre_admin_page %}Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord{% endblock %}</h4>
+			{% block titre_admin_page %}
+			<div class="title-dashboard">
+				<h4 class="color-blue-dark-shebam">Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord</h4>
+			</div>
+			<div class="title-dashboard-mobile">
+				<h4 class="color-blue-dark-shebam text-center">Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord</h4>
+			</div>
+			{% endblock %}
 		</div>
 		<div class="container">
 			{% block admin_utilisateur %}

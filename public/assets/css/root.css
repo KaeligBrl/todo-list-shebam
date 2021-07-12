@@ -40,5 +40,5 @@
 
 /* Administration */
 body{background: var(--color-white-light);}
-.table td, .table th {text-align: center;border:none}
+.table td, .table th {text-align: center;border-right: none !important;border-left: none !important;border-top: none !important}
 .img-admin{height: 150px;width: 148px;margin-left: 17%;}

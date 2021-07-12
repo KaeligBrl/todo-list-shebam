@@ -50,7 +50,7 @@
 									|
 								<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
 									|
-								<a href="{{ path('taskp1_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder"></i></a>							
+								<a href="{{ path('taskp1_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>							
 							</td>
 						</tr>
 					{% endif %}
@@ -96,7 +96,7 @@
 									|
 									<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 									|
-									<a href="{{ path('appointment_archived_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter un rendez-vous à l'archive')"><i class="fas fa-folder"></i></a>
+									<a href="{{ path('appointment_archived_admin', {"id": rendezvous.id}) }}"><i class="fas fa-folder"></i></a>
 								</td>
 							</tr>
 						{% endif %}
@@ -142,7 +142,7 @@
 									|
 									<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 									|
-									<a href="{{ path('quote_archived_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter un devis à l'archive')"><i class="fas fa-folder"></i></a>
+									<a href="{{ path('quote_archived_admin', {"id": quote.id}) }}"><i class="fas fa-folder-plus"></i></a>
 								</td>
 							</tr>
 						{% endif %}
@@ -191,7 +191,7 @@
 								|
 								<a href="{{ path('task2_list_detete_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 								|
-								<a href="{{ path('task2_archived_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à ajouter un devis à l'archive')"><i class="fas fa-folder"></i></a>				
+								<a href="{{ path('task2_archived_admin', {"id": task2.id}) }}"><i class="fas fa-folder-plus"></i></a>				
 							</td>
 						</tr>
 					{% endif %}
