@@ -64,7 +64,7 @@ class Task
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $Archived;
+    private $archived;
 
     public function __construct()
     {
@@ -196,14 +196,14 @@ class Task
         return $this;
     }
 
-    public function getArchived(): ?bool
+    public function getarchived(): ?bool
     {
-        return $this->Archived;
+        return $this->archived;
     }
 
-    public function setArchived(?bool $Archived): self
+    public function setarchived(?bool $archived): self
     {
-        $this->Archived = $Archived;
+        $this->archived = $archived;
 
         return $this;
     }

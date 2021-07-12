@@ -19,32 +19,20 @@ class Task2Repository extends ServiceEntityRepository
         parent::__construct($registry, Task2::class);
     }
 
-    // /**
-    //  * @return Task2[] Returns an array of Task2 objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // ** Priority 2 **
+    // Archived
+    public function setTask2ForArchived($id)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "update App\Entity\Task2 as t set t.archived = t where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Task2
+    // UnArchived
+    public function setTask2ForUnArchived($id)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "update App\Entity\Task2 as t set t.archived = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 }

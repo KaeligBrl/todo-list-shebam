@@ -53,7 +53,6 @@ class AdminTasksController extends AbstractController
      */
     public function listTaskArchived(TaskRepository $taskArchivedAdmin, RendezvousRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
     {
-
         return $this->render('back/task/archived.html.twig', [
             'task' => $taskArchivedAdmin->findAll(),
             'rendezvous' => $appointmentArchivedAdmin->findAll(),
@@ -126,12 +125,11 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches-p1/{id}/archiver", name="taskp1_archived_admin")
     * return RedirectResponse
     */
-    public function archivedTaskP1(): Response {
+    public function archivedTaskP1(Task $task): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE task SET archived = 1';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Task::class)
+        ->setTaskForArchived($task->getId());
     
         return $this->redirectToRoute("task_list_admin"); 
     }
@@ -140,12 +138,11 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches-p1/{id}/desarchiver", name="taskp1_unarchived_admin")
     * return RedirectResponse
     */
-    public function unarchivedTaskP1(): Response {
+    public function unarchivedTaskP1(Task $task): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE task SET archived = 0';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Task::class)
+        ->setTaskForUnArchived($task->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
     }
@@ -213,12 +210,11 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches-p2/{id}/archiver", name="task2_archived_admin")
     * return RedirectResponse
     */
-    public function archivedTaskP2(): Response {
+    public function archivedTask2(Task2 $task2): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE task2 SET archived = 1';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Task2::class)
+        ->setTask2ForArchived($task2->getId());
     
         return $this->redirectToRoute("task_list_admin"); 
     }
@@ -227,12 +223,11 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches-p2/{id}/desarchiver", name="task2_unarchived_admin")
     * return RedirectResponse
     */
-    public function unarchivedTaskP2(): Response {
+    public function unarchivedTask2(Task2 $task2): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE task2 SET archived = 0';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Task2::class)
+        ->setTask2ForUnarchived($task2->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
     }
@@ -291,40 +286,39 @@ class AdminTasksController extends AbstractController
      * return RedirectResponse
      */
     public function deleteQuote(Rendezvous $rendezvousDelete): RedirectResponse {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($rendezvousDelete);
-        $em->flush();
+        
+        $rep = $this->getDoctrine()
+        ->getRepository(Task2::class)
+        ->setTask2ForUnarchivedArchived($task2->getId());
 
         return $this->redirectToRoute("task_list_admin");
         ;   
     }
 
     /**
-    * @Route("/admin/liste-des-taches/rendez-vous/{id}/desarchiver", name="appointment_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function archivedAppointment(): Response {
-
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE rendezvous SET archived = 0';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    /**
     * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver", name="appointment_archived_admin")
     * return RedirectResponse
     */
-    public function unarchivedAppointment(): Response {
+    public function unarchivedAppointment(Rendezvous $appointment): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE rendezvous SET archived = 1';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Rendezvous::class)
+        ->setAppointmentForArchived($appointment->getId());
     
         return $this->redirectToRoute("task_list_admin"); 
+    }
+
+    /**
+    * @Route("/admin/liste-des-taches/rendez-vous/{id}/desarchiver", name="appointment_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function archivedAppointment(Rendezvous $appointment): Response {
+
+        $rep = $this->getDoctrine()
+        ->getRepository(Rendezvous::class)
+        ->setAppointmentForUnArchived($appointment->getId());
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
     }
 
     // ------------------------------
@@ -388,32 +382,30 @@ class AdminTasksController extends AbstractController
         ;   
     }
 
-        /**
-    * @Route("/admin/liste-des-taches/devis/{id}/desarchiver", name="quote_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function archivedQuote(): Response {
-
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE quote SET archived = 0';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
     /**
     * @Route("/admin/liste-des-taches/devis/{id}/archiver", name="quote_archived_admin")
     * return RedirectResponse
     */
-    public function unarchivedQuote(): Response {
+    public function unarchivedQuote(Quote $quote): Response {
 
-        $em = $this->getDoctrine()->getManager();
-        $sql = 'UPDATE quote SET archived = 1';
-        $req = $em->getConnection()->prepare($sql);
-        $req->execute();
+        $rep = $this->getDoctrine()
+        ->getRepository(Quote::class)
+        ->setQuoteForArchived($quote->getId());
     
         return $this->redirectToRoute("task_list_admin"); 
+    }
+
+        /**
+    * @Route("/admin/liste-des-taches/devis/{id}/desarchiver", name="quote_unarchived_admin")
+    * return RedirectResponse
+    */
+    public function archivedQuote(Quote $quote): Response {
+
+        $rep = $this->getDoctrine()
+        ->getRepository(Quote::class)
+        ->setQuoteForUnArchived($quote->getId());
+    
+        return $this->redirectToRoute("task_list_archived_admin"); 
     }
 
     // ------------------------------

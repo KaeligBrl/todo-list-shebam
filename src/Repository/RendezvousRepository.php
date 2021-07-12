@@ -19,32 +19,20 @@ class RendezvousRepository extends ServiceEntityRepository
         parent::__construct($registry, Rendezvous::class);
     }
     
-    // /**
-    //  * @return Rendezvous[] Returns an array of Rendezvous objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // ** Appointment **
+    // Archived
+    public function setAppointmentForArchived($id)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "update App\Entity\Rendezvous as t set t.archived = t where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Rendezvous
+    // UnArchived
+    public function setAppointmentForUnArchived($id)
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "update App\Entity\Rendezvous as t set t.archived = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 }

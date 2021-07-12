@@ -18,32 +18,21 @@ class TaskRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Task::class);
     }
-    // /**
-    //  * @return Task[] Returns an array of Task objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // ** Priority 1 **
+    // Archived
+    public function setTaskForArchived($id)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "update App\Entity\Task as t set t.archived = t where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Task
+    // UnArchived
+    public function setTaskForUnArchived($id)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "update App\Entity\Task as t set t.archived = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
+
 }

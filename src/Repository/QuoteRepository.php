@@ -18,33 +18,21 @@ class QuoteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Quote::class);
     }
-
-    // /**
-    //  * @return Quote[] Returns an array of Quote objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    
+    // ** Quote **
+    // Archived
+    public function setQuoteForArchived($id)
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $sql = "update App\Entity\Quote as t set t.archived = t where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Quote
+    // UnArchived
+    public function setQuoteForUnArchived($id)
     {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $sql = "update App\Entity\Quote as t set t.archived = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
-    */
 }

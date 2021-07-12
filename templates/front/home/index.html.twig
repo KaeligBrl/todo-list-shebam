@@ -31,23 +31,24 @@
 					</tr>
 				</thead>
 				<tbody>
-						{% for task in task %}
-					<tr>
-						<td>{{task.customer}}</td>
-						<td>{{task.subject}}</td>
-						<td>{% for task in task.users %}
-								{{ task.firstname }} <br>
-							{% endfor %}
-						</td>
-						<td>{{task.comment}}</td>
-						<td>{{task.status.name|raw}}</td>
-						<td>
-							<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
-						</td>
-					</tr>
-						{% endfor %}
+					{% for task in task %}
+						<tr>
+							<td>{{task.customer}}</td>
+							<td>{{task.subject}}</td>
+							<td>{% for task in task.users %}
+									{{ task.firstname }} <br>
+								{% endfor %}
+							</td>
+							<td>{{task.comment}}</td>
+							<td>{{task.status.name|raw}}</td>
+							<td>
+								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
 				</tbody>
 			</table>
+			<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="#popup1">Ajouter</a></p>
 
 			<div class="mb-5"></div>
 
@@ -82,6 +83,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			<p class="mt-3 text-center"><a class="btn-pink-shebam" href="">Ajouter</a></p>
 
 			<div class="mb-5"></div>
 
@@ -116,6 +118,7 @@
 					{% endfor %}
 				</tbody>
 			</table>
+			<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="">Ajouter</a></p>
 
 			<div class="mb-5"></div>
 
@@ -150,7 +153,36 @@
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>
+			<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="">Ajouter</a></p>
+			<div id="popup1" class="overlay">
+				<div class="popup bg-white-light-shebam">
+				<h2>Ajout d'une tâche P1</h2>
+				<a class="close" href="">&times;</a>
+					<div class="content">
+						{{ form_start(form_task_p1_add_front) }}
+							{% if notification %}
+									<div class="alert alert-success">{{ notification }}<br>
+										<hr>
+										<a href="{{ path('home') }}">Voir la liste des tâches</a>
+									</div>
+							{% endif %}
+								<div class="form-group">
+									{{ form_row(form_task_p1_add_front.customer) }}
+									{{ form_row(form_task_p1_add_front.subject) }}
+									{{ form_row(form_task_p1_add_front.subsubject1) }}
+									{{ form_row(form_task_p1_add_front.subsubject2) }}
+									{{ form_row(form_task_p1_add_front.subsubject3) }}
+									{{ form_row(form_task_p1_add_front.status|raw) }}
+									{{ form_row(form_task_p1_add_front.users) }}
+									{{ form_row(form_task_p1_add_front.comment) }}
+								</div>
+								<div class="form-group">
+									{{ form_row(form_task_p1_add_front.submit) }}
+								</div>
+						{{ form_end(form_task_p1_add_front) }}
+					</div>
+				</div>
+			</div>
     </header>
 </body>
 </html>
