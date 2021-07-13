@@ -1,6 +1,6 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Modifier le statut - Administration{% endblock %}
+{% block title %}Modifier le statut - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>

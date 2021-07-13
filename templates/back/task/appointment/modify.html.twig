@@ -1,6 +1,6 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Rendez-vous - Modifier - Administration{% endblock %}
+{% block title %}Rendez-vous - Modifier - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>

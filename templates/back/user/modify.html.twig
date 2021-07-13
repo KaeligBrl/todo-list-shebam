@@ -1,10 +1,10 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Modifier utilisateur - Administration{% endblock %}
+{% block title %}Modifier utilisateur - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Utilisateur - Modifier - {% endblock %}
+		{% block titre_admin_page %}Utilisateur - Modifier - Liste des tâches{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">

@@ -1,6 +1,6 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Devis - Ajouter - Administration{% endblock %}
+{% block title %}Devis - Ajouter - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>

@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon compte - To Do List Shebam
-{% endblock %}
+{% block title %}Mon compte - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block content %}
 

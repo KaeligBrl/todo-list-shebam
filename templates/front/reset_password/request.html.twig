@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mot de passe oublié - To Do List Shebam{% endblock %}
+{% block title %}Mot de passe oublié - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 
 {% block content %}

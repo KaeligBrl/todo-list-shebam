@@ -1,6 +1,6 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Modifier le client - Administration{% endblock %}
+{% block title %}Modifier le client - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>

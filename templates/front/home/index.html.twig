@@ -9,15 +9,15 @@
     <meta name="description" content="Le made in france 100% français">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
-    <title>{%  block title %}Liste des tâches - Shebam{% endblock %}</title>
+    <title>{%  block title %}Accueil - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
     </style>
 </head>
 <body>
     <header>
 		<div class="container">
 			<div class="mb-5">
-			<h1 class="text-center color-blue-dark->shebam mb-3">Liste des tâches</h1>
-			<hr class="text-center mb-5 mt-5">
+			<h1 class="text-center color-blue-dark->shebam">Liste des tâches</h1>
+			<hr class="text-center mb-5 mt-3">
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
 			<table class="table mb-5" data-toggle="table">
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">

@@ -1,11 +1,10 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Liste de l'équipe - Administration
-{% endblock %}
+{% block title %}Liste de l'équipe - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div class="d-flex flex-row">
-		{% block titre_admin_page %}Liste de l'équipe{% endblock %}
+		{% block titre_admin_page %}Liste de l'équipe - Liste des tâches{% endblock %}
 	</div>
 
 

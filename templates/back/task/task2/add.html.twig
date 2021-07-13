@@ -1,6 +1,6 @@
 {% extends 'back/index.html.twig' %}
 
-{% block title %}Tâche P2 - Ajouter - Administration{% endblock %}
+{% block title %}Tâche P2 - Ajouter - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>

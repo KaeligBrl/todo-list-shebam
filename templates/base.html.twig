@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{%  block title %}To Do List Shebam - Pour mieux nous organiser{% endblock %}</title>
+    <title>{%  block title %}{% block title_base %}Liste des tâches{% endblock %}{% endblock %}</title>
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/locale/bootstrap-table-fr-FR.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css">
 

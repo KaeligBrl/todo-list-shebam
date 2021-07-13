@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription - To Do List Shebam{% endblock %}
+{% block title %}Inscription - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 {%  block content %}
 
     <div class="was-validated form-signin text-center background-login bg-white-shebam is-valid">
