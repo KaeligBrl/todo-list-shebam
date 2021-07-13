@@ -4,7 +4,7 @@ namespace App\Form\Back\Appointment;
 
 use App\Entity\User;
 use App\Entity\Status;
-use App\Entity\Rendezvous;
+use App\Entity\Appointment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -26,7 +26,7 @@ class AdminTaskAppointmentModifyType extends AbstractType
                 'class' => ' form-control is-invalid'
             ]
         ])
-            ->add('sujet',  TextType::class, [
+            ->add('subject',  TextType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => [
@@ -34,7 +34,7 @@ class AdminTaskAppointmentModifyType extends AbstractType
                     'class' => ' form-control is-invalid'
                 ]
             ])
-            ->add('heuredurendezvous', DateTimeType::class, [
+            ->add('hoursappointment', DateTimeType::class, [
                 'label' => 'Heure du rendez-vous ',
                 'label_attr' => ['class' => 'label-custom'],
                 'days' => range(1,31),
@@ -42,7 +42,7 @@ class AdminTaskAppointmentModifyType extends AbstractType
                 'hours' => range(7,18),
                 'placeholder' => ['january' => 'janvier'],
             ])
-            ->add('utilisateur', EntityType::class, array(
+            ->add('user', EntityType::class, array(
                 'required' => true,
                 'label' => 'Personne(s) Désigné(e): ',
                 'multiple' => true,
@@ -68,7 +68,7 @@ class AdminTaskAppointmentModifyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Rendezvous::class,
+            'data_class' => Appointment::class,
         ]);
     }
 }

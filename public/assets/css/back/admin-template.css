@@ -63,3 +63,4 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .framed{background: var(--color-white); padding: 25px; border-radius: 5px;}
 .framed h3{color: var(--blue-dark-shebam); font-size: 20px;}
 .framed p,.framed span{font-weight: 400;}
+.title-dashboard, .title-dashboard h4{font-size: 30px;}

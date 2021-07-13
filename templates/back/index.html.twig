@@ -127,33 +127,28 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container mb-5">
+		<div class="container mb-5 title-dashboard">
 			{% block titre_admin_page %}
-			<div class="title-dashboard">
 				<h4 class="color-blue-dark-shebam">Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord</h4>
-			</div>
-			<div class="title-dashboard-mobile">
-				<h4 class="color-blue-dark-shebam text-center">Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord</h4>
-			</div>
 			{% endblock %}
 		</div>
 		<div class="container">
 			{% block admin_utilisateur %}
-			<div class="row mb-5  text-center">
+			<div class="row text-center">
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Tâches</h3>
 						{# Task P1 Condition #}
 						{% if countTaskP1Board <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tache P1</p>
+							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tâche P1</p>
 						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> taches P1</p>
+							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tâches P1</p>
 						{% endif %}
 						{# Task P2 Condition #}
 						{% if countTaskP2Board <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tache P2</p>
+							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâche P2</p>
 						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> taches P2</p>
+							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâches P2</p>
 						{% endif %}
 						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countAppointment }}</span> rendez-vous</p>
 						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countQuote }}</span>  devis à faire</p>
@@ -171,7 +166,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row  text-center">
+			<div class="row text-center">
 				<div class="col-sm">
 					<div class="framed">
 						<h3 class="mb-4">Clients</h3>

@@ -72,19 +72,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for rendezvous in rendezvous %}
+					{% for appointment in appointment %}
 						<tr class="bg-white-shebam">
-							<td>{{rendezvous.name}}</td>
-							<td>{{rendezvous.sujet}}</td>
+							<td>{{appointment.name}}</td>
+							<td>{{appointment.subject}}</td>
 							<td>
-							{% for rendezvous in rendezvous.utilisateur %}
-								{{ rendezvous.firstname }} <br>
+							{% for appointment in appointment.user %}
+								{{ appointment.firstname }} <br>
 							{% endfor %}
 							</td>
-							<td>{{ rendezvous.heuredurendezvous|date("m/d/Y")  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
-							<td>{{rendezvous.statut|raw}}</td>
+							<td>{{ appointment.hoursappointment|date("m/d/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+							<td>{{appointment.statut|raw}}</td>
 							<td>
-								<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
+								<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
@@ -185,6 +185,7 @@
 			{% endif %}
 
 			<!-- POPUP -->
+				<!-- Task 1 -->
 			<div id="ajouterunetachep1" class="overlay">
 				<div class="popup bg-white-light-shebam">
 				<h2 class="mb-4">Ajout d'une tâche P1</h2>
@@ -211,6 +212,31 @@
 									{{ form_row(form_task_p1_add_front.submit) }}
 								</div>
 						{{ form_end(form_task_p1_add_front) }}
+					</div>
+				</div>
+			</div>
+				<!-- Appointment -->
+			<div id="ajouterunrendezvous" class="overlay">
+				<div class="popup bg-white-light-shebam">
+				<h2 class="mb-4">Ajout un rendez-vous</h2>
+				<a class="close" href=""><i class="fas fa-times"></i></a>
+					<div class="content">
+						{{ form_start(form_appointment_add_admin) }}
+							{% if notification %}
+									<div class="alert alert-success">{{ notification }}<br>
+										<hr>
+										<a href="{{ path('home') }}">Voir la liste des tâches</a>
+									</div>
+							{% endif %}
+								<div class="form-group">
+									{{ form_row(form_appointment_add_admin.name) }}
+									{{ form_row(form_appointment_add_admin.subject) }}
+									{{ form_row(form_appointment_add_admin.hoursappointment) }}
+								</div>
+								<div class="form-group">
+									{{ form_row(form_appointment_add_admin.submit) }}
+								</div>
+						{{ form_end(form_appointment_add_admin) }}
 					</div>
 				</div>
 			</div>

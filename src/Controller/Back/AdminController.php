@@ -8,14 +8,14 @@ use App\Entity\Quote;
 use App\Entity\Task2;
 use App\Entity\Status;
 use App\Entity\Customer;
-use App\Entity\Rendezvous;
+use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
 use App\Repository\QuoteRepository;
 use App\Repository\Task2Repository;
 use App\Repository\StatusRepository;
 use App\Repository\CustomerRepository;
-use App\Repository\RendezvousRepository;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,7 +44,7 @@ class AdminController extends AbstractController
             ->getSingleScalarResult();
 
         //Count Appointment
-        $repoAppointment = $em->getRepository(Rendezvous::class);
+        $repoAppointment = $em->getRepository(Appointment::class);
         $totalAppointment = $repoAppointment->createQueryBuilder('a')
             ->select('count(a.id)')
             ->getQuery()

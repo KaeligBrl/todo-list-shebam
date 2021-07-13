@@ -8,12 +8,12 @@ use App\Entity\Task;
 use App\Entity\Quote;
 use App\Entity\Task2;
 use App\Entity\Statut;
-use App\Entity\Rendezvous;
+use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use App\Repository\Task2Repository;
 use App\Form\Back\Task\AdminTaskAddType;
-use App\Repository\RendezvousRepository;
+use App\Repository\AppointmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\Task2\AdminTask2AddType;
 use App\Form\Back\Task\AdminTaskModifyType;
@@ -37,12 +37,12 @@ class AdminTasksController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/", name="task_list_admin")
      */
-    public function listTask(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
+    public function listTask(TaskRepository $taskAdmin, AppointmentRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
     {
 
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findAll(),
-            'rendezvous' => $rendezvousAdmin->findAll(),
+            'appointment' => $rendezvousAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
         ]);
@@ -51,11 +51,11 @@ class AdminTasksController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/archives", name="task_list_archived_admin")
      */
-    public function listTaskArchived(TaskRepository $taskArchivedAdmin, RendezvousRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
+    public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
     {
         return $this->render('back/task/archived.html.twig', [
             'task' => $taskArchivedAdmin->findAll(),
-            'rendezvous' => $appointmentArchivedAdmin->findAll(),
+            'appointment' => $appointmentArchivedAdmin->findAll(),
             'quote' => $quoteArchivedAdmin->findAll(),
             'task2' => $task2ArchivedAdmin->findAll()
         ]);
@@ -166,7 +166,7 @@ class AdminTasksController extends AbstractController
             $task2Add = new Task2();
             $form = $this->createForm(AdminTask2AddType::class, $task2Add);
         }
-            return $this->render('back/task2/add.html.twig', [
+            return $this->render('back/task/task2/add.html.twig', [
                 'form_task_p2_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
@@ -241,7 +241,7 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="task_appointment_add_admin")
     */
     public function addTaskAppointment(Request $request): Response {
-        $appointmentAdd = new Rendezvous();
+        $appointmentAdd = new Appointment();
         $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
         $notification = null;
         $form->handleRequest($request);
@@ -249,7 +249,7 @@ class AdminTasksController extends AbstractController
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             $notification = 'Le rendez-vous a bien été ajoutée';
-            $appointmentAdd = new Rendezvous();
+            $appointmentAdd = new Appointment();
             $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
         }
             return $this->render('back/task/appointment/add.html.twig', [
@@ -261,7 +261,7 @@ class AdminTasksController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/rendez-vous/{id}/modifier", name="task_appointment_modify_admin")
      */
-    public function modifyAppointment(Request $request, Rendezvous $appointmentModify): Response
+    public function modifyAppointment(Request $request, Appointment $appointmentModify): Response
     {
         $form = $this->createForm(AdminTaskAppointmentModifyType::class, $appointmentModify);
         $notification = null;
@@ -282,14 +282,14 @@ class AdminTasksController extends AbstractController
 
     /**
      * @Route("/admin/liste-des-taches/rendez-vous/{id}/supprimer", name="task_appointment_detete_admin")
-     * @param Rendezvous $rendezvousDelete
+     * @param Appointment $rendezvousDelete
      * return RedirectResponse
      */
-    public function deleteQuote(Rendezvous $rendezvousDelete): RedirectResponse {
+    public function deleteQuote(Appointment $appointmentDelete): RedirectResponse {
         
-        $rep = $this->getDoctrine()
-        ->getRepository(Task2::class)
-        ->setTask2ForUnarchivedArchived($task2->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($appointmentDelete);
+        $em->flush();
 
         return $this->redirectToRoute("task_list_admin");
         ;   
@@ -299,10 +299,10 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver", name="appointment_archived_admin")
     * return RedirectResponse
     */
-    public function unarchivedAppointment(Rendezvous $appointment): Response {
+    public function unarchivedAppointment(Appointment $appointment): Response {
 
         $rep = $this->getDoctrine()
-        ->getRepository(Rendezvous::class)
+        ->getRepository(Appointment::class)
         ->setAppointmentForArchived($appointment->getId());
     
         return $this->redirectToRoute("task_list_admin"); 
@@ -312,10 +312,10 @@ class AdminTasksController extends AbstractController
     * @Route("/admin/liste-des-taches/rendez-vous/{id}/desarchiver", name="appointment_unarchived_admin")
     * return RedirectResponse
     */
-    public function archivedAppointment(Rendezvous $appointment): Response {
+    public function archivedAppointment(Appointment $appointment): Response {
 
         $rep = $this->getDoctrine()
-        ->getRepository(Rendezvous::class)
+        ->getRepository(Appointment::class)
         ->setAppointmentForUnArchived($appointment->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
@@ -415,7 +415,7 @@ class AdminTasksController extends AbstractController
         /**
      * @Route("/admin/liste-des-taches/telecharger", name="task_list_download_admin")
      */
-    public function taskDownload(TaskRepository $taskAdmin, RendezvousRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
+    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
     {
         $pdfOptions = New Options();
         $pdfOptions->set('defaultFont', 'Gotham');

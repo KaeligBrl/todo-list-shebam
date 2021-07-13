@@ -79,24 +79,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for rendezvous in rendezvous %}
-						{% if rendezvous.archived == 0 %}
+					{% for appointment in appointment %}
+						{% if appointment.archived == 0 %}
 							<tr>
-								<td>{{rendezvous.name}}</td>
-								<td>{{rendezvous.sujet}}</td>
+								<td>{{appointment.name}}</td>
+								<td>{{appointment.subject}}</td>
 								<td>
-								{% for rendezvous in rendezvous.utilisateur %}
-									{{ rendezvous.firstname }} <br>
+								{% for appointment in appointment.user %}
+									{{ appointment.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>{{ rendezvous.heuredurendezvous|date('d-m-Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
-								<td>{{rendezvous.statut|raw}}</td>
+								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+								<td>{{appointment.statut|raw}}</td>
 								<td>
-									<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
+									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 									|
-									<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+									<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 									|
-									<a href="{{ path('appointment_archived_admin', {"id": rendezvous.id}) }}"><i class="fas fa-folder"></i></a>
+									<a href="{{ path('appointment_archived_admin', {"id": appointment.id}) }}"><i class="fas fa-folder"></i></a>
 								</td>
 							</tr>
 						{% endif %}

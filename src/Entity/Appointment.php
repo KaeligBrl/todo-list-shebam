@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\RendezvousRepository;
+use App\Repository\AppointmentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=RendezvousRepository::class)
+ * @ORM\Entity(repositoryClass=AppointmentRepository::class)
  */
-class Rendezvous
+class Appointment
 {
     /**
      * @ORM\Id
@@ -27,21 +27,21 @@ class Rendezvous
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $sujet;
+    private $subject;
     /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="rendezvouses")
+     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="appointments")
      */
     private $statut;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $heuredurendezvous;
+    private $hoursappointment;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="rendezvouses")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="appointments")
      */
-    private $utilisateur;
+    private $user;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -50,7 +50,7 @@ class Rendezvous
 
     public function __construct()
     {
-        $this->utilisateur = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -70,14 +70,14 @@ class Rendezvous
         return $this;
     }
 
-    public function getSujet(): ?string
+    public function getSubject(): ?string
     {
-        return $this->sujet;
+        return $this->subject;
     }
 
-    public function setSujet(string $sujet): self
+    public function setSubject(string $subject): self
     {
-        $this->sujet = $sujet;
+        $this->subject = $subject;
 
         return $this;
     }
@@ -94,14 +94,14 @@ class Rendezvous
         return $this;
     }
 
-    public function getHeuredurendezvous(): ?\DateTimeInterface
+    public function getHoursappointment(): ?\DateTimeInterface
     {
-        return $this->heuredurendezvous;
+        return $this->hoursappointment;
     }
 
-    public function setHeuredurendezvous(\DateTimeInterface $heuredurendezvous): self
+    public function setHoursappointment(\DateTimeInterface $hoursappointment): self
     {
-        $this->heuredurendezvous = $heuredurendezvous;
+        $this->hoursappointment = $hoursappointment;
 
         return $this;
     }
@@ -109,23 +109,23 @@ class Rendezvous
     /**
      * @return Collection|User[]
      */
-    public function getUtilisateur(): Collection
+    public function getUser(): Collection
     {
-        return $this->utilisateur;
+        return $this->user;
     }
 
-    public function addUtilisateur(User $utilisateur): self
+    public function addUser(User $user): self
     {
-        if (!$this->utilisateur->contains($utilisateur)) {
-            $this->utilisateur[] = $utilisateur;
+        if (!$this->user->contains($user)) {
+            $this->user[] = $user;
         }
 
         return $this;
     }
 
-    public function removeUtilisateur(User $utilisateur): self
+    public function removeUser(User $user): self
     {
-        $this->utilisateur->removeElement($utilisateur);
+        $this->user->removeElement($user);
 
         return $this;
     }

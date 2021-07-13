@@ -59,9 +59,9 @@ class User implements UserInterface
     private $tasks;
 
     /**
-     * @ORM\OneToMany(targetEntity=Rendezvous::class, mappedBy="utilisateur")
+     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="user")
      */
-    private $rendezvouses;
+    private $appointments;
 
     /**
      * @ORM\ManyToMany(targetEntity=Quote::class, mappedBy="person")
@@ -76,7 +76,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-        $this->rendezvouses = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
         $this->quotes = new ArrayCollection();
         $this->task2s = new ArrayCollection();
     }
@@ -216,29 +216,29 @@ class User implements UserInterface
     }
 
     /**
-     * @return Collection|Rendezvous[]
+     * @return Collection|Appointment[]
      */
-    public function getRendezvouses(): Collection
+    public function getAppointments(): Collection
     {
-        return $this->rendezvouses;
+        return $this->appointments;
     }
 
-    public function addRendezvouse(Rendezvous $rendezvouse): self
+    public function addAppointments(Appointment $appointmentt): self
     {
-        if (!$this->rendezvouses->contains($rendezvouse)) {
-            $this->rendezvouses[] = $rendezvouse;
-            $rendezvouse->setUtilisateur($this);
+        if (!$this->appointments->contains($appointmentt)) {
+            $this->appointments[] = $appointmentt;
+            $appointmentt->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeRendezvouse(Rendezvous $rendezvouse): self
+    public function removeRendezvouse(Appointment $appointmentt): self
     {
-        if ($this->rendezvouses->removeElement($rendezvouse)) {
+        if ($this->appointments->removeElement($appointmentt)) {
             // set the owning side to null (unless already changed)
-            if ($rendezvouse->getUtilisateur() === $this) {
-                $rendezvouse->setUtilisateur(null);
+            if ($appointmentt->getUser() === $this) {
+                $appointmentt->setUser(null);
             }
         }
 

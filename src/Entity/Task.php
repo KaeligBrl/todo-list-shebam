@@ -76,14 +76,14 @@ class Task
         return $this->id;
     }
 
-    public function getNomDeLaTache(): ?string
+    public function getName(): ?string
     {
-        return $this->nom_de_la_tache;
+        return $this->name;
     }
 
-    public function setNomDeLaTache(string $nom_de_la_tache): self
+    public function setName(string $name): self
     {
-        $this->nom_de_la_tache = $nom_de_la_tache;
+        $this->name = $name;
 
         return $this;
     }
