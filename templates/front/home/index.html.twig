@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
-
+{# https://stackoverflow.com/questions/55341561/symfony-updating-values-using-ajax #}
 {% block content %}
 <!doctype html>
 <html lang="fr">
@@ -19,7 +19,7 @@
 			<h1 class="text-center color-blue-dark->shebam">Liste des tâches</h1>
 			<hr class="text-center mb-5 mt-3">
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
-			<table class="table mb-5" data-toggle="table">
+			<table class="table mb-5" data-toggle="table" data-reorderable-rows="true">
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
@@ -35,16 +35,16 @@
 				<tbody>
 					{% for task in task %}
 						<tr class="bg-white-shebam">
-							<td>{{task.customer}}</td>
-							<td>{{task.subject}}</td>
-							<td>{% for task in task.users %}
+							<td data-sortable="true">{{task.customer}}</td>
+							<td data-sortable="true">{{task.subject}}</td>
+							<td data-sortable="true">{% for task in task.users %}
 									{{ task.firstname }} <br>
 								{% endfor %}
 							</td>
-							<td>{{task.comment}}</td>
-							<td>{{task.status.name|raw}}</td>
+							<td data-sortable="true">{{task.comment}}</td>
+							<td data-sortable="true">{{task.status.name|raw}}</td>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-							<td>
+							<td data-sortable="true">
 								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
 						{% endif %}
@@ -258,6 +258,7 @@
 			</div>
 		</div>
     </header>
+	<script src"{{ asset('assets/js/saveHomeTable.js') }}"></script>
 </body>
 </html>
 {%  endblock %}

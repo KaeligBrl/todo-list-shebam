@@ -4,7 +4,7 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Liste des 				{# Customer Condition #}
+		{% block titre_admin_page %}Liste des clients - Il y a
 				{% if totalCustomer <= 1 %}
 					{{ totalCustomer }} <span> client </span>
 				{% else %}
@@ -35,7 +35,6 @@
 								<a href="{{ path('customer_modify_admin', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>
 								|
 								<a href="{{ path('customer_detete_admin', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
-								
 							</td>
 						</tr>
 					{% endfor %}
