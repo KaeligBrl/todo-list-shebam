@@ -68,24 +68,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for rendezvous in rendezvous %}
-						{% if rendezvous.archived == 1 %}
+					{% for appointment in appointment %}
+						{% if appointment.archived == 1 %}
 							<tr>
-								<td>{{rendezvous.name}}</td>
-								<td>{{rendezvous.sujet}}</td>
+								<td>{{appointment.name}}</td>
+								<td>{{appointment.sujet}}</td>
 								<td>
-								{% for rendezvous in rendezvous.utilisateur %}
-									{{ rendezvous.firstname }} <br>
+								{% for appointment in appointment.utilisateur %}
+									{{ appointment.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>{{ rendezvous.heuredurendezvous|date('d-m-Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
-								<td>{{rendezvous.statut|raw}}</td>
+								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{rendezvous.hoursappointment|date('H:i')}}</td>
+								<td>{{appointment.statut|raw}}</td>
 								<td>
-									<a href="{{ path('task_appointment_modify_admin', {"id": rendezvous.id}) }}"><i class="fas fa-cog"></i></a>
+									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 									|
-									<a href="{{ path('task_appointment_detete_admin', {"id": rendezvous.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>					
+									<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>					
 										|
-									<a href="{{ path('appointment_unarchived_admin', {"id": rendezvous.id}) }}" ><i class="fas fa-folder-minus"></i></a>
+									<a href="{{ path('appointment_unarchived_admin', {"id": appointment.id}) }}" ><i class="fas fa-folder-minus"></i></a>
 								</td>
 							</tr>
 						{% endif %}
@@ -179,11 +179,11 @@
 			<div class="mb-5"></div>
 			{% set taskbool = true %}
             {% for task in task %}
-                {% for rendezvous in rendezvous %}
+                {% for appointment in appointment %}
                     {% for quote in quote %}
                         {% for task2 in task2 %}
 							{% if taskbool %}
-                            	{% if task.archived is empty or rendezvous.archived is empty or quote.archived is empty or task2.archived is empty %}
+                            	{% if task.archived is empty or appointment.archived is empty or quote.archived is empty or task2.archived is empty %}
                                 	<p class="color-white-shebam">Téléchargement indisponible</p>
                             	{% else %}	
                                 	<div class="mt-3 text-center btn-submit-admin-shebam btn"><a href="{{path('task_list_download_admin') }}">Télécharger la liste des tâches</a></div>

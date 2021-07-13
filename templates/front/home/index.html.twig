@@ -27,7 +27,9 @@
 						<th scope="col">Personne(s)</th>
 						<th scope="col">Remarque</th>
 						<th scope="col">Statut</th>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<th scope="col">Action</th>
+					{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -41,9 +43,11 @@
 							</td>
 							<td>{{task.comment}}</td>
 							<td>{{task.status.name|raw}}</td>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 							<td>
 								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
+						{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -68,7 +72,9 @@
 						<th scope="col">Personne(s)</th>
 						<th scope="col">Date et heure</th>
 						<th scope="col">Statut</th>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<th scope="col">Action</th>
+					{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -83,9 +89,11 @@
 							</td>
 							<td>{{ appointment.hoursappointment|date("m/d/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 							<td>{{appointment.statut|raw}}</td>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 							<td>
 								<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
+						{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -111,7 +119,9 @@
 						<th scope="col">Personne(s)</th>
 						<th scope="col">Remarque</th>
 						<th scope="col">Statut</th>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<th scope="col">Action</th>
+					{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -126,9 +136,11 @@
 							</td>
 							<td>{{ quote.comment }}</td>
 							<td>{{ quote.status|raw }}</td>
+						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 							<td>
 								<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
+						{% endif %}
 						</tr>
 					{% endfor %}
 				</tbody>
@@ -154,7 +166,9 @@
 						<th scope="col">Personne(s)</th>
 						<th scope="col">Remarque</th>
 						<th scope="col">Statut</th>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<th scope="col">Action</th>
+					{% endif %}
 					</tr>
 				</thead>
 				<tbody>
@@ -168,9 +182,11 @@
 						</td>
 						<td>{{task2.comment}}</td>
 						<td>{{task2.status.name|raw}}</td>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<td>
 							<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
 						</td>
+					{% endif %}
 					</tr>
 					{% endfor %}
 				</tbody>
