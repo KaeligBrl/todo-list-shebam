@@ -3,13 +3,15 @@
 namespace App\Controller\Front;
 
 use App\Entity\Task;
+use App\Entity\Quote;
 use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use App\Repository\Task2Repository;
-use App\Repository\AppointmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\Task\FrontTaskAddType;
+use App\Repository\AppointmentRepository;
+use App\Form\Front\Quote\FrontQuoteAddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,11 +46,23 @@ class HomeController extends AbstractController
         $notification = null;
         $formappointment->handleRequest($request);
         if($formappointment->isSubmitted() && $formappointment->isValid()) {
-            $this->entityManager->persist($taskAdd);
+            $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             $notification = 'Le rendez-vous a bien été ajoutée';
             $appointmentAdd = new Appointment();
             $formappointment = $this->createForm(FrontAppointmentAddType::class, $appointmentAdd);
+        }
+
+        $quoteAdd = new Quote();
+        $formquote = $this->createForm(FrontQuoteAddType::class, $quoteAdd);
+        $notification = null;
+        $formquote->handleRequest($request);
+        if ($formquote->isSubmitted() && $formquote->isValid()) {
+            $this->entityManager->persist($quoteAdd);
+            $this->entityManager->flush();
+            $notification = 'Le rendez-vous a bien été ajoutée';
+            $appointmentAdd = new Appointment();
+            $formquote = $this->createForm(FrontQuoteAddType::class, $quoteAdd);
         }
 
         return $this->render('front/home/index.html.twig', [
@@ -57,7 +71,8 @@ class HomeController extends AbstractController
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
             'form_task_p1_add_front' => $form->createView(),
-            'form_appointment_add_admin' => $formappointment->createView(),
+            'form_appointment_add_front' => $formappointment->createView(),
+            'form_quote_add_front' => $formquote->createView(),
             'notification' => $notification,
         ]);
     }

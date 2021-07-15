@@ -17,9 +17,10 @@
 		<div class="container">
 			<div class="mb-5">
 			<h1 class="text-center color-blue-dark->shebam">Liste des tâches</h1>
-			<hr class="text-center mb-5 mt-3">
+			<hr class="text-center mb-3 mt-3">
+			<p class="text-center mb-3">Connectes toi pour pouvoir ajouter des tâches !</p>
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
-			<table class="table mb-5" data-toggle="table" data-reorderable-rows="true">
+			<table id="tabletask1" class="table mb-5" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-reorderable-rows="true"{% endif %}>
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
@@ -35,7 +36,7 @@
 				<tbody>
 					{% for task in task %}
 						<tr class="bg-white-shebam">
-							<td data-sortable="true">{{task.customer}}</td>
+						<td data-sortable="true">{{task.customer}}</td>
 							<td data-sortable="true">{{task.subject}}</td>
 							<td data-sortable="true">{% for task in task.users %}
 									{{ task.firstname }} <br>
@@ -64,7 +65,7 @@
 			<div class="mb-5"></div>
 
 			<div class="text-center bg-pink-shebam color-white-shebam p-3 font-weight-bold">Rendez-vous</div>
-			<table class="table" data-toggle="table">
+			<table class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-reorderable-rows="true"{% endif %}>
 				<thead class="bg-grey-shebam color-white-shebam">
 					<tr>
 						<th scope="col">Entreprise</th>
@@ -111,7 +112,7 @@
 			<div class="mb-5"></div>
 
 			<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Devis</div>
-			<table class="table" data-toggle="table">
+			<table class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-reorderable-rows="true"{% endif %}>
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
@@ -158,7 +159,7 @@
 			<div class="mb-5"></div>
 
 			<div class="text-center bg-green-light-shebam color-white-shebam p-3 font-weight-bold">Priorité 2</div>
-			<table class="table" data-toggle="table">
+			<table class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-reorderable-rows="true"{% endif %}>
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 					<tr>
 						<th scope="col">Client</th>
@@ -237,7 +238,7 @@
 				<h2 class="mb-4">Ajout un rendez-vous</h2>
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
-						{{ form_start(form_appointment_add_admin) }}
+						{{ form_start(form_appointment_add_front) }}
 							{% if notification %}
 									<div class="alert alert-success">{{ notification }}<br>
 										<hr>
@@ -245,20 +246,46 @@
 									</div>
 							{% endif %}
 								<div class="form-group">
-									{{ form_row(form_appointment_add_admin.name) }}
-									{{ form_row(form_appointment_add_admin.subject) }}
-									{{ form_row(form_appointment_add_admin.hoursappointment) }}
+									{{ form_row(form_appointment_add_front.name) }}
+									{{ form_row(form_appointment_add_front.subject) }}
+									{{ form_row(form_appointment_add_front.hoursappointment) }}
 								</div>
 								<div class="form-group">
-									{{ form_row(form_appointment_add_admin.submit) }}
+									{{ form_row(form_appointment_add_front.submit) }}
 								</div>
-						{{ form_end(form_appointment_add_admin) }}
+						{{ form_end(form_appointment_add_front) }}
+					</div>
+				</div>
+			</div>
+				<!-- Quote -->
+			<div id="ajouterundevis" class="overlay">
+				<div class="popup bg-white-light-shebam">
+				<h2 class="mb-4">Ajout un devis</h2>
+				<a class="close" href=""><i class="fas fa-times"></i></a>
+					<div class="content">
+						{{ form_start(form_quote_add_front) }}
+							{% if notification %}
+									<div class="alert alert-success">{{ notification }}<br>
+										<hr>
+										<a href="{{ path('home') }}">Voir la liste des tâches</a>
+									</div>
+							{% endif %}
+								<div class="form-group">
+									{{ form_row(form_quote_add_front.enterprise) }}
+									{{ form_row(form_quote_add_front.subject) }}
+									{{ form_row(form_quote_add_front.comment) }}
+									{{ form_row(form_quote_add_front.person) }}
+									{{ form_row(form_quote_add_front.status) }}
+								</div>
+								<div class="form-group">
+									{{ form_row(form_quote_add_front.submit) }}
+								</div>
+						{{ form_end(form_quote_add_front) }}
 					</div>
 				</div>
 			</div>
 		</div>
     </header>
-	<script src"{{ asset('assets/js/saveHomeTable.js') }}"></script>
 </body>
 </html>
 {%  endblock %}

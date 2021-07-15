@@ -64,7 +64,7 @@ class FrontAppointmentAddType extends AbstractType
         ))
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-admin-shebam'],
+            'attr' => ['class' => 'btn-submit-front-shebam'],
         ])
         ;
     }
