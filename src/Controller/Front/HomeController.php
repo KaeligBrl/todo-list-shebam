@@ -17,12 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Front\Task\FrontAppointmentAddType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
-    $this->entityManager = $entityManager;
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
     /**
      * @Route("/", name="home")
@@ -33,7 +35,7 @@ class HomeController extends AbstractController
         $form = $this->createForm(FrontTaskAddType::class, $taskAdd);
         $notification = null;
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
             $notification = 'La tâche a bien été ajoutée';
@@ -45,7 +47,7 @@ class HomeController extends AbstractController
         $formappointment = $this->createForm(FrontAppointmentAddType::class, $appointmentAdd);
         $notification = null;
         $formappointment->handleRequest($request);
-        if($formappointment->isSubmitted() && $formappointment->isValid()) {
+        if ($formappointment->isSubmitted() && $formappointment->isValid()) {
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             $notification = 'Le rendez-vous a bien été ajoutée';
@@ -66,7 +68,7 @@ class HomeController extends AbstractController
         }
 
         return $this->render('front/home/index.html.twig', [
-            'task' => $taskAdmin->findAll(),
+            'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
@@ -77,4 +79,20 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/reorder", name="home_reorder_row")
+     */
+    public function reorderRow(Request $request, TaskRepository $taskRow)
+    {
+        $cpt = 0;
+        foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
+            $task = $taskRow->find($row['id']); //on récupère la task
+            $task->setPosition($cpt); //on definit la position
+            $cpt++; //on ajoute une rangée
+        }
+        $this->entityManager->flush();
+        return new JsonResponse([
+            'data' => json_decode($request->request->get("table"))
+        ]);
+    }
 }

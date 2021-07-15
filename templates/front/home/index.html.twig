@@ -1,14 +1,11 @@
 {% extends 'base.html.twig' %}
-{# https://stackoverflow.com/questions/55341561/symfony-updating-values-using-ajax #}
+
 {% block content %}
 <!doctype html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Le made in france 100% français">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
     <title>{%  block title %}Accueil - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
     </style>
 </head>
@@ -20,14 +17,15 @@
 			<hr class="text-center mb-3 mt-3">
 			<p class="text-center mb-3">Connectes toi pour pouvoir ajouter des tâches !</p>
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
-			<table id="tabletask1" class="table mb-5" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-reorderable-rows="true"{% endif %}>
+			<table id="tabletask1" class="table mb-5" data-toggle="table" data-show-toggle="true" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
 				<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 					<tr>
-						<th scope="col">Client</th>
-						<th scope="col">Sujet</th>
-						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
+						<th data-field="id" data-visible="false">ID</th>
+						<th data-field="customer" data-sortable="true" scope="col">Client</th>
+						<th data-field="subject" data-sortable="true" scope="col">Sujet</th>
+						<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
+						<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
+						<th data-field="status" data-sortable="true" scope="col">Statut</th>
 					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<th scope="col">Action</th>
 					{% endif %}
@@ -35,17 +33,19 @@
 				</thead>
 				<tbody>
 					{% for task in task %}
+
 						<tr class="bg-white-shebam">
-						<td data-sortable="true">{{task.customer}}</td>
-							<td data-sortable="true">{{task.subject}}</td>
-							<td data-sortable="true">{% for task in task.users %}
+						<td>{{ task.id }}</td>
+						<td >{{task.customer}}</td>
+							<td>{{task.subject}}</td>
+							<td>{% for task in task.users %}
 									{{ task.firstname }} <br>
 								{% endfor %}
 							</td>
-							<td data-sortable="true">{{task.comment}}</td>
-							<td data-sortable="true">{{task.status.name|raw}}</td>
+							<td>{{task.comment}}</td>
+							<td>{{task.status.name|raw}}</td>
 						{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-							<td data-sortable="true">
+							<td>
 								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 							</td>
 						{% endif %}
@@ -289,3 +289,22 @@
 </body>
 </html>
 {%  endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>
+$(()=>{
+    $("#tabletask1").on("reorder-row.bs.table", (e, table, row, old) => {
+        console.log(JSON.stringify(table));
+		$.ajax({
+			url: "{{ path('home_reorder_row')}}",
+			method: "POST",
+			data: {
+				table: JSON.stringify(table)
+			},
+			dataType: "JSON",
+			success: (response)=>{console.log(response)}
+		})
+   })
+ })
+</script>
+{% endblock %}
