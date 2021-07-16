@@ -64,6 +64,11 @@ class Task2
      */
     private $archived;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -190,6 +195,18 @@ class Task2
     public function setArchived(?bool $archived): self
     {
         $this->archived = $archived;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->poisition;
+    }
+
+    public function setPosition(?int $poisition): self
+    {
+        $this->poisition = $poisition;
 
         return $this;
     }

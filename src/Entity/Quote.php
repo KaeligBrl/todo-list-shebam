@@ -49,6 +49,11 @@ class Quote
      */
     private $archived;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->person = new ArrayCollection();
@@ -139,6 +144,18 @@ class Quote
     public function setArchived(?bool $archived): self
     {
         $this->archived = $archived;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(?int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }
