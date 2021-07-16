@@ -21,6 +21,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 25%;}
 .btn-green-light-shebam:hover{background: var(--color-white);color: var(--green-light-shebam); transition: ease 0.5s;}
 .btn-submit-front-shebam{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
 .btn-submit-front-shebam:hover{background: var(--color-white);color: var(--blue-dark-shebam);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-success-front{color: var(--color-green-dark-shebam); font-weight: 600;}
 
 /* Navbar */
 .navbar{height: 92px;}

@@ -11,6 +11,7 @@
     --blue-dark-shebam: #00263A;
     --pink-shebam: #DE99C3;
     --green-light-shebam: #6CBFA5;
+    --green-dark-shebam: #155724;
 }
 
 /* Texts and Backgrounds */
@@ -25,6 +26,7 @@
 .color-blue-dark-shebam{color: var(--blue-dark-shebam)}
 .color-pink-shebam{color: var(--pink-shebam)}
 .color-green-light-shebam{color: var(--green-light-shebam)}
+.color-green-dark-shebam{color: var(--green-dark-shebam)}
 
 .bg-white-shebam{background: var(--color-white)}
 .bg-white-light-shebam{background: var(--color-white-light)}
@@ -37,6 +39,7 @@
 .bg-blue-dark-shebam{background: var(--blue-dark-shebam)}
 .bg-pink-shebam{background: var(--pink-shebam)}
 .bg-green-light-shebam{background: var(--green-light-shebam)}
+.bg-green-dark-shebam{background: var(--green-dark-shebam)}
 
 /* Administration */
 body{background: var(--color-white-light);}
