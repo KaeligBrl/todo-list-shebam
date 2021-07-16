@@ -20,7 +20,7 @@
 			{% endif %}
 
 			<div class="row">
-				<div class="col-6">
+				<div class="col-6 mb-5">
 					<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
 					<table id="tableOrderTask" class="table mb-5" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
 						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
@@ -118,8 +118,7 @@
 					{% endif %}
 				</div>
 
-				<!-- Force next columns to break to new line -->
-				<div class="w-100"></div>
+			<div class="mb-5"></div>
 
 				<div class="col-6">
 					<!-- TABLE QUOTE -->
@@ -221,18 +220,6 @@
 				</div>
 			</div>
 			<!-- TABLE PRIORITY 1 -->
-
-
-
-			<div class="mb-5"></div>
-			
-
-
-			<div class="mb-5"></div>
-
-
-
-			<div class="mb-5"></div>
 
 			<!-- POPUP -->
 				<!-- Task 1 -->
