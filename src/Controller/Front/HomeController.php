@@ -102,25 +102,25 @@ class HomeController extends AbstractController
             break;
 
             case '2':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $appt = $appointmentRow->find($row['id']); //on récupère la task
-                    $appt->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $appt = $appointmentRow->find($row['id']);
+                    $appt->setPosition($cpt);
+                    $cpt++;
                 }
             break;
 
             case '3':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $quote = $quoteRow->find($row['id']); //on récupère la task
-                    $quote->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $quote = $quoteRow->find($row['id']);
+                    $quote->setPosition($cpt);
+                    $cpt++;
                 }
             break;
             case '4':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $task2 = $task2Row->find($row['id']); //on récupère la task
-                    $task2->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $task2 = $task2Row->find($row['id']);
+                    $task2->setPosition($cpt);
+                    $cpt++;
                 }
                 break;
         }
