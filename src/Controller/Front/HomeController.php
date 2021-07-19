@@ -89,7 +89,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/reorder", name="home_reorder_row")
      */
-    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository$appointmentRow, QuoteRepository $quoteRow, Task2Repository $task2Row)
+    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow, Task2Repository $task2Row)
     {
         $cpt = 0;
         switch ($request->request->get("context")) {

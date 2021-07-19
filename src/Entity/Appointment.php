@@ -49,7 +49,7 @@ class Appointment
     private $archived;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
 
@@ -152,7 +152,7 @@ class Appointment
         return $this->position;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $position): self
     {
         $this->position = $position;
 

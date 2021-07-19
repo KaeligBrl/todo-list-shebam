@@ -65,7 +65,7 @@ class Task2
     private $archived;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
 
@@ -201,12 +201,12 @@ class Task2
 
     public function getPosition(): ?int
     {
-        return $this->position;
+        return $this->poisition;
     }
 
-    public function setPosition(int $position): self
+    public function setPosition(?int $poisition): self
     {
-        $this->position = $position;
+        $this->poisition = $poisition;
 
         return $this;
     }
