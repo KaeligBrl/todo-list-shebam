@@ -73,6 +73,8 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .fa-plus-circle{color: var(--color-white) !important;}
 .fa-plus-circle:hover{color: var(--blue-dark-shebam) !important;}
 
+.fa-arrow-right{font-size: 25px !important;}
+
 .btn-outline-light {color: var(--color-white);background-color: var(--blue-dark-shebam);border-color: var(--color-white);}
 .btn-outline-light:hover {color: var(--blue-dark-shebam);background-color: var(--color-white);border-color: var(--blue-dark-shebam);
 }

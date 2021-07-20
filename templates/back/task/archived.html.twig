@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="{{ asset('assets/js/custom.js') }}">
 
 	<div>
-		{% block titre_admin_page %}Liste des tâches archivées {% endblock %}
+		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Liste des tâches archivées {% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">

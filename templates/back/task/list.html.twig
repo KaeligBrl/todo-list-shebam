@@ -7,13 +7,13 @@
 		<link rel="stylesheet" href="{{ asset('assets/js/custom.js') }}">
 
 	<div>
-		{% block titre_admin_page %}Liste de nos tâches - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Liste de nos tâches{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3">Priorité 1
 				<div class="add-icon-custom d-flex flew-row-reverse">			
-					<a href="{{ path('task_list_add_admin') }}" type="button">
+					<a href="{{ path('task_list_add_admin') }}" title="Ajouter une tâche P1" type="button">
 						<i class="fas fa-plus-circle"></i>
 					</a>
 				</div>
@@ -62,7 +62,7 @@
 
 			<div class="text-center bg-pink-shebam color-white-shebam p-3">Rendez-vous
 				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task_appointment_add_admin') }}" type="button">
+					<a href="{{ path('task_appointment_add_admin') }}" title="Ajouter un rendez-vous" type="button">
 						<i class="fas fa-plus-circle"></i>
 					</a>
 				</div>
@@ -108,7 +108,7 @@
 
 			<div class="text-center bg-blue-light-shebam color-white-shebam p-3 align-bottom">Devis
 				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task_quote_add_admin') }}" type="button">
+					<a href="{{ path('task_quote_add_admin') }}" title="Ajouter un devis" type="button">
 						<i class="fas fa-plus-circle"></i>
 					</a>
 				</div>
@@ -154,7 +154,7 @@
 
 			<div class="text-center bg-green-light-shebam color-white-shebam p-3">Priorité 2
 				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task2_list_add_admin') }}" type="button">
+					<a href="{{ path('task2_list_add_admin') }}" title="Ajouter une tâche P2" type="button">
 						<i class="fas fa-plus-circle"></i>
 					</a>
 				</div>

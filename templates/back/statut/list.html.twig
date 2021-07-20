@@ -4,17 +4,17 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Liste des statuts{% endblock %}
+		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Liste des statuts{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">
 			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('status_add_admin') }}" type="button" class="btn btn-outline-light mr-3 mb-3">
+				<a href="{{ path('status_add_admin') }}" title="Ajouter un statut" type="button" class="btn btn-outline-light mr-3 mb-3">
 					<i class="fas fa-plus-circle"></i>
 				</a>
 			</div>
 
-			<table class="table table-striped bg-light">
+			<table class="table table-light">
 				<thead class="thead-light">
 					<tr>
 						<th scope="col">Nom du statut</th>

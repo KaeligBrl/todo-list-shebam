@@ -7,7 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 		<title>
-			{% block title %}Tableau de bord -{% block title_base %} Administration - Liste des tâches{% endblock %}{% endblock %}
+			{% block title %}Tableau de bord -{% block title_base %} Administration{% endblock %}{% endblock %}
 		</title>
 
 		<!-- Bootstrap CSS CDN -->
@@ -27,31 +27,31 @@
 		<div class="wrapper">
 			<nav id="sidebar" class="bg-yellow-shebam">
 				<div class="sidebar-header bg-white-shebam">
-					<a href="{{ path('admin') }}"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }}"></a>
+					<a href="{{ path('admin') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype du la liste des tâches SHEBAM!"></a>
 				</div>
 				<ul class="list-unstyled components color-white-shebam">
 					<li>
-						<a href="{{ path('admin') }}"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
+						<a href="{{ path('admin') }}" title="Aller sur le tableau de bord"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
 					</li>
 					<li>
 						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-tasks"></i> Tâches</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
 							<li>
-								<a href="{{ path('task_list_admin') }}">Liste</a>
+								<a href="{{ path('task_list_admin') }}" title="Aller sur la liste des tâches">Liste</a>
 							</li>
 							<li>
-								<a href="{{ path('task_list_archived_admin') }}">Archivée</a>
+								<a href="{{ path('task_list_archived_admin') }}" title="Aller sur la liste des tâches archivées">Archivée</a>
 							</li>
 						</ul>
 					</li>
 					<li>
-						<a href="{{ path('status_list_admin') }}"><i class="fas fa-signal"></i> Status</a>
+						<a href="{{ path('status_list_admin') }}" title="Aller sur le statut"><i class="fas fa-signal"></i> Status</a>
 					</li>
 					<li>
-						<a href="{{ path('customer_list_admin') }}"><i class="fas fa-user-tie"></i> Clients</a>
+						<a href="{{ path('customer_list_admin') }}" title="Aller sur la liste des clients"><i class="fas fa-user-tie"></i> Clients</a>
 					</li>
 					<li>
-						<a href="{{ path('user_list_admin') }}"><i class="fas fa-users"></i> Équipe</a>
+						<a href="{{ path('user_list_admin') }}" title="Aller sur la liste de l'équipe"><i class="fas fa-users"></i> Équipe</a>
 					</li>
 				</ul>
 			</nav>
@@ -61,12 +61,14 @@
 			<div id="content">
 				<nav class="navbar navbar-expand-lg bg-white-shebam">
 					<div class="container-fluid">
-						<button type="button" id="sidebarCollapse" class="navbar-btn">
-							<i class="fas fa-times"></i>
-						</button>
-						<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-							<i class="fas fa-align-justify"></i>
-						</button>
+							<button type="button" id="sidebarCollapse" class="navbar-btn">
+								<span></span>
+								<span></span>
+								<span></span>
+							</button>
+							<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<i class="fas fa-align-justify"></i>
+							</button>
 
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="nav navbar-nav ml-auto">
@@ -91,8 +93,8 @@
 			</div>
 		</nav>
 		<div class="container mb-5 title-dashboard">
-			{% block titre_admin_page %}
-				<h4 class="color-blue-dark-shebam">Bienvenue {{app.user.firstname}} {{app.user.lastname}} sur le tableau de Bord</h4>
+			{% block titre_admin_page %}<h4 class="color-blue-dark-shebam">{% block title_titre_admin_page_base %}<a href="{{ path('admin') }} " title="Retourner sur le tableau de bord">Administration</a> <i class="fas fa-arrow-right"></i>
+			{% endblock %}Tableau de Bord / {{app.user.firstname}} {{app.user.lastname}}</h4>
 			{% endblock %}
 		</div>
 		<div class="container">
@@ -108,13 +110,13 @@
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tâches P1</p>
 						{% endif %}
 						{# Task P2 Condition #}
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countAppointment }}</span> rendez-vous</p>
+						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countQuote }}</span>  devis à faire</p>
 						{% if countTaskP2Board <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâche P2</p>
 						{% else %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâches P2</p>
 						{% endif %}
-						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countAppointment }}</span> rendez-vous</p>
-						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countQuote }}</span>  devis à faire</p>
 					</div>
 				</div>
 				<div class="col-sm">
@@ -145,7 +147,7 @@
 					<div class="framed">
 						<h3 class="mb-4">Équipe</h3>
 						{# Status Condition #}
-						{% if countStatus <= 1 %}
+						{% if countUser <= 1 %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personne dans l'équipe</p>
 						{% else %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personnes dans l'équipe</p>

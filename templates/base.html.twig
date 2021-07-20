@@ -22,7 +22,7 @@
     <header>
         <nav class="navbar navbar-expand-lg fixed-top bg-white-shebam mx-auto ">
             <a href="{{ path('home') }}">
-                <img class="navbar-img " src="{{ asset('assets/images/logo-to-do-list-hor.png') }}" alt="Logo de la to do list Shebam!">
+                <img class="navbar-img" src="{{ asset('assets/images/logo-to-do-list-hor.png') }}" alt="Logo de la to do list Shebam!">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -61,7 +61,7 @@
                     </div>
                     <div class="mobile-bottom-nav__item">
                         <div class="mobile-bottom-nav__item-content">
-                            <a href=""><i class="fas fa-user-alt"></i><br>Compte</a>
+                            <a href="{{ path('account') }}"><i class="fas fa-user-alt"></i><br>Compte</a>
                         </div>		
                     </div>
                 {% endif %}
@@ -83,7 +83,7 @@
     </header>
 
     <main role="main">
-        <div class="container-xl-lg pt-5" style="margin-top: 150px;">
+        <div class="container-fluid" style="margin-top: 150px;">
             {% block content %}{% endblock %}
         </div>
     </main>

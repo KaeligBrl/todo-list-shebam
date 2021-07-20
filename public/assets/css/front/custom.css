@@ -60,7 +60,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .popup .content {max-height: 30%;overflow: auto;}
 
 /* Mobile Menu */
-.mobile-bottom-nav {position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;will-change: transform;transform: translateZ(0);display: flex;height: 50px;box-shadow: 0 -2px 5px -2px #333;background: var(--blue-dark-shebam);}
+.mobile-bottom-nav {margin-top:50px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;will-change: transform;transform: translateZ(0);display: flex;height: 50px;box-shadow: 0 -2px 5px -2px #333;background: var(--blue-dark-shebam);}
 .mobile-bottom-nav__item {flex-grow: 1;text-align: center;font-size: 18px;display: flex;flex-direction: column;justify-content: center;}
 .mobile-bottom-nav i{font-size: 20px !important;}
 .mobile-bottom-nav__item-content {display: flex;flex-direction: column;font-size: 12px;color: var(--color-white);}
