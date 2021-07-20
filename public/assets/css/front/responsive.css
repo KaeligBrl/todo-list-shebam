@@ -22,4 +22,5 @@
 }
 @media (min-width: 900px){
     .mobile-bottom-nav{display: none !important;}
+    .btn-add-task-home-mobile{display: none;}
 }
