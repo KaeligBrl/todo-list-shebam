@@ -12,12 +12,12 @@ use App\Repository\Task2Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\Task\FrontTaskAddType;
 use App\Repository\AppointmentRepository;
-use App\Form\Front\Task\FrontTask2AddType;
+use App\Form\Front\Task2\FrontTask2AddType;
 use App\Form\Front\Quote\FrontQuoteAddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Front\Task\FrontAppointmentAddType;
+use App\Form\Front\Appointment\FrontAppointmentAddType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 

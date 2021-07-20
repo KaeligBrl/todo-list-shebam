@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Front\Task;
+namespace App\Form\Front\Task2;
 
 use App\Entity\User;
 use App\Entity\Task2;
