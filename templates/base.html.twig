@@ -35,9 +35,9 @@
                 </ul> 
                 <ul class="navbar-nav">
                 {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" href="{{ path('admin')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" href="{{ path('app_logout') }}">Déconnexion</a>
+                    {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur l'administration" href="{{ path('admin')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur mon compte" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" title="Se déconnecter" href="{{ path('app_logout') }}">Déconnexion</a>
                 {% else %}
-                <a class="navbar-text color-blue-dark-shebam" href="{{ path('app_login') }}">Connexion</a> <a class="navbar-text color-blue-dark-shebam" href="{{ path('register') }}">Inscription</a>
+                <a class="navbar-text color-blue-dark-shebam" title="Se connecter" href="{{ path('app_login') }}">Connexion</a> <a class="navbar-text color-blue-dark-shebam" title="S'inscrire" href="{{ path('register') }}">Inscription</a>
                 {% endif %}
             </div>
         </nav>
