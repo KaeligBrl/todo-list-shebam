@@ -20,7 +20,7 @@
 			{% endif %}
 		
 			<div class="row">
-				<div class="col">
+				<div class="col padding-mobile">
 					<!-- Table Priority 1 -->
 					<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
 					<table id="tableOrderTask" class="table mb-5" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
@@ -121,7 +121,7 @@
 			<div class="mt-5"></div>
 
 			<div class="row">
-				<div class="col">
+				<div class="col padding-mobile">
 					<!-- Table Quote -->
 					<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Devis</div>
 					<table id="tableOrderQuote" class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true"{% endif %}>

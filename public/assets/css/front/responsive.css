@@ -14,8 +14,10 @@
     .box{width: auto;}
     .popup{width: auto;}
     .btn-add-task-home{display: none;}
+    .padding-mobile{margin-bottom: 15px;}
 }
 @media screen and (min-width: 769px){
     .mobile-bottom-nav{display: none !important;}
     .btn-add-task-home-mobile{display: none;}
+    .padding-mobile{margin-bottom: none;}
 }
