@@ -45,37 +45,13 @@
 						</ul>
 					</li>
 					<li>
-						<a href="#StatutSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-signal"></i> Statut</a>
-						<ul class="collapse list-unstyled" id="StatutSubmenu">
-							<li>
-								<a href="{{ path('status_list_admin') }}">Liste</a>
-							</li>
-							<li>
-								<a href="{{ path('status_add_admin') }}">Ajouter un statut</a>
-							</li>
-						</ul>
+						<a href="{{ path('status_list_admin') }}"><i class="fas fa-signal"></i> Status</a>
 					</li>
 					<li>
-						<a href="#ClientSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-user-tie"></i> Clients</a>
-						<ul class="collapse list-unstyled" id="ClientSubmenu">
-							<li>
-								<a href="{{ path('customer_list_admin') }}">Liste</a>
-							</li>
-							<li>
-								<a href="{{ path('customer_add_admin') }}">Ajouter un client</a>
-							</li>
-						</ul>
+						<a href="{{ path('customer_list_admin') }}"><i class="fas fa-user-tie"></i> Clients</a>
 					</li>
 					<li>
-						<a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Équipe</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<li>
-								<a href="{{ path('user_admin') }}">Liste</a>
-							</li>
-							<li>
-								<a href="{{ path('user_add_admin') }}">Ajouter une personne</a>
-							</li>
-						</ul>
+						<a href="{{ path('user_list_admin') }}"><i class="fas fa-users"></i> Équipe</a>
 					</li>
 				</ul>
 			</nav>
@@ -85,7 +61,6 @@
 			<div id="content">
 				<nav class="navbar navbar-expand-lg bg-white-shebam">
 					<div class="container-fluid">
-
 						<button type="button" id="sidebarCollapse" class="navbar-btn">
 							<i class="fas fa-times"></i>
 						</button>

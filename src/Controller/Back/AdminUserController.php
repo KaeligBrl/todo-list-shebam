@@ -23,7 +23,7 @@ class AdminUserController extends AbstractController
         $this->entityManager = $entityManager;
     }
     /**
-     * @Route("/admin/utilisateurs", name="user_admin")
+     * @Route("/admin/utilisateurs", name="user_list_admin")
      */
     public function index(UserRepository $userAdmin): Response
     {

@@ -64,3 +64,15 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .framed h3{color: var(--blue-dark-shebam); font-size: 20px;}
 .framed p,.framed span{font-weight: 400;}
 .title-dashboard, .title-dashboard h4{font-size: 30px;}
+
+/* Font Awesome - Icons */
+/* Customer List */
+.fa-plus-circle{color: var(--color-white) !important;}
+.fa-plus-circle:hover{color: var(--blue-dark-shebam) !important;}
+/* Customer List */
+.fa-plus-circle{color: var(--color-white) !important;}
+.fa-plus-circle:hover{color: var(--blue-dark-shebam) !important;}
+
+.btn-outline-light {color: var(--color-white);background-color: var(--blue-dark-shebam);border-color: var(--color-white);}
+.btn-outline-light:hover {color: var(--blue-dark-shebam);background-color: var(--color-white);border-color: var(--blue-dark-shebam);
+}
