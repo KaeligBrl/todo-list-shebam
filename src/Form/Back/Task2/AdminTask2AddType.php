@@ -6,7 +6,9 @@ use App\Entity\User;
 use App\Entity\Task2;
 use App\Entity\Status;
 use App\Entity\Statut;
+use App\Entity\Customer;
 use App\Form\UserMultipleType;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,7 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\WeekType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use App\Entity\Customer;
 
 class AdminTask2AddType extends AbstractType
 {
@@ -28,6 +29,13 @@ class AdminTask2AddType extends AbstractType
             'label' => 'Client :',
             'class' => Customer::class,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC');
+            },
+            'attr' => [
+                'class' => 'select-customer'
+            ],
         ))
         ->add('subject',  TextType::class, [
             'required' => true,
@@ -68,12 +76,20 @@ class AdminTask2AddType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.firstname', 'ASC');
+            }
         ))
         ->add('status', EntityType::class, array(
             'required' => true,
             'label' => 'Statut :',
             'class' => Status::class,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC');
+            }
         ))
         ->add('comment', TextareaType::class, array(
             'required' => true,

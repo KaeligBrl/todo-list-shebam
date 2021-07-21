@@ -166,7 +166,7 @@ class AdminTasksController extends AbstractController
             $task2Add = new Task2();
             $form = $this->createForm(AdminTask2AddType::class, $task2Add);
         }
-            return $this->render('back/task/task2/add.html.twig', [
+            return $this->render('back/task2/add.html.twig', [
                 'form_task_p2_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);

@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Customer;
+use Doctrine\ORM\EntityRepository;
 
 class AdminTaskAddType extends AbstractType
 {
@@ -27,7 +28,14 @@ class AdminTaskAddType extends AbstractType
             'required' => true,
             'label' => 'Client : ',
             'class' => Customer::class,
+            'attr' => [
+                'class' => 'select-customer'
+            ],
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function(EntityRepository $er){
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC');
+            }
         ))
         ->add('subject',  TextType::class, [
             'required' => true,
@@ -68,6 +76,10 @@ class AdminTaskAddType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.firstname', 'ASC');
+            }
         ))
         ->add('status', EntityType::class, array(
             'required' => true,
