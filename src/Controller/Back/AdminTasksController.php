@@ -7,7 +7,6 @@ use Dompdf\Options;
 use App\Entity\Task;
 use App\Entity\Quote;
 use App\Entity\Task2;
-use App\Entity\Statut;
 use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
@@ -415,7 +414,7 @@ class AdminTasksController extends AbstractController
         /**
      * @Route("/admin/liste-des-taches/telecharger", name="task_list_download_admin")
      */
-    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
+    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
     {
         $pdfOptions = New Options();
         $pdfOptions->set('defaultFont', 'Gotham');
@@ -425,7 +424,7 @@ class AdminTasksController extends AbstractController
         $html 	= '<img width="220" height="220" src="../assets/images/logo-to-do-list-vert.png">';
         $html = $this->renderView('back/task/download.html.twig', [
             'task' => $taskAdmin->findAll(),
-            'rendezvous' => $rendezvousAdmin->findAll(),
+            'appointment' => $appointmentAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
         ]);

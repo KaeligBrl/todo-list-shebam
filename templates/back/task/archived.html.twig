@@ -72,13 +72,13 @@
 						{% if appointment.archived == 1 %}
 							<tr>
 								<td>{{appointment.name}}</td>
-								<td>{{appointment.sujet}}</td>
+								<td>{{appointment.subject}}</td>
 								<td>
-								{% for appointment in appointment.utilisateur %}
+								{% for appointment in appointment.user %}
 									{{ appointment.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{rendezvous.hoursappointment|date('H:i')}}</td>
+								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 								<td>{{appointment.statut|raw}}</td>
 								<td>
 									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>

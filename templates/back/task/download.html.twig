@@ -43,17 +43,17 @@
             </tr>
         </thead>
         <tbody>
-            {% for rendezvous in rendezvous %}
+            {% for appointment in appointment %}
                 <tr>
-                    <td>{{rendezvous.name}}</td>
-                    <td>{{rendezvous.sujet}}</td>
+                    <td>{{appointment.name}}</td>
+                    <td>{{appointment.subject}}</td>
                     <td>
-                    {% for rendezvous in rendezvous.utilisateur %}
-                        {{ rendezvous.firstname }} <br>
+                    {% for appointment in appointment.user %}
+                        {{ appointment.firstname }} <br>
                     {% endfor %}
                     </td>
-                    <td>{{rendezvous.statut|raw}}</td>
-                    <td>{{ rendezvous.heuredurendezvous|date('j F Y')  }} à {{rendezvous.heuredurendezvous|date('H:i')}}</td>
+                    <td>{{appointment.statut|raw}}</td>
+                    <td>{{ appointment.hoursappointment|date('j F Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
                 </tr>
             {% endfor %}
         </tbody>
