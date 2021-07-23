@@ -22,7 +22,7 @@ class TaskRepository extends ServiceEntityRepository
     // Archived
     public function setTaskForArchived($id)
     {
-        $sql = "update App\Entity\Task as t set t.archived = t where t.id = :id";
+        $sql = "update App\Entity\Task as t set t.archived = 1 where t.id = :id";
         $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }

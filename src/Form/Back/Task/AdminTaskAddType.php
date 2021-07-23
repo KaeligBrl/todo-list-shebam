@@ -80,6 +80,7 @@ class AdminTaskAddType extends AbstractType
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
             }
+            
         ))
         ->add('status', EntityType::class, array(
             'required' => true,

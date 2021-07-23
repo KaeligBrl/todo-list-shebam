@@ -89,7 +89,8 @@ class AdminCustomerController extends AbstractController
         }
         return $this->render('back/customer/modify.html.twig',[
             'form_customer_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' =>$notification,
+            'customer' => $customerModify
         ]);   
     }
     

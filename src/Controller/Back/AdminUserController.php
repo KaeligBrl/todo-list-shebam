@@ -28,7 +28,7 @@ class AdminUserController extends AbstractController
     public function index(UserRepository $userAdmin): Response
     {
         return $this->render('back/user/list.html.twig', [
-            'user' => $userAdmin->findAll(),
+            'user' => $userAdmin->findBy(array(), array('firstname' => 'ASC')),
         ]);
     }
 

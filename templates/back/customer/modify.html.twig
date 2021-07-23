@@ -4,7 +4,8 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Client - Modifier{% endblock %}
+		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}<a href="{{path('customer_list_admin')}}">Client</a> - Modification - 
+		<br>ID: {{ customer.id }}{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">

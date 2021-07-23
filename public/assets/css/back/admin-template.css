@@ -45,13 +45,13 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 
 /* Form */
 .form-back {width: 100%;max-width: 400px;}
-.form-back input::placeholder {color: var(--yellow-shebam);}
+.form-back input::placeholder {color: var(--color-yellow-dark);}
 
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {width: 100%;padding: 20px;min-height: 100vh;transition: all 0.3s;}
-.label-custom {color: var(--yellow-shebam) !important}
+.label-custom {color: var(--color-yellow-dark) !important}
 
 .add-icon-custom{margin-top: -20px;}
 .page-link{color: var(--color-yellow-dark);border: none !important}

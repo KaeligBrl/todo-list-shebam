@@ -52,7 +52,7 @@ class AdminTasksController extends AbstractController
      */
     public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
     {
-        return $this->render('back/task/archived.html.twig', [
+        return $this->render('back/tasks_archived/list.html.twig', [
             'task' => $taskArchivedAdmin->findAll(),
             'appointment' => $appointmentArchivedAdmin->findAll(),
             'quote' => $quoteArchivedAdmin->findAll(),
@@ -103,7 +103,8 @@ class AdminTasksController extends AbstractController
         }
         return $this->render('back/task/modify.html.twig',[
             'form_task_p1_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'task' => $taskModify
         ]);   
     }
     
@@ -201,7 +202,8 @@ class AdminTasksController extends AbstractController
         }
         return $this->render('back/task2/modify.html.twig',[
             'form_task_p2_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'task2' => $task2Modify
         ]);   
     }
 
@@ -251,7 +253,7 @@ class AdminTasksController extends AbstractController
             $appointmentAdd = new Appointment();
             $form = $this->createForm(AdminTaskAppointmentAddType::class, $appointmentAdd);
         }
-            return $this->render('back/task/appointment/add.html.twig', [
+            return $this->render('back/appointment/add.html.twig', [
                 'form_appointment_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
@@ -273,9 +275,10 @@ class AdminTasksController extends AbstractController
             $notification = 'Le rendez-vous a bien été mise à jour !';
             $form = $this->createForm(AdminTaskAppointmentModifyType::class, $appointmentModify);
         }
-        return $this->render('back/task/appointment/modify.html.twig',[
+        return $this->render('back/appointment/modify.html.twig',[
             'form_appointment_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'appointment' => $appointmentModify
         ]);   
     }
 
@@ -339,7 +342,7 @@ class AdminTasksController extends AbstractController
             $quoteAdd = new Quote();
             $form = $this->createForm(AdminTaskQuoteAddType::class, $quoteAdd);
         }
-            return $this->render('back/task/quote/add.html.twig', [
+            return $this->render('back/quote/add.html.twig', [
                 'form_admin_task_quote_add' => $form->createView(),
                 'notification' => $notification
             ]);
@@ -361,9 +364,10 @@ class AdminTasksController extends AbstractController
             $notification = 'Le devis a bien été mise à jour !';
             $form = $this->createForm(AdminTaskQuoteModifyType::class, $quoteModify);
         }
-        return $this->render('back/task/quote/modify.html.twig',[
+        return $this->render('back/quote/modify.html.twig',[
             'form_quote_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'quote' => $quoteModify
         ]);   
     }
 
@@ -422,7 +426,7 @@ class AdminTasksController extends AbstractController
         // la partie ssl de la vidéo a été supprimé 
         $dompdf = new Dompdf($pdfOptions);
         $html 	= '<img width="220" height="220" src="../assets/images/logo-to-do-list-vert.png">';
-        $html = $this->renderView('back/task/download.html.twig', [
+        $html = $this->renderView('back/tasks_archived/download.html.twig', [
             'task' => $taskAdmin->findAll(),
             'appointment' => $appointmentAdmin->findAll(),
             'quote' => $quoteAdmin->findAll(),
@@ -431,11 +435,14 @@ class AdminTasksController extends AbstractController
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();
-        $file = 'liste-des-tâches' . '.pdf';
+        $dompdf->stream('liste-des-tâches.pdf');
 
-        $dompdf->stream($file, [
-            'Attachment' => true
-        ]);
+        // $pdf = $dompdf->output();
+
+        // // You can now write $pdf to disk, store it in a database or stream it
+        // // to the client.
+
+        // file_put_contents("saved_pdf.pdf", $pdf);
 
         return new Response('', 200, [
             'Content-Type' => 'application/pdf',

@@ -26,6 +26,8 @@
 						<tr>
 							<td>{{status.name}}</td>
 							<td>
+								<a href="{{ path('status_modify_admin', {"id": status.id}) }}"><i class="fas fas fa-cog"></i></a>
+								|
 								<a href="{{ path('status_detete_admin', {"id": status.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un statut')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>

@@ -1,3 +1,5 @@
+parameters:
+    download_task_directory: '%kernel.project_dir%/public/download/'
 security:
     encoders:
         App\Entity\User:
