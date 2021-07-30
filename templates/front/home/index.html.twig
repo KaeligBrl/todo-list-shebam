@@ -18,6 +18,7 @@
 			{% else %}
 				<p class="text-center mb-4 mt-4">Connectes toi pour pouvoir gérer les tâches !</p>
 			{% endif %}
+			<p class="text-center mb-4">Les tâches affichées sont celles non archivées.</p>
 		
 			<div class="row">
 				<div class="col padding-mobile">
@@ -39,26 +40,28 @@
 						</thead>
 						<tbody>
 							{% for task in task %}
-								<tr class="bg-white-shebam">
-									<td>{{ task.id }}</td>
-									<td >{{task.customer}}</td>
-									<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
-										{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
-										{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
-										{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
-									</td>
-									<td>{% for task in task.users %}
-											{{ task.firstname }} <br>
-										{% endfor %}
-									</td>
-									<td>{{task.comment}}</td>
-									<td>{{task.status.name|raw}}</td>
-								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-									<td>
-										<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
-									</td>
+								{% if task.archived == 0 %}
+									<tr class="bg-white-shebam">
+										<td>{{ task.id }}</td>
+										<td >{{task.customer}}</td>
+										<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
+											{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
+											{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
+											{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
+										</td>
+										<td>{% for task in task.users %}
+												{{ task.firstname }} <br>
+											{% endfor %}
+										</td>
+										<td>{{task.comment}}</td>
+										<td>{{task.status.name|raw}}</td>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+										<td>
+											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+										</td>
+									{% endif %}
+									</tr>
 								{% endif %}
-								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
@@ -90,23 +93,25 @@
 						</thead>
 						<tbody>
 							{% for appointment in appointment %}
-								<tr class="bg-white-shebam">
-									<td>{{appointment.id}}</td>
-									<td>{{appointment.name}}</td>
-									<td>{{appointment.subject}}</td>
-									<td>
-									{% for appointment in appointment.user %}
-										{{ appointment.firstname }} <br>
-									{% endfor %}
-									</td>
-									<td>{{ appointment.hoursappointment|date("m/d/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
-									<td>{{appointment.statut|raw}}</td>
-								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-									<td>
-										<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
-									</td>
+								{% if appointment.archived == 0 %}							
+									<tr class="bg-white-shebam">
+										<td>{{appointment.id}}</td>
+										<td>{{appointment.name}}</td>
+										<td>{{appointment.subject}}</td>
+										<td>
+										{% for appointment in appointment.user %}
+											{{ appointment.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>{{ appointment.hoursappointment|date("m/d/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+										<td>{{appointment.statut|raw}}</td>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+										<td>
+											<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
+										</td>
+									{% endif %}
+									</tr>
 								{% endif %}
-								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
@@ -144,23 +149,25 @@
 						</thead>
 						<tbody>
 							{% for quote in quote %}
-								<tr class="bg-white-shebam">
-									<td>{{ quote.id }}</td>
-									<td>{{ quote.enterprise }}</td>
-									<td>{{ quote.subject }}</td>
-									<td>
-									{% for quote in quote.person %}
-										{{ quote.firstname }} <br>
-									{% endfor %}
-									</td>
-									<td>{{ quote.comment }}</td>
-									<td>{{ quote.status|raw }}</td>
-								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-									<td>
-										<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-									</td>
+								{% if quote.archived == 0 %}
+									<tr class="bg-white-shebam">
+										<td>{{ quote.id }}</td>
+										<td>{{ quote.enterprise }}</td>
+										<td>{{ quote.subject }}</td>
+										<td>
+										{% for quote in quote.person %}
+											{{ quote.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>{{ quote.comment }}</td>
+										<td>{{ quote.status|raw }}</td>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+										<td>
+											<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+										</td>
+									{% endif %}
+									</tr>
 								{% endif %}
-								</tr>
 							{% endfor %}
 						</tbody>
 					</table>
@@ -193,26 +200,28 @@
 						</thead>
 						<tbody>
 							{% for task2 in task2 %}
-							<tr class="bg-white-shebam">
-								<td>{{task2.id}}
-								<td>{{task2.customer}}</td>
-								<td>{% if task2.subject is empty %}{% else %}{{task2.subject}}<br>{% endif %}
-									{% if task2.subsubject1 is empty %}{% else %}{{task2.subsubject1}}<br>{% endif %} 
-									{% if task2.subsubject2 is empty %}{% else %}{{task2.subsubject2}}<br>{% endif %}
-									{% if task2.subsubject3 is empty %}{% else %}{{task2.subsubject3}}<br>{% endif %}
-								</td>
-								<td>{% for task2 in task2.users %}
-										{{ task2.firstname }} <br>
-									{% endfor %}
-								</td>
-								<td>{{task2.comment}}</td>
-								<td>{{task2.status.name|raw}}</td>
-							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-								<td>
-									<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
-								</td>
-							{% endif %}
-							</tr>
+								{% if task2.archived == 0 %}
+									<tr class="bg-white-shebam">
+										<td>{{task2.id}}
+										<td>{{task2.customer}}</td>
+										<td>{% if task2.subject is empty %}{% else %}{{task2.subject}}<br>{% endif %}
+											{% if task2.subsubject1 is empty %}{% else %}{{task2.subsubject1}}<br>{% endif %} 
+											{% if task2.subsubject2 is empty %}{% else %}{{task2.subsubject2}}<br>{% endif %}
+											{% if task2.subsubject3 is empty %}{% else %}{{task2.subsubject3}}<br>{% endif %}
+										</td>
+										<td>{% for task2 in task2.users %}
+												{{ task2.firstname }} <br>
+											{% endfor %}
+										</td>
+										<td>{{task2.comment}}</td>
+										<td>{{task2.status.name|raw}}</td>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+										<td>
+											<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
+										</td>
+									{% endif %}
+									</tr>
+								{% endif %}
 							{% endfor %}
 						</tbody>
 					</table>

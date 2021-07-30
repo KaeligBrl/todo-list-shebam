@@ -2,6 +2,8 @@
 
 namespace App\Controller\Back;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Download;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
@@ -37,5 +39,37 @@ class AdminDownloadController extends AbstractController
         $em->remove($statutDelete);
         $em->flush();
         return $this->redirectToRoute("download_list_admin");
+    }
+
+    // ------------------------------
+    // ------- Download Tasks -------
+    // ------------------------------
+
+    /**
+     * @Route("/admin/telechargement/telecharger", name="button_list_download_admin")
+     */
+    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
+    {
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Gotham');
+        $pdfOptions->setIsRemoteEnabled(true);
+        // la partie ssl de la vidéo a été supprimé 
+        $dompdf = new Dompdf($pdfOptions);
+        $html = $this->renderView('back/tasks_archived/download.html.twig', [
+            'task' => $taskAdmin->findAll(),
+            'appointment' => $appointmentAdmin->findAll(),
+            'quote' => $quoteAdmin->findAll(),
+            'task2' => $task2Admin->findAll(),
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        
+
+        $pdfOutput = $dompdf->output();
+        file_put_contents("liste-des-taches.pdf", $pdfOutput);
+
+        return new Response('', 200, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }

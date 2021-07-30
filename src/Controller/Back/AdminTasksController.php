@@ -2,8 +2,6 @@
 
 namespace App\Controller\Back;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use App\Entity\Task;
 use App\Entity\Quote;
 use App\Entity\Task2;
@@ -409,44 +407,6 @@ class AdminTasksController extends AbstractController
         ->setQuoteForUnArchived($quote->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    // ------------------------------
-    // ------- Download Tasks -------
-    // ------------------------------
-
-        /**
-     * @Route("/admin/liste-des-taches/telecharger", name="task_list_download_admin")
-     */
-    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin)
-    {
-        $pdfOptions = New Options();
-        $pdfOptions->set('defaultFont', 'Gotham');
-        $pdfOptions->setIsRemoteEnabled(true);
-        // la partie ssl de la vidéo a été supprimé 
-        $dompdf = new Dompdf($pdfOptions);
-        $html 	= '<img width="220" height="220" src="../assets/images/logo-to-do-list-vert.png">';
-        $html = $this->renderView('back/tasks_archived/download.html.twig', [
-            'task' => $taskAdmin->findAll(),
-            'appointment' => $appointmentAdmin->findAll(),
-            'quote' => $quoteAdmin->findAll(),
-            'task2' => $task2Admin->findAll(),
-        ]);
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->render();
-        $dompdf->stream('liste-des-tâches.pdf');
-
-        // $pdf = $dompdf->output();
-
-        // // You can now write $pdf to disk, store it in a database or stream it
-        // // to the client.
-
-        // file_put_contents("saved_pdf.pdf", $pdf);
-
-        return new Response('', 200, [
-            'Content-Type' => 'application/pdf',
-          ]);
     }
 
 }
