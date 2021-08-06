@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\FileRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,5 +38,4 @@ class File
 
         return $this;
     }
-
 }

@@ -42,10 +42,10 @@ class AdminDownloadController extends AbstractController
      * @param File $downloadDelete
      * return RedirectResponse
      */
-    public function deleteStatus(File $statutDelete): RedirectResponse
+    public function deleteStatus(File $downloadDelete): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($statutDelete);
+        $em->remove($downloadDelete);
         $em->flush();
         return $this->redirectToRoute("download_list_admin");
     }

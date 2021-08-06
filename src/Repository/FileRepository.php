@@ -20,15 +20,15 @@ class FileRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return File[] Returns an array of Download objects
+    //  * @return File[] Returns an array of File objects
     //  */
     /*
     public function findByExampleField($value)
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
             ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
+            ->orderBy('f.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
@@ -37,10 +37,10 @@ class FileRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Download
+    public function findOneBySomeField($value): ?File
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
