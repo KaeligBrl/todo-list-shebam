@@ -22,10 +22,10 @@ class Task2
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $subject;
+    private $object;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $comment;
 
@@ -47,17 +47,17 @@ class Task2
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $sub_subject1;
+    private $sub_object1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $sub_subject2;
+    private $sub_object2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $sub_subject3;
+    private $sub_object3;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
@@ -79,14 +79,14 @@ class Task2
         return $this->id;
     }
 
-    public function getSubject(): ?string
+    public function getObject(): ?string
     {
-        return $this->subject;
+        return $this->object;
     }
 
-    public function setSubject(string $subject): self
+    public function setObject(string $object): self
     {
-        $this->subject = $subject;
+        $this->object = $object;
 
         return $this;
     }
@@ -151,38 +151,38 @@ class Task2
         return $this;
     }
 
-    public function getSubSubject1(): ?string
+    public function getSubObject1(): ?string
     {
-        return $this->sub_subject1;
+        return $this->sub_object1;
     }
 
-    public function setSubSubject1(?string $sub_subject1): self
+    public function setSubObject1(?string $sub_object1): self
     {
-        $this->sub_subject1 = $sub_subject1;
+        $this->sub_object1 = $sub_object1;
 
         return $this;
     }
 
-    public function getSubSubject2(): ?string
+    public function getSubObject2(): ?string
     {
-        return $this->sub_subject2;
+        return $this->sub_object2;
     }
 
-    public function setSubSubject2(?string $sub_subject2): self
+    public function setSubObject2(?string $sub_object2): self
     {
-        $this->sub_subject2 = $sub_subject2;
+        $this->sub_object2 = $sub_object2;
 
         return $this;
     }
 
-    public function getSubSubject3(): ?string
+    public function getSubObject3(): ?string
     {
-        return $this->sub_subject3;
+        return $this->sub_object3;
     }
 
-    public function setSubSubject3(?string $sub_subject3): self
+    public function setSubObject3(?string $sub_object3): self
     {
-        $this->sub_subject3 = $sub_subject3;
+        $this->sub_object3 = $sub_object3;
 
         return $this;
     }

@@ -14,17 +14,15 @@
 				<thead class="thead-light">
 					<tr>
                         <th scope="col">Nom</th>
-						<th scope="col">Date de création</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for download in download %}
 						<tr>
-							<td>{{ download.name }}</td>
-							<td>{{ download.createdAt|date('d-m-Y') }}</td>
+							<td><a href="{{ asset("file_tasks/" ~ download.name) }}">{{ download.name }}</a></td>
                             <td>
-								<a href="{{ path('download_detete_admin', {"id": download.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
+								<a href="{{ path('download_detete_admin', {"id": download.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un téléchargement')"><i class="fas fa-trash"></i></a>
                             </td>
 						</tr>
 					{% endfor %}

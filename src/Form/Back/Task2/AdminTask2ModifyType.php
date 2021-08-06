@@ -22,7 +22,7 @@ class AdminTask2ModifyType extends AbstractType
         $builder
         ->add('customer', EntityType::class, array(
             'required' => true,
-            'label' => 'Client : ',
+            'label' => 'Sujet',
             'class' => Customer::class,
             'label_attr' => ['class' => 'label-custom'],
             'query_builder' => function (EntityRepository $er) {
@@ -33,35 +33,35 @@ class AdminTask2ModifyType extends AbstractType
                 'class' => 'select-customer'
             ],
         ))
-        ->add('subject',  TextType::class, [
+        ->add('object',  TextType::class, [
             'required' => true,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sujet',
+                'placeholder' => 'Objet',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject1',  TextType::class, [
+        ->add('subobject1',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 1',
+                'placeholder' => 'Sous-Objet 1',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject2',  TextType::class, [
+        ->add('subobject2',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 2',
+                'placeholder' => 'Sous-Objet 2',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject3',  TextType::class, [
+        ->add('subobject3',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 3',
+                'placeholder' => 'Sous-Objet 3',
                 'class' => ' form-control is-invalid'
             ]
         ])
@@ -91,6 +91,7 @@ class AdminTask2ModifyType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => ['placeholder' => 'Remarque'],
+            'empty_data' => '',
         ))
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

@@ -31,9 +31,9 @@
 					<a href="{{ path('admin') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype du la liste des tâches SHEBAM!"></a>
 				</div>
 				<ul class="list-unstyled components color-white-shebam">
-					<li>
+					{# <li>
 						<a href="{{ path('admin') }}" title="Aller sur le tableau de bord"><i class="fas fa-tachometer-alt"></i> Tableau de bord</a>
-					</li>
+					</li> #}
 					<li>
 						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-tasks"></i> Tâches</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
@@ -81,8 +81,8 @@
 										{{app.user.lastname}}</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" target="blank_" href="{{ path('home') }}">
-										<i class="fas fa-home" title="Aller sur la page d'accueil"></i>
+									<a class="nav-link" href="{{ path('home') }}">
+										Retour à l'accueil
 									</a>
 								</li>
 								<li class"nav-item">

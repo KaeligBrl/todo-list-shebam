@@ -5,6 +5,7 @@ namespace App\Form\Front\Quote;
 use App\Entity\User;
 use App\Entity\Quote;
 use App\Entity\Status;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -17,14 +18,6 @@ class FrontQuoteAddType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enterprise', TextType::class, [
-                'required' => true,
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'Entreprise',
-                    'class' => ' form-control is-invalid'
-                ]
-            ])
             ->add('subject', TextType::class, [
                 'required' => true,
                 'label' => false,
@@ -33,8 +26,16 @@ class FrontQuoteAddType extends AbstractType
                     'class' => ' form-control is-invalid'
                 ]
             ])
-            ->add('comment', TextType::class, [
+            ->add('object', TextType::class, [
                 'required' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Objet',
+                    'class' => ' form-control is-invalid'
+                ]
+            ])
+            ->add('comment', TextType::class, [
+                'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Remarque',
@@ -54,6 +55,10 @@ class FrontQuoteAddType extends AbstractType
                 'label' => 'Statut :',
                 'class' => Status::class,
                 'label_attr' => ['class' => 'label-custom'],
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('s')
+                        ->orderBy('s.name', 'ASC');
+            }
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

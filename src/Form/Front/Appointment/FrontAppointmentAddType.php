@@ -5,6 +5,7 @@ namespace App\Form\Front\Appointment;
 use App\Entity\User;
 use App\Entity\Status;
 use App\Entity\Appointment;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -49,12 +50,20 @@ class FrontAppointmentAddType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.firstname', 'ASC');
+            }
         ))
         ->add('statut', EntityType::class, array(
             'required' => true,
             'label' => 'Statut :',
             'class' => Status::class,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC');
+            }
         ))
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

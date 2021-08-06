@@ -28,8 +28,8 @@
 						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 							<tr>
 								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="customer" data-sortable="true" scope="col">Client</th>
-								<th data-field="subject" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
 								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
 								<th data-field="status" data-sortable="true" scope="col">Statut</th>
@@ -44,16 +44,22 @@
 									<tr class="bg-white-shebam">
 										<td>{{ task.id }}</td>
 										<td >{{task.customer}}</td>
-										<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
-											{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
-											{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
-											{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
+										<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+											{% if task.subobject1 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+											{% if task.subobject1 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
 										</td>
 										<td>{% for task in task.users %}
 												{{ task.firstname }} <br>
 											{% endfor %}
 										</td>
-										<td>{{task.comment}}</td>
+										<td>											
+											{% if task.comment is empty %}
+												Pas de remarque
+											{% else %}
+												{{ task.comment }}
+											{% endif %}
+										</td>
 										<td>{{task.status.name|raw}}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
@@ -81,8 +87,8 @@
 						<thead class="bg-grey-shebam color-white-shebam">
 							<tr>
 								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="enterprise" data-sortable="true" scope="col">Entreprise</th>
-								<th data-field="subject" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="enterprise" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
 								<th data-field="hours" data-sortable="true" scope="col">Date et heure</th>
 								<th data-field="status" data-sortable="true"scope="col">Statut</th>
@@ -103,7 +109,7 @@
 											{{ appointment.firstname }} <br>
 										{% endfor %}
 										</td>
-										<td>{{ appointment.hoursappointment|date("m/d/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+										<td>{{ appointment.hoursappointment|date("d/m/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										<td>{{appointment.statut|raw}}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
@@ -130,6 +136,66 @@
 			<div class="mt-5"></div>
 
 			<div class="row">
+
+				<div class="col">
+					<!-- Table Priority 2 -->
+					<div class="text-center bg-green-light-shebam color-white-shebam p-3 font-weight-bold">Priorité 2</div>
+					<table id="tableOrderTask2" class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true"{% endif %}>
+						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
+							<tr>
+								<th data-field="id" data-visible="false">ID</th>
+								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
+								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
+								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
+								<th data-field="status" data-sortable="true" scope="col">Statut</th>
+							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+								<th scope="col">Action</th>
+							{% endif %}
+							</tr>
+						</thead>
+						<tbody>
+							{% for task2 in task2 %}
+								{% if task2.archived == 0 %}
+									<tr class="bg-white-shebam">
+										<td>{{task2.id}}
+										<td>{{task2.customer}}</td>
+										<td>{% if task2.object is empty %}{% else %}{{task2.object}}<br>{% endif %}
+											{% if task2.subobject2 is empty %}{% else %}{{task2.subobject1}}<br>{% endif %} 
+											{% if task2.subobject2 is empty %}{% else %}{{task2.subobject2}}<br>{% endif %}
+											{% if task2.subobject3 is empty %}{% else %}{{task2.subobject3}}<br>{% endif %}
+										</td>
+										<td>{% for task2 in task2.users %}
+												{{ task2.firstname }} <br>
+											{% endfor %}
+										</td>
+										<td>											
+											{% if task2.comment is empty %}
+												Pas de remarque
+											{% else %}
+												{{ task2.comment }}
+											{% endif %}
+										</td>
+										<td>{{task2.status.name|raw}}</td>
+									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+										<td>
+											<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
+										</td>
+									{% endif %}
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+						<div class="btn-add-task-home">
+							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="#ajouterunetachep2">Ajouter</a></p>
+						</div>
+						<div class="btn-add-task-home-mobile">
+							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('task2_list_add_admin') }}">Ajouter</a></p>
+						</div>
+					{% endif %}
+				</div>
 				<div class="col padding-mobile">
 					<!-- Table Quote -->
 					<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Devis</div>
@@ -137,8 +203,8 @@
 						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 							<tr>
 								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="customer" data-sortable="true" scope="col">Client</th>
-								<th data-field="subject" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
+								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
 								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
 								<th data-field="status" data-sortable="true" scope="col">Statut</th>
@@ -152,14 +218,20 @@
 								{% if quote.archived == 0 %}
 									<tr class="bg-white-shebam">
 										<td>{{ quote.id }}</td>
-										<td>{{ quote.enterprise }}</td>
 										<td>{{ quote.subject }}</td>
+										<td>{{ quote.object }}</td>
 										<td>
 										{% for quote in quote.person %}
 											{{ quote.firstname }} <br>
 										{% endfor %}
 										</td>
-										<td>{{ quote.comment }}</td>
+										<td>											
+											{% if quote.comment is empty %}
+												Pas de remarque
+											{% else %}
+												{{ quote.comment }}
+											{% endif %}
+										</td>
 										<td>{{ quote.status|raw }}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
@@ -181,59 +253,6 @@
 						</div>
 					{% endif %}
 				</div>
-				<div class="col">
-					<!-- Table Priority 2 -->
-					<div class="text-center bg-green-light-shebam color-white-shebam p-3 font-weight-bold">Priorité 2</div>
-					<table id="tableOrderTask2" class="table" data-toggle="table"  {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true"{% endif %}>
-						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
-							<tr>
-								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="customer" data-sortable="true" scope="col">Client</th>
-								<th data-field="subject" data-sortable="true" scope="col">Sujet</th>
-								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
-								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
-								<th data-field="status" data-sortable="true" scope="col">Statut</th>
-							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-								<th scope="col">Action</th>
-							{% endif %}
-							</tr>
-						</thead>
-						<tbody>
-							{% for task2 in task2 %}
-								{% if task2.archived == 0 %}
-									<tr class="bg-white-shebam">
-										<td>{{task2.id}}
-										<td>{{task2.customer}}</td>
-										<td>{% if task2.subject is empty %}{% else %}{{task2.subject}}<br>{% endif %}
-											{% if task2.subsubject1 is empty %}{% else %}{{task2.subsubject1}}<br>{% endif %} 
-											{% if task2.subsubject2 is empty %}{% else %}{{task2.subsubject2}}<br>{% endif %}
-											{% if task2.subsubject3 is empty %}{% else %}{{task2.subsubject3}}<br>{% endif %}
-										</td>
-										<td>{% for task2 in task2.users %}
-												{{ task2.firstname }} <br>
-											{% endfor %}
-										</td>
-										<td>{{task2.comment}}</td>
-										<td>{{task2.status.name|raw}}</td>
-									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-										<td>
-											<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
-										</td>
-									{% endif %}
-									</tr>
-								{% endif %}
-							{% endfor %}
-						</tbody>
-					</table>
-					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-						<div class="btn-add-task-home">
-							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="#ajouterunetachep2">Ajouter</a></p>
-						</div>
-						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('task2_list_add_admin') }}">Ajouter</a></p>
-						</div>
-					{% endif %}
-				</div>
 			</div>
 
 			<!-- POPUP -->
@@ -252,10 +271,10 @@
 							{% endif %}
 								<div class="form-group">
 									{{ form_row(form_task_p1_add_front.customer) }}
-									{{ form_row(form_task_p1_add_front.subject) }}
-									{{ form_row(form_task_p1_add_front.subsubject1) }}
-									{{ form_row(form_task_p1_add_front.subsubject2) }}
-									{{ form_row(form_task_p1_add_front.subsubject3) }}
+									{{ form_row(form_task_p1_add_front.object) }}
+									{{ form_row(form_task_p1_add_front.subobject1) }}
+									{{ form_row(form_task_p1_add_front.subobject2) }}
+									{{ form_row(form_task_p1_add_front.subobject3) }}
 									{{ form_row(form_task_p1_add_front.status|raw) }}
 									{{ form_row(form_task_p1_add_front.users) }}
 									{{ form_row(form_task_p1_add_front.comment) }}
@@ -267,7 +286,36 @@
 					</div>
 				</div>
 			</div>
-
+			<!-- Task2 -->
+			<div id="ajouterunetachep2" class="overlay">
+				<div class="was-validated popup bg-white-light-shebam is-valid">
+				<h2 class="mb-4">Ajout une tâche P2</h2>
+				<a class="close" href=""><i class="fas fa-times"></i></a>
+					<div class="content">
+						{{ form_start(form_task2_add_front) }}
+							{% if notification %}
+								<div class="alert alert-success">{{ notification }}<br>
+									<hr>
+									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
+								</div>
+							{% endif %}
+								<div class="form-group">
+									{{ form_row(form_task2_add_front.customer) }}
+									{{ form_row(form_task2_add_front.object) }}
+									{{ form_row(form_task2_add_front.subobject1) }}
+									{{ form_row(form_task2_add_front.subobject2) }}
+									{{ form_row(form_task2_add_front.subobject3) }}
+									{{ form_row(form_task2_add_front.status|raw) }}
+									{{ form_row(form_task2_add_front.users) }}
+									{{ form_row(form_task2_add_front.comment) }}
+								</div>
+								<div class="form-group">
+									{{ form_row(form_task2_add_front.submit) }}
+								</div>
+						{{ form_end(form_task2_add_front) }}
+					</div>
+				</div>
+			</div>
 			<!-- Appointment -->
 			<div id="ajouterunrendezvous" class="overlay">
 				<div class="was-validated popup bg-white-light-shebam is-valid">
@@ -309,8 +357,8 @@
 								</div>
 							{% endif %}
 								<div class="form-group">
-									{{ form_row(form_quote_add_front.enterprise) }}
 									{{ form_row(form_quote_add_front.subject) }}
+									{{ form_row(form_quote_add_front.object) }}
 									{{ form_row(form_quote_add_front.comment) }}
 									{{ form_row(form_quote_add_front.person) }}
 									{{ form_row(form_quote_add_front.status) }}
@@ -319,36 +367,6 @@
 									{{ form_row(form_quote_add_front.submit) }}
 								</div>
 						{{ form_end(form_quote_add_front) }}
-					</div>
-				</div>
-			</div>
-			<!-- Task2 -->
-			<div id="ajouterunetachep2" class="overlay">
-				<div class="was-validated popup bg-white-light-shebam is-valid">
-				<h2 class="mb-4">Ajout une tâche P2</h2>
-				<a class="close" href=""><i class="fas fa-times"></i></a>
-					<div class="content">
-						{{ form_start(form_task2_add_front) }}
-							{% if notification %}
-								<div class="alert alert-success">{{ notification }}<br>
-									<hr>
-									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
-								</div>
-							{% endif %}
-								<div class="form-group">
-									{{ form_row(form_task2_add_front.customer) }}
-									{{ form_row(form_task2_add_front.subject) }}
-									{{ form_row(form_task2_add_front.subsubject1) }}
-									{{ form_row(form_task2_add_front.subsubject2) }}
-									{{ form_row(form_task2_add_front.subsubject3) }}
-									{{ form_row(form_task2_add_front.status|raw) }}
-									{{ form_row(form_task2_add_front.users) }}
-									{{ form_row(form_task2_add_front.comment) }}
-								</div>
-								<div class="form-group">
-									{{ form_row(form_task2_add_front.submit) }}
-								</div>
-						{{ form_end(form_task2_add_front) }}
 					</div>
 				</div>
 			</div>

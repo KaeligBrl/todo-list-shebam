@@ -18,15 +18,7 @@ class AdminTaskQuoteModifyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('enterprise',  TextType::class, [
-                'required' => true,
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'Entreprise',
-                    'class' => ' form-control is-invalid'
-                ]
-            ])
-            ->add('subject', TextType::class, [
+            ->add('subject',  TextType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => [
@@ -34,10 +26,19 @@ class AdminTaskQuoteModifyType extends AbstractType
                     'class' => ' form-control is-invalid'
                 ]
             ])
-            ->add('comment', TextareaType::class, array(
+            ->add('object', TextType::class, [
                 'required' => true,
                 'label' => false,
+                'attr' => [
+                    'placeholder' => 'Objet',
+                    'class' => ' form-control is-invalid'
+                ]
+            ])
+            ->add('comment', TextareaType::class, array(
+                'required' => false,
+                'label' => false,
                 'attr' => ['placeholder' => 'Remarque'],
+                'empty_data' => '',
             ))
             ->add('person', EntityType::class, array(
                 'required' => true,

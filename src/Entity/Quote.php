@@ -22,12 +22,12 @@ class Quote
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $enterprise;
+    private $subject;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $subject;
+    private $object;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="quotes")
@@ -40,7 +40,7 @@ class Quote
     private $status;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $comment;
 
@@ -64,18 +64,6 @@ class Quote
         return $this->id;
     }
 
-    public function getEnterprise(): ?string
-    {
-        return $this->enterprise;
-    }
-
-    public function setEnterprise(string $enterprise): self
-    {
-        $this->enterprise = $enterprise;
-
-        return $this;
-    }
-
     public function getSubject(): ?string
     {
         return $this->subject;
@@ -84,6 +72,18 @@ class Quote
     public function setSubject(string $subject): self
     {
         $this->subject = $subject;
+
+        return $this;
+    }
+
+    public function getObject(): ?string
+    {
+        return $this->object;
+    }
+
+    public function setObject(string $object): self
+    {
+        $this->object = $object;
 
         return $this;
     }

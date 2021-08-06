@@ -2,9 +2,11 @@
 
 namespace App\Form\Front\Task;
 
-use App\Entity\User;
 use App\Entity\Task;
+use App\Entity\User;
 use App\Entity\Status;
+use App\Entity\Customer;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,7 +14,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use App\Entity\Customer;
 
 class FrontTaskAddType extends AbstractType
 {
@@ -21,60 +22,73 @@ class FrontTaskAddType extends AbstractType
         $builder
         ->add('customer', EntityType::class, array(
             'required' => true,
-            'label' => 'Client : ',
+            'label' => 'Sujet',
             'class' => Customer::class,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC');
+            }
         ))
-        ->add('subject',  TextType::class, [
+        ->add('object',  TextType::class, [
             'required' => true,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sujet',
+                'placeholder' => 'Objet',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject1',  TextType::class, [
+        ->add('subobject1',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 1',
+                'placeholder' => 'Sous-Objet 1',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject2',  TextType::class, [
+        ->add('subobject2',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 2',
+                'placeholder' => 'Sous-Objet 2',
                 'class' => ' form-control is-invalid'
             ]
         ])
-        ->add('subsubject3',  TextType::class, [
+        ->add('subobject3',  TextType::class, [
             'required' => false,
             'label' => false,
             'attr' => [
-                'placeholder' => 'Sous-Sujet 3',
+                'placeholder' => 'Sous-Objet 3',
                 'class' => ' form-control is-invalid'
             ]
         ])
         ->add('users', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s) :',
+            'label' => 'Personne(s)',
             'class' => User::class,
             'multiple' => true,
             'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.firstname', 'ASC');
+            }
         ))
         ->add('status', EntityType::class, array(
             'required' => true,
-            'label' => 'Statut :',
+            'label' => 'Statut',
             'class' => Status::class,
             'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC');
+            }
         ))
         ->add('comment', TextareaType::class, array(
-            'required' => true,
+            'required' => false,
             'label' => false,
             'attr' => ['placeholder' => 'Remarque'],
+            'empty_data' => ''
         ))
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

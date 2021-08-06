@@ -1,0 +1,175 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{%  block title %}Tâches archivées - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
+    </style>
+</head>
+	<body>
+		<div class="mb-5">
+			<h1 class="text-center color-blue-dark-shebam mb-3">Liste des tâches</h1>
+			<hr>
+			<p class="text-center mb-4">Les tâches affichées sont celles archivées.</p>
+			<div class="d-flex justify-content-center">
+				<div class="mt-3 btn-submit-home-shebam btn">
+					<a href="{{path('button_list_download_admin') }}">Télécharger la liste des tâches</a>
+				</div>
+			</div>
+			<div class="mb-5"></div>
+			<div class="row">
+				<div class="col padding-mobile">
+					<!-- Table Priority 1 -->
+					<div class="text-center bg-yellow-shebam color-white-shebam p-3 font-weight-bold">Priorité 1</div>
+					<table id="tableOrderTask" class="table mb-5" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
+							<tr>
+								<th data-visible="false">ID</th>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Remarque</th>
+								<th scope="col">Statut</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for task in task %}
+								{% if task.archived == 1 %}
+									<tr class="bg-white-shebam">
+										<td>{{ task.id }}</td>
+										<td >{{task.customer}}</td>
+										<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
+											{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
+											{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
+											{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
+										</td>
+										<td>{% for task in task.users %}
+												{{ task.firstname }} <br>
+											{% endfor %}
+										</td>
+										<td>{{task.comment}}</td>
+										<td>{{task.status.name|raw}}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="col">
+					<!-- Table Appointment -->
+					<div class="text-center bg-pink-shebam color-white-shebam p-3 font-weight-bold">Rendez-vous</div>
+					<table id="tableOrderAppointment" class="table" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam">
+							<tr>
+								<th data-visible="false">ID</th>
+								<th scope="col">Sujet</th>
+								<th  scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Date et heure</th>
+								<th scope="col">Statut</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for appointment in appointment %}
+								{% if appointment.archived == 1 %}							
+									<tr class="bg-white-shebam">
+										<td>{{appointment.id}}</td>
+										<td>{{appointment.name}}</td>
+										<td>{{appointment.subject}}</td>
+										<td>
+										{% for appointment in appointment.user %}
+											{{ appointment.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>{{ appointment.hoursappointment|date("d/m/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+										<td>{{appointment.statut|raw}}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="mt-5"></div>
+
+			<div class="row">
+				<div class="col">
+					<!-- Table Priority 2 -->
+					<div class="text-center bg-green-light-shebam color-white-shebam p-3 font-weight-bold">Priorité 2</div>
+					<table id="tableOrderTask2" class="table" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
+							<tr>
+								<th data-field="id" data-visible="false">ID</th>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Remarque</th>
+								<th scope="col">Statut</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for task2 in task2 %}
+								{% if task2.archived == 1 %}
+									<tr class="bg-white-shebam">
+										<td>{{task2.id}}
+										<td>{{task2.customer}}</td>
+										<td>{% if task2.subject is empty %}{% else %}{{task2.subject}}<br>{% endif %}
+											{% if task2.subsubject1 is empty %}{% else %}{{task2.subsubject1}}<br>{% endif %} 
+											{% if task2.subsubject2 is empty %}{% else %}{{task2.subsubject2}}<br>{% endif %}
+											{% if task2.subsubject3 is empty %}{% else %}{{task2.subsubject3}}<br>{% endif %}
+										</td>
+										<td>{% for task2 in task2.users %}
+												{{ task2.firstname }} <br>
+											{% endfor %}
+										</td>
+										<td>{{task2.comment}}</td>
+										<td>{{task2.status.name|raw}}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="col padding-mobile">
+					<!-- Table Quote -->
+					<div class="text-center bg-blue-light-shebam color-white-shebam p-3 font-weight-bold">Devis</div>
+					<table id="tableOrderQuote" class="table" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
+							<tr>
+								<th data-visible="false">ID</th>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Remarque</th>
+								<th scope="col">Statut</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for quote in quote %}
+								{% if quote.archived == 1 %}
+									<tr class="bg-white-shebam">
+										<td>{{ quote.id }}</td>
+										<td>{{ quote.enterprise }}</td>
+										<td>{{ quote.subject }}</td>
+										<td>
+										{% for quote in quote.person %}
+											{{ quote.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>{{ quote.comment }}</td>
+										<td>{{ quote.status|raw }}</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+{%  endblock %}
