@@ -28,7 +28,7 @@
 		<div class="wrapper">
 			<nav id="sidebar" class="bg-yellow-shebam">
 				<div class="sidebar-header bg-white-shebam">
-					<a href="{{ path('admin') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype du la liste des tâches SHEBAM!"></a>
+					<a href="{{ path('admin') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype la liste des tâches SHEBAM!"></a>
 				</div>
 				<ul class="list-unstyled components color-white-shebam">
 					{# <li>
@@ -97,7 +97,7 @@
 			</div>
 		</nav>
 		<div class="container mb-5 title-dashboard">
-			{% block titre_admin_page %}<h4 class="color-blue-dark-shebam">{% block title_titre_admin_page_base %}<a href="{{ path('admin') }} " title="Retourner sur le tableau de bord">Administration</a> <i class="fas fa-arrow-right"></i>
+			{% block titre_admin_page %}<h4 class="color-blue-dark-shebam">{% block title_titre_admin_page_base %}<a href="{{ path('task_list_admin') }} " title="Retourner sur le tableau de bord">Administration</a> <i class="fas fa-arrow-right"></i>
 			{% endblock %}Tableau de Bord / {{app.user.firstname}} {{app.user.lastname}}</h4>
 			{% endblock %}
 		</div>

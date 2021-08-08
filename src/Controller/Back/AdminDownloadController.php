@@ -32,8 +32,8 @@ class AdminDownloadController extends AbstractController
      */
     public function listDownload(FileRepository $downloadAdmin): Response
     {
-        return $this->render('back/download/index.html.twig', [
-            'download' =>$downloadAdmin->findBy(array(), array('name' => 'ASC')),
+        return $this->render('back/file/index.html.twig', [
+            'file' =>$downloadAdmin->findBy(array(), array('name' => 'ASC')),
         ]);
     }
 
@@ -42,8 +42,13 @@ class AdminDownloadController extends AbstractController
      * @param File $downloadDelete
      * return RedirectResponse
      */
+
     public function deleteStatus(File $downloadDelete): RedirectResponse
     {
+        $fileName = $this->getParameter('download_task_directory') . '/' . $downloadDelete->getName();
+        if(file_exists($fileName)){
+            unlink($fileName);
+            }
         $em = $this->getDoctrine()->getManager();
         $em->remove($downloadDelete);
         $em->flush();
@@ -57,12 +62,15 @@ class AdminDownloadController extends AbstractController
     /**
      * @Route("/admin/telechargement/telecharger", name="button_list_download_admin")
      */
+    
     public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin, LoggerInterface $logger)
     {
+        // # We define the date in Europe configuration
+        // date_default_timezone_set('UTC');
+
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Gotham');
         $pdfOptions->setIsRemoteEnabled(true);
-        // la partie ssl de la vidéo a été supprimé 
         $dompdf = new Dompdf($pdfOptions);
         $html = $this->renderView('back/tasks_archived/download.html.twig', [
             'task' => $taskAdmin->findAll(),
@@ -76,7 +84,9 @@ class AdminDownloadController extends AbstractController
 
         $image = new File;
         $path = $this->getParameter('download_task_directory');
-        $fileName = md5(uniqid()) . '.pdf';
+        
+        $dateFile = date("d-m-y");
+        $fileName = 'liste-des-tâches-du-'. $dateFile .'.pdf';
         $fsObject = new Filesystem();
 
         try {
@@ -98,9 +108,6 @@ class AdminDownloadController extends AbstractController
         $image->setName($fileName);
         $this->entityManager->persist($image);
         $this->entityManager->flush();
-
-        return new Response('', Response::HTTP_OK, [
-            'Content-Type' => 'application/pdf',
-        ]);
+        return $this->redirectToRoute('download_list_admin');
     }
 }
