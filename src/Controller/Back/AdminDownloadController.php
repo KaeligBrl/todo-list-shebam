@@ -33,7 +33,7 @@ class AdminDownloadController extends AbstractController
     public function listDownload(FileRepository $downloadAdmin): Response
     {
         return $this->render('back/file/index.html.twig', [
-            'file' => $downloadAdmin->findBy(array(), array('name' => 'ASC')),
+            'file' =>$downloadAdmin->findBy(array(), array('name' => 'ASC')),
         ]);
     }
 
@@ -46,9 +46,9 @@ class AdminDownloadController extends AbstractController
     public function deleteStatus(File $downloadDelete): RedirectResponse
     {
         $fileName = $this->getParameter('download_task_directory') . '/' . $downloadDelete->getName();
-        if (file_exists($fileName)) {
+        if(file_exists($fileName)){
             unlink($fileName);
-        }
+            }
         $em = $this->getDoctrine()->getManager();
         $em->remove($downloadDelete);
         $em->flush();
@@ -62,7 +62,7 @@ class AdminDownloadController extends AbstractController
     /**
      * @Route("/admin/telechargement/telecharger", name="button_list_download_admin")
      */
-
+    
     public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789')
     {
         // # We define the date in Europe configuration
@@ -85,18 +85,16 @@ class AdminDownloadController extends AbstractController
         $image = new File;
         $charactersLength = strlen($characters);
         $randomString = '';
-        for (
-            $i = 0;
-            $i < $length;
+        for ($i = 0; $i < $length;
             $i++
         ) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         $path = $this->getParameter('download_task_directory');
-
+        
         $dateFile = date("d-m-y");
-        $fileName = 'liste-des-taches-' . $randomString . '-du-' . $dateFile . '.pdf';
-
+        $fileName = 'liste-des-taches-du-'. $dateFile .'-'. $randomString .'.pdf';
+    
         $fsObject = new Filesystem();
 
         try {
@@ -109,6 +107,8 @@ class AdminDownloadController extends AbstractController
                 $fsObject->chmod($file, 0777);
                 $fsObject->dumpFile($file, $output);
             }
+
+
         } catch (IOExceptionInterface $exception) {
             $logger->error("Impossible de créer le fichier");
         }

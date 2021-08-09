@@ -41,10 +41,10 @@
 									<tr class="bg-white-shebam">
 										<td>{{ task.id }}</td>
 										<td >{{task.customer}}</td>
-										<td>{% if task.subject is empty %}{% else %}{{task.subject}}<br>{% endif %}
-											{% if task.subsubject1 is empty %}{% else %}{{task.subsubject1}}<br>{% endif %} 
-											{% if task.subsubject2 is empty %}{% else %}{{task.subsubject2}}<br>{% endif %}
-											{% if task.subsubject3 is empty %}{% else %}{{task.subsubject3}}<br>{% endif %}
+										<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+											{% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+											{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
 										</td>
 										<td>{% for task in task.users %}
 												{{ task.firstname }} <br>
