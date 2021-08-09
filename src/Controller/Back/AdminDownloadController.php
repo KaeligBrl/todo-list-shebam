@@ -83,10 +83,13 @@ class AdminDownloadController extends AbstractController
         $output = $dompdf->output();
 
         $image = new File;
+        $chaine ="abcdefghijklmnopqrstuvwxyz";
+        $ref = substr($chaine, rand(0, 2), rand(0, 2));
         $path = $this->getParameter('download_task_directory');
         
         $dateFile = date("d-m-y");
-        $fileName = 'liste-des-tâches-du-'. $dateFile .'.pdf';
+        $fileName = 'liste-des-taches-'. $ref.'-du-'. $dateFile .'.pdf';
+    
         $fsObject = new Filesystem();
 
         try {
@@ -102,7 +105,7 @@ class AdminDownloadController extends AbstractController
 
 
         } catch (IOExceptionInterface $exception) {
-            $this->$logger->error("Impossible de créer le fichier");
+            $logger->error("Impossible de créer le fichier");
         }
 
         $image->setName($fileName);

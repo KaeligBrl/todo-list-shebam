@@ -22,7 +22,7 @@
 					{% for file in file %}
 						<tr>
 							<td>{{ file.name }}</a></td>
-							<td>{{ file.createdat|date('d/m/Y')}}</td>
+							<td>{{ file.createdat|date("d-m-Y")}} à {{file.createdat|date((" H:i"))}}</td>
                             <td>
 								<a href="{{ asset("file_tasks/" ~ file.name) }}" target="new"><i class="fas fa-eye"></i></a>
 								|
