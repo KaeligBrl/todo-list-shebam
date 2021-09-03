@@ -42,7 +42,7 @@ class AdminUserController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute("user_admin");
+        return $this->redirectToRoute("user_list_admin");
     }
         /**
      * @Route("/admin/utilisateurs/ajouter", name="user_add_admin")
@@ -62,7 +62,7 @@ class AdminUserController extends AbstractController
                 $notification = 'L\'utilisateur a bien été ajouté';
                 $user = new User();
                 $form = $this->createForm(AdminUserAddType:: class, $user);
-                return $this->redirectToRoute("user_admin");
+                return $this->redirectToRoute("user_list_admin");
             }
         return $this->render('back/user/add.html.twig', [
             'form_admin_user_add' => $form->createView(),
