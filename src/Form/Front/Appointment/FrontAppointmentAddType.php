@@ -41,7 +41,7 @@ class FrontAppointmentAddType extends AbstractType
             'days' => range(1,31),
             'years' => range(2021,2022),
             'hours' => range(7,18),
-            'minutes' => range(0,59),
+            'widget' => 'single_text',
         ])
         ->add('user', EntityType::class, array(
             'required' => true,

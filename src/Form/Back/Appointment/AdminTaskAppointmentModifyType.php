@@ -40,7 +40,7 @@ class AdminTaskAppointmentModifyType extends AbstractType
                 'days' => range(1,31),
                 'years' => range(2021,2023),
                 'hours' => range(7,18),
-                'placeholder' => ['january' => 'janvier'],
+                'widget' => 'single_text',
             ])
             ->add('user', EntityType::class, array(
                 'required' => true,

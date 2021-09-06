@@ -1,17 +1,15 @@
 {% extends 'back/tasks_archived/base-pdf.html.twig' %}
 
 {% block body %}
-    <h3 class="text-center mb-3" style="color: caa904;"> Liste archivée téléchargée le {{ "now"|date("d/m/Y") }}</h3>
+    <h3 class="text-center mb-3" style="color: caa904;"> Liste archivée téléchargée le {{ "now"|date("d/m/Y") }}</h3><br>
     <div class="mb-5"></div>
     <div class="text-center p-3" style="background-color: #FFD600; color: #ffffff; font-weight: bold;">Priorité 1</div>
     <table class="table table-striped table-light" data-toggle="table">
-        <thead style="background-color: #caa904; color: #ffffff">
+        <thead style="background-color: #FFD600; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
                 <th scope="col">Objet</th>
                 <th scope="col">Personne(s) Désignée(s)</th>
-                <th scope="col">Remarque</th>
-                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -29,14 +27,6 @@
                                 {{ task.firstname }} <br>
                             {% endfor %}
                         </td>
-                        <td>											
-                            {% if task.comment is empty %}
-                                Pas de remarque
-                            {% else %}
-                                {{ task.comment }}
-                            {% endif %}
-                        </td>
-                        <td>{{task.status.name|raw}}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -47,13 +37,11 @@
 
     <div style="background-color: #6CBFA5; color: #ffffff; font-weight: bold;" class="text-center p-3">Priorité 2</div>
     <table class="table table-striped table-light" data-toggle="table">
-        <thead style="background-color: #caa904; color: #ffffff">
+        <thead style="background-color: #6CBFA5; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
                 <th scope="col">Objet</th>
                 <th scope="col">Personne(s) Désignée(s)</th>
-                <th scope="col">Remarque</th>
-                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -71,14 +59,6 @@
                                 {{ task2.firstname }} <br>
                             {% endfor %}
                         </td>
-                        <td>											
-                            {% if task2.comment is empty %}
-                                Pas de remarque
-                            {% else %}
-                                {{ task2.comment }}
-                            {% endif %}
-                        </td>
-                        <td>{{task2.status.name|raw}}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -89,12 +69,11 @@
 
     <div style="background-color: #DE99C3; color: #ffffff; font-weight: bold;" class="text-center p-3">Rendez-vous</div>
     <table class="table table-striped table-light" data-toggle="table">
-        <thead style="background-color: #caa904; color: #ffffff ">
+        <thead style="background-color: #DE99C3; color: #ffffff ">
             <tr>
                 <th scope="col">Sujet</th>
                 <th scope="col">Objet</th>
                 <th>Personne(s) Désignée(s)</th>
-                <th scope="col">Statut</th>
                 <th scope="col">Date et heure</th>
             </tr>
         </thead>
@@ -109,8 +88,7 @@
                             {{ appointment.firstname }} <br>
                         {% endfor %}
                         </td>
-                        <td>{{appointment.statut|raw}}</td>
-                        <td>{{ appointment.hoursappointment|date('j F Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+                        <td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
                     </tr>
                 {% endif %}
             {% endfor %}
@@ -121,13 +99,11 @@
 
     <div style="background-color: #34BDE8; color: #ffffff; font-weight: bold;" class="text-center p-3">Devis</div>
     <table class="table table-striped table-light" data-toggle="table">
-        <thead style="background-color: #caa904; color: #ffffff">
+        <thead style="background-color: #34BDE8; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
                 <th scope="col">Objet</th>
                 <th>Personne(s) Désignée(s)</th>
-                <th scope="col">Remarque</th>
-                <th scope="col">Statut</th>
             </tr>
         </thead>
         <tbody>
@@ -141,14 +117,6 @@
                             {{ quote.firstname }} <br>
                         {% endfor %}
                         </td>
-                        <td>											
-                            {% if quote.comment is empty %}
-                                Pas de remarque
-                            {% else %}
-                                {{ quote.comment }}
-                            {% endif %}
-                        </td>
-                        <td>{{ quote.status|raw }}</td>
                     </tr>
                 {% endif %}
             {% endfor %}

@@ -31,8 +31,13 @@
                 <ul class="navbar-nav mr-auto">
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item active">
+                        <li class="nav-item active"> 
+                            {% if app.request.attributes.get('tasks_archived') %}
+                            
+                            <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches en cours</a>
+                            {% else %}
                             <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived') }}">Tâches archivées</a>
+                            {% endif %}
                         </li>
                     {% endif %}
                 {% endif %}

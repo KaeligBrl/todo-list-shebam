@@ -72,6 +72,7 @@ class AdminDownloadController extends AbstractController
         $pdfOptions->set('defaultFont', 'Gotham');
         $pdfOptions->setIsRemoteEnabled(true);
         $dompdf = new Dompdf($pdfOptions);
+        $dompdf->setPaper('A3', 'landscape');
         $html = $this->renderView('back/tasks_archived/download.html.twig', [
             'task' => $taskAdmin->findAll(),
             'appointment' => $appointmentAdmin->findAll(),
