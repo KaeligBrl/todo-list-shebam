@@ -91,13 +91,55 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/tache/{id}/supprimer", name="task_detete_home")
-     * @param Task $quoteDelete
+     * @param Task $taskDelete
      * return RedirectResponse
      */
-    public function deleteAppointment(Task $taskDelete): RedirectResponse
+    public function deleteTask(Task $taskDelete): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($taskDelete);
+        $em->flush();
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/tache2/{id}/supprimer", name="task2_detete_home")
+     * @param Task2 $task2Delete
+     * return RedirectResponse
+     */
+    public function deleteTask2(Task2 $task2Delete): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($task2Delete);
+        $em->flush();
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/rendez-vous/{id}/supprimer", name="appointment_detete_home")
+     * @param Appointment $appointmentDelete
+     * return RedirectResponse
+     */
+    public function deleteAppointment(Appointment $appointmentDelete): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($appointmentDelete);
+        $em->flush();
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/devis/{id}/supprimer", name="quote_detete_home")
+     * @param Quote $quoteDelete
+     * return RedirectResponse
+     */
+    public function deleteQuote(Quote $quoteDelete): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($quoteDelete);
         $em->flush();
 
         return $this->redirectToRoute("home");
