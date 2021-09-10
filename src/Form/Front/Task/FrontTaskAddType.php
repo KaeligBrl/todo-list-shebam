@@ -4,7 +4,6 @@ namespace App\Form\Front\Task;
 
 use App\Entity\Task;
 use App\Entity\User;
-use App\Entity\Status;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;

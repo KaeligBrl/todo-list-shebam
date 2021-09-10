@@ -4,7 +4,6 @@ namespace App\Form\Front\Quote;
 
 use App\Entity\User;
 use App\Entity\Quote;
-use App\Entity\Status;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

@@ -3,7 +3,6 @@
 namespace App\Form\Front\Appointment;
 
 use App\Entity\User;
-use App\Entity\Status;
 use App\Entity\Appointment;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;

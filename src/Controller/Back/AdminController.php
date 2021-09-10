@@ -6,7 +6,6 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Quote;
 use App\Entity\Task2;
-use App\Entity\Status;
 use App\Entity\Customer;
 use App\Entity\Appointment;
 use Symfony\Component\HttpFoundation\Response;
