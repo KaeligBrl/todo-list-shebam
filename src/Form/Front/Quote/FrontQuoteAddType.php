@@ -34,31 +34,13 @@ class FrontQuoteAddType extends AbstractType
                     'class' => ' form-control is-invalid'
                 ]
             ])
-            ->add('comment', TextType::class, [
-                'required' => false,
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'Remarque',
-                    'class' => ' form-control is-invalid'
-                ]
-            ])
+
             ->add('person', EntityType::class, array(
                 'required' => true,
                 'label' => 'Personne(s) Désigné(e): ',
                 'class' => User::class,
                 'multiple' => true,
-                'expanded' => true,
                 'label_attr' => ['class' => 'label-custom'],
-            ))
-            ->add('status', EntityType::class, array(
-                'required' => true,
-                'label' => 'Statut :',
-                'class' => Status::class,
-                'label_attr' => ['class' => 'label-custom'],
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.name', 'ASC');
-            }
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

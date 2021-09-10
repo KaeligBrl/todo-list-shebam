@@ -32,11 +32,10 @@
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item active"> 
-                            {% if app.request.attributes.get('tasks_archived') %}
-                            
-                            <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches en cours</a>
+                            {% if 'home' != app.request.attributes.get('_route') %}
+                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches en cours</a>
                             {% else %}
-                            <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived') }}">Tâches archivées</a>
+                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived') }}">Tâches archivées</a>
                             {% endif %}
                         </li>
                     {% endif %}

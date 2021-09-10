@@ -4,8 +4,6 @@ namespace App\Form\Back\Task;
 
 use App\Entity\User;
 use App\Entity\Task;
-use App\Entity\Status;
-use App\Entity\Statut;
 use App\Form\UserMultipleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -74,29 +72,12 @@ class AdminTaskAddType extends AbstractType
             'label' => 'Personne(s)',
             'class' => User::class,
             'multiple' => true,
-            'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
             }
             
-        ))
-        ->add('status', EntityType::class, array(
-            'required' => true,
-            'label' => 'Statut',
-            'class' => Status::class,
-            'label_attr' => ['class' => 'label-custom'],
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('s')
-                    ->orderBy('s.name', 'ASC');
-            }
-        ))
-        ->add('comment', TextareaType::class, array(
-            'required' => false,
-            'label' => false,
-            'attr' => ['placeholder' => 'Remarque'],
-            'empty_data' => ''
         ))
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

@@ -35,16 +35,6 @@ class Quote
     private $person;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="quotes")
-     */
-    private $status;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $comment;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $archived;
@@ -108,30 +98,6 @@ class Quote
     public function removePerson(User $person): self
     {
         $this->person->removeElement($person);
-
-        return $this;
-    }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(string $comment): self
-    {
-        $this->comment = $comment;
 
         return $this;
     }

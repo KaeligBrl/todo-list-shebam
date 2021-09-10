@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use App\Entity\Status;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\Collection;
@@ -27,19 +26,9 @@ class Task
     private $object;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $comment;
-
-    /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
      */
     private $users;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="tasks")
-    */
-    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="tasks")
@@ -93,18 +82,6 @@ class Task
         return $this;
     }
 
-    public function getcomment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setcomment(string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
     /**
      * @return Collection|User[]
      */
@@ -137,18 +114,6 @@ class Task
     public function setObject(string $object): self
     {
         $this->object = $object;
-
-        return $this;
-    }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }

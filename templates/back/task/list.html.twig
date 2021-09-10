@@ -24,8 +24,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -43,14 +41,6 @@
 									{{ task.firstname }} <br>
 								{% endfor %}
 							</td>
-							<td>											
-								{% if task.comment is empty %}
-									Pas de remarque
-								{% else %}
-									{{ task.comment }}
-								{% endif %}
-							</td>
-							<td>{{task.status.name|raw}}</td>
 							<td>
 								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 									|
@@ -79,8 +69,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -98,14 +86,6 @@
 									{{ task2.firstname }} <br>
 								{% endfor %}
 						</td>
-							<td>											
-								{% if task2.comment is empty %}
-									Pas de remarque
-								{% else %}
-									{{ task2.comment }}
-								{% endif %}
-							</td>
-							<td>{{task2.status.name|raw}}</td>
 							<td>
 								<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
 								|
@@ -135,7 +115,6 @@
 						<th scope="col">Objet</th>
 						<th>Personne(s)</th>
 						<th scope="col">Date et heure</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -151,7 +130,6 @@
 								{% endfor %}
 								</td>
 								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
-								<td>{{appointment.statut|raw}}</td>
 								<td>
 									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 									|
@@ -180,8 +158,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -196,14 +172,6 @@
 									{{ quote.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>											
-									{% if quote.comment is empty %}
-										Pas de remarque
-									{% else %}
-										{{ quote.comment }}
-									{% endif %}
-								</td>
-								<td>{{ quote.status|raw }}</td>
 								<td>
 									<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 									|

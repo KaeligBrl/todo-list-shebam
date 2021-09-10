@@ -23,21 +23,10 @@ class Task2
      * @ORM\Column(type="string", length=255)
      */
     private $object;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $comment;
-
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="task2s")
      */
     private $users;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="task2s")
-     */
-    private $status;
 
     /**
      * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="task2")
@@ -91,40 +80,12 @@ class Task2
         return $this;
     }
 
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Status[]
      */
     public function getUsers(): Collection
     {
         return $this->users;
-    }
-
-    public function addUser(Status $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(Status $user): self
-    {
-        $this->users->removeElement($user);
-
-        return $this;
     }
 
     public function getCustomer(): ?Customer
@@ -135,18 +96,6 @@ class Task2
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
-
-        return $this;
-    }
-
-    public function getStatus(): ?Status
-    {
-        return $this->status;
-    }
-
-    public function setStatus(?Status $status): self
-    {
-        $this->status = $status;
 
         return $this;
     }

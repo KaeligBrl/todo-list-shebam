@@ -31,8 +31,6 @@
 								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
 								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
-								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
-								<th data-field="status" data-sortable="true" scope="col">Statut</th>
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 									<th scope="col">Action</th>
 								{% endif %}
@@ -53,14 +51,6 @@
 												{{ task.firstname }} <br>
 											{% endfor %}
 										</td>
-										<td>											
-											{% if task.comment is empty %}
-												Pas de remarque
-											{% else %}
-												{{ task.comment }}
-											{% endif %}
-										</td>
-										<td>{{task.status.name|raw}}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
 											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
@@ -91,7 +81,6 @@
 								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
 								<th data-field="hours" data-sortable="true" scope="col">Date et heure</th>
-								<th data-field="status" data-sortable="true"scope="col">Statut</th>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 								<th scope="col">Action</th>
 							{% endif %}
@@ -110,7 +99,6 @@
 										{% endfor %}
 										</td>
 										<td>{{ appointment.hoursappointment|date("d/m/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
-										<td>{{appointment.statut|raw}}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
 											<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
@@ -135,6 +123,9 @@
 
 			<div class="mt-5"></div>
 
+
+			<div class="mt-5"></div>
+
 			<div class="row">
 
 				<div class="col">
@@ -147,8 +138,6 @@
 								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
 								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
-								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
-								<th data-field="status" data-sortable="true" scope="col">Statut</th>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 								<th scope="col">Action</th>
 							{% endif %}
@@ -169,14 +158,6 @@
 												{{ task2.firstname }} <br>
 											{% endfor %}
 										</td>
-										<td>											
-											{% if task2.comment is empty %}
-												Pas de remarque
-											{% else %}
-												{{ task2.comment }}
-											{% endif %}
-										</td>
-										<td>{{task2.status.name|raw}}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
 											<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
@@ -206,8 +187,6 @@
 								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
 								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
 								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
-								<th data-field="comment" data-sortable="true" scope="col">Remarque</th>
-								<th data-field="status" data-sortable="true" scope="col">Statut</th>
 							{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 								<th scope="col">Action</th>
 							{% endif %}
@@ -225,14 +204,6 @@
 											{{ quote.firstname }} <br>
 										{% endfor %}
 										</td>
-										<td>											
-											{% if quote.comment is empty %}
-												Pas de remarque
-											{% else %}
-												{{ quote.comment }}
-											{% endif %}
-										</td>
-										<td>{{ quote.status|raw }}</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
 											<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
@@ -263,21 +234,13 @@
 					<a class="close" href=""><i class="fas fa-times"></i></a>
 						<div class="content">
 						{{ form_start(form_task_p1_add_front) }}
-							{% if notification %}
-								<div class="alert alert-success">{{ notification }}<br>
-									<hr>
-									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
-								</div>
-							{% endif %}
 								<div class="form-group">
 									{{ form_row(form_task_p1_add_front.customer) }}
 									{{ form_row(form_task_p1_add_front.object) }}
 									{{ form_row(form_task_p1_add_front.subobject1) }}
 									{{ form_row(form_task_p1_add_front.subobject2) }}
 									{{ form_row(form_task_p1_add_front.subobject3) }}
-									{{ form_row(form_task_p1_add_front.status|raw) }}
 									{{ form_row(form_task_p1_add_front.users) }}
-									{{ form_row(form_task_p1_add_front.comment) }}
 								</div>
 								<div class="form-group">
 									{{ form_row(form_task_p1_add_front.submit) }}
@@ -293,21 +256,13 @@
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
 						{{ form_start(form_task2_add_front) }}
-							{% if notification %}
-								<div class="alert alert-success">{{ notification }}<br>
-									<hr>
-									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
-								</div>
-							{% endif %}
 								<div class="form-group">
 									{{ form_row(form_task2_add_front.customer) }}
 									{{ form_row(form_task2_add_front.object) }}
 									{{ form_row(form_task2_add_front.subobject1) }}
 									{{ form_row(form_task2_add_front.subobject2) }}
 									{{ form_row(form_task2_add_front.subobject3) }}
-									{{ form_row(form_task2_add_front.status|raw) }}
 									{{ form_row(form_task2_add_front.users) }}
-									{{ form_row(form_task2_add_front.comment) }}
 								</div>
 								<div class="form-group">
 									{{ form_row(form_task2_add_front.submit) }}
@@ -323,17 +278,10 @@
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
 						{{ form_start(form_appointment_add_front) }}
-							{% if notification %}
-								<div class="alert alert-success">{{ notification }}<br>
-									<hr>
-									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
-								</div>
-							{% endif %}
 								<div class="form-group">
 									{{ form_row(form_appointment_add_front.name) }}
 									{{ form_row(form_appointment_add_front.subject) }}
 									{{ form_row(form_appointment_add_front.hoursappointment) }}
-									{{ form_row(form_appointment_add_front.statut) }}
 									{{ form_row(form_appointment_add_front.user) }}
 								</div>
 								<div class="form-group">
@@ -350,18 +298,10 @@
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
 						{{ form_start(form_quote_add_front) }}
-							{% if notification %}
-								<div class="alert alert-success">{{ notification }}<br>
-									<hr>
-									<a class="btn-success-front" href="{{ path('home') }}">Voir la liste des tâches</a>
-								</div>
-							{% endif %}
 								<div class="form-group">
 									{{ form_row(form_quote_add_front.subject) }}
 									{{ form_row(form_quote_add_front.object) }}
-									{{ form_row(form_quote_add_front.comment) }}
 									{{ form_row(form_quote_add_front.person) }}
-									{{ form_row(form_quote_add_front.status) }}
 								</div>
 								<div class="form-group">
 									{{ form_row(form_quote_add_front.submit) }}

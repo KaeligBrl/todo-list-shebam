@@ -9,12 +9,10 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class AdminUserAddType extends AbstractType
@@ -53,8 +51,6 @@ class AdminUserAddType extends AbstractType
                 ]
             ])
             ->add('password', RepeatedType::class, [
-            // ->add('password', ShowHidePasswordType::class, [
-                // 'type' => PasswordType::class,
                 'type' => ShowHidePasswordType::class,
                 'invalid_message' => 'Les mot de passes ne sont pas identiques',
                 'label' => false,

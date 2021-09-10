@@ -46,9 +46,6 @@
 						</ul>
 					</li>
 					<li>
-						<a href="{{ path('status_list_admin') }}" title="Aller sur le statut"><i class="fas fa-signal"></i> Status</a>
-					</li>
-					<li>
 						<a href="{{ path('customer_list_admin') }}" title="Aller sur la liste des clients"><i class="fas fa-user-tie"></i> Clients</a>
 					</li>
 					<li>
@@ -120,17 +117,6 @@
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâche P2</p>
 						{% else %}
 							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâches P2</p>
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm">
-					<div class="framed">
-						<h3 class="mb-4">Status</h3>
-						{# Status Condition #}
-						{% if countStatus <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countStatus }}</span> statut créé</p>
-						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countStatus }}</span> statuts créés</p>
 						{% endif %}
 					</div>
 				</div>

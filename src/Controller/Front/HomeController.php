@@ -12,13 +12,14 @@ use App\Repository\Task2Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\Task\FrontTaskAddType;
 use App\Repository\AppointmentRepository;
-use App\Form\Front\Task2\FrontTask2AddType;
 use App\Form\Front\Quote\FrontQuoteAddType;
+use App\Form\Front\Task2\FrontTask2AddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Front\Appointment\FrontAppointmentAddType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Form\Front\Appointment\FrontAppointmentAddType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -40,7 +41,7 @@ class HomeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
-            $notification = 'La tâche a bien été ajoutée';
+            return $this->redirectToRoute("home");
         }
 
         $appointmentAdd = new Appointment();
@@ -50,7 +51,8 @@ class HomeController extends AbstractController
         if ($formappointment->isSubmitted() && $formappointment->isValid()) {
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été ajoutée';
+            return $this->redirectToRoute("home");
+            
         }
 
         $quoteAdd = new Quote();
@@ -60,7 +62,7 @@ class HomeController extends AbstractController
         if ($formquote->isSubmitted() && $formquote->isValid()) {
             $this->entityManager->persist($quoteAdd);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été ajoutée';
+            return $this->redirectToRoute("home");
         }
 
         $task2Add = new Task2();
@@ -70,8 +72,9 @@ class HomeController extends AbstractController
         if ($formtask2->isSubmitted() && $formtask2->isValid()) {
             $this->entityManager->persist($task2Add);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été ajoutée';
+            return $this->redirectToRoute("home");
         }
+
 
         return $this->render('front/home/index.html.twig', [
             'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
@@ -84,6 +87,20 @@ class HomeController extends AbstractController
             'form_task2_add_front' => $formtask2->createView(),
             'notification' => $notification,
         ]);
+    }
+
+    /**
+     * @Route("/tache/{id}/supprimer", name="task_detete_home")
+     * @param Task $quoteDelete
+     * return RedirectResponse
+     */
+    public function deleteAppointment(Task $taskDelete): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($taskDelete);
+        $em->flush();
+
+        return $this->redirectToRoute("home");
     }
 
     /**

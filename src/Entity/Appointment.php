@@ -28,10 +28,6 @@ class Appointment
      * @ORM\Column(type="string", length=100)
      */
     private $subject;
-    /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="appointments")
-     */
-    private $statut;
 
     /**
      * @ORM\Column(type="datetime")
@@ -83,18 +79,6 @@ class Appointment
     public function setSubject(string $subject): self
     {
         $this->subject = $subject;
-
-        return $this;
-    }
-
-    public function getStatut(): ?Status
-    {
-        return $this->statut;
-    }
-
-    public function setStatut(?Status $statut): self
-    {
-        $this->statut = $statut;
 
         return $this;
     }

@@ -19,8 +19,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -38,14 +36,6 @@
                                             {{ task.firstname }} <br>
                                         {% endfor %}
                                     </td>
-									<td>											
-										{% if task.comment is empty %}
-											Pas de remarque
-										{% else %}
-											{{ task.comment }}
-										{% endif %}
-									</td>
-                                    <td>{{task.status.name|raw}}</td>
                                     <td>
                                         <a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
                                             |
@@ -66,8 +56,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -85,18 +73,10 @@
                                         {{ task2.firstname }} <br>
                                     {% endfor %}
                                 </td>
-								<td>											
-									{% if task2.comment is empty %}
-										Pas de remarque
-									{% else %}
-										{{ task2.comment }}
-									{% endif %}
-								</td>
-                                <td>{{task2.status.name|raw}}</td>
                                 <td>
                                     <a href="{{ path('task_list_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>	
                                     |
-                                    <a href="{{ path('task2_unarchived_admin', {"id": task2.id}) }}"><i class="fas fa-folder-minus"></i></a>		
+                                    <a href="{{ path('task2_unarchived_admin', {"id": task2.id}) }}"><i class="fas fa-folder-minus"></i></a>
                                 </td>
                             </tr>
                         {% endif %}
@@ -114,7 +94,6 @@
 						<th scope="col">Objet</th>
 						<th>Personne(s)</th>
 						<th scope="col">Date et heure</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -130,7 +109,6 @@
 								{% endfor %}
 								</td>
 								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
-								<td>{{appointment.statut|raw}}</td>
 								<td>
 									<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>					
 										|
@@ -151,8 +129,6 @@
 						<th scope="col">Sujet</th>
 						<th scope="col">Objet</th>
 						<th scope="col">Personne(s)</th>
-						<th scope="col">Remarque</th>
-						<th scope="col">Statut</th>
 						<th scope="col">Action</th>
 					</tr>
 				</thead>
@@ -167,14 +143,6 @@
 									{{ quote.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>											
-									{% if quote.comment is empty %}
-										Pas de remarque
-									{% else %}
-										{{ quote.comment }}
-									{% endif %}
-								</td>
-								<td>{{ quote.status|raw }}</td>
 								<td>
 									<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 									|

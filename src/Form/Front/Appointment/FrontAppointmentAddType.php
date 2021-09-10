@@ -48,21 +48,10 @@ class FrontAppointmentAddType extends AbstractType
             'label' => 'Personne(s) :',
             'class' => User::class,
             'multiple' => true,
-            'expanded' => true,
             'label_attr' => ['class' => 'label-custom'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
-            }
-        ))
-        ->add('statut', EntityType::class, array(
-            'required' => true,
-            'label' => 'Statut :',
-            'class' => Status::class,
-            'label_attr' => ['class' => 'label-custom'],
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('s')
-                    ->orderBy('s.name', 'ASC');
             }
         ))
         ->add('submit', SubmitType::class, [

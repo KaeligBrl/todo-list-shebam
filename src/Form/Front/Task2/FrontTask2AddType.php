@@ -4,7 +4,6 @@ namespace App\Form\Front\Task2;
 
 use App\Entity\User;
 use App\Entity\Task2;
-use App\Entity\Status;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
@@ -13,7 +12,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class FrontTask2AddType extends AbstractType
 {
@@ -67,28 +65,11 @@ class FrontTask2AddType extends AbstractType
                 'label' => 'Personne(s) :',
                 'class' => User::class,
                 'multiple' => true,
-                'expanded' => true,
                 'label_attr' => ['class' => 'label-custom'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.firstname', 'ASC');
                 }
-            ))
-            ->add('status', EntityType::class, array(
-                'required' => true,
-                'label' => 'Statut :',
-                'class' => Status::class,
-                'label_attr' => ['class' => 'label-custom'],
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('s')
-                        ->orderBy('s.name', 'ASC');
-                }
-            ))
-            ->add('comment', TextareaType::class, array(
-                'required' => false,
-                'label' => false,
-                'attr' => ['placeholder' => 'Remarque'],
-                'empty_data' => ''
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',

@@ -37,23 +37,14 @@ class AdminTaskAppointmentAddType extends AbstractType
         ->add('hoursappointment', DateTimeType::class, [
             'label' => 'Heure du rendez-vous :',
             'label_attr' => ['class' => 'label-custom'],
-            'days' => range(1,31),
-            'years' => range(2021,2022),
-            'hours' => range(7,18),
-            'format' => 'dd-MM-yyyy',
+            'widget' => 'single_text',
+            'minutes' => ['00', '15', '30', '45'],
         ])
         ->add('user', EntityType::class, array(
             'required' => true,
             'label' => 'Personne(s) :',
             'class' => User::class,
             'multiple' => true,
-            'expanded' => true,
-            'label_attr' => ['class' => 'label-custom'],
-        ))
-        ->add('statut', EntityType::class, array(
-            'required' => true,
-            'label' => 'Statut :',
-            'class' => Status::class,
             'label_attr' => ['class' => 'label-custom'],
         ))
         ->add('submit', SubmitType::class, [
