@@ -24,9 +24,6 @@
             <a href="{{ path('home') }}">
                 <img class="navbar-img" src="{{ asset('assets/images/logo-to-do-list-hor.png') }}" alt="Logo de la to do list Shebam!">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                 {% if app.user %}
@@ -35,7 +32,7 @@
                             {% if 'home' != app.request.attributes.get('_route') %}
                                 <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches en cours</a>
                             {% else %}
-                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived') }}">Tâches archivées</a>
+                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived_home') }}">Tâches archivées</a>
                             {% endif %}
                         </li>
                     {% endif %}
@@ -65,7 +62,11 @@
                 {% if is_granted('ROLE_USER') %}
                     <div class="mobile-bottom-nav__item">
                         <div class="mobile-bottom-nav__item-content">
-                            <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Accueil</a>
+                            {% if 'home' != app.request.attributes.get('_route') %}
+                                <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Tâches en cours</a>
+                            {% else %}
+                                <a href="{{ path('tasks_archived_home') }}"><i class="fas fa-home"></i><br>Tâches archivées</a>
+                            {% endif %}
                         </div>		
                     </div>
                     <div class="mobile-bottom-nav__item">
@@ -75,11 +76,10 @@
                     </div>
                 {% endif %}
             {% endif %} 
-        {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
                     <a href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i><br>Connexion</a>
-                    
                 </div>		
             </div>
             <div class="mobile-bottom-nav__item">

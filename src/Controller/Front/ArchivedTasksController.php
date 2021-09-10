@@ -14,7 +14,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArchivedTasksController extends AbstractController
 {
     /**
-     * @Route("/taches-archivées", name="tasks_archived")
+     * @Route("/taches-archivées", name="tasks_archived_home")
      */
     public function index(TaskRepository $tasksHomeArchived, AppointmentRepository $appointmentHomeArchived, QuoteRepository $quoteHomeArchived, Task2Repository $task2HomeArchived): Response
     {

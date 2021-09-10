@@ -49,13 +49,6 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        //Count Statut
-        $repoStatus = $em->getRepository(Status::class);
-        $totalStatus = $repoStatus->createQueryBuilder('a')
-            ->select('count(a.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-
         //Count User
         $repoUser = $em->getRepository(User::class);
         $totalUser = $repoUser->createQueryBuilder('a')
@@ -75,7 +68,6 @@ class AdminController extends AbstractController
             'countTaskP2Board'=> $totalTaskP2,
             'countAppointment' => $totalAppointment,            
             'countQuote' => $totalQuote,
-            'countStatus' => $totalStatus,
             'countUser' => $totalUser,
             'countCustomer' => $totalCustomer
 
