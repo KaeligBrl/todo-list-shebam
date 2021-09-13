@@ -164,7 +164,7 @@
 										</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('task_quote_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
 											|
 											<a href="{{ path('task2_detete_home', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche p2')"><i class="fas fa-trash"></i></a>
 										</td>
