@@ -46,7 +46,7 @@ class AdminTasksController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/archives", name="task_list_archived_admin")
+     * @Route("/admin/liste-des-taches/archiver", name="task_list_archived_admin")
      */
     public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
     {
@@ -145,6 +145,20 @@ class AdminTasksController extends AbstractController
         return $this->redirectToRoute("task_list_archived_admin"); 
     }
 
+    /**
+     * @Route("/admin/liste-des-taches-p1/{id}/archiver/supprimer", name="task_list_archived_delete_admin")
+     * @param Task $deleteTaskArchived
+     * return RedirectResponse
+     */
+    public function deleteTaskArchived(Task $deleteTaskArchived): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($deleteTaskArchived);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_archived_admin");
+    }
+
     // ------------------------------
     // --------- Priority 2 ---------
     // ------------------------------
@@ -229,6 +243,20 @@ class AdminTasksController extends AbstractController
         ->setTask2ForUnarchived($task2->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches-p2/{id}/archiver/supprimer", name="task2_list_archived_delete_admin")
+     * @param Task2 $deleteTask2Archived
+     * return RedirectResponse
+     */
+    public function deleteTask2Archived(Task2 $deleteTask2Archived): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($deleteTask2Archived);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_archived_admin");
     }
 
 
@@ -321,6 +349,20 @@ class AdminTasksController extends AbstractController
         return $this->redirectToRoute("task_list_archived_admin"); 
     }
 
+    /**
+     * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver/supprimer", name="appointment_archived_delete_admin")
+     * @param Appointment $deleteAppointmentArchived
+     * return RedirectResponse
+     */
+    public function deleteAppointmentArchived(Appointment $deleteAppointmentArchived): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($deleteAppointmentArchived);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_archived_admin");
+    }
+
     // ------------------------------
     // ----------- Quote ------------
     // ------------------------------
@@ -407,6 +449,20 @@ class AdminTasksController extends AbstractController
         ->setQuoteForUnArchived($quote->getId());
     
         return $this->redirectToRoute("task_list_archived_admin"); 
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/devis/{id}/archiver/supprimer", name="quote_list_archived_delete_admin")
+     * @param Quote $deleteQuoteArchived
+     * return RedirectResponse
+     */
+    public function deleteQuoteArchived(Quote $deleteQuoteArchived): RedirectResponse
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($deleteQuoteArchived);
+        $em->flush();
+
+        return $this->redirectToRoute("task_list_archived_admin");
     }
 
 }

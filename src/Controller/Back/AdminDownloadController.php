@@ -33,7 +33,7 @@ class AdminDownloadController extends AbstractController
     public function listDownload(FileRepository $downloadAdmin): Response
     {
         return $this->render('back/file/index.html.twig', [
-            'file' =>$downloadAdmin->findBy(array(), array('name' => 'ASC')),
+            'file' =>$downloadAdmin->findBy(array(), array('created_at' => 'desc')),
         ]);
     }
 
