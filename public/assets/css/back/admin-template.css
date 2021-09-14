@@ -78,3 +78,7 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .btn-outline-light {color: var(--color-white);background-color: var(--blue-dark-shebam);border-color: var(--color-white);}
 .btn-outline-light:hover {color: var(--blue-dark-shebam);background-color: var(--color-white);border-color: var(--blue-dark-shebam);
 }
+
+.changelog{margin: 0 25px 25px 0;padding: 20px;border: 2px solid #000000; border-radius: 10px;width: 40%;}
+.changelog p{clear: both;}
+.changelog p:first-child{text-align: center;color:#000000 ; font-weight: 400;font-size: 20px;text-decoration: underline;}

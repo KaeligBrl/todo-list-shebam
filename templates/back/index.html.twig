@@ -52,9 +52,13 @@
 						<a href="{{ path('user_list_admin') }}" title="Aller sur la liste de l'équipe"><i class="fas fa-users"></i> Équipe</a>
 					</li>
 					<li>
-						<a href="{{ path('download_list_admin') }}" title="Aller sur la liste de l'équipe"><i class="fas fa-download"></i> Téléchargement</a>
+						<a href="{{ path('download_list_admin') }}" title="Aller sur la liste des téléchargements"><i class="fas fa-download"></i> Téléchargement</a>
+					</li>
+					<li>
+						<a href="{{ path('changelog') }}" title="Aller sur l'historique des changemnents de la list des tâches"><i class="fas fa-clipboard-list"></i> Changements</a>
 					</li>
 				</ul>
+
 			</nav>
 			
 
@@ -62,15 +66,17 @@
 			<div id="content">
 				<nav class="navbar navbar-expand-lg bg-white-shebam">
 					<div class="container-fluid">
+					
 							<button type="button" id="sidebarCollapse" class="navbar-btn">
 								<span></span>
 								<span></span>
 								<span></span>
 							</button>
+							
 							<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<i class="fas fa-align-justify"></i>
 							</button>
-
+						
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="nav navbar-nav ml-auto">
 								<li class="nav-item active">
@@ -100,51 +106,6 @@
 		</div>
 		<div class="container">
 			{% block admin_utilisateur %}
-			<div class="row text-center">
-				<div class="col-sm">
-					<div class="framed">
-						<h3 class="mb-4">Tâches</h3>
-						{# Task P1 Condition #}
-						{% if countTaskP1Board <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tâche P1</p>
-						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP1Board }}</span> tâches P1</p>
-						{% endif %}
-						{# Task P2 Condition #}
-						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countAppointment }}</span> rendez-vous</p>
-						<p class="color-black-shebam"><span class="color-yellow-dark">{{ countQuote }}</span>  devis à faire</p>
-						{% if countTaskP2Board <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâche P2</p>
-						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countTaskP2Board }}</span> tâches P2</p>
-						{% endif %}
-					</div>
-				</div>
-			</div>
-			<div class="row text-center">
-				<div class="col-sm">
-					<div class="framed">
-						<h3 class="mb-4">Clients</h3>
-						{# Customer Condition #}
-						{% if countCustomer <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countCustomer }}</span> client</p>
-						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countCustomer }}</span> clients</p>
-						{% endif %}
-					</div>
-				</div>
-				<div class="col-sm">
-					<div class="framed">
-						<h3 class="mb-4">Équipe</h3>
-						{# Status Condition #}
-						{% if countUser <= 1 %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personne dans l'équipe</p>
-						{% else %}
-							<p class="color-black-shebam"><span class="color-yellow-dark">{{ countUser }}</span> personnes dans l'équipe</p>
-						{% endif %}
-					</div>
-				</div>
-			</div>
 			{% endblock %}
 		</div>
 
