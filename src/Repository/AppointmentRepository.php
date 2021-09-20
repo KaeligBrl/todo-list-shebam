@@ -35,4 +35,18 @@ class AppointmentRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
+
+    public function setAppointmentArchivedBtn()
+    {
+        $sql = "update App\Entity\Appointment as t set t.archived = 1";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
+    public function setAppointmentUnArchivedBtn()
+    {
+        $sql = "update App\Entity\Appointment as t set t.archived = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
 }

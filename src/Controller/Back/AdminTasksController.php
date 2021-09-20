@@ -34,12 +34,12 @@ class AdminTasksController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/", name="task_list_admin")
      */
-    public function listTask(TaskRepository $taskAdmin, AppointmentRepository $rendezvousAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
+    public function listTask(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
     {
 
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findAll(),
-            'appointment' => $rendezvousAdmin->findAll(),
+            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
         ]);
@@ -52,7 +52,7 @@ class AdminTasksController extends AbstractController
     {
         return $this->render('back/tasks_archived/list.html.twig', [
             'task' => $taskArchivedAdmin->findAll(),
-            'appointment' => $appointmentArchivedAdmin->findAll(),
+            'appointment' => $appointmentArchivedAdmin->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quoteArchivedAdmin->findAll(),
             'task2' => $task2ArchivedAdmin->findAll()
         ]);
@@ -461,6 +461,56 @@ class AdminTasksController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($deleteQuoteArchived);
         $em->flush();
+
+        return $this->redirectToRoute("task_list_archived_admin");
+    }
+
+    /**
+     *@Route("/admin/liste-des-taches/bouton-archiver/", name="task_btn_archived_admin")
+     */
+    public function archivedBtn(): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setAppointmentArchivedBtn();
+
+        $rep2 = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setTaskArchivedBtn();
+
+        $rep4 = $this->getDoctrine()
+            ->getRepository(Task2::class)
+            ->setTask2ArchivedBtn();
+
+        $rep4 = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setQuoteArchivedBtn();
+
+        return $this->redirectToRoute("task_list_admin");
+    }
+
+    /**
+     *@Route("/admin/liste-des-taches/bouton-desarchiver/", name="task_btn_unarchived_admin")
+     */
+    public function unArchivedBtn(): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setAppointmentUnArchivedBtn();
+
+        $rep2 = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setTaskUnArchivedBtn();
+
+        $rep4 = $this->getDoctrine()
+            ->getRepository(Task2::class)
+            ->setTask2UnArchivedBtn();
+
+        $rep4 = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setQuoteUnArchivedBtn();
 
         return $this->redirectToRoute("task_list_archived_admin");
     }

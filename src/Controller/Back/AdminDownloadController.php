@@ -75,7 +75,7 @@ class AdminDownloadController extends AbstractController
         $dompdf->setPaper('A3', 'landscape');
         $html = $this->renderView('back/tasks_archived/download.html.twig', [
             'task' => $taskAdmin->findAll(),
-            'appointment' => $appointmentAdmin->findAll(),
+            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
         ]);

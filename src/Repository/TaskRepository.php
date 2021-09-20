@@ -35,4 +35,18 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function setTaskArchivedBtn()
+    {
+        $sql = "update App\Entity\Task as t set t.archived = 1";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
+    public function setTaskUnArchivedBtn()
+    {
+        $sql = "update App\Entity\Task as t set t.archived = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
 }

@@ -35,4 +35,18 @@ class Task2Repository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
+
+    public function setTask2ArchivedBtn()
+    {
+        $sql = "update App\Entity\Task2 as t set t.archived = 1";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
+    public function setTask2UnArchivedBtn()
+    {
+        $sql = "update App\Entity\Task2 as t set t.archived = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
 }

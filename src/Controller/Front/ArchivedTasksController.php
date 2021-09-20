@@ -20,7 +20,7 @@ class ArchivedTasksController extends AbstractController
     {
         return $this->render('front/tasks_archived/index.html.twig', [
             'task' => $tasksHomeArchived->findBy([], ['position' => 'ASC']),
-            'appointment' => $appointmentHomeArchived->findBy([], ['position' => 'ASC']),
+            'appointment' => $appointmentHomeArchived->findBy([], ['position' => 'ASC', 'hoursappointment' => 'DESC']),
             'quote' => $quoteHomeArchived->findBy([], ['position' => 'ASC']),
             'task2' => $task2HomeArchived->findBy([], ['position' => 'ASC']),
         ]);

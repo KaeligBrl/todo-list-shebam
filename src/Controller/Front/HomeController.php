@@ -78,7 +78,7 @@ class HomeController extends AbstractController
 
         return $this->render('front/home/index.html.twig', [
             'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
-            'appointment' => $appointmentAdmin->findBy([], ['position' => 'ASC']),
+            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quoteAdmin->findBy([], ['position' => 'ASC']),
             'task2' => $task2Admin->findBy([], ['position' => 'ASC']),
             'form_task_p1_add_front' => $form->createView(),

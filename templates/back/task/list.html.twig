@@ -11,6 +11,7 @@
 	</div>
 	{% block admin_utilisateur %}
 		<div class="container">
+			<div class="mb-5"></div>
 			<div class="text-center bg-yellow-shebam color-white-shebam p-3 justify-content-md-center">Priorité 1
 				<div class="add-icon-custom d-flex flew-row-reverse">			
 					<a href="{{ path('task_list_add_admin') }}" title="Ajouter une tâche P1" type="button">
@@ -129,7 +130,7 @@
 									{{ appointment.firstname }} <br>
 								{% endfor %}
 								</td>
-								<td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+								<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 								<td>
 									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 									|
@@ -186,6 +187,24 @@
 			</table>
 
 			<div class="mb-5"></div>
+
+			{% set taskbool = true %}
+            {% for task in task %}
+                {% for appointment in appointment %}
+                    {% for quote in quote %}
+                        {% for task2 in task2 %}
+							{% if taskbool %}
+                            	{% if task.archived == true or appointment.archived == true or quote.archived == true or task2.archived == true %}
+                                	<div class="mt-3 text-center btn-submit-admin-shebam btn pointer-event">Les tâches doivent être désarchivées</div>
+                            	{% else %}	
+		    					<div class="mt-3 text-center btn-submit-admin-shebam btn"><a href="{{ path('task_btn_archived_admin') }}">Archiver l'ensemble</a></div>
+								{% endif %}
+							{% endif %}
+							{% set taskbool = false %}
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>  
 	{% endblock %}

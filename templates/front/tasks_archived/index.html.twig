@@ -79,7 +79,7 @@
 											{{ appointment.firstname }} <br>
 										{% endfor %}
 										</td>
-										<td>{{ appointment.hoursappointment|date("d/m/Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 									</tr>
 								{% endif %}
 							{% endfor %}
