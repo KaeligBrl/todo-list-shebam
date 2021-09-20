@@ -4,187 +4,190 @@
 
 {% block body %}
 
-		<link rel="stylesheet" href="{{ asset('assets/js/custom.js') }}">
+	<link rel="stylesheet" href="{{ asset('assets/js/custom.js') }}">
 
-	<div>
+
 		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Liste de nos tâches{% endblock %}
-	</div>
+
 	{% block admin_utilisateur %}
-		<div class="container">
-			<div class="mb-5"></div>
-			<div class="text-center bg-yellow-shebam color-white-shebam p-3 justify-content-md-center">Priorité 1
-				<div class="add-icon-custom d-flex flew-row-reverse">			
-					<a href="{{ path('task_list_add_admin') }}" title="Ajouter une tâche P1" type="button">
-						<i class="fas fa-plus-circle"></i>
-					</a>
-				</div>
-			</div>
-			<table class="table table-striped table-light table text-center" data-toggle="table">
-				<thead class="bg-grey-shebam color-white-shebam">
-					<tr>
-						<th scope="col">Sujet</th>
-						<th scope="col">Objet</th>
-						<th scope="col">Personne(s)</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for task in task %}
-					{% if task.archived == 0 %}
-						<tr>
-							<td>{{task.customer}}</td>
-							<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
-								{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-								{% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
-								{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
-							</td>
-							<td>{% for task in task.users %}
-									{{ task.firstname }} <br>
-								{% endfor %}
-							</td>
-							<td>
-								<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
-									|
-								<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
-									|
-								<a href="{{ path('taskp1_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>							
-							</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-				</tbody>
-			</table>
-
-			<div class="mb-5"></div>
-
-			<div class="text-center bg-green-light-shebam color-white-shebam p-3">Priorité 2
-				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task2_list_add_admin') }}" title="Ajouter une tâche P2" type="button">
-						<i class="fas fa-plus-circle"></i>
-					</a>
-				</div>
-			</div>
-			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-grey-shebam color-white-shebam">
-					<tr>
-						<th scope="col">Sujet</th>
-						<th scope="col">Objet</th>
-						<th scope="col">Personne(s)</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-				{% for task2 in task2 %}
-					{% if task2.archived == 0 %}
-						<tr>
-							<td>{{task2.customer}}</td>
-							<td>{% if task2.object is empty %}{% else %}{{task2.object}}<br>{% endif %}
-								{% if task2.subobject1 is empty %}{% else %}{{task2.subobject1}}<br>{% endif %} 
-								{% if task2.subobject3 is empty %}{% else %}{{task2.subobject2}}<br>{% endif %}
-								{% if task2.subobject3 is empty %}{% else %}{{task2.subobject3}}<br>{% endif %}
-							</td>
-							<td>{% for task2 in task2.users %}
-									{{ task2.firstname }} <br>
-								{% endfor %}
-						</td>
-							<td>
-								<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
-								|
-								<a href="{{ path('task2_list_detete_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
-								|
-								<a href="{{ path('task2_archived_admin', {"id": task2.id}) }}"><i class="fas fa-folder-plus"></i></a>				
-							</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-				</tbody>
-			</table>
-
-			<div class="mb-5"></div>
-
-			<div class="text-center bg-pink-shebam color-white-shebam p-3">Rendez-vous
-				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task_appointment_add_admin') }}" title="Ajouter un rendez-vous" type="button">
-						<i class="fas fa-plus-circle"></i>
-					</a>
-				</div>
-			</div>
-			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-grey-shebam color-white-shebam">
-					<tr>
-						<th scope="col">Sujet</th>
-						<th scope="col">Objet</th>
-						<th>Personne(s)</th>
-						<th scope="col">Date et heure</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for appointment in appointment %}
-						{% if appointment.archived == 0 %}
+		<div class="container-xxl">
+			<div class="row">
+				<div class="col">
+					<div class="text-center bg-yellow-shebam color-white-shebam p-3 justify-content-md-center">Priorité 1
+						<div class="add-icon-custom d-flex flew-row-reverse">			
+							<a href="{{ path('task_list_add_admin') }}" title="Ajouter une tâche P1" type="button">
+								<i class="fas fa-plus-circle"></i>
+							</a>
+						</div>
+					</div>
+					<table class="table table-striped table-light table text-center" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam">
 							<tr>
-								<td>{{appointment.name}}</td>
-								<td>{{appointment.subject}}</td>
-								<td>
-								{% for appointment in appointment.user %}
-									{{ appointment.firstname }} <br>
-								{% endfor %}
-								</td>
-								<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
-								<td>
-									<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
-									|
-									<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
-									|
-									<a href="{{ path('appointment_archived_admin', {"id": appointment.id}) }}"><i class="fas fa-folder-plus"></i></a>
-								</td>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Action</th>
 							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
-
-			<div class="mb-5"></div>
-
-			<div class="text-center bg-blue-light-shebam color-white-shebam p-3 align-bottom">Devis
-				<div class="add-icon-custom d-flex flew-row-reverse">				
-					<a href="{{ path('task_quote_add_admin') }}" title="Ajouter un devis" type="button">
-						<i class="fas fa-plus-circle"></i>
-					</a>
+						</thead>
+						<tbody>
+						{% for task in task %}
+							{% if task.archived == 0 %}
+								<tr>
+									<td>{{task.customer}}</td>
+									<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+										{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+										{% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+										{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
+									</td>
+									<td>{% for task in task.users %}
+											{{ task.firstname }} <br>
+										{% endfor %}
+									</td>
+									<td>
+										<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											|
+										<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
+											|
+										<a href="{{ path('taskp1_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>	
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="col">
+					<div class="text-center bg-green-light-shebam color-white-shebam p-3">Priorité 2
+						<div class="add-icon-custom d-flex flew-row-reverse">				
+							<a href="{{ path('task2_list_add_admin') }}" title="Ajouter une tâche P2" type="button">
+								<i class="fas fa-plus-circle"></i>
+							</a>
+						</div>
+					</div>
+					<table class="table table-striped table-light" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam">
+							<tr>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for task2 in task2 %}
+							{% if task2.archived == 0 %}
+								<tr>
+									<td>{{task2.customer}}</td>
+									<td>{% if task2.object is empty %}{% else %}{{task2.object}}<br>{% endif %}
+										{% if task2.subobject1 is empty %}{% else %}{{task2.subobject1}}<br>{% endif %} 
+										{% if task2.subobject3 is empty %}{% else %}{{task2.subobject2}}<br>{% endif %}
+										{% if task2.subobject3 is empty %}{% else %}{{task2.subobject3}}<br>{% endif %}
+									</td>
+									<td>{% for task2 in task2.users %}
+											{{ task2.firstname }} <br>
+										{% endfor %}
+								</td>
+									<td>
+										<a href="{{ path('task2_list_modify_admin', {"id": task2.id}) }}"><i class="fas fa-cog"></i></a>
+										|
+										<a href="{{ path('task2_list_detete_admin', {"id": task2.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+										|
+										<a href="{{ path('task2_archived_admin', {"id": task2.id}) }}"><i class="fas fa-folder-plus"></i></a>	
+									</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+						</tbody>
+					</table>
 				</div>
 			</div>
-			<table class="table table-striped table-light" data-toggle="table">
-				<thead class="bg-grey-shebam color-white-shebam">
-					<tr>
-						<th scope="col">Sujet</th>
-						<th scope="col">Objet</th>
-						<th scope="col">Personne(s)</th>
-						<th scope="col">Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					{% for quote in quote %}
-						{% if quote.archived == 0 %}
+			<div class="mb-5"></div>
+			<div class="row">
+				<div class="col">
+					<div class="text-center bg-pink-shebam color-white-shebam p-3">Rendez-vous
+						<div class="add-icon-custom d-flex flew-row-reverse">				
+							<a href="{{ path('task_appointment_add_admin') }}" title="Ajouter un rendez-vous" type="button">
+								<i class="fas fa-plus-circle"></i>
+							</a>
+						</div>
+					</div>
+					<table class="table table-striped table-light" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam">
 							<tr>
-								<td>{{ quote.subject }}</td>
-								<td>{{ quote.object }}</td>
-								<td>
-								{% for quote in quote.person %}
-									{{ quote.firstname }} <br>
-								{% endfor %}
-								</td>
-								<td>
-									<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-									|
-									<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
-									|
-									<a href="{{ path('quote_archived_admin', {"id": quote.id}) }}"><i class="fas fa-folder-plus"></i></a>
-								</td>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th>Personne(s)</th>
+								<th scope="col">Date et heure</th>
+								<th scope="col">Action</th>
 							</tr>
-						{% endif %}
-					{% endfor %}
-				</tbody>
-			</table>
+						</thead>
+						<tbody>
+							{% for appointment in appointment %}
+								{% if appointment.archived == 0 %}
+									<tr>
+										<td>{{appointment.name}}</td>
+										<td>{{appointment.subject}}</td>
+										<td>
+										{% for appointment in appointment.user %}
+											{{ appointment.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+										<td>
+											<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
+											|
+											<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+											|
+											<a href="{{ path('appointment_archived_admin', {"id": appointment.id}) }}"><i class="fas fa-folder-plus"></i></a>
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				<div class="col">
+					<div class="text-center bg-blue-light-shebam color-white-shebam p-3 align-bottom">Devis
+						<div class="add-icon-custom d-flex flew-row-reverse">				
+							<a href="{{ path('task_quote_add_admin') }}" title="Ajouter un devis" type="button">
+								<i class="fas fa-plus-circle"></i>
+							</a>
+						</div>
+					</div>
+					<table class="table table-striped table-light" data-toggle="table">
+						<thead class="bg-grey-shebam color-white-shebam">
+							<tr>
+								<th scope="col">Sujet</th>
+								<th scope="col">Objet</th>
+								<th scope="col">Personne(s)</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for quote in quote %}
+								{% if quote.archived == 0 %}
+									<tr>
+										<td>{{ quote.subject }}</td>
+										<td>{{ quote.object }}</td>
+										<td>
+										{% for quote in quote.person %}
+											{{ quote.firstname }} <br>
+										{% endfor %}
+										</td>
+										<td>
+											<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+											|
+											<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
+											|
+											<a href="{{ path('quote_archived_admin', {"id": quote.id}) }}"><i class="fas fa-folder-plus"></i></a>
+										</td>
+									</tr>
+								{% endif %}
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
 
 			<div class="mb-5"></div>
 

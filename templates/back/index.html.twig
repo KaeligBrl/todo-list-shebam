@@ -58,10 +58,8 @@
 						<a href="{{ path('changelog') }}" title="Aller sur l'historique des changemnents de la list des tâches"><i class="fas fa-clipboard-list"></i> Changements</a>
 					</li>
 				</ul>
-
 			</nav>
-			
-
+	
 			<!-- Page Content Holder -->
 			<div id="content">
 				<nav class="navbar navbar-expand-lg bg-white-shebam">
@@ -75,8 +73,13 @@
 							
 							<button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<i class="fas fa-align-justify"></i>
-							</button>
-						
+							</button><br>
+							<div class="container title-dashboard">
+								{% block titre_admin_page %}<h4 class="color-blue-dark-shebam">
+									{% block title_titre_admin_page_base %}<a href="{{ path('task_list_admin') }} " title="Retourner sur la liste des tâches">Administration</a> <i class="fas fa-arrow-right"></i>
+									{% endblock %}Tableau de Bord / {{app.user.firstname}} {{app.user.lastname}}</h4>
+								{% endblock %}
+						</div>
 						<div class="collapse navbar-collapse" id="navbarSupportedContent">
 							<ul class="nav navbar-nav ml-auto">
 								<li class="nav-item active">
@@ -99,12 +102,8 @@
 				</div>
 			</div>
 		</nav>
-		<div class="container mb-5 title-dashboard">
-			{% block titre_admin_page %}<h4 class="color-blue-dark-shebam">{% block title_titre_admin_page_base %}<a href="{{ path('task_list_admin') }} " title="Retourner sur la liste des tâches">Administration</a> <i class="fas fa-arrow-right"></i>
-			{% endblock %}Tableau de Bord / {{app.user.firstname}} {{app.user.lastname}}</h4>
-			{% endblock %}
-		</div>
-		<div class="container">
+
+		<div class="container-xxl">
 			{% block admin_utilisateur %}
 			{% endblock %}
 		</div>
