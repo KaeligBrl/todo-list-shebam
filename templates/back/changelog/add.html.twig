@@ -4,7 +4,7 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Historique - Ajouter{% endblock %}
+		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Historique - Ajouter{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
 		{{ form_start(form_changelog_add_admin) }}

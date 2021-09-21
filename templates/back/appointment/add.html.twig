@@ -17,7 +17,11 @@
 			{% endif %}
 				{{ form_start(form_appointment_add_admin) }}
 			<div class="form-group">
-				{{ form_widget(form_appointment_add_admin)|raw }}
+					{{ form_row(form_appointment_add_admin.name) }}
+					{{ form_row(form_appointment_add_admin.subject) }}
+					{{ form_row(form_appointment_add_admin.hoursappointment) }}
+					{{ form_row(form_appointment_add_admin.user) }}
+					{{ form_row(form_appointment_add_admin.submit) }}
 			</div>
 				{{ form_end(form_appointment_add_admin) }}
 		</div>

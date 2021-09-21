@@ -15,11 +15,17 @@
 					</div>
 				<hr>
 			{% endif %}
-				{{ form_start(form_task_p2_add_admin) }}
+			{{ form_start(form_task2_add_admin) }}
 			<div class="form-group">
-				{{ form_widget(form_task_p2_add_admin) }}
+				{{ form_row(form_task2_add_admin.customer) }}
+				{{ form_row(form_task2_add_admin.object) }}
+				{{ form_row(form_task2_add_admin.subobject1) }}
+				{{ form_row(form_task2_add_admin.subobject2) }}
+				{{ form_row(form_task2_add_admin.subobject3) }}
+				{{ form_row(form_task2_add_admin.users) }}
+				{{ form_row(form_task2_add_admin.submit) }}
 			</div>
-				{{ form_end(form_task_p2_add_admin) }}
+			{{ form_end(form_task2_add_admin) }}
 		</div>
 	{% endblock %}
 {% endblock %}

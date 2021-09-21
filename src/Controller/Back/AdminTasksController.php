@@ -78,7 +78,7 @@ class AdminTasksController extends AbstractController
             $form = $this->createForm(AdminTaskAddType::class, $taskAdd);
         }
             return $this->render('back/task/add.html.twig', [
-                'form_task_p1_add_admin' => $form->createView(),
+                'form_task_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
     }
@@ -100,7 +100,7 @@ class AdminTasksController extends AbstractController
             $form = $this->createForm(AdminTaskModifyType::class, $taskModify);
         }
         return $this->render('back/task/modify.html.twig',[
-            'form_task_p1_modify_admin' => $form->createView(),
+            'form_task_modify_admin' => $form->createView(),
             'notification' => $notification,
             'task' => $taskModify
         ]);   
@@ -179,7 +179,7 @@ class AdminTasksController extends AbstractController
             $form = $this->createForm(AdminTask2AddType::class, $task2Add);
         }
             return $this->render('back/task2/add.html.twig', [
-                'form_task_p2_add_admin' => $form->createView(),
+                'form_task2_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
         }
@@ -213,7 +213,7 @@ class AdminTasksController extends AbstractController
             $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
         }
         return $this->render('back/task2/modify.html.twig',[
-            'form_task_p2_modify_admin' => $form->createView(),
+            'form_task2_modify_admin' => $form->createView(),
             'notification' => $notification,
             'task2' => $task2Modify
         ]);   
@@ -378,12 +378,12 @@ class AdminTasksController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($quoteAdd);
             $this->entityManager->flush();
-            $notification = 'Le devis a bien été ajoutée';
+            $notification = 'Le devis a bien été ajouté';
             $quoteAdd = new Quote();
             $form = $this->createForm(AdminTaskQuoteAddType::class, $quoteAdd);
         }
             return $this->render('back/quote/add.html.twig', [
-                'form_admin_task_quote_add' => $form->createView(),
+                'form_quote_add_admin' => $form->createView(),
                 'notification' => $notification
             ]);
         }
@@ -401,7 +401,7 @@ class AdminTasksController extends AbstractController
             $quoteModify = $form->getData();
             $this->entityManager->persist($quoteModify);
             $this->entityManager->flush();
-            $notification = 'Le devis a bien été mise à jour !';
+            $notification = 'Le devis a bien été mis à jour !';
             $form = $this->createForm(AdminTaskQuoteModifyType::class, $quoteModify);
         }
         return $this->render('back/quote/modify.html.twig',[

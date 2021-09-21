@@ -47,8 +47,6 @@ class AdminTaskAppointmentModifyType extends AbstractType
                 'label' => 'Personne(s) Désigné(e): ',
                 'multiple' => true,
                 'class' => User::class,
-
-                'expanded' => true,
                 'label_attr' => ['class' => 'label-custom'],
             ))
             ->add('submit', SubmitType::class, [

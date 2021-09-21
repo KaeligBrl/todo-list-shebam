@@ -4,25 +4,26 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Utilisateur - Modifier - Liste des tâches{% endblock %}
+{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Utilisateur - Modifier{% endblock %}
 	</div>
 	{% block admin_utilisateur %}
-		<div class="container">
+
+		{{ form_start(form_user_modify_admin) }}
+		<div class="was-validated form-back background-login is-valid">
 			{% if notification %}
-				<hr>
-					<div class="alert alert-success">{{ notification }}<br>
-						<hr>
-						<a href="{{ path('user_admin') }}">Retourner sur la liste</a>
-					</div>
-				<hr>
-			{% endif %}
-		<div class="was-validated">
-			<div class="row">
-				<div class="col-6">
-					{{ form(form_user_modify_admin) }}
+				<div class="alert alert-success">{{ notification }}<br>
+					<hr>
+					<a href="{{ path('user_list_admin') }}">Retourner à la liste</a>
 				</div>
-			</div>
+			{% endif %}
+				<div class="form-group">
+					{{ form_row(form_user_modify_admin.email) }}
+					{{ form_row(form_user_modify_admin.firstname) }}
+					{{ form_row(form_user_modify_admin.lastname) }}
+					{{ form_row(form_user_modify_admin.roles) }}
+					{{ form_row(form_user_modify_admin.submit) }}
+				</div>
 		</div>
+		{{ form_end(form_user_modify_admin) }}
 	{% endblock %}
-	</div>
 {% endblock %}

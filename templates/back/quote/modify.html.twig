@@ -18,7 +18,10 @@
 			{% endif %}
 				{{ form_start(form_quote_modify_admin) }}
 			<div class="form-group">
-				{{ form_widget(form_quote_modify_admin) }}
+				{{ form_row(form_quote_modify_admin.subject) }}
+				{{ form_row(form_quote_modify_admin.object) }}
+				{{ form_row(form_quote_modify_admin.person) }}
+				{{ form_row(form_quote_modify_admin.submit) }}
 			</div>
 				{{ form_end(form_quote_modify_admin) }}
 	{% endblock %}

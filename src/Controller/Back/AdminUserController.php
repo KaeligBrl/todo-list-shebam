@@ -50,7 +50,6 @@ class AdminUserController extends AbstractController
     public function addUser(Request $request, UserPasswordEncoderInterface $encoder){
         $user = new User();
         $form = $this->createForm(AdminUserAddType:: class, $user);
-        $notification = null;
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
@@ -59,14 +58,12 @@ class AdminUserController extends AbstractController
                 $user->setPassword($password);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
-                $notification = 'L\'utilisateur a bien été ajouté';
                 $user = new User();
                 $form = $this->createForm(AdminUserAddType:: class, $user);
                 return $this->redirectToRoute("user_list_admin");
             }
         return $this->render('back/user/add.html.twig', [
-            'form_admin_user_add' => $form->createView(),
-            'notification' => $notification
+            'form_admin_user_add' => $form->createView()
         ]);
     }
 
@@ -87,7 +84,6 @@ class AdminUserController extends AbstractController
                 $user = new User();
                 $user = $form->getData();
                 $form = $this->createForm(AdminUserModifyType:: class, $user);
-                return $this->redirect($request->getUri());
             
     }
         return $this->render('back/user/modify.html.twig',[

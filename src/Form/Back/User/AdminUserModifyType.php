@@ -37,7 +37,7 @@ class AdminUserModifyType extends AbstractType
                     'Utilisateur' => 'ROLE_USER',
                     'Administrateur' => 'ROLE_ADMIN'
                 ),
-                'label' => 'Role',
+                'label' => 'Rôle',
                 'label_attr' => ['class' => 'label-custom'],
             ))
 

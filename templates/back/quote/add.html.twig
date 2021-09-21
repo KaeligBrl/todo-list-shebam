@@ -15,11 +15,14 @@
 					</div>
 				<hr>
 			{% endif %}
-				{{ form_start(form_admin_task_quote_add) }}
+				{{ form_start(form_quote_add_admin) }}
 			<div class="form-group">
-				{{ form_widget(form_admin_task_quote_add) }}
+				{{ form_row(form_quote_add_admin.subject) }}
+				{{ form_row(form_quote_add_admin.object) }}
+				{{ form_row(form_quote_add_admin.person) }}
+				{{ form_row(form_quote_add_admin.submit) }}
 			</div>
-				{{ form_end(form_admin_task_quote_add) }}
+				{{ form_end(form_quote_add_admin) }}
 		</div>
 	{% endblock %}
 {% endblock %}
