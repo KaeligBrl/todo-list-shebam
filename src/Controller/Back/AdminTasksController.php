@@ -39,7 +39,7 @@ class AdminTasksController extends AbstractController
 
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findAll(),
-            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
+            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteAdmin->findAll(),
             'task2' => $task2Admin->findAll(),
         ]);
