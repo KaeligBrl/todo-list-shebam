@@ -63,12 +63,12 @@ class Task
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $p2;
+    private $p1;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $p1;
+    private $p2;
 
     public function __construct()
     {
@@ -200,18 +200,6 @@ class Task
         return $this;
     }
 
-    public function getP2(): ?bool
-    {
-        return $this->p2;
-    }
-
-    public function setP2(?bool $p2): self
-    {
-        $this->p2 = $p2;
-
-        return $this;
-    }
-
     public function getP1(): ?bool
     {
         return $this->p1;
@@ -220,6 +208,18 @@ class Task
     public function setP1(?bool $p1): self
     {
         $this->p1 = $p1;
+
+        return $this;
+    }
+
+    public function getP2(): ?bool
+    {
+        return $this->p2;
+    }
+
+    public function setP2(?bool $p2): self
+    {
+        $this->p2 = $p2;
 
         return $this;
     }

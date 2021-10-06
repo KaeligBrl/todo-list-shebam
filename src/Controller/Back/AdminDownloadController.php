@@ -63,7 +63,7 @@ class AdminDownloadController extends AbstractController
      * @Route("/admin/telechargement/telecharger", name="button_list_download_admin")
      */
     
-    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789')
+    public function taskDownload(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789')
     {
         // # We define the date in Europe configuration
         // date_default_timezone_set('UTC');
@@ -77,7 +77,6 @@ class AdminDownloadController extends AbstractController
             'task' => $taskAdmin->findAll(),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quoteAdmin->findAll(),
-            'task2' => $task2Admin->findAll(),
         ]);
         $dompdf->loadHtml($html);
         $dompdf->render();

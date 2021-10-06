@@ -35,7 +35,8 @@
 								{% if task.archived == 0 %}
 									<tr>
 										<td>{{task.customer}}</td>
-										<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+										<td>
+											{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
 											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
 											{% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
 											{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
@@ -45,13 +46,13 @@
 											{% endfor %}
 										</td>
 										<td>
+											<a href="{{ path('task_change_to_p1_admin', {"id": task.id}) }}"><span>P2</span></a>
+												|
 											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
-												|											
+												|
 											<a href="{{ path('task_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>
 												|
-											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche')"><i class="fas fa-trash"></i></a>
-												|
-											<a href="{{ path('task_change_to_p2_admin', {"id": task.id}) }}"><span>P2</span></a>	
+											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -84,7 +85,8 @@
 								{% if task.archived == 0 %}
 									<tr>
 										<td>{{task.customer}}</td>
-										<td>{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+										<td>
+											{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
 											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
 											{% if task.subobject3 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
 											{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
@@ -94,13 +96,13 @@
 											{% endfor %}
 									</td>
 										<td>
+											<a href="{{ path('task_change_to_p1_admin', {"id": task.id}) }}"><span>P1</span></a>
+												|
 											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
 											<a href="{{ path('task_archived_admin', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>
 												|
 											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
-												|
-											<a href="{{ path('task_change_to_p1_admin', {"id": task.id}) }}"><span>P1</span></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -144,10 +146,10 @@
 										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										<td>
 											<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
-											|
-											<a href="{{ path('task_appointment_detete_admin', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
-											|
-											<a href="{{ path('appointment_archived_admin', {"id": appointment.id}) }}"><i class="fas fa-folder-plus"></i></a>
+												|
+											<a href="{{ path('task_archived_admin', {"id": appointment.id}) }}"><i class="fas fa-folder-plus"></i></a>
+												|
+											<a href="{{ path('appointment_detete_home', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -185,10 +187,10 @@
 										</td>
 										<td>
 											<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-											|
-											<a href="{{ path('task_quote_detete_admin', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
-											|
-											<a href="{{ path('quote_archived_admin', {"id": quote.id}) }}"><i class="fas fa-folder-plus"></i></a>
+												|
+											<a href="{{ path('task_archived_admin', {"id": quote.id}) }}"><i class="fas fa-folder-plus"></i></a>
+												|
+											<a href="{{ path('quote_detete_home', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}

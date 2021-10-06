@@ -4,7 +4,7 @@
     <h3 class="text-center mb-3" style="color: caa904;"> Liste archivée téléchargée le {{ "now"|date("d/m/Y") }}</h3><br>
     <div class="mb-5"></div>
     <div class="text-center p-3" style="background-color: #FFD600; color: #ffffff; font-weight: bold;">Priorité 1</div>
-    <table class="table table-striped table-light" data-toggle="table">
+    <table class="table" data-toggle="table">
         <thead style="background-color: #FFD600; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
@@ -14,20 +14,22 @@
         </thead>
         <tbody>
             {% for task in task %}
-                {% if task.archived == 1 %}
-                    <tr>
-                        <td>{{task.customer}}</td>
-                        <td>
-                            {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
-                            {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-                            {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
-                            {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
-                        </td>
-                        <td>{% for task in task.users %}
-                                {{ task.firstname }} <br>
-                            {% endfor %}
-                        </td>
-                    </tr>
+            	{% if task.p1 == 1 and task.p2 == 0 %}
+                    {% if task.archived == 1 %}
+                        <tr style="background: #e3e3e3">
+                            <td>{{task.customer}}</td>
+                            <td>
+                                {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+                                {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+                                {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+                                {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
+                            </td>
+                            <td>{% for task in task.users %}
+                                    {{ task.firstname }} <br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>
@@ -36,7 +38,7 @@
     <div class="mb-5"></div>
 
     <div style="background-color: #6CBFA5; color: #ffffff; font-weight: bold;" class="text-center p-3">Priorité 2</div>
-    <table class="table table-striped table-light" data-toggle="table">
+    <table class="table" data-toggle="table">
         <thead style="background-color: #6CBFA5; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
@@ -45,21 +47,23 @@
             </tr>
         </thead>
         <tbody>
-            {% for task2 in task2 %}
-                {% if task2.archived == 1 %}
-                    <tr>
-                        <td>{{task2.customer}}</td>
-                        <td>
-                            {% if task2.object is empty %}{% else %}{{task2.object}}<br>{% endif %}
-                            {% if task2.subobject1 is empty %}{% else %}{{task2.subobject1}}<br>{% endif %} 
-                            {% if task2.subobject2 is empty %}{% else %}{{task2.subobject2}}<br>{% endif %}
-                            {% if task2.subobject3 is empty %}{% else %}{{task2.subobject3}}<br>{% endif %}
-                        </td>
-                        <td>{% for task2 in task2.users %}
-                                {{ task2.firstname }} <br>
-                            {% endfor %}
-                        </td>
-                    </tr>
+            {% for task in task %}
+                {% if task.p1 == 0 and task.p2 == 1 %}
+                    {% if task.archived == 1 %}
+                        <tr style="background: #e3e3e3">
+                            <td>{{task.customer}}</td>
+                            <td>
+                                {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+                                {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+                                {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+                                {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
+                            </td>
+                            <td>{% for task in task.users %}
+                                    {{ task.firstname }} <br>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>
@@ -68,7 +72,7 @@
     <div class="mb-5"></div>
 
     <div style="background-color: #DE99C3; color: #ffffff; font-weight: bold;" class="text-center p-3">Rendez-vous</div>
-    <table class="table table-striped table-light" data-toggle="table">
+    <table class="table" data-toggle="table">
         <thead style="background-color: #DE99C3; color: #ffffff ">
             <tr>
                 <th scope="col">Sujet</th>
@@ -80,7 +84,7 @@
         <tbody>
             {% for appointment in appointment %}
                 {% if appointment.archived == 1 %}
-                    <tr>
+                    <tr style="background: #e3e3e3">
                         <td>{{appointment.name}}</td>
                         <td>{{appointment.subject}}</td>
                         <td>
@@ -98,7 +102,7 @@
     <div class="mb-5"></div>
 
     <div style="background-color: #34BDE8; color: #ffffff; font-weight: bold;" class="text-center p-3">Devis</div>
-    <table class="table table-striped table-light" data-toggle="table">
+    <table class="table" data-toggle="table">
         <thead style="background-color: #34BDE8; color: #ffffff">
             <tr>
                 <th scope="col">Sujet</th>
@@ -109,7 +113,7 @@
         <tbody>
             {% for quote in quote %}
                 {% if quote.archived == 1 %}
-                    <tr>
+                    <tr style="background: #e3e3e3">
                         <td>{{ quote.enterprise }}</td>
                         <td>{{ quote.subject }}</td>
                         <td>

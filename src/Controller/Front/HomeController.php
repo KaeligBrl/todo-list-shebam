@@ -4,16 +4,13 @@ namespace App\Controller\Front;
 
 use App\Entity\Task;
 use App\Entity\Quote;
-use App\Entity\Task2;
 use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
-use App\Repository\Task2Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\Task\FrontTaskAddType;
 use App\Repository\AppointmentRepository;
 use App\Form\Front\Quote\FrontQuoteAddType;
-use App\Form\Front\Task2\FrontTask2AddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

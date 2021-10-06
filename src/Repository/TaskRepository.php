@@ -49,17 +49,17 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function setChangeTaskForP2()
+    public function setChangeTaskForP2($id)
     {
-        $sql = "update App\Entity\Task as t set t.p2 = 1, t.p1 = 0 ";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $sql = "update App\Entity\Task as t set t.p2 = 1 , t.p1 = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
-    public function setChangeTaskForP1()
+    public function setChangeTaskForP1($id)
     {
-        $sql = "update App\Entity\Task as t set t.p1 = 1, t.p2 = 0 ";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $sql = "update App\Entity\Task as t set t.p1 = 1, t.p2 = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 

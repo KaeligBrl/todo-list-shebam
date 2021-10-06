@@ -4,17 +4,13 @@ namespace App\Controller\Back;
 
 use App\Entity\Task;
 use App\Entity\Quote;
-use App\Entity\Task2;
 use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
-use App\Repository\Task2Repository;
 use App\Form\Back\Task\AdminTaskAddType;
 use App\Repository\AppointmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\Task2\AdminTask2AddType;
 use App\Form\Back\Task\AdminTaskModifyType;
-use App\Form\Back\Task2\AdminTask2ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Quote\AdminTaskQuoteAddType;
 use Symfony\Component\HttpFoundation\Response;
@@ -144,6 +140,20 @@ class AdminTasksController extends AbstractController
     }
 
     /**
+     * @Route("/archiver/{id}/", name="task_archived_front")
+     * return RedirectResponse
+     */
+    public function archivedTaskFront(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setTaskForArchived($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
      * @Route("/admin/liste-des-taches/{id}/archiver/supprimer", name="task_list_archived_delete_admin")
      * @param Task $deleteTaskArchived
      * return RedirectResponse
@@ -158,21 +168,7 @@ class AdminTasksController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/{id}/p2", name="task_change_to_p2_admin")
-     * return RedirectResponse
-     */
-    public function changeTaskToP2(Task $task): Response
-    {
-
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskForP2($task->getId());
-
-        return $this->redirectToRoute("task_list_admin");
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/{id}/p1", name="task_change_to_p1_admin")
+     * @Route("/admin/liste-des-taches/basculement-vers-p1/{id}", name="task_change_to_p1_admin")
      * return RedirectResponse
      */
     public function changeTaskToP1Admin(Task $task): Response
@@ -181,6 +177,20 @@ class AdminTasksController extends AbstractController
         $rep = $this->getDoctrine()
             ->getRepository(Task::class)
             ->setChangeTaskForP1($task->getId());
+
+        return $this->redirectToRoute("task_list_admin");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/basculement-vers-p2/{id}", name="task_change_to_p2_admin")
+     * return RedirectResponse
+     */
+    public function changeTaskToP2(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP2($task->getId());
 
         return $this->redirectToRoute("task_list_admin");
     }
