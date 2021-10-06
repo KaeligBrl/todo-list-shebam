@@ -41,11 +41,6 @@ class Customer
     private $tasks;
 
     /**
-     * @ORM\OneToMany(targetEntity=Task2::class, mappedBy="customer")
-     */
-    private $task2;
-
-    /**
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $archived;
@@ -53,7 +48,6 @@ class Customer
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
-        $this->task2 = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,36 +108,6 @@ class Customer
             // set the owning side to null (unless already changed)
             if ($tach->getCustomer() === $this) {
                 $tach->setCustomer(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Task2[]
-     */
-    public function getTask2(): Collection
-    {
-        return $this->task2;
-    }
-
-    public function addTask2(Task2 $task2): self
-    {
-        if (!$this->task2->contains($task2)) {
-            $this->task2[] = $task2;
-            $task2->setCustomer($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTask2(Task2 $task2): self
-    {
-        if ($this->task2->removeElement($task2)) {
-            // set the owning side to null (unless already changed)
-            if ($task2->getCustomer() === $this) {
-                $task2->setCustomer(null);
             }
         }
 

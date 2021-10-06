@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class AdminTaskModifyType extends AbstractType
@@ -75,6 +76,22 @@ class AdminTaskModifyType extends AbstractType
                     ->orderBy('u.firstname', 'ASC');
             }
         ))
+        ->add('p1',  CheckboxType::class, [
+            'required' => false,
+            'label' => 'P1',
+            'attr' => [
+                'placeholder' => 'P1'
+            ],
+            'label_attr' => ['class' => 'label-custom'],
+        ])
+        ->add('p2',  CheckboxType::class, [
+            'required' => false,
+            'label' => 'P2',
+            'label_attr' => ['class' => 'label-custom'],
+            'attr' => [
+                'placeholder' => 'P2'
+            ]
+        ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
             'attr' => ['class' => 'btn-submit-admin-shebam'],

@@ -60,6 +60,16 @@ class Task
      */
     private $position;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $p2;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $p1;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -186,6 +196,30 @@ class Task
     public function setPosition(int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getP2(): ?bool
+    {
+        return $this->p2;
+    }
+
+    public function setP2(?bool $p2): self
+    {
+        $this->p2 = $p2;
+
+        return $this;
+    }
+
+    public function getP1(): ?bool
+    {
+        return $this->p1;
+    }
+
+    public function setP1(?bool $p1): self
+    {
+        $this->p1 = $p1;
 
         return $this;
     }

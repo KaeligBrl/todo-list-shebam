@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class AdminTaskAddType extends AbstractType
 {
@@ -79,6 +80,20 @@ class AdminTaskAddType extends AbstractType
             }
             
         ))
+        ->add('p1',  CheckboxType::class, [
+            'required' => false,
+            'label' => 'P1',
+            'attr' => [
+                'placeholder' => 'P1',
+            ]
+        ])
+        ->add('p2',  CheckboxType::class, [
+            'required' => false,
+            'label' => 'P2',
+            'attr' => [
+                'placeholder' => 'P2',
+            ]
+        ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
             'attr' => ['class' => 'btn-submit-admin-shebam'],

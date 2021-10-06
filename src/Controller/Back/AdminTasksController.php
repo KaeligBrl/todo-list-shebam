@@ -34,27 +34,25 @@ class AdminTasksController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/", name="task_list_admin")
      */
-    public function listTask(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Task2Repository $task2Admin): Response
+    public function listTask(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin): Response
     {
 
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findAll(),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteAdmin->findAll(),
-            'task2' => $task2Admin->findAll(),
         ]);
     }
 
     /**
      * @Route("/admin/liste-des-taches/archiver", name="task_list_archived_admin")
      */
-    public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin, Task2Repository $task2ArchivedAdmin): Response
+    public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin): Response
     {
         return $this->render('back/tasks_archived/list.html.twig', [
             'task' => $taskArchivedAdmin->findAll(),
             'appointment' => $appointmentArchivedAdmin->findBy([], ['hoursappointment' => 'DESC']),
-            'quote' => $quoteArchivedAdmin->findAll(),
-            'task2' => $task2ArchivedAdmin->findAll()
+            'quote' => $quoteArchivedAdmin->findAll()
         ]);
     }
 
@@ -154,106 +152,6 @@ class AdminTasksController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $em->remove($deleteTaskArchived);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_archived_admin");
-    }
-
-    // ------------------------------
-    // --------- Priority 2 ---------
-    // ------------------------------
-
-    /**
-     * @Route("/admin/liste-des-taches-p2/ajouter", name="task2_list_add_admin")
-     */
-    public function taskP2(Request $request): Response {
-        $task2Add = new Task2();
-        $form = $this->createForm(AdminTask2AddType::class, $task2Add);
-        $notification = null;
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($task2Add);
-            $this->entityManager->flush();
-            $notification = 'La tâche P2 a bien été ajoutée';
-            $task2Add = new Task2();
-            $form = $this->createForm(AdminTask2AddType::class, $task2Add);
-        }
-            return $this->render('back/task2/add.html.twig', [
-                'form_task2_add_admin' => $form->createView(),
-                'notification' => $notification
-            ]);
-        }
-
-    /**
-     * @Route("/admin/liste-des-taches-p2/{id}/supprimer", name="task2_list_detete_admin")
-     * @param Task2 $task2
-     * return RedirectResponse
-     */
-    public function deleteTask2(Task2 $task2): RedirectResponse {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task2);
-        $em->flush();
-        return $this->redirectToRoute("task_list_admin");
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches-p2/{id}/modifier", name="task2_list_modify_admin")
-     */
-    public function modifyTask2(Request $request, Task2 $task2Modify): Response
-    {
-        $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
-        $notification = null;
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid()) {
-            $task2Modify = $form->getData();
-            $this->entityManager->persist($task2Modify);
-            $this->entityManager->flush();
-            $notification = 'Tâche P2 a bien été mise à jour !';
-            $form = $this->createForm(AdminTask2ModifyType::class, $task2Modify);
-        }
-        return $this->render('back/task2/modify.html.twig',[
-            'form_task2_modify_admin' => $form->createView(),
-            'notification' => $notification,
-            'task2' => $task2Modify
-        ]);   
-    }
-
-    /**
-    * @Route("/admin/liste-des-taches-p2/{id}/archiver", name="task2_archived_admin")
-    * return RedirectResponse
-    */
-    public function archivedTask2(Task2 $task2): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Task2::class)
-        ->setTask2ForArchived($task2->getId());
-    
-        return $this->redirectToRoute("task_list_admin"); 
-    }
-
-    /**
-    * @Route("/admin/liste-des-taches-p2/{id}/desarchiver", name="task2_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function unarchivedTask2(Task2 $task2): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Task2::class)
-        ->setTask2ForUnarchived($task2->getId());
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches-p2/{id}/archiver/supprimer", name="task2_list_archived_delete_admin")
-     * @param Task2 $deleteTask2Archived
-     * return RedirectResponse
-     */
-    public function deleteTask2Archived(Task2 $deleteTask2Archived): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($deleteTask2Archived);
         $em->flush();
 
         return $this->redirectToRoute("task_list_archived_admin");
@@ -480,10 +378,6 @@ class AdminTasksController extends AbstractController
             ->setTaskArchivedBtn();
 
         $rep4 = $this->getDoctrine()
-            ->getRepository(Task2::class)
-            ->setTask2ArchivedBtn();
-
-        $rep4 = $this->getDoctrine()
             ->getRepository(Quote::class)
             ->setQuoteArchivedBtn();
 
@@ -503,10 +397,6 @@ class AdminTasksController extends AbstractController
         $rep2 = $this->getDoctrine()
             ->getRepository(Task::class)
             ->setTaskUnArchivedBtn();
-
-        $rep4 = $this->getDoctrine()
-            ->getRepository(Task2::class)
-            ->setTask2UnArchivedBtn();
 
         $rep4 = $this->getDoctrine()
             ->getRepository(Quote::class)
