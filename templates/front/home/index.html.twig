@@ -28,9 +28,9 @@
 						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 							<tr>
 								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
-								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
-								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
+								<th data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
+								<th data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Objet</th>
+								<th data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Personne(s)</th>
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 									<th scope="col">Action</th>
 								{% endif %}
@@ -85,9 +85,9 @@
 						<thead class="bg-grey-shebam color-white-shebam font-weight-bold">
 							<tr>
 								<th data-field="id" data-visible="false">ID</th>
-								<th data-field="customer" data-sortable="true" scope="col">Sujet</th>
-								<th data-field="subject" data-sortable="true" scope="col">Objet</th>
-								<th data-field="person" data-sortable="true" scope="col">Personne(s)</th>
+								<th data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
+								<th data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Objet</th>
+								<th data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Personne(s)</th>
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 								<th scope="col">Action</th>
 								{% endif %}
@@ -109,15 +109,17 @@
 												{{ task.firstname }} <br>
 											{% endfor %}
 									</td>
-										<td>
-											<a href="{{ path('task_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>
-												|
-											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
-												|
-											<a href="{{ path('task_archived_front', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>
-												|
-											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
-										</td>
+										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+											<td>
+												<a href="{{ path('task_change_to_p1_front', {"id": task.id}) }}"><span>P2</span></a>
+													|
+												<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+													|
+												<a href="{{ path('task_archived_front', {"id": task.id}) }}"><i class="fas fa-folder-plus"></i></a>
+													|
+												<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											</td>
+										{% endif %}
 									</tr>
 								{% endif %}
 							{% endif %}
