@@ -61,7 +61,7 @@ class AdminTasksController extends AbstractController
     // ------------------------------
 
     /**
-     * @Route("/admin/liste-des-taches-p1/ajouter", name="task_list_add_admin")
+     * @Route("/admin/liste-des-taches/ajouter", name="task_list_add_admin")
      */
     public function taskP1(Request $request): Response {
         $taskAdd = new Task();
@@ -105,7 +105,7 @@ class AdminTasksController extends AbstractController
     }
     
     /**
-     * @Route("/admin/liste-des-taches-p1/{id}/supprimer", name="task_list_detete_admin")
+     * @Route("/admin/liste-des-taches/{id}/supprimer", name="task_list_detete_admin")
      * @param Task $task
      * return RedirectResponse
      */
@@ -118,7 +118,7 @@ class AdminTasksController extends AbstractController
     }
 
     /**
-    * @Route("/admin/liste-des-taches-p1/{id}/archiver", name="taskp1_archived_admin")
+    * @Route("/admin/liste-des-taches/{id}/archiver", name="task_archived_admin")
     * return RedirectResponse
     */
     public function archivedTaskP1(Task $task): Response {
@@ -131,7 +131,7 @@ class AdminTasksController extends AbstractController
     }
 
     /**
-    * @Route("/admin/liste-des-taches-p1/{id}/desarchiver", name="taskp1_unarchived_admin")
+    * @Route("/admin/liste-des-taches/{id}/desarchiver", name="task_unarchived_admin")
     * return RedirectResponse
     */
     public function unarchivedTaskP1(Task $task): Response {
@@ -144,7 +144,7 @@ class AdminTasksController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches-p1/{id}/archiver/supprimer", name="task_list_archived_delete_admin")
+     * @Route("/admin/liste-des-taches/{id}/archiver/supprimer", name="task_list_archived_delete_admin")
      * @param Task $deleteTaskArchived
      * return RedirectResponse
      */
@@ -155,6 +155,62 @@ class AdminTasksController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute("task_list_archived_admin");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/{id}/p2", name="task_change_to_p2_admin")
+     * return RedirectResponse
+     */
+    public function changeTaskToP2(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP2($task->getId());
+
+        return $this->redirectToRoute("task_list_admin");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/{id}/p1", name="task_change_to_p1_admin")
+     * return RedirectResponse
+     */
+    public function changeTaskToP1Admin(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP1($task->getId());
+
+        return $this->redirectToRoute("task_list_admin");
+    }
+
+    /**
+     * @Route("/basculement-vers-p1/{id}", name="task_change_to_p1_front")
+     * return RedirectResponse
+     */
+    public function changeTaskToP1Front(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP1($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculement-vers-p2/{id}", name="task_change_to_p2_front")
+     * return RedirectResponse
+     */
+    public function changeTaskToP2Front(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP2($task->getId());
+
+        return $this->redirectToRoute("home");
     }
 
 
