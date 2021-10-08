@@ -71,13 +71,14 @@
 							</a>
 						</div>
 					</div>
-					<table class="table table-striped table-light" data-toggle="table">
+					<table id="tableOrderTaskP2" class="table table-striped table-light" data-toggle="table" data-use-row-attr-func="true" data-reorderable-rows="true">
 						<thead class="bg-grey-shebam color-white-shebam">
 							<tr>
-								<th scope="col">Sujet</th>
-								<th scope="col">Objet</th>
-								<th scope="col">Personne(s)</th>
-								<th scope="col">Action</th>
+								<th data-field="id" data-visible="false">ID</th>
+								<th scope="col" data-sortable="true">Sujet</th>
+								<th scope="col" data-sortable="true">Objet</th>
+								<th scope="col" data-sortable="true">Personne(s)</th>
+								<th scope="col" data-sortable="true">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -85,6 +86,7 @@
 							{% if task.p1 == 0 and task.p2 == 1 %}
 								{% if task.archived == 0 %}
 									<tr>
+										<td>{{task.id}}</td>
 										<td>{{task.customer}}</td>
 										<td>
 											{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
@@ -225,6 +227,18 @@
 	<script>
 		$(()=>{
 			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
+				$.ajax({
+					url: "{{ path('admin_reorder_row')}}",
+					method: "POST",
+					data: {
+						table: JSON.stringify(table),
+						context: 1
+					},
+					dataType: "JSON",
+					success: (response)=>{console.log(response)}
+				})
+			})
+			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
 					url: "{{ path('admin_reorder_row')}}",
 					method: "POST",

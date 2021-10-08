@@ -37,7 +37,7 @@ class AdminTasksController extends AbstractController
         return $this->render('back/task/list.html.twig', [
             'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
-            'quote' => $quoteAdmin->findAll(),
+            'quote' => $quoteAdmin->findBy([], ['position' => 'ASC']),
         ]);
     }
 
