@@ -111,7 +111,7 @@
 									</td>
 										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 											<td>
-												<a href="{{ path('task_change_to_p1_front', {"id": task.id}) }}"><span>P2</span></a>
+												<a href="{{ path('task_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>
 													|
 												<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 													|
