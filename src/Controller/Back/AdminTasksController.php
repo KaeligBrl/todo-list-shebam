@@ -8,14 +8,15 @@ use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use App\Form\Back\Task\AdminTaskAddType;
-use App\Repository\AppointmentRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AppointmentRepository;
 use App\Form\Back\Task\AdminTaskModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Quote\AdminTaskQuoteAddType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Back\Quote\AdminTaskQuoteModifyType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Form\Back\Appointment\AdminTaskAppointmentAddType;
 use App\Form\Back\Appointment\AdminTaskAppointmentModifyType;
@@ -34,7 +35,7 @@ class AdminTasksController extends AbstractController
     {
 
         return $this->render('back/task/list.html.twig', [
-            'task' => $taskAdmin->findAll(),
+            'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteAdmin->findAll(),
         ]);
@@ -469,6 +470,45 @@ class AdminTasksController extends AbstractController
             ->setQuoteUnArchivedBtn();
 
         return $this->redirectToRoute("task_list_archived_admin");
+    }
+
+
+    /**
+     * @Route("/admin/liste-des-taches/reorder", name="admin_reorder_row")
+     */
+    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    {
+        $cpt = 0;
+        switch ($request->request->get("context")) {
+            case '1':
+                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
+                    $task = $taskRow->find($row['id']); //on récupère la task
+                    $task->setPosition($cpt); //on definit la position
+                    $cpt++; //on ajoute une rangée
+                }
+                break;
+
+            case '2':
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $appt = $appointmentRow->find($row['id']);
+                    $appt->setPosition($cpt);
+                    $cpt++;
+                }
+                break;
+
+            case '3':
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $quote = $quoteRow->find($row['id']);
+                    $quote->setPosition($cpt);
+                    $cpt++;
+                }
+                break;
+        }
+
+        $this->entityManager->flush();
+        return new JsonResponse([
+            'data' => gettype($request->request->get("context"))
+        ]);
     }
 
 }
