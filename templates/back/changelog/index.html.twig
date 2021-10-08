@@ -18,7 +18,7 @@
                     <p class="color-blue-dark-shebam">Aucune modification n'a été faite</p>
                 {% else %}
                 {% for changelogList in changelogList %}
-                <div class="col-lg-3 ml-3 changelog">
+                <div class="col-lg-2 ml-3 changelog">
                     <p>{{changelogList.version}}</p>
                     <p class="color-blue-dark-shebam fw-normal">- {{changelogList.name}}</p>
                     <p class="color-blue-dark-shebam">{% if changelogList.subname is empty %}{% else %} - {{changelogList.subname}}<br>{% endif %}</p>
