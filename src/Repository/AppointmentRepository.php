@@ -49,4 +49,11 @@ class AppointmentRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
+
+    public function setRemoveAppointment()
+    {
+        $sql = "DELETE FROM App\Entity\Appointment";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
 }

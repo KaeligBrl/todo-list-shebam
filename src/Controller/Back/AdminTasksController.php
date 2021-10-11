@@ -2,15 +2,20 @@
 
 namespace App\Controller\Back;
 
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Entity\File;
 use App\Entity\Task;
 use App\Entity\Quote;
 use App\Entity\Appointment;
+use Psr\Log\LoggerInterface;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use App\Form\Back\Task\AdminTaskAddType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use App\Form\Back\Task\AdminTaskModifyType;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Quote\AdminTaskQuoteAddType;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +25,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Form\Back\Appointment\AdminTaskAppointmentAddType;
 use App\Form\Back\Appointment\AdminTaskAppointmentModifyType;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminTasksController extends AbstractController
@@ -38,18 +44,6 @@ class AdminTasksController extends AbstractController
             'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteAdmin->findBy([], ['position' => 'ASC']),
-        ]);
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/archiver", name="task_list_archived_admin")
-     */
-    public function listTaskArchived(TaskRepository $taskArchivedAdmin, AppointmentRepository $appointmentArchivedAdmin, QuoteRepository $quoteArchivedAdmin): Response
-    {
-        return $this->render('back/tasks_archived/list.html.twig', [
-            'task' => $taskArchivedAdmin->findAll(),
-            'appointment' => $appointmentArchivedAdmin->findBy([], ['hoursappointment' => 'DESC']),
-            'quote' => $quoteArchivedAdmin->findAll()
         ]);
     }
 
@@ -112,60 +106,6 @@ class AdminTasksController extends AbstractController
         $em->flush();
 
         return $this->redirectToRoute("task_list_admin");
-    }
-
-    /**
-    * @Route("/admin/liste-des-taches/{id}/archiver", name="task_archived_admin")
-    * return RedirectResponse
-    */
-    public function archivedTaskP1(Task $task): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Task::class)
-        ->setTaskForArchived($task->getId());
-    
-        return $this->redirectToRoute("task_list_admin"); 
-    }
-
-    /**
-    * @Route("/admin/liste-des-taches/{id}/desarchiver", name="task_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function unarchivedTaskP1(Task $task): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Task::class)
-        ->setTaskForUnArchived($task->getId());
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    /**
-     * @Route("/archiver/{id}/", name="task_archived_front")
-     * return RedirectResponse
-     */
-    public function archivedTaskFront(Task $task): Response
-    {
-
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setTaskForArchived($task->getId());
-
-        return $this->redirectToRoute("home");
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/{id}/archiver/supprimer", name="task_list_archived_delete_admin")
-     * @param Task $deleteTaskArchived
-     * return RedirectResponse
-     */
-    public function deleteTaskArchived(Task $deleteTaskArchived): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($deleteTaskArchived);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_archived_admin");
     }
 
     /**
@@ -288,46 +228,6 @@ class AdminTasksController extends AbstractController
         ;   
     }
 
-    /**
-    * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver", name="appointment_archived_admin")
-    * return RedirectResponse
-    */
-    public function unarchivedAppointment(Appointment $appointment): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Appointment::class)
-        ->setAppointmentForArchived($appointment->getId());
-    
-        return $this->redirectToRoute("task_list_admin"); 
-    }
-
-    /**
-    * @Route("/admin/liste-des-taches/rendez-vous/{id}/desarchiver", name="appointment_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function archivedAppointment(Appointment $appointment): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Appointment::class)
-        ->setAppointmentForUnArchived($appointment->getId());
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/rendez-vous/{id}/archiver/supprimer", name="appointment_archived_delete_admin")
-     * @param Appointment $deleteAppointmentArchived
-     * return RedirectResponse
-     */
-    public function deleteAppointmentArchived(Appointment $deleteAppointmentArchived): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($deleteAppointmentArchived);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_archived_admin");
-    }
-
     // ------------------------------
     // ----------- Quote ------------
     // ------------------------------
@@ -390,86 +290,79 @@ class AdminTasksController extends AbstractController
         ;   
     }
 
-    /**
-    * @Route("/admin/liste-des-taches/devis/{id}/archiver", name="quote_archived_admin")
-    * return RedirectResponse
-    */
-    public function unarchivedQuote(Quote $quote): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Quote::class)
-        ->setQuoteForArchived($quote->getId());
-    
-        return $this->redirectToRoute("task_list_admin"); 
-    }
-
-        /**
-    * @Route("/admin/liste-des-taches/devis/{id}/desarchiver", name="quote_unarchived_admin")
-    * return RedirectResponse
-    */
-    public function archivedQuote(Quote $quote): Response {
-
-        $rep = $this->getDoctrine()
-        ->getRepository(Quote::class)
-        ->setQuoteForUnArchived($quote->getId());
-    
-        return $this->redirectToRoute("task_list_archived_admin"); 
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/devis/{id}/archiver/supprimer", name="quote_list_archived_delete_admin")
-     * @param Quote $deleteQuoteArchived
-     * return RedirectResponse
-     */
-    public function deleteQuoteArchived(Quote $deleteQuoteArchived): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($deleteQuoteArchived);
-        $em->flush();
-
-        return $this->redirectToRoute("task_list_archived_admin");
-    }
+    // -------------------------------------------
+    // ----------- Dowlonad All Tasks ------------
+    // -------------------------------------------
 
     /**
      *@Route("/admin/liste-des-taches/bouton-archiver/", name="task_btn_archived_admin")
      */
-    public function archivedBtn(): Response
+    public function archivedBtn(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
 
-        $rep = $this->getDoctrine()
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Gotham');
+        $pdfOptions->setIsRemoteEnabled(true);
+        $dompdf = new Dompdf($pdfOptions);
+        $dompdf->setPaper('A3', 'landscape');
+        $html = $this->renderView('back/task/download.html.twig', [
+            'task' => $taskAdmin->findAll(),
+            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'DESC']),
+            'quote' => $quoteAdmin->findAll(),
+        ]);
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        $output = $dompdf->output();
+
+        $image = new File;
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for (
+            $i = 0;
+            $i < $length;
+            $i++
+        ) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        $path = $this->getParameter('download_task_directory');
+
+        $dateFile = date("d-m-y");
+        $fileName = 'liste-des-taches-du-' . $dateFile . '-' . $randomString . '.pdf';
+
+        $fsObject = new Filesystem();
+
+        try {
+            if (!$fsObject->exists($path)) {
+                $fsObject->mkdir($path);
+            }
+            $file = $path . $fileName;
+            if (!$fsObject->exists($file)) {
+                $fsObject->touch($file);
+                $fsObject->chmod($file, 0777);
+                $fsObject->dumpFile($file, $output);
+            }
+        } catch (IOExceptionInterface $exception) {
+            $logger->error("Impossible de créer le fichier");
+        }
+
+        $image->setName($fileName);
+        $this->entityManager->persist($image);
+        $this->entityManager->flush();
+
+
+        $remove = $this->getDoctrine()
             ->getRepository(Appointment::class)
-            ->setAppointmentArchivedBtn();
+            ->setRemoveAppointment();
 
-        $rep2 = $this->getDoctrine()
+        $remove2 = $this->getDoctrine()
             ->getRepository(Task::class)
-            ->setTaskArchivedBtn();
+            ->setRemoveTask();
 
-        $rep4 = $this->getDoctrine()
+        $remove3 = $this->getDoctrine()
             ->getRepository(Quote::class)
-            ->setQuoteArchivedBtn();
+            ->setRemoveQuote();   
 
         return $this->redirectToRoute("task_list_admin");
-    }
-
-    /**
-     *@Route("/admin/liste-des-taches/bouton-desarchiver/", name="task_btn_unarchived_admin")
-     */
-    public function unArchivedBtn(): Response
-    {
-
-        $rep = $this->getDoctrine()
-            ->getRepository(Appointment::class)
-            ->setAppointmentUnArchivedBtn();
-
-        $rep2 = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setTaskUnArchivedBtn();
-
-        $rep4 = $this->getDoctrine()
-            ->getRepository(Quote::class)
-            ->setQuoteUnArchivedBtn();
-
-        return $this->redirectToRoute("task_list_archived_admin");
     }
 
 

@@ -35,11 +35,6 @@ class Quote
     private $person;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $archived;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
@@ -98,18 +93,6 @@ class Quote
     public function removePerson(User $person): self
     {
         $this->person->removeElement($person);
-
-        return $this;
-    }
-
-    public function getArchived(): ?bool
-    {
-        return $this->archived;
-    }
-
-    public function setArchived(?bool $archived): self
-    {
-        $this->archived = $archived;
 
         return $this;
     }

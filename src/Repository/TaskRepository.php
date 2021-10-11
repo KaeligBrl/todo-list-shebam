@@ -63,4 +63,11 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function setRemoveTask()
+    {
+        $sql = "DELETE FROM App\Entity\Task";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
 }

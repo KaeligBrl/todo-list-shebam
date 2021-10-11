@@ -43,9 +43,9 @@ class QuoteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function setQuoteUnArchivedBtn()
+    public function setRemoveQuote()
     {
-        $sql = "update App\Entity\Quote as t set t.archived = 0";
+        $sql = "DELETE FROM App\Entity\Quote";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }

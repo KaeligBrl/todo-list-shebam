@@ -40,11 +40,6 @@ class Appointment
     private $user;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $archived;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
@@ -115,18 +110,6 @@ class Appointment
     public function removeUser(User $user): self
     {
         $this->user->removeElement($user);
-
-        return $this;
-    }
-
-    public function getArchived(): ?bool
-    {
-        return $this->archived;
-    }
-
-    public function setArchived(?bool $archived): self
-    {
-        $this->archived = $archived;
 
         return $this;
     }

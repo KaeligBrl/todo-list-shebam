@@ -30,11 +30,7 @@
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item active"> 
-                            {% if 'home' != app.request.attributes.get('_route') %}
-                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches en cours</a>
-                            {% else %}
-                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('tasks_archived_home') }}">Tâches archivées</a>
-                            {% endif %}
+                            <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Tâches</a>
                         </li>
                     {% endif %}
                 {% endif %}
@@ -63,11 +59,7 @@
                 {% if is_granted('ROLE_USER') %}
                     <div class="mobile-bottom-nav__item">
                         <div class="mobile-bottom-nav__item-content">
-                            {% if 'home' != app.request.attributes.get('_route') %}
-                                <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Tâches en cours</a>
-                            {% else %}
-                                <a href="{{ path('tasks_archived_home') }}"><i class="fas fa-home"></i><br>Tâches archivées</a>
-                            {% endif %}
+                            <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Tâches en cours</a>
                         </div>		
                     </div>
                     <div class="mobile-bottom-nav__item">

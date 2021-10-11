@@ -1,0 +1,122 @@
+{% extends 'back/task/base-pdf.html.twig' %}
+
+{% block body %}
+    <h3 class="text-center mb-3" style="color: caa904;"> Liste téléchargée le {{ "now"|date("d/m/Y") }}</h3><br>
+    <div class="mb-5"></div>
+    <div class="text-center p-3" style="background-color: #FFD600; color: #ffffff; font-weight: bold;">Priorité 1</div>
+    <table class="table" data-toggle="table">
+        <thead style="background-color: #FFD600; color: #ffffff">
+            <tr>
+                <th scope="col">Sujet</th>
+                <th scope="col">Objet</th>
+                <th scope="col">Personne(s) Désignée(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in task %}
+            	{% if task.p1 == 1 and task.p2 == 0 %}
+                    <tr style="background: #e3e3e3">
+                        <td>{{task.customer}}</td>
+                        <td>
+                            {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+                            {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+                            {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+                            {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
+                        </td>
+                        <td>{% for task in task.users %}
+                                {{ task.firstname }} <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mb-5"></div>
+
+    <div style="background-color: #6CBFA5; color: #ffffff; font-weight: bold;" class="text-center p-3">Priorité 2</div>
+    <table class="table" data-toggle="table">
+        <thead style="background-color: #6CBFA5; color: #ffffff">
+            <tr>
+                <th scope="col">Sujet</th>
+                <th scope="col">Objet</th>
+                <th scope="col">Personne(s) Désignée(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in task %}
+                {% if task.p1 == 0 and task.p2 == 1 %}
+                    <tr style="background: #e3e3e3">
+                        <td>{{task.customer}}</td>
+                        <td>
+                            {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
+                            {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
+                            {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+                            {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
+                        </td>
+                        <td>{% for task in task.users %}
+                                {{ task.firstname }} <br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mb-5"></div>
+
+    <div style="background-color: #DE99C3; color: #ffffff; font-weight: bold;" class="text-center p-3">Rendez-vous</div>
+    <table class="table" data-toggle="table">
+        <thead style="background-color: #DE99C3; color: #ffffff ">
+            <tr>
+                <th scope="col">Sujet</th>
+                <th scope="col">Objet</th>
+                <th>Personne(s) Désignée(s)</th>
+                <th scope="col">Date et heure</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for appointment in appointment %}
+                <tr style="background: #e3e3e3">
+                    <td>{{appointment.name}}</td>
+                    <td>{{appointment.subject}}</td>
+                    <td>
+                    {% for appointment in appointment.user %}
+                        {{ appointment.firstname }} <br>
+                    {% endfor %}
+                    </td>
+                    <td>{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mb-5"></div>
+
+    <div style="background-color: #34BDE8; color: #ffffff; font-weight: bold;" class="text-center p-3">Devis</div>
+    <table class="table" data-toggle="table">
+        <thead style="background-color: #34BDE8; color: #ffffff">
+            <tr>
+                <th scope="col">Sujet</th>
+                <th scope="col">Objet</th>
+                <th>Personne(s) Désignée(s)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quote in quote %}
+                <tr style="background: #e3e3e3">
+                    <td>{{ quote.subject }}</td>
+                    <td>{{ quote.object }}</td>
+                    <td>
+                    {% for quote in quote.person %}
+                        {{ quote.firstname }} <br>
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

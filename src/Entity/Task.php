@@ -51,11 +51,6 @@ class Task
     private $sub_object3;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $archived;
-
-    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $position;
@@ -172,18 +167,6 @@ class Task
     public function setSubObject3(?string $sub_object3): self
     {
         $this->sub_object3 = $sub_object3;
-
-        return $this;
-    }
-
-    public function getarchived(): ?bool
-    {
-        return $this->archived;
-    }
-
-    public function setarchived(?bool $archived): self
-    {
-        $this->archived = $archived;
 
         return $this;
     }

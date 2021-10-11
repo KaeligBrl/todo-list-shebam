@@ -10,7 +10,7 @@
 
 	{% block admin_utilisateur %}
 		<div class="container">
-			<table class="table table-light" data-pagination="true" data-toggle="table">
+			<table class="table table-light" data-toggle="table">
 				<thead class="thead-light">
 					<tr>
                         <th scope="col">Nom</th>
@@ -32,9 +32,6 @@
 					{% endfor %}
 				</tbody>
 			</table>
-			<div class="mb-5"></div>
-            <div class="mt- text-center btn-submit-admin-shebam btn"><a href="{{path('button_list_download_admin') }}">Générer la liste des tâches archivées</a></div>
-
 		</div>
 	{% endblock %}
 {% endblock %}
