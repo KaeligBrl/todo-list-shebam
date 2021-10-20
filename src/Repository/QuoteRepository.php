@@ -45,8 +45,15 @@ class QuoteRepository extends ServiceEntityRepository
 
     public function setRemoveQuote()
     {
-        $sql = "DELETE FROM App\Entity\Quote";
+        $sql = "delete from App\Entity\Quote as t where t.nextweek = 0";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
+
+    public function setchangeQuoteToCurrentWeek()
+    {
+        $sql = "update App\Entity\Quote as t set t.nextweek = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }  
 }

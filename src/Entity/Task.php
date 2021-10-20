@@ -65,6 +65,11 @@ class Task
      */
     private $p2;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $nextweek;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -207,4 +212,15 @@ class Task
         return $this;
     }
 
+    public function getNextweek()
+    {
+        return $this->nextweek;
+    }
+
+    public function setNextweek(?bool $nextweek): self
+    {
+        $this->nextweek = $nextweek;
+
+        return $this;
+    }
 }

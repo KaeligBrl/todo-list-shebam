@@ -4,11 +4,11 @@
 
 {% block body %}
 	<div class="d-flex flex-row">
-		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}Liste de l'équipe{% endblock %}{% endblock %}
+		{% block title_back_page %}Liste de l'équipe{% endblock %}
 	</div>
 
 
-	{% block admin_utilisateur %}
+	{% block back_content %}
 		<div class="container">
 			<div class="add-icon-custom d-flex flex-row-reverse">
 				<a href="{{ path('user_add_admin') }}" title="Ajouter une personne dans léquipe" type="button" class="btn btn-outline-light mr-3 mb-2">

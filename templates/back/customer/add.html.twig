@@ -1,4 +1,3 @@
-{% extends 'back/index.html.twig' %}
 
 {% block title %}Ajouter un client - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
@@ -9,7 +8,7 @@
 	{% block admin_utilisateur %}
 		<div class="was-validated form-back background-login is-valid">
 			{% if notification %}
-					<div class="alert alert-success">{{ notification }}<br>
+					<div class="alert alert-success form-success text-center">{{ notification }}<br>
 						<hr>
 						<a href="{{ path('customer_list_admin') }}">Retourner sur la liste des Clients</a>
 					</div>

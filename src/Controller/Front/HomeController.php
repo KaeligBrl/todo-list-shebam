@@ -8,15 +8,15 @@ use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Front\Task\FrontTaskAddType;
 use App\Repository\AppointmentRepository;
-use App\Form\Front\Quote\FrontQuoteAddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use App\Form\Front\Task\AddTaskCurrentWeekType;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Front\Quote\AddQuoteCurrentWeekType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Form\Front\Appointment\FrontAppointmentAddType;
+use App\Form\Front\Appointment\AddAppointmentCurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -29,10 +29,10 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Request $request): Response
+    public function index(TaskRepository $taskList, AppointmentRepository $appointmentList, QuoteRepository $quoteList, Request $request): Response
     {
         $taskAdd = new Task();
-        $form = $this->createForm(FrontTaskAddType::class, $taskAdd);
+        $form = $this->createForm(AddTaskCurrentWeekType::class, $taskAdd);
         $notification = null;
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +42,7 @@ class HomeController extends AbstractController
         }
 
         $appointmentAdd = new Appointment();
-        $formappointment = $this->createForm(FrontAppointmentAddType::class, $appointmentAdd);
+        $formappointment = $this->createForm(AddAppointmentCurrentWeekType::class, $appointmentAdd);
         $notification = null;
         $formappointment->handleRequest($request);
         if ($formappointment->isSubmitted() && $formappointment->isValid()) {
@@ -53,7 +53,7 @@ class HomeController extends AbstractController
         }
 
         $quoteAdd = new Quote();
-        $formquote = $this->createForm(FrontQuoteAddType::class, $quoteAdd);
+        $formquote = $this->createForm(AddQuoteCurrentWeekType::class, $quoteAdd);
         $notification = null;
         $formquote->handleRequest($request);
         if ($formquote->isSubmitted() && $formquote->isValid()) {
@@ -64,18 +64,18 @@ class HomeController extends AbstractController
 
 
         return $this->render('front/home/index.html.twig', [
-            'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
-            'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
-            'quote' => $quoteAdmin->findBy([], ['position' => 'ASC']),
-            'form_task_p1_add_front' => $form->createView(),
-            'form_appointment_add_front' => $formappointment->createView(),
-            'form_quote_add_front' => $formquote->createView(),
+            'task' => $taskList->findBy([], ['position' => 'ASC']),
+            'appointment' => $appointmentList->findBy([], ['hoursappointment' => 'ASC']),
+            'quote' => $quoteList->findBy([], ['position' => 'ASC']),
+            'form_task_cw_add_front' => $form->createView(),
+            'form_appointment_cw_add_front' => $formappointment->createView(),
+            'form_quote_cw_add_front' => $formquote->createView(),
             'notification' => $notification,
         ]);
     }
 
     /**
-     * @Route("/tache/{id}/supprimer", name="task_detete_home")
+     * @Route("/tache/{id}/supprimer", name="task_cw_detete_front")
      * @param Task $taskDelete
      * return RedirectResponse
      */
@@ -89,7 +89,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/rendez-vous/{id}/supprimer", name="appointment_detete_home")
+     * @Route("/rendez-vous/{id}/supprimer", name="appointment_cw_detete_home")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -103,7 +103,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/devis/{id}/supprimer", name="quote_detete_home")
+     * @Route("/devis/{id}/supprimer", name="quote_cw_detete_home")
      * @param Quote $quoteDelete
      * return RedirectResponse
      */
@@ -117,7 +117,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/reorder", name="home_reorder_row")
+     * @Route("/reorder", name="home_cw_reorder_row")
      */
     public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
     {

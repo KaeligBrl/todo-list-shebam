@@ -36,7 +36,7 @@
 						</thead>
 						<tbody>
 							{% for task in task %}
-								{% if task.p1 == 1 and task.p2 == 0 %}
+								{% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0 %}
 									<tr class="bg-white-shebam">
 										<td>{{ task.id }}</td>
 										<td >{{task.customer}}</td>
@@ -51,11 +51,11 @@
 										</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('task_change_to_p2_front', {"id": task.id}) }}"><span>P2</span></a>
+											<a href="{{ path('task_cw_change_to_p2_front', {"id": task.id}) }}"><span>P2</span></a>
 												|
-											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('task_cw_detete_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 									</tr>
@@ -68,7 +68,7 @@
 							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="#ajouterunetache">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('task_list_add_admin') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('task_cw_add_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -89,7 +89,7 @@
 						</thead>
 						<tbody>
 						{% for task in task %}
-							{% if task.p1 == 0 and task.p2 == 1 %}
+							{% if task.p1 == 0 and task.p2 == 1 and task.nextweek == 0  %}
 								<tr class="bg-white-shebam">
 									<td>{{ task.id }}</td>
 									<td>{{task.customer}}</td>
@@ -104,11 +104,11 @@
 									</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('task_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>
+											<a href="{{ path('task_cw_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>
 												|
-											<a href="{{ path('task_list_modify_admin', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('task_list_detete_admin', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('task_cw_detete_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 								</tr>
@@ -122,7 +122,7 @@
 							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="#ajouterunetache">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('task_list_add_admin') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('task_cw_add_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 
@@ -150,7 +150,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for appointment in appointment %}					
+							{% for appointment in appointment %}
+								{% if appointment.nextweek == 0 %}					
 									<tr class="bg-white-shebam">
 										<td>{{appointment.id}}</td>
 										<td>{{appointment.name}}</td>
@@ -163,12 +164,13 @@
 										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('task_appointment_modify_admin', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('appointment_cw_modify_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('appointment_detete_home', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('appointment_cw_detete_home', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 									</tr>
+								{% endif %}
 							{% endfor %}
 						</tbody>
 					</table>
@@ -178,7 +180,7 @@
 							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="#ajouterunrendezvous">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="{{ path('task_appointment_add_admin') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="{{ path('appointment_cw_add_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -210,9 +212,9 @@
 									</td>
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 									<td>
-										<a href="{{ path('task_quote_modify_admin', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+										<a href="{{ path('quote_cw_modify_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 											|
-										<a href="{{ path('quote_detete_home', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
+										<a href="{{ path('quote_cw_detete_home', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 									</td>
 								{% endif %}
 								</tr>
@@ -225,7 +227,7 @@
 							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="#ajouterundevis">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="{{ path('task_quote_add_admin') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="{{ path('quote_cw_add_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -238,21 +240,21 @@
 					<h2 class="mb-4">Ajout d'une tâche</h2>
 					<a class="close" href=""><i class="fas fa-times"></i></a>
 						<div class="content">
-						{{ form_start(form_task_p1_add_front) }}
+						{{ form_start(form_task_cw_add_front) }}
 								<div class="form-group">
-									{{ form_row(form_task_p1_add_front.customer) }}
-									{{ form_row(form_task_p1_add_front.object) }}
-									{{ form_row(form_task_p1_add_front.subobject1) }}
-									{{ form_row(form_task_p1_add_front.subobject2) }}
-									{{ form_row(form_task_p1_add_front.subobject3) }}
-									{{ form_row(form_task_p1_add_front.users) }}
-									{{ form_row(form_task_p1_add_front.p1) }}
-									{{ form_row(form_task_p1_add_front.p2) }}
+									{{ form_row(form_task_cw_add_front.customer) }}
+									{{ form_row(form_task_cw_add_front.object) }}
+									{{ form_row(form_task_cw_add_front.subobject1) }}
+									{{ form_row(form_task_cw_add_front.subobject2) }}
+									{{ form_row(form_task_cw_add_front.subobject3) }}
+									{{ form_row(form_task_cw_add_front.users) }}
+									{{ form_row(form_task_cw_add_front.p1) }}
+									{{ form_row(form_task_cw_add_front.p2) }}
 								</div>
 								<div class="form-group">
-									{{ form_row(form_task_p1_add_front.submit) }}
+									{{ form_row(form_task_cw_add_front.submit) }}
 								</div>
-						{{ form_end(form_task_p1_add_front) }}
+						{{ form_end(form_task_cw_add_front) }}
 					</div>
 				</div>
 			</div>
@@ -263,17 +265,17 @@
 				<h2 class="mb-4">Ajout un rendez-vous</h2>
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
-						{{ form_start(form_appointment_add_front) }}
+						{{ form_start(form_appointment_cw_add_front) }}
 								<div class="form-group">
-									{{ form_row(form_appointment_add_front.name) }}
-									{{ form_row(form_appointment_add_front.subject) }}
-									{{ form_row(form_appointment_add_front.hoursappointment) }}
-									{{ form_row(form_appointment_add_front.user) }}
+									{{ form_row(form_appointment_cw_add_front.name) }}
+									{{ form_row(form_appointment_cw_add_front.subject) }}
+									{{ form_row(form_appointment_cw_add_front.hoursappointment) }}
+									{{ form_row(form_appointment_cw_add_front.user) }}
 								</div>
 								<div class="form-group">
-									{{ form_row(form_appointment_add_front.submit) }}
+									{{ form_row(form_appointment_cw_add_front.submit) }}
 								</div>
-						{{ form_end(form_appointment_add_front) }}
+						{{ form_end(form_appointment_cw_add_front) }}
 					</div>
 				</div>
 			</div>
@@ -283,16 +285,16 @@
 				<h2 class="mb-4">Ajout un devis</h2>
 				<a class="close" href=""><i class="fas fa-times"></i></a>
 					<div class="content">
-						{{ form_start(form_quote_add_front) }}
+						{{ form_start(form_quote_cw_add_front) }}
 								<div class="form-group">
-									{{ form_row(form_quote_add_front.subject) }}
-									{{ form_row(form_quote_add_front.object) }}
-									{{ form_row(form_quote_add_front.person) }}
+									{{ form_row(form_quote_cw_add_front.subject) }}
+									{{ form_row(form_quote_cw_add_front.object) }}
+									{{ form_row(form_quote_cw_add_front.person) }}
 								</div>
 								<div class="form-group">
-									{{ form_row(form_quote_add_front.submit) }}
+									{{ form_row(form_quote_cw_add_front.submit) }}
 								</div>
-						{{ form_end(form_quote_add_front) }}
+						{{ form_end(form_quote_cw_add_front) }}
 					</div>
 				</div>
 			</div>
@@ -306,7 +308,7 @@
 		$(()=>{
 			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_reorder_row')}}",
+					url: "{{ path('home_cw_reorder_row')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),
@@ -318,7 +320,7 @@
 			})
 			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_reorder_row')}}",
+					url: "{{ path('home_cw_reorder_row')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),
@@ -330,7 +332,7 @@
 			})
 			$("#tableOrderAppointment").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_reorder_row')}}",
+					url: "{{ path('home_cw_reorder_row')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),
@@ -342,7 +344,7 @@
 			})
 			$("#tableOrderQuote").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_reorder_row')}}",
+					url: "{{ path('home_cw_reorder_row')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),

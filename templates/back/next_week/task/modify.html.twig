@@ -1,0 +1,34 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Modification de la tâche  {{ task.customer }} - Semaine Suivante - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Modification de la tâche  {{ task.customer }} - Semaine Suivante{% endblock %}
+	</div>
+	{% block back_content %}
+		<div class="was-validated form-back background-login is-valid">
+		{% if notification %}
+			<hr>
+				<div class="alert alert-success">{{ notification }}<br>
+					<hr>
+						<a href="{{ path('mission_list_nw_back') }}">Retourner sur la liste</a>
+				</div>
+			<hr>
+		{% endif %}
+		{{ form_start(form_task_nw_modify_admin) }}
+		<div class="form-group">
+			{{ form_row(form_task_nw_modify_admin.customer) }}
+			{{ form_row(form_task_nw_modify_admin.object) }}
+			{{ form_row(form_task_nw_modify_admin.subobject1) }}
+			{{ form_row(form_task_nw_modify_admin.subobject2) }}
+			{{ form_row(form_task_nw_modify_admin.subobject3) }}
+			{{ form_row(form_task_nw_modify_admin.users) }}
+			{{ form_row(form_task_nw_modify_admin.p1) }}
+			{{ form_row(form_task_nw_modify_admin.p2) }}
+			{{ form_row(form_task_nw_modify_admin.submit) }}
+		</div>
+		{{ form_end(form_task_nw_modify_admin) }}
+	{% endblock %}
+	</div>
+{% endblock %}

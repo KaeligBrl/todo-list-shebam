@@ -44,6 +44,11 @@ class Appointment
      */
     private $position;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $nextweek;
+
     public function __construct()
     {
         $this->user = new ArrayCollection();
@@ -122,6 +127,18 @@ class Appointment
     public function setPosition(?int $position): self
     {
         $this->position = $position;
+
+        return $this;
+    }
+
+    public function getNextweek()
+    {
+        return $this->nextweek;
+    }
+
+    public function setNextweek(?bool $nextweek): self
+    {
+        $this->nextweek = $nextweek;
 
         return $this;
     }

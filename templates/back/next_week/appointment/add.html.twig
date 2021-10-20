@@ -1,0 +1,32 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Ajouter un rendez-vous - Semaine Suivante{% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Ajouter un rendez-vous - Semaine Suivante{% endblock %}
+	</div>
+	{% block back_content %}
+		<div class="was-validated form-back background-login is-valid">
+			{% if notification %}
+					<div class="alert alert-success">{{ notification }}<br>
+						<hr>
+						<a href="{{ path('mission_list_nw_back') }}">Retourner à la liste</a>
+					</div>
+				<hr>
+			{% endif %}
+				{{ form_start(form_appointment_nw_add_back) }}
+			<div class="form-group">
+					{{ form_row(form_appointment_nw_add_back.name) }}
+					{{ form_row(form_appointment_nw_add_back.subject) }}
+					{{ form_row(form_appointment_nw_add_back.hoursappointment) }}
+					{{ form_row(form_appointment_nw_add_back.user) }}
+					{{ form_row(form_appointment_nw_add_back.nextweek) }}
+					{{ form_row(form_appointment_nw_add_back.submit) }}
+			</div>
+				{{ form_end(form_appointment_nw_add_back) }}
+		</div>
+	{% endblock %}
+{% endblock %}
+
+

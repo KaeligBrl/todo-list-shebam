@@ -20,13 +20,13 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .btn-pink-shebam:hover{background: var(--color-white);color: var(--pink-shebam); transition: ease 0.5s;}
 .btn-green-light-shebam{background: var(--green-light-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none;}
 .btn-green-light-shebam:hover{background: var(--color-white);color: var(--green-light-shebam); transition: ease 0.5s;}
-.btn-submit-front-shebam{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
-.btn-submit-front-shebam:hover{background: var(--color-white);color: var(--blue-dark-shebam);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-submit-front{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-submit-front:hover{background: var(--color-white);color: var(--blue-dark-shebam);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
 .btn-success-front{color: var(--color-green-dark-shebam); font-weight: 600;}
-.btn-submit-home-shebam{text-align: center;background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
-.btn-submit-home-shebam a{color: var(--color-white)}
-.btn-submit-home-shebam:hover{text-align: center;background: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
-.btn-submit-home-shebam a:hover{color: var(--blue-dark-shebam)}
+.btn-submit-home{text-align: center;background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-submit-home a{color: var(--color-white)}
+.btn-submit-home:hover{text-align: center;background: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-submit-home a:hover{color: var(--blue-dark-shebam)}
 
 /* Navbar */
 .navbar{height: 92px;}

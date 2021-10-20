@@ -49,25 +49,53 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function setChangeTaskForP2($id)
-    {
-        $sql = "update App\Entity\Task as t set t.p2 = 1 , t.p1 = 0 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
-        return $query->getResult();
-    }
-
-    public function setChangeTaskForP1($id)
+    public function setChangeTaskForP1CurrentWeek($id)
     {
         $sql = "update App\Entity\Task as t set t.p1 = 1, t.p2 = 0 where t.id = :id";
         $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
+    public function setChangeTaskForP1NextWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 1, t.p2 = 0, t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeTaskForP2NextWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 0, t.p2 = 1, t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeTaskForP2CurrentWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p2 = 1 , t.p1 = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
     public function setRemoveTask()
     {
-        $sql = "DELETE FROM App\Entity\Task";
+        $sql = "delete from App\Entity\Task as t where t.nextweek = 0";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
+
+    public function setchangeTaskToCurrentWeek()
+    {
+        $sql = "update App\Entity\Task as t set t.nextweek = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }  
+
+    // public function setRemoveTask()
+    // {
+    //     $sql = "DELETE FROM App\Entity\Task";
+    //     $query = $this->getEntityManager()->createQuery($sql);
+    //     return $query->getResult();
+    // }
 
 }

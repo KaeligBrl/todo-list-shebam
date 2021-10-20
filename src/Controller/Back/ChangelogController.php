@@ -24,12 +24,12 @@ class ChangelogController extends AbstractController
      */
     public function index(ChangelogRepository $changelog): Response
     {
-        return $this->render('back/changelog/index.html.twig',[
+        return $this->render('back/changelog/list.html.twig',[
             'changelogList' => $changelog->findBy(array(), array('created_at' => 'DESC'))
         ]);
     }
     /**
-     * @Route("/admin/historique-des-changements/ajouter", name="changelog_add_admin")
+     * @Route("/admin/historique-des-changements/ajouter", name="changelog_add_back")
      */
     public function changelogAdd(Request $request,ChangelogRepository $changelogAdd): Response
     {
@@ -45,13 +45,13 @@ class ChangelogController extends AbstractController
             $form = $this->createForm(AdminChangelogAddType::class, $changelogAdd);
         }
         return $this->render('back/changelog/add.html.twig', [
-            'form_changelog_add_admin' => $form->createView(),
+            'form_changelog_add_back' => $form->createView(),
             'notification' => $notification
         ]);
     }
 
     /**
-     * @Route("/admin/changelog/{id}/supprimer", name="changelog_detete_admin")
+     * @Route("/admin/changelog/{id}/supprimer", name="changelog_detete_back")
      * @param Changelog $changelogDelete
      * return RedirectResponse
      */

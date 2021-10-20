@@ -4,7 +4,7 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Liste des clients - Il y a
+		{% block title_back_page %}Liste des clients - Il y a
 				{% if totalCustomer <= 1 %}
 					{{ totalCustomer }} <span> client </span>
 				{% else %}
@@ -12,7 +12,7 @@
 				{% endif %}{% endblock %}
 				
 	</div>
-	{% block admin_utilisateur %}
+	{% block back_content %}
 		<div class="container">
 			<div class="d-flex flex-row-reverse">
 				<a href="{{ path('customer_add_admin') }}" title="Ajouter un client" type="button" class="btn btn-outline-light mb-3">

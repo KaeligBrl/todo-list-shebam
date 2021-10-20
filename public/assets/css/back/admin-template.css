@@ -43,7 +43,7 @@ ul.CTAs a {text-align: center;font-size: 0.9em !important;display: block;border-
 .dropdown-toggle::after {display: block;position: absolute;top: 50%;right: 20px;transform: translateY(-50%);}
 
 /* Button Styles */
-.btn-submit-admin-shebam{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
+.btn-submit-back{background: var(--blue-dark-shebam);color: var(--color-white);border-radius: 5px;padding: 10px 15px;border: none; font-size: 1rem !important; font-weight: 400 !important;}
 
 /* Form */
 .form-back {width: 100%;max-width: 400px;}

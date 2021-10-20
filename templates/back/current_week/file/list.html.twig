@@ -1,0 +1,38 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Liste des téléchargements - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div class="d-flex flex-row">
+		{% block title_back_page %}Liste des téléchargements{% endblock %}
+	</div>
+
+
+	{% block back_content %}
+		<div class="container">
+			<table class="table table-light" data-toggle="table">
+				<thead class="thead-light">
+					<tr>
+                        <th scope="col">Nom</th>
+						<th scope="col">Date de téléchargement</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for file in file %}
+						<tr>
+							<td>{{ file.name }}</a></td>
+							<td>{{ file.createdat|date("d-m-Y")}} à {{file.createdat|date((" H:i"))}}</td>
+                            <td>
+								<a href="{{ asset("file_tasks/" ~ file.name) }}" target="new"><i class="fas fa-eye"></i></a>
+								|
+								<a href="{{ path('download_detete_back', {"id": file.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un téléchargement')"><i class="fas fa-trash"></i></a>
+                            </td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endblock %}
+{% endblock %}
+
