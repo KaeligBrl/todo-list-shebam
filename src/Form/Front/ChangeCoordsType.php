@@ -12,10 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
 class ChangeCoordsType extends AbstractType
 {
-    private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
-        $this->entityManager = $entityManager;
-    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
