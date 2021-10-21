@@ -117,6 +117,86 @@ class HomeController extends AbstractController
     }
 
     /**
+     * @Route("/basculement-vers-p1/id={id}", name="task_cw_change_to_p1_front")
+     * return RedirectResponse
+     */
+    public function changeTaskToP1Front(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP1CurrentWeek($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculement-vers-p2/id={id}", name="task_cw_change_to_p2_front")
+     * return RedirectResponse
+     */
+    public function changeTaskToP2Front(Task $task): Response
+    {
+
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskForP2CurrentWeek($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculer/p1/semaine-suivante/id={id}", name="task_change_p1_cw_to_p1_nw_front")
+     * return RedirectResponse
+     */
+    public function changeTaskP1CurrentWeekToP1NextWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP1CurrentWeekToP1NextWeek($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculer/p2/semaine-suivante/id={id}", name="task_change_p2_cw_to_p2_nw_front")
+     * return RedirectResponse
+     */
+    public function changeTaskP2CurrentWeekToP2NextWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP2CurrentWeekToP2NextWeek($task->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculer/rendez-vous/semaine-suivante/id={id}", name="change_appointment_cw_to_nw_front")
+     * return RedirectResponse
+     */
+    public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointmentChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setChangeAppointmentCurrentWeekToNextWeek($appointmentChange->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
+     * @Route("/basculer/quote/semaine-suivante/id={id}", name="change_quote_cw_to_nw_front")
+     * return RedirectResponse
+     */
+    public function changeQuoteCurrentToNextWeek(Quote $quoteChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setChangeQuoteCurrentWeekToNextWeek($quoteChange->getId());
+
+        return $this->redirectToRoute("home");
+    }
+
+    /**
      * @Route("/reorder", name="home_cw_reorder_row")
      */
     public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)

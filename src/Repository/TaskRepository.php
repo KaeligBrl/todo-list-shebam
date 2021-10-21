@@ -77,6 +77,34 @@ class TaskRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    public function setChangeTaskP1NextWeekToP1CurrentWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 1 , t.p2 = 0, t.nextweek = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeTaskP2NextWeekToP2CurrentWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 0 , t.p2 = 1, t.nextweek = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeTaskP1CurrentWeekToP1NextWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 1 , t.p2 = 0, t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeTaskP2CurrentWeekToP2NextWeek($id)
+    {
+        $sql = "update App\Entity\Task as t set t.p1 = 0 , t.p2 = 2, t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
     public function setRemoveTask()
     {
         $sql = "delete from App\Entity\Task as t where t.nextweek = 0";

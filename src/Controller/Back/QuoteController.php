@@ -142,4 +142,30 @@ class QuoteController extends AbstractController
         return $this->redirectToRoute("mission_list_nw_back");;
     }
 
+    /**
+     * @Route("/admin/liste-des-taches/basculer/quote/semaine-suivante/id={id}", name="change_quote_cw_to_nw_back")
+     * return RedirectResponse
+     */
+    public function changeQuoteCurrentToNextWeek(Quote $quoteChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setChangeQuoteCurrentWeekToNextWeek($quoteChange->getId());
+
+        return $this->redirectToRoute("mission_list_back");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/basculer/quote/semaine-actuelle/id={id}", name="change_quote_nw_to_cw_back")
+     * return RedirectResponse
+     */
+    public function changeQuoteNextToCurrentWeek(Quote $quoteChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setChangeQuoteNextWeekToCurrentWeek($quoteChange->getId());
+
+        return $this->redirectToRoute("mission_list_nw_back");
+    }
+
 }

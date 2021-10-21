@@ -144,6 +144,58 @@ class NextWeekController extends AbstractController
     }
 
     /**
+     * @Route("/basculer/p1/semaine-actuelle/id={id}", name="task_change_p1_nw_to_p1_cw_front")
+     * return RedirectResponse
+     */
+    public function changeTaskP1NextWeekToP1CurrentWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP1NextWeekToP1CurrentWeek($task->getId());
+
+        return $this->redirectToRoute("next_week");
+    }
+
+    /**
+     * @Route("/basculer/p2/semaine-actuelle/id={id}", name="task_change_p2_nw_to_p2_cw_front")
+     * return RedirectResponse
+     */
+    public function changeTaskP2NextWeekToP2CurrentWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP2NextWeekToP2CurrentWeek($task->getId());
+
+        return $this->redirectToRoute("next_week");
+    }
+
+    /**
+     * @Route("/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_front")
+     * return RedirectResponse
+     */
+    public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointmentChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setChangeAppointmentNextWeekToCurrentWeek($appointmentChange->getId());
+
+        return $this->redirectToRoute("next_week");
+    }
+
+    /**
+     * @Route("/basculer/devis/semaine-actuelle/id={id}", name="change_quote_nw_to_cw_front")
+     * return RedirectResponse
+     */
+    public function changeQuoteNextWeekToCurrentWeek(Quote $quoteChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setChangeQuoteNextWeekToCurrentWeek($quoteChange->getId());
+
+        return $this->redirectToRoute("next_week");
+    }
+
+    /**
      * @Route("/semaine-suivante/changer-vers-semaine-actuelle/", name="mission_nw_change_to_cw_front")
      */
     public function changeTaskToCurrentWeek(): Response

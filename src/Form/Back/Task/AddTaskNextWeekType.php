@@ -89,6 +89,7 @@ class AddTaskNextWeekType extends AbstractType
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
                 'label' => 'Semaine Suivante',
+                'disabled' => true,
                 'attr' => [
                     'placeholder' => 'Semaine Suivante',
                     'checked'   => 'checked'

@@ -143,4 +143,30 @@ class AppointmentController extends AbstractController
         return $this->redirectToRoute("mission_list_nw_back");;
     }
 
+    /**
+     * @Route("/admin/liste-des-taches/basculer/rendez-vous/semaine-suivante/id={id}", name="change_appointment_cw_to_nw_back")
+     * return RedirectResponse
+     */
+    public function changeQuoteCurrentToNextWeek(Appointment $quoteChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setChangeAppointmentCurrentWeekToNextWeek($quoteChange->getId());
+
+        return $this->redirectToRoute("mission_list_back");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_back")
+     * return RedirectResponse
+     */
+    public function changeAppointmentNextToCurrentWeek(Appointment $appointmentChange): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setChangeAppointmentNextWeekToCurrentWeek($appointmentChange->getId());
+
+        return $this->redirectToRoute("mission_list_nw_back");
+    }
+
 }

@@ -55,5 +55,19 @@ class QuoteRepository extends ServiceEntityRepository
         $sql = "update App\Entity\Quote as t set t.nextweek = 0";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
-    }  
+    }
+
+    public function setChangeQuoteCurrentWeekToNextWeek($id)
+    {
+        $sql = "update App\Entity\Quote as t set t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeQuoteNextWeekToCurrentWeek($id)
+    {
+        $sql = "update App\Entity\Quote as t set t.nextweek = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
 }

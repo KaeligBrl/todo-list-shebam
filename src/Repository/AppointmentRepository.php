@@ -52,15 +52,30 @@ class AppointmentRepository extends ServiceEntityRepository
 
     public function setRemoveAppointment()
     {
-        $sql = "delete from App\Entity\Appointment as t where  t.nextweek = 0";
+        $sql = "DELETE FROM App\Entity\Appointment";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
 
-    public function setchangeAppointmentToCurrentWeek()
+    public function setchangeQuoteToCurrentWeek()
     {
-        $sql = "update App\Entity\Appointment as t set t.nextweek = 0";
+        $sql = "update App\Entity\Quote as t set t.nextweek = 0";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
-    }  
+    }
+
+    public function setChangeAppointmentCurrentWeekToNextWeek($id)
+    {
+        $sql = "update App\Entity\Appointment as t set t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeAppointmentNextWeekToCurrentWeek($id)
+    {
+        $sql = "update App\Entity\Appointment as t set t.nextweek = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
 }

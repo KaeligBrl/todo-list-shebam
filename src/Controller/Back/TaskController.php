@@ -198,34 +198,56 @@ class TaskController extends AbstractController
         return $this->redirectToRoute("mission_list_nw_back");
     }
 
-
-
     /**
-     * @Route("/basculement-vers-p1/id={id}", name="task_cw_change_to_p1_front")
+     * @Route("/admin/liste-des-taches/basculer/p1/semaine-suivante/id={id}", name="change_task_p1_cw_to_p1_nw_back")
      * return RedirectResponse
      */
-    public function changeTaskToP1Front(Task $task): Response
+    public function changeTaskP1CurrentWeekToP1NextWeek(Task $task): Response
     {
-
         $rep = $this->getDoctrine()
             ->getRepository(Task::class)
-            ->setChangeTaskForP1CurrentWeek($task->getId());
+            ->setChangeTaskP1CurrentWeekToP1NextWeek($task->getId());
 
-        return $this->redirectToRoute("home");
+        return $this->redirectToRoute("mission_list_back");
     }
 
     /**
-     * @Route("/basculement-vers-p2/id={id}", name="task_cw_change_to_p2_front")
+     * @Route("/admin/liste-des-taches/basculer/p1/semaine-actuelle/id={id}", name="change_task_p1_nw_to_p1_cw_back")
      * return RedirectResponse
      */
-    public function changeTaskToP2Front(Task $task): Response
+    public function changeTaskP1NextWeekToP1CurrentWeek(Task $task): Response
     {
-
         $rep = $this->getDoctrine()
             ->getRepository(Task::class)
-            ->setChangeTaskForP2CurrentWeek($task->getId());
+            ->setChangeTaskP1NextWeekToP1CurrentWeek($task->getId());
 
-        return $this->redirectToRoute("home");
+        return $this->redirectToRoute("mission_list_nw_back");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/basculer/p2/semaine-suivante/id={id}", name="change_task_p2_cw_to_p2_nw_back")
+     * return RedirectResponse
+     */
+    public function changeTaskP2CurrentWeekToP2NextWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP2CurrentWeekToP2NextWeek($task->getId());
+
+        return $this->redirectToRoute("mission_list_back");
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/basculer/p2/semaine-actuelle/id={id}", name="change_task_p2_nw_to_p2_cw_back")
+     * return RedirectResponse
+     */
+    public function changeTaskP2NextWeekToP2CurrentWeek(Task $task): Response
+    {
+        $rep = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setChangeTaskP2NextWeekToP2CurrentWeek($task->getId());
+
+        return $this->redirectToRoute("mission_list_nw_back");
     }
 
     /**

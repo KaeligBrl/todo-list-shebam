@@ -45,6 +45,8 @@
 										<td>
 											<a href="{{ path('task_cw_change_to_p2_back', {"id": task.id}) }}"><span>P2</span></a>
 												|
+											<a href="{{ path('change_task_p1_cw_to_p1_nw_back', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
+												|
 											<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
 											<a href="{{ path('task_cw_detete_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
@@ -91,7 +93,9 @@
 										{% endfor %}
 								</td>
 									<td>
-										<a href="{{ path('task_cw_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>
+										<a href="{{ path('task_cw_change_to_p1_back', {"id": task.id}) }}"><span>P1</span></a>
+											|
+										<a href="{{ path('change_task_p2_cw_to_p2_nw_back', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
 											|
 										<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 											|
@@ -138,7 +142,9 @@
 										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										<td>
 											<a href="{{ path('appointment_cw_modify_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
-												|
+													|
+											<a href="{{ path('change_appointment_cw_to_nw_back', {"id": appointment.id}) }}"><i class="fas fa-redo"></i></a>
+													|
 											<a href="{{ path('appointment_cw_detete_back', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
@@ -177,7 +183,9 @@
 										</td>
 										<td>
 											<a href="{{ path('quote_cw_modify_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-												|
+													|
+											<a href="{{ path('change_quote_cw_to_nw_back', {"id": quote.id}) }}"><i class="fas fa-redo"></i></a>
+													|
 											<a href="{{ path('quote_cw_detete_back', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
