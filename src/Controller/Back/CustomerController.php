@@ -5,11 +5,11 @@ namespace App\Controller\Back;
 use App\Entity\Customer;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\Customer\AddCustomerType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\Back\Customer\ModifyCustomerType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Back\Customer\AdminCustomerAddType;
-use App\Form\Back\Customer\AdminCustomerModifyType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -20,7 +20,7 @@ class CustomerController extends AbstractController
     $this->entityManager = $entityManager;
     }
     /**
-     * @Route("/admin/client", name="customer_list_admin")
+     * @Route("/admin/client", name="list_customer_back")
      */
     public function listCustomers(CustomerRepository $customerAdmin): Response
     {
@@ -39,11 +39,11 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/admin/client/ajouter", name="customer_add_admin")
+     * @Route("/admin/client/ajouter", name="add_customer_back")
      */
     public function index(Request $request): Response {
         $customerAdd = new Customer();
-        $form = $this->createForm(AdminCustomerAddType::class, $customerAdd);
+        $form = $this->createForm(AddCustomerType::class, $customerAdd);
         $notification = null;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
@@ -51,16 +51,16 @@ class CustomerController extends AbstractController
             $this->entityManager->flush();
             $notification = 'Le client a bien été ajouté';
             $customerAdd = new Customer();
-            $form = $this->createForm(AdminCustomerAddType::class, $customerAdd);
+            $form = $this->createForm(AddCustomerType::class, $customerAdd);
         }
             return $this->render('back/customer/add.html.twig', [
-                'form_admin_customer_add' => $form->createView(),
+                'form_customer_add_back' => $form->createView(),
                 'notification' => $notification
             ]);
         }
 
     /**
-     * @Route("/admin/client/{id}/supprimer", name="customer_detete_admin")
+     * @Route("/admin/client/{id}/supprimer", name="delete_customer_back")
      * @param Customer $customerDelete
      * return RedirectResponse
      */
@@ -68,15 +68,15 @@ class CustomerController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($customerDelete);
         $em->flush();
-        return $this->redirectToRoute("customer_list_admin");
+        return $this->redirectToRoute("list_customer_back");
     }
 
     /**
-     * @Route("/admin/client/{id}/modifier", name="customer_modify_admin")
+     * @Route("/admin/client/{id}/modifier", name="modify_customer_back")
      */
     public function modifyTask(Request $request, Customer $customerModify): Response
     {
-        $form = $this->createForm(AdminCustomerModifyType::class, $customerModify);
+        $form = $this->createForm(ModifyCustomerType::class, $customerModify);
         $notification = null;
         $form->handleRequest($request);
 
@@ -85,7 +85,7 @@ class CustomerController extends AbstractController
             $this->entityManager->persist($customerModify);
             $this->entityManager->flush();
             $notification = 'Client mise à jour !';
-            $form = $this->createForm(AdminCustomerModifyType::class, $customerModify);
+            $form = $this->createForm(ModifyCustomerType::class, $customerModify);
         }
         return $this->render('back/customer/modify.html.twig',[
             'form_customer_modify_admin' => $form->createView(),

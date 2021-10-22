@@ -4,10 +4,10 @@
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}<a href="{{path('customer_list_admin')}}">Client</a> - Modification - 
+		{% block title_back_page %}Client</a> - Modification - 
 		<br>ID: {{ customer.id }}{% endblock %}
 	</div>
-	{% block admin_utilisateur %}
+	{% block back_content %}
 		<div class="container">
 			{% if notification %}
 				<hr>

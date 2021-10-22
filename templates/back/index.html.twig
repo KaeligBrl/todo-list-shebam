@@ -29,7 +29,7 @@
 		<div class="wrapper">
 			<nav id="sidebar" class="bg-yellow-shebam">
 				<div class="sidebar-header bg-white-shebam">
-					<a href="{{ path('mission_list_back') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype la liste des tâches SHEBAM!"></a>
+					<a href="{{ path('list_cw_mission_back') }}" title="Retourner sur le tableau de bord"><img class="img-admin" src="{{ asset('assets/images/logo-to-do-list-vert.png') }} " alt="Logotype la liste des tâches SHEBAM!"></a>
 				</div>
 				<ul class="list-unstyled components color-white-shebam">
 					{# <li>
@@ -39,15 +39,15 @@
 						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-tasks"></i> Tâches</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
 							<li>
-								<a href="{{ path('mission_list_back') }}" title="Aller sur la liste des tâches">Semaine Actuelle</a>
+								<a href="{{ path('list_cw_mission_back') }}" title="Aller sur la liste des tâches">Semaine Actuelle</a>
 							</li>
 							<li>
-								<a href="{{ path('mission_list_nw_back') }}" title="Aller sur la liste des tâches archivées">Semaine Suivante</a>
+								<a href="{{ path('list_nw_mission_back') }}" title="Aller sur la liste des tâches archivées">Semaine Suivante</a>
 							</li>
 						</ul>
 					</li>
 					<li>
-						<a href="{{ path('customer_list_admin') }}" title="Aller sur la liste des clients"><i class="fas fa-user-tie"></i> Clients</a>
+						<a href="{{ path('list_customer_back') }}" title="Aller sur la liste des clients"><i class="fas fa-user-tie"></i> Clients</a>
 					</li>
 					<li>
 						<a href="{{ path('user_list_admin') }}" title="Aller sur la liste de l'équipe"><i class="fas fa-users"></i> Équipe</a>

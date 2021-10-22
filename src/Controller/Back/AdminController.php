@@ -28,7 +28,7 @@ class AdminController extends AbstractController
         $this->entityManager = $entityManager;
     }
     /**
-     * @Route("/admin/liste-des-taches/", name="mission_list_back")
+     * @Route("/admin/liste-des-taches/", name="list_cw_mission_back")
      */
     public function listTask(TaskRepository $taskListCW, AppointmentRepository $appointmentListCW, QuoteRepository $quoteListCW): Response
     {
@@ -40,15 +40,16 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/", name="mission_list_nw_back")
+     * @Route("/admin/liste-des-taches/semaine-suivante/", name="list_nw_mission_back")
      */
     public function listTaskNextWeek(TaskRepository $taskListNW, AppointmentRepository $appointmentListNW, QuoteRepository $quoteListNW): Response
     {
-
         return $this->render('back/next_week/list.html.twig', [
-            'task' => $taskListNW->findBy([], ['position' => 'ASC']),
-            'appointment' => $appointmentListNW->findBy([], ['hoursappointment' => 'ASC']),
-            'quote' => $quoteListNW->findBy([], ['position' => 'ASC']),
+            'tasks' => $taskListNW->findBy([], ['position' => 'ASC']),
+            // $tasks = $taskListNW->findBy([], ['position' => 'ASC']),
+            // dd($tasks),
+            'appointments' => $appointmentListNW->findBy([], ['hoursappointment' => 'ASC']),
+            'quotes' => $quoteListNW->findBy([], ['position' => 'ASC']),
         ]);
     }
 
@@ -57,7 +58,7 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     /**
-     *@Route("/admin/liste-des-taches/generation-de-l-archive/", name="task_btn_archived_back")
+     *@Route("/admin/liste-des-taches/generation-de-l-archive/", name="btn_task_archived_back")
      */
     public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, QuoteRepository $quote, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
@@ -116,9 +117,47 @@ class AdminController extends AbstractController
 
 
     /**
-     * @Route("/admin/liste-des-taches/reorder", name="back_cw_reorder_row")
+     * @Route("/admin/liste-des-taches/reorder", name="reorder_row_cw_back")
      */
-    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    public function reorderRowCWback(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    {
+        $cpt = 0;
+        switch ($request->request->get("context")) {
+            case '1':
+                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
+                    $task = $taskRow->find($row['id']); //on récupère la task
+                    $task->setPosition($cpt); //on definit la position
+                    $cpt++; //on ajoute une rangée
+                }
+                break;
+
+            case '2':
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $appt = $appointmentRow->find($row['id']);
+                    $appt->setPosition($cpt);
+                    $cpt++;
+                }
+                break;
+
+            case '3':
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $quote = $quoteRow->find($row['id']);
+                    $quote->setPosition($cpt);
+                    $cpt++;
+                }
+                break;
+        }
+
+        $this->entityManager->flush();
+        return new JsonResponse([
+            'data' => gettype($request->request->get("context"))
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/semaine-suivante/reorder", name="reorder_row_nw_back")
+     */
+    public function reorderRowNWback(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
     {
         $cpt = 0;
         switch ($request->request->get("context")) {

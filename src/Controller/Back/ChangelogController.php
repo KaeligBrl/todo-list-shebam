@@ -29,7 +29,7 @@ class ChangelogController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/historique-des-changements/ajouter", name="changelog_add_back")
+     * @Route("/admin/historique-des-changements/ajouter", name="add_changelog_back")
      */
     public function changelogAdd(Request $request,ChangelogRepository $changelogAdd): Response
     {
@@ -51,7 +51,7 @@ class ChangelogController extends AbstractController
     }
 
     /**
-     * @Route("/admin/changelog/{id}/supprimer", name="changelog_detete_back")
+     * @Route("/admin/changelog/{id}/supprimer", name="delete_changelog_back")
      * @param Changelog $changelogDelete
      * return RedirectResponse
      */

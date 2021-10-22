@@ -57,9 +57,9 @@ class AppointmentRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function setchangeQuoteToCurrentWeek()
+    public function setchangeAppointmentToCurrentWeek()
     {
-        $sql = "update App\Entity\Quote as t set t.nextweek = 0";
+        $sql = "update App\Entity\Appointment as t set t.nextweek = 0";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }

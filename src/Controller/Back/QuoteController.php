@@ -10,9 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Back\Quote\AddQuoteCurrentWeekType;
 use App\Form\Back\Quote\ModifyQuoteNextWeekType;
-use App\Form\Back\Quote\AdminTaskQuoteModifyType;
 use App\Form\Back\Quote\ModifyQuoteCurrentWeekType;
-use App\Form\Front\Quote\AdminQuoteAddNextWeekType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -25,7 +23,7 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/devis/ajouter", name="quote_cw_add_back")
+     * @Route("/admin/liste-des-taches/devis/ajouter", name="add_quote_cw_back")
      */
     public function addTaskQuote(Request $request): Response
     {
@@ -47,7 +45,7 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/devis/ajouter", name="quote_nw_add_back")
+     * @Route("/admin/liste-des-taches/semaine-suivante/devis/ajouter", name="add_quote_nw_back")
      */
     public function addTaskQuoteNextWeek(Request $request): Response
     {
@@ -63,13 +61,13 @@ class QuoteController extends AbstractController
             $form = $this->createForm(AddQuoteNextWeekType::class, $quoteAdd);
         }
         return $this->render('back/next_week/quote/add.html.twig', [
-            'form_quote_nw_add_admin' => $form->createView(),
+            'form_quote_nw_add_back' => $form->createView(),
             'notification' => $notification
         ]);
     }
 
     /**
-     * @Route("/admin/liste-des-taches/devis/modifier/id={id}", name="quote_cw_modify_back")
+     * @Route("/admin/liste-des-taches/devis/modifier/id={id}", name="modify_quote_cw_back")
      */
     public function modifyQuote(Request $request, Quote $quoteModify): Response
     {
@@ -92,7 +90,7 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/devis/modifier/id={id}", name="quote_nw_modify_back")
+     * @Route("/admin/liste-des-taches/semaine-suivante/devis/modifier/id={id}", name="modify_quote_nw_back")
      */
     public function modifyQuoteNextWeek(Request $request, Quote $quoteModify): Response
     {
@@ -115,7 +113,7 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/devis/supprimer/id={id}", name="quote_cw_detete_back")
+     * @Route("/admin/liste-des-taches/devis/supprimer/id={id}", name="delete_quote_cw_back")
      * @param Quote $quoteDelete
      * return RedirectResponse
      */
@@ -125,11 +123,11 @@ class QuoteController extends AbstractController
         $em->remove($quoteDelete);
         $em->flush();
 
-        return $this->redirectToRoute("mission_list_back");;
+        return $this->redirectToRoute("list_cw_mission_back");;
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/devis/supprimer/id={id}", name="quote_nw_detete_back")
+     * @Route("/admin/liste-des-taches/semaine-suivante/devis/supprimer/id={id}", name="delete_quote_nw_back")
      * @param Quote $quoteDelete
      * return RedirectResponse
      */
@@ -139,7 +137,7 @@ class QuoteController extends AbstractController
         $em->remove($quoteDelete);
         $em->flush();
 
-        return $this->redirectToRoute("mission_list_nw_back");;
+        return $this->redirectToRoute("list_nw_mission_back");;
     }
 
     /**
@@ -152,7 +150,7 @@ class QuoteController extends AbstractController
             ->getRepository(Quote::class)
             ->setChangeQuoteCurrentWeekToNextWeek($quoteChange->getId());
 
-        return $this->redirectToRoute("mission_list_back");
+        return $this->redirectToRoute("list_nw_mission_back");
     }
 
     /**
@@ -165,7 +163,7 @@ class QuoteController extends AbstractController
             ->getRepository(Quote::class)
             ->setChangeQuoteNextWeekToCurrentWeek($quoteChange->getId());
 
-        return $this->redirectToRoute("mission_list_nw_back");
+        return $this->redirectToRoute("list_nw_mission_back");
     }
 
 }

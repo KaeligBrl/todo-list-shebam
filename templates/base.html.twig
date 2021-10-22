@@ -43,7 +43,7 @@
                 </ul> 
                 <ul class="navbar-nav">
                     {% if app.user %}
-                        {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur l'administration" href="{{ path('mission_list_back')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur mon compte" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" title="Se déconnecter" href="{{ path('app_logout') }}">Déconnexion</a>
+                        {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur l'administration" href="{{ path('list_cw_mission_back')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur mon compte" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" title="Se déconnecter" href="{{ path('app_logout') }}">Déconnexion</a>
                     {% else %}
                     <a class="navbar-text color-blue-dark-shebam" title="Se connecter" href="{{ path('app_login') }}">Connexion</a> <a class="navbar-text color-blue-dark-shebam" title="S'inscrire" href="{{ path('register') }}">Inscription</a>
                     {% endif %}
@@ -56,7 +56,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="mobile-bottom-nav__item">
                         <div class="mobile-bottom-nav__item-content">
-                            <a href="{{ path('mission_list_back') }}"><i class="fas fa-tools"></i><br>Admin</a>
+                            <a href="{{ path('list_cw_mission_back') }}"><i class="fas fa-tools"></i><br>Admin</a>
                         </div>		
                     </div>
                 {% endif %}

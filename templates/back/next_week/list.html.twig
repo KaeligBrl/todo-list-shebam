@@ -12,7 +12,7 @@
 				<div class="col">
 					<div class="text-center bg-yellow-shebam color-white-shebam p-3 justify-content-md-center">Priorité 1
 						<div class="add-icon-custom d-flex flew-row-reverse">			
-							<a href="{{ path('task_nw_add_back') }}" title="Ajouter une tâche" type="button">
+							<a href="{{ path('add_task_nw_back') }}" title="Ajouter une tâche" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -28,7 +28,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for task in task %}
+							{% for task in tasks %}
 								{% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 1 %}
 									<tr class="bg-white-shebam">
 										<td>{{ task.id }}</td>
@@ -44,13 +44,13 @@
 											{% endfor %}
 										</td>
 										<td>
-											<a href="{{ path('task_nw_change_to_p2_back', {"id": task.id}) }}"><span>P2</span></a>
+											<a href="{{ path('change_task_nw_to_p2_back', {"id": task.id}) }}"><span>P2</span></a>
 												|
-											<a href="{{ path('change_task_p2_nw_to_p2_cw_back', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>
+											<a href="{{ path('change_task_p1_nw_to_p1_cw_back', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>
 												|
-											<a href="{{ path('task_nw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_task_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('task_nw_detete_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('detete_task_nw_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -62,7 +62,7 @@
 				<div class="col">
 					<div class="text-center bg-green-light-shebam color-white-shebam p-3">Priorité 2
 						<div class="add-icon-custom d-flex flew-row-reverse">				
-							<a href="{{ path('task_nw_add_back') }}" title="Ajouter une tâche" type="button">
+							<a href="{{ path('add_task_nw_back') }}" title="Ajouter une tâche" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -78,7 +78,7 @@
 							</tr>
 						</thead>
 						<tbody>
-						{% for task in task %}
+						{% for task in tasks %}
 							{% if task.p1 == 0 and task.p2 == 1 and task.nextweek == 1  %}
 								<tr class="bg-white-shebam">
 									<td>{{task.id}}</td>
@@ -92,13 +92,15 @@
 									<td>{% for task in task.users %}
 											{{ task.firstname }} <br>
 										{% endfor %}
-								</td>
+									</td>
 									<td>
-										<a href="{{ path('task_nw_change_to_p1_back', {"id": task.id}) }}"><span>P1</span></a>
+										<a href="{{ path('change_task_nw_to_p1_back', {"id": task.id}) }}"><span>P1</span></a>
 											|
 										<a href="{{ path('change_task_p2_nw_to_p2_cw_back', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>
 											|
-										<a href="{{ path('task_nw_detete_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+										<a href="{{ path('modify_task_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											|
+										<a href="{{ path('detete_task_nw_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 									</td>
 								</tr>
 							{% endif %}
@@ -112,7 +114,7 @@
 				<div class="col">
 					<div class="text-center bg-pink-shebam color-white-shebam p-3">Rendez-vous
 						<div class="add-icon-custom d-flex flew-row-reverse">				
-							<a href="{{ path('appointment_nw_add_back') }}" title="Ajouter un rendez-vous" type="button">
+							<a href="{{ path('add_appointment_nw_back') }}" title="Ajouter un rendez-vous" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -128,7 +130,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for appointment in appointment %}
+							{% for appointment in appointments %}
 								{% if  appointment.nextweek == 1 %}
 									<tr class="bg-white-shebam">
 										<td>{{appointment.name}}</td>
@@ -140,11 +142,11 @@
 										</td>
 										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										<td>
-											<a href="{{ path('appointment_nw_modify_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
-													|
 											<a href="{{ path('change_appointment_nw_to_cw_back', {"id": appointment.id}) }}"><i class="fas fa-undo"></i></a>
 													|
-											<a href="{{ path('appointment_nw_detete_back', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('modify_appointment_nw_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
+													|
+											<a href="{{ path('delete_appointment_nw_back', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -155,7 +157,7 @@
 				<div class="col">
 					<div class="text-center bg-blue-light-shebam color-white-shebam p-3 align-bottom">Devis
 						<div class="add-icon-custom d-flex flew-row-reverse">				
-							<a href="{{ path('quote_nw_add_back') }}" title="Ajouter un devis" type="button">
+							<a href="{{ path('add_quote_nw_back') }}" title="Ajouter un devis" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -170,7 +172,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							{% for quote in quote %}
+							{% for quote in quotes %}
 								{% if  quote.nextweek == 1 %}
 									<tr class="bg-white-shebam">
 										<td>{{ quote.subject }}</td>
@@ -181,11 +183,11 @@
 										{% endfor %}
 										</td>
 										<td>
-											<a href="{{ path('quote_nw_modify_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-													|
 											<a href="{{ path('change_quote_nw_to_cw_back', {"id": quote.id}) }}"><i class="fas fa-undo"></i></a>
 													|
-											<a href="{{ path('quote_nw_detete_back', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('modify_quote_nw_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+													|
+											<a href="{{ path('delete_quote_nw_back', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 								{% endif %}
@@ -196,11 +198,8 @@
 			</div>
 			<div class="mb-5"></div>
 
-			{% if task is empty and quote is empty and appointment is empty %}
-				<div style="pointer-events: none" class="mt-3 text-center btn-submit-back btn"><span>Il faut au moins une donnée pour basculer sur la semaine suivante</span></div>
-			{% else %}			
-				<div class="mt-3 text-center btn-submit-back btn"><a href="{{ path('task_change_to_current_back') }}">Passer dans la semaine actuelle</a></div>
-			{% endif %}
+			<div class="mt-3 text-center btn-submit-back btn"><a href="{{path('change_task_to_cw_back') }}">Passer à la semaine suivante</a></div>
+			
         </div>
     </div>  
 	{% endblock %}
@@ -211,7 +210,7 @@
 		$(()=>{
 			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_nw_reorder_row')}}",
+					url: "{{ path('reorder_row_nw_back')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),
@@ -223,7 +222,7 @@
 			})
 			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
 				$.ajax({
-					url: "{{ path('home_nw_reorder_row')}}",
+					url: "{{ path('reorder_row_nw_back')}}",
 					method: "POST",
 					data: {
 						table: JSON.stringify(table),

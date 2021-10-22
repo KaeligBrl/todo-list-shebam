@@ -3,7 +3,6 @@
 namespace App\Form\Back\User;
 
 use App\Entity\User;
-use App\Form\ShowHidePasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,9 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class AdminUserModifyType extends AbstractType
+class ModifyUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,7 +41,7 @@ class AdminUserModifyType extends AbstractType
 
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-admin-shebam'],
+                'attr' => ['class' => 'btn-submit-back'],
             ])
         ;
         $builder->get('roles')

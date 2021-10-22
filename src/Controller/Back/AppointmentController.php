@@ -24,7 +24,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="appointment_cw_add_back")
+     * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="add_appointment_cw_back")
      */
     public function addTaskAppointment(Request $request): Response
     {
@@ -46,7 +46,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/rendez-vous/ajouter", name="appointment_nw_add_back")
+     * @Route("/admin/liste-des-taches/semaine-suivante/rendez-vous/ajouter", name="add_appointment_nw_back")
      */
     public function addTaskAppointmentNextWeek(Request $request): Response
     {
@@ -68,7 +68,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/modifier/id={id}", name="appointment_cw_modify_back")
+     * @Route("/admin/liste-des-taches/rendez-vous/modifier/id={id}", name="modify_appointment_cw_back")
      */
     public function modifyAppointment(Request $request, Appointment $appointmentModify): Response
     {
@@ -91,7 +91,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/modifier/id={id}", name="appointment_nw_modify_back")
+     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/modifier/id={id}", name="modify_appointment_nw_back")
      */
     public function modifyAppointmentNextWeek(Request $request, Appointment $appointmentModify): Response
     {
@@ -114,7 +114,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/supprimer/id={id}", name="appointment_cw_detete_back")
+     * @Route("/admin/liste-des-taches/rendez-vous/supprimer/id={id}", name="delete_appointment_cw_back")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -125,11 +125,11 @@ class AppointmentController extends AbstractController
         $em->remove($appointmentDelete);
         $em->flush();
 
-        return $this->redirectToRoute("mission_list_back");;
+        return $this->redirectToRoute("list_cw_mission_back");;
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/supprimer/id={id}", name="appointment_nw_detete_back")
+     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/supprimer/id={id}", name="delete_appointment_nw_back")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -153,7 +153,7 @@ class AppointmentController extends AbstractController
             ->getRepository(Appointment::class)
             ->setChangeAppointmentCurrentWeekToNextWeek($quoteChange->getId());
 
-        return $this->redirectToRoute("mission_list_back");
+        return $this->redirectToRoute("list_cw_mission_back");
     }
 
     /**
@@ -166,7 +166,7 @@ class AppointmentController extends AbstractController
             ->getRepository(Appointment::class)
             ->setChangeAppointmentNextWeekToCurrentWeek($appointmentChange->getId());
 
-        return $this->redirectToRoute("mission_list_nw_back");
+        return $this->redirectToRoute("list_nw_mission_back");
     }
 
 }

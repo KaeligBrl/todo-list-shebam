@@ -28,7 +28,7 @@ class DownloadController extends AbstractController
     }
 
     /**
-     * @Route("/admin/telechargement/{id}/supprimer", name="download_detete_back")
+     * @Route("/admin/telechargement/{id}/supprimer", name="delete_download_back")
      * @param File $downloadDelete
      * return RedirectResponse
      */

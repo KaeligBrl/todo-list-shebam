@@ -4,9 +4,9 @@
 
 {% block body %}
 	<div>
-{% block titre_admin_page %}{% block title_titre_admin_page_base %}{{ parent() }}{% endblock %}Utilisateur - Modifier{% endblock %}
+{% block title_back_page %}Modifier l'utilisateur {{user.firstname}} {{user.lastname}}{% endblock %}
 	</div>
-	{% block admin_utilisateur %}
+	{% block back_content %}
 
 		{{ form_start(form_user_modify_admin) }}
 		<div class="was-validated form-back background-login is-valid">

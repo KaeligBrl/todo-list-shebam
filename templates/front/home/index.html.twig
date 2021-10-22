@@ -56,9 +56,9 @@
 												|
 											<a href="{{ path('task_change_p1_cw_to_p1_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
 												|
-											<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_task_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('task_cw_detete_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 									</tr>
@@ -71,7 +71,7 @@
 							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="#ajouterunetache">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('task_cw_add_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('add_task_cw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -111,9 +111,9 @@
 												|
 											<a href="{{ path('task_change_p2_cw_to_p2_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
 												|
-											<a href="{{ path('task_cw_modify_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_task_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
-											<a href="{{ path('task_cw_detete_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 								</tr>
@@ -127,7 +127,7 @@
 							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="#ajouterunetache">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('task_cw_add_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('add_task_cw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 
@@ -169,11 +169,11 @@
 										<td>{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
 										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('appointment_cw_modify_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_appointment_cw_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>
 												|
 											<a href="{{ path('change_appointment_cw_to_nw_front', {"id": appointment.id}) }}"><i class="fas fa-redo"></i></a>
 												|
-											<a href="{{ path('appointment_cw_detete_home', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('detete_appointment_cw_front', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 									</tr>
@@ -187,7 +187,7 @@
 							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="#ajouterunrendezvous">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="{{ path('appointment_cw_add_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-pink-shebam" href="{{ path('add_appointment_cw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -220,11 +220,11 @@
 										</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a href="{{ path('quote_cw_modify_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_quote_cw_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 													|
 											<a href="{{ path('change_quote_cw_to_nw_front', {"id": quote.id}) }}"><i class="fas fa-redo"></i></a>
 													|
-											<a href="{{ path('quote_cw_detete_home', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
+											<a href="{{ path('delete_quote_cw_front', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
 									</tr>
@@ -238,7 +238,7 @@
 							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="#ajouterundevis">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="{{ path('quote_cw_add_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-blue-light-shebam" href="{{ path('add_appointment_cw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>

@@ -15,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class AdminUserAddType extends AbstractType
+class AddUserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -81,7 +81,7 @@ class AdminUserAddType extends AbstractType
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-admin-shebam'],
+                'attr' => ['class' => 'btn-submit-back'],
             ])
         ;
         $builder->get('roles')

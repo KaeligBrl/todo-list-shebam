@@ -74,7 +74,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/tache/{id}/supprimer", name="task_nw_detete_home")
+     * @Route("/semaine-suivante/tache/supprimer/id={id}/", name="delete_task_nw_front")
      * @param Task $taskDelete
      * return RedirectResponse
      */
@@ -88,7 +88,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/rendez-vous/{id}/supprimer", name="appointment_nw_detete_home")
+     * @Route("/semaine-suivante/rendez-vous/supprimer/id={id}", name="delete_appointment_nw_front")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -102,7 +102,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/devis/{id}/supprimer", name="quote_nw_detete_home")
+     * @Route("/semaine-suivante/devis/supprimer/id={id}", name="delete_quote_nw_front")
      * @param Quote $quoteDelete
      * return RedirectResponse
      */
@@ -116,7 +116,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/basculement-vers-p1/{id}", name="task_nw_change_to_p1_front")
+     * @Route("/semaine-suivante/tache-p2/basculement-vers-p1/={id}", name="change_task_nw_to_p1_front")
      * return RedirectResponse
      */
     public function changeTaskToP1NextWeek(Task $task): Response
@@ -130,7 +130,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/basculement-vers-p2/{id}", name="task_nw_change_to_p2_front")
+     * @Route("/semaine-suivante/tache-p1/basculement-vers-p2/id={id}", name="change_task_nw_to_p2_front")
      * return RedirectResponse
      */
     public function changeTaskToP2NextWeek(Task $task): Response
@@ -144,7 +144,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/p1/semaine-actuelle/id={id}", name="task_change_p1_nw_to_p1_cw_front")
+     * @Route("/semaine-suivante/basculer-p1-en-semaine-actuelle/id={id}", name="change_task_p1_nw_to_p1_cw_front")
      * return RedirectResponse
      */
     public function changeTaskP1NextWeekToP1CurrentWeek(Task $task): Response
@@ -157,7 +157,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/p2/semaine-actuelle/id={id}", name="task_change_p2_nw_to_p2_cw_front")
+     * @Route("/semaine-suivante/basculer-p2-en-semaine-actuelle/id={id}", name="change_task_p2_nw_to_p2_cw_front")
      * return RedirectResponse
      */
     public function changeTaskP2NextWeekToP2CurrentWeek(Task $task): Response
@@ -170,7 +170,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_front")
+     * @Route("/semaine-suivante/rendez-vous/basculer-en-semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_front")
      * return RedirectResponse
      */
     public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointmentChange): Response
@@ -183,7 +183,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/devis/semaine-actuelle/id={id}", name="change_quote_nw_to_cw_front")
+     * @Route("/semaine-suivante/devis/basculer-en-semaine-actuelle/id={id}", name="change_quote_nw_to_cw_front")
      * return RedirectResponse
      */
     public function changeQuoteNextWeekToCurrentWeek(Quote $quoteChange): Response
@@ -231,7 +231,7 @@ class NextWeekController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-suivante/reorder", name="home_nw_reorder_row")
+     * @Route("/semaine-suivante/reorder", name="reorder_row_nw_front")
      */
     public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
     {

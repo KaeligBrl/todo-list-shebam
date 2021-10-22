@@ -62,14 +62,15 @@ class UserController extends AbstractController
                 return $this->redirectToRoute("user_list_admin");
             }
         return $this->render('back/user/add.html.twig', [
-            'form_admin_user_add' => $form->createView()
+            'form_admin_user_add' => $form->createView(),
+
         ]);
     }
 
     /**
      * @Route("/admin/utilisateurs/{id}/modifier", name="user_modify_admin")
      */
-    public function modifyUser(Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
+    public function modifyUser(User $userTitle, Request $request, User $user, UserPasswordEncoderInterface $encoder): Response
     {
         $form = $this->createForm(AdminUserModifyType:: class, $user);
         $notification = null;
@@ -87,7 +88,8 @@ class UserController extends AbstractController
     }
         return $this->render('back/user/modify.html.twig',[
             'form_user_modify_admin' => $form->createView(),
-            'notification' => $notification
+            'notification' => $notification,
+            'user' => $userTitle
         ]);   
     }
 }

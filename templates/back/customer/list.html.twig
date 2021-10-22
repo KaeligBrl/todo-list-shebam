@@ -15,7 +15,7 @@
 	{% block back_content %}
 		<div class="container">
 			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('customer_add_admin') }}" title="Ajouter un client" type="button" class="btn btn-outline-light mb-3">
+				<a href="{{ path('add_customer_back') }}" title="Ajouter un client" type="button" class="btn btn-outline-light mb-3">
 					<i class="fas fa-plus-circle"></i>
 				</a>
 			</div>
@@ -32,9 +32,9 @@
 						<tr>
 							<td>{{customer.name}}</td>
 							<td>
-								<a href="{{ path('customer_modify_admin', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>
+								<a href="{{ path('modify_customer_back', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>
 								|
-								<a href="{{ path('customer_detete_admin', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
+								<a href="{{ path('delete_customer_back', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}

@@ -10,9 +10,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
-class AdminTaskQuoteModifyType extends AbstractType
+class ModifyQuoteCurrentWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

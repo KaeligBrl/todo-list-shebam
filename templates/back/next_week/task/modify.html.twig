@@ -12,23 +12,23 @@
 			<hr>
 				<div class="alert alert-success">{{ notification }}<br>
 					<hr>
-						<a href="{{ path('mission_list_nw_back') }}">Retourner sur la liste</a>
+						<a href="{{ path('list_nw_mission_back') }}">Retourner sur la liste</a>
 				</div>
 			<hr>
 		{% endif %}
-		{{ form_start(form_task_nw_modify_admin) }}
+		{{ form_start(form_task_nw_modify_back) }}
 		<div class="form-group">
-			{{ form_row(form_task_nw_modify_admin.customer) }}
-			{{ form_row(form_task_nw_modify_admin.object) }}
-			{{ form_row(form_task_nw_modify_admin.subobject1) }}
-			{{ form_row(form_task_nw_modify_admin.subobject2) }}
-			{{ form_row(form_task_nw_modify_admin.subobject3) }}
-			{{ form_row(form_task_nw_modify_admin.users) }}
-			{{ form_row(form_task_nw_modify_admin.p1) }}
-			{{ form_row(form_task_nw_modify_admin.p2) }}
-			{{ form_row(form_task_nw_modify_admin.submit) }}
+			{{ form_row(form_task_nw_modify_back.customer) }}
+			{{ form_row(form_task_nw_modify_back.object) }}
+			{{ form_row(form_task_nw_modify_back.subobject1) }}
+			{{ form_row(form_task_nw_modify_back.subobject2) }}
+			{{ form_row(form_task_nw_modify_back.subobject3) }}
+			{{ form_row(form_task_nw_modify_back.users) }}
+			{{ form_row(form_task_nw_modify_back.p1) }}
+			{{ form_row(form_task_nw_modify_back.p2) }}
+			{{ form_row(form_task_nw_modify_back.submit) }}
 		</div>
-		{{ form_end(form_task_nw_modify_admin) }}
+		{{ form_end(form_task_nw_modify_back) }}
 	{% endblock %}
 	</div>
 {% endblock %}

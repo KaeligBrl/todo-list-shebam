@@ -75,7 +75,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/tache/{id}/supprimer", name="task_cw_detete_front")
+     * @Route("/tache/{id}/supprimer", name="delete_task_cw_front")
      * @param Task $taskDelete
      * return RedirectResponse
      */
@@ -89,7 +89,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/rendez-vous/{id}/supprimer", name="appointment_cw_detete_home")
+     * @Route("/rendez-vous/{id}/supprimer", name="detete_appointment_cw_front")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -103,7 +103,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/devis/{id}/supprimer", name="quote_cw_detete_home")
+     * @Route("/devis/{id}/supprimer", name="delete_quote_cw_front")
      * @param Quote $quoteDelete
      * return RedirectResponse
      */
@@ -145,7 +145,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/p1/semaine-suivante/id={id}", name="task_change_p1_cw_to_p1_nw_front")
+     * @Route("/basculer-p1-en-semaine-suivante/id={id}", name="task_change_p1_cw_to_p1_nw_front")
      * return RedirectResponse
      */
     public function changeTaskP1CurrentWeekToP1NextWeek(Task $task): Response
@@ -158,7 +158,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/p2/semaine-suivante/id={id}", name="task_change_p2_cw_to_p2_nw_front")
+     * @Route("/basculer-p2-en-semaine-suivante/id={id}", name="task_change_p2_cw_to_p2_nw_front")
      * return RedirectResponse
      */
     public function changeTaskP2CurrentWeekToP2NextWeek(Task $task): Response
@@ -171,7 +171,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/rendez-vous/semaine-suivante/id={id}", name="change_appointment_cw_to_nw_front")
+     * @Route("/basculer/rendez-vous-en-semaine-suivante/id={id}", name="change_appointment_cw_to_nw_front")
      * return RedirectResponse
      */
     public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointmentChange): Response
@@ -184,7 +184,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/basculer/quote/semaine-suivante/id={id}", name="change_quote_cw_to_nw_front")
+     * @Route("/basculer/devis-en-semaine-suivante/id={id}", name="change_quote_cw_to_nw_front")
      * return RedirectResponse
      */
     public function changeQuoteCurrentToNextWeek(Quote $quoteChange): Response

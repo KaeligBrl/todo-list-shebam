@@ -1,24 +1,26 @@
+{% extends 'back/index.html.twig' %}
 
 {% block title %}Ajouter un client - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
 	<div>
-		{% block titre_admin_page %}Client - Ajouter{% endblock %}
+		{% block title_back_page %}Ajouter un client{% endblock %}
 	</div>
-	{% block admin_utilisateur %}
+	{% block back_content %}
 		<div class="was-validated form-back background-login is-valid">
 			{% if notification %}
 					<div class="alert alert-success form-success text-center">{{ notification }}<br>
 						<hr>
-						<a href="{{ path('customer_list_admin') }}">Retourner sur la liste des Clients</a>
+						<a href="{{ path('list_customer_back') }}">Retourner sur la liste des Clients</a>
 					</div>
 				<hr>
 			{% endif %}
-				{{ form_start(form_admin_customer_add) }}
+				{{ form_start(form_customer_add_back) }}
 			<div class="form-group">
-				{{ form_widget(form_admin_customer_add) }}
+				{{ form_row(form_customer_add_back.name) }}
+				{{ form_row(form_customer_add_back.submit) }}
 			</div>
-				{{ form_end(form_admin_customer_add) }}
+				{{ form_end(form_customer_add_back) }}
 		</div>
 	{% endblock %}
 {% endblock %}

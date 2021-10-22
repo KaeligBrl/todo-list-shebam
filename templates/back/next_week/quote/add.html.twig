@@ -11,19 +11,19 @@
 			{% if notification %}
 					<div class="alert alert-success">{{ notification }}<br>
 						<hr>
-						<a href="{{ path('mission_list_nw_back') }}">Retourner à la liste</a>
+						<a href="{{ path('list_nw_mission_back') }}">Retourner à la liste</a>
 					</div>
 				<hr>
 			{% endif %}
-				{{ form_start(form_quote_nw_add_admin) }}
+				{{ form_start(form_quote_nw_add_back) }}
 			<div class="form-group">
-				{{ form_row(form_quote_nw_add_admin.subject) }}
-				{{ form_row(form_quote_nw_add_admin.object) }}
-				{{ form_row(form_quote_nw_add_admin.person) }}
-				{{ form_row(form_quote_nw_add_admin.nextweek) }}
-				{{ form_row(form_quote_nw_add_admin.submit) }}
+				{{ form_row(form_quote_nw_add_back.subject) }}
+				{{ form_row(form_quote_nw_add_back.object) }}
+				{{ form_row(form_quote_nw_add_back.person) }}
+				{{ form_row(form_quote_nw_add_back.nextweek) }}
+				{{ form_row(form_quote_nw_add_back.submit) }}
 			</div>
-				{{ form_end(form_quote_nw_add_admin) }}
+				{{ form_end(form_quote_nw_add_back) }}
 		</div>
 	{% endblock %}
 {% endblock %}
