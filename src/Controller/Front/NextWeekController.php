@@ -9,9 +9,10 @@ use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
-use App\Form\Front\Task\AddTaskNextWeekType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\Quote\AddQuoteNextWeekType;
+use App\Form\Front\Task\AddTaskP1NextWeekType;
+use App\Form\Front\Task\AddTaskP2NextWeekType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,12 +32,22 @@ class NextWeekController extends AbstractController
      */
     public function index(TaskRepository $taskAdmin, AppointmentRepository $appointmentAdmin, QuoteRepository $quoteAdmin, Request $request): Response
     {
-        $taskAdd = new Task();
-        $form = $this->createForm(AddTaskNextWeekType::class, $taskAdd);
+        $taskP1Add = new Task();
+        $form_p1 = $this->createForm(AddTaskP1NextWeekType::class, $taskP1Add);
         $notification = null;
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($taskAdd);
+        $form_p1->handleRequest($request);
+        if ($form_p1->isSubmitted() && $form_p1->isValid()) {
+            $this->entityManager->persist($taskP1Add);
+            $this->entityManager->flush();
+            return $this->redirectToRoute("next_week");
+        }
+
+        $taskP2Add = new Task();
+        $form_p2 = $this->createForm(AddTaskP2NextWeekType::class, $taskP2Add);
+        $notification = null;
+        $form_p2->handleRequest($request);
+        if ($form_p2->isSubmitted() && $form_p2->isValid()) {
+            $this->entityManager->persist($taskP2Add);
             $this->entityManager->flush();
             return $this->redirectToRoute("next_week");
         }
@@ -66,7 +77,8 @@ class NextWeekController extends AbstractController
             'task' => $taskAdmin->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentAdmin->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteAdmin->findBy([], ['position' => 'ASC']),
-            'form_task_p1_nw_add_front' => $form->createView(),
+            'form_task_p1_nw_add_front' => $form_p1->createView(),
+            'form_task_p2_nw_add_front' => $form_p2->createView(),
             'form_appointment_nw_add_front' => $formappointment->createView(),
             'form_quote_nw_add_front' => $formquote->createView(),
             'notification' => $notification,
