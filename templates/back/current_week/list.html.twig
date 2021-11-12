@@ -12,7 +12,7 @@
 				<div class="col">
 					<div class="text-center bg-yellow-shebam color-white-shebam p-3 justify-content-md-center">Priorité 1
 						<div class="add-icon-custom d-flex flew-row-reverse">			
-							<a href="{{ path('add_task_cw_back') }}" title="Ajouter une tâche" type="button">
+							<a href="{{ path('add_task_p1_cw_back') }}" title="Ajouter une tâche" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -47,7 +47,7 @@
 												|
 											<a href="{{ path('change_task_p1_cw_to_p1_nw_back', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
 												|
-											<a href="{{ path('modify_task_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_task_p1_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
 											<a href="{{ path('delete_task_cw_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
@@ -61,7 +61,7 @@
 				<div class="col">
 					<div class="text-center bg-green-light-shebam color-white-shebam p-3">Priorité 2
 						<div class="add-icon-custom d-flex flew-row-reverse">				
-							<a href="{{ path('add_task_cw_back') }}" title="Ajouter une tâche" type="button">
+							<a href="{{ path('add_task_p2_cw_back') }}" title="Ajouter une tâche" type="button">
 								<i class="fas fa-plus-circle"></i>
 							</a>
 						</div>
@@ -97,7 +97,7 @@
 											|
 										<a href="{{ path('change_task_p2_cw_to_p2_nw_back', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
 											|
-										<a href="{{ path('modify_task_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+										<a href="{{ path('modify_task_p2_cw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 											|
 										<a href="{{ path('delete_task_cw_back', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 									</td>

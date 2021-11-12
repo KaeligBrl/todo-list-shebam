@@ -2,20 +2,20 @@
 
 namespace App\Form\Back\Task;
 
-use App\Entity\User;
 use App\Entity\Task;
+use App\Entity\User;
+use App\Entity\Customer;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use App\Entity\Customer;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class AddTaskCurrentWeekType extends AbstractType
+
+class ModifyTaskP1CurrentWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -24,14 +24,14 @@ class AddTaskCurrentWeekType extends AbstractType
             'required' => true,
             'label' => 'Sujet',
             'class' => Customer::class,
+            'label_attr' => ['class' => 'label-custom'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('c')
+                    ->orderBy('c.name', 'ASC');
+            },
             'attr' => [
                 'class' => 'select-customer'
             ],
-            'label_attr' => ['class' => 'label-custom'],
-            'query_builder' => function(EntityRepository $er){
-                return $er->createQueryBuilder('c')
-                    ->orderBy('c.name', 'ASC');
-            }
         ))
         ->add('object',  TextType::class, [
             'required' => true,
@@ -75,21 +75,15 @@ class AddTaskCurrentWeekType extends AbstractType
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
             }
-            
         ))
         ->add('p1',  CheckboxType::class, [
             'required' => false,
             'label' => 'P1',
             'attr' => [
                 'placeholder' => 'P1',
-            ]
-        ])
-        ->add('p2',  CheckboxType::class, [
-            'required' => false,
-            'label' => 'P2',
-            'attr' => [
-                'placeholder' => 'P2',
-            ]
+                'checked' => 'checked'
+            ],
+            'label_attr' => ['class' => 'label-custom'],
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
@@ -98,7 +92,7 @@ class AddTaskCurrentWeekType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Task::class,

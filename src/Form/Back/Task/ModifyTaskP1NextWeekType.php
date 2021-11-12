@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class ModifyTaskNextWeekType extends AbstractType
+class ModifyTaskP1NextWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -79,17 +79,10 @@ class ModifyTaskNextWeekType extends AbstractType
             'required' => false,
             'label' => 'P1',
             'attr' => [
-                'placeholder' => 'P1'
+                'placeholder' => 'P1',
+                'checked' => 'checked'
             ],
             'label_attr' => ['class' => 'label-custom'],
-        ])
-        ->add('p2',  CheckboxType::class, [
-            'required' => false,
-            'label' => 'P2',
-            'label_attr' => ['class' => 'label-custom'],
-            'attr' => [
-                'placeholder' => 'P2'
-            ]
         ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',

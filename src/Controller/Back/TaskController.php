@@ -4,16 +4,20 @@ namespace App\Controller\Back;
 
 use App\Entity\Task;
 use App\Repository\TaskRepository;
+use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\Task\AddTaskNextWeekType;
+use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Back\Task\AddTaskCurrentWeekType;
-use App\Form\Back\Task\ModifyTaskNextWeekType;
+use App\Form\Back\Task\AddTaskP1NextWeekType;
+use App\Form\Back\Task\AddTaskP2NextWeekType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Back\Task\ModifyTaskCurrentWeekType;
-use App\Repository\AppointmentRepository;
-use App\Repository\QuoteRepository;
+use App\Form\Back\Task\AddTaskP1CurrentWeekType;
+use App\Form\Back\Task\AddTaskP2CurrentWeekType;
+use App\Form\Back\Task\ModifyTaskP1NextWeekType;
+use App\Form\Back\Task\ModifyTaskP2NextWeekType;
+use App\Form\Back\Task\ModifyTaskP1CurrentWeekType;
+use App\Form\Back\Task\ModifyTaskP2CurrentWeekType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -25,54 +29,98 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/ajouter", name="add_task_cw_back")
+     * @Route("/admin/liste-des-taches/p1/ajouter", name="add_task_p1_cw_back")
      */
-    public function addTask(Request $request): Response {
-        $taskAdd = new Task();
-        $form = $this->createForm(AddTaskCurrentWeekType::class, $taskAdd);
+    public function addTaskP1CurrentWeek(Request $request): Response {
+        $taskP1cwAdd = new Task();
+        $form_p1_cw = $this->createForm(AddTaskP1CurrentWeekType::class, $taskP1cwAdd);
         $notification = null;
-        $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($taskAdd);
+        $form_p1_cw->handleRequest($request);
+        if($form_p1_cw->isSubmitted() && $form_p1_cw->isValid()) {
+            $this->entityManager->persist($taskP1cwAdd);
             $this->entityManager->flush();
             $notification = 'La tâche a bien été ajoutée';
-            $taskAdd = new Task();
-            $form = $this->createForm(AddTaskCurrentWeekType::class, $taskAdd);
+            $taskP1cwAdd = new Task();
+            $form = $this->createForm(AddTaskP1CurrentWeekType::class, $taskP1cwAdd);
         }
-            return $this->render('back/current_week/task/add.html.twig', [
-                'form_task_cw_add_back' => $form->createView(),
-                'notification' => $notification
-            ]);
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/ajouter", name="add_task_nw_back")
-     */
-    public function addTaskNextWeek(Request $request): Response
-    {
-        $taskAdd = new Task();
-        $form = $this->createForm(AddTaskNextWeekType::class, $taskAdd);
-        $notification = null;
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($taskAdd);
-            $this->entityManager->flush();
-            $notification = 'La tâche a bien été ajoutée';
-            $taskAdd = new Task();
-            $form = $this->createForm(AddTaskNextWeekType::class, $taskAdd);
-        }
-        return $this->render('back/next_week/task/add.html.twig', [
-            'form_task_nw_add_back' => $form->createView(),
+        return $this->render('back/current_week/task/add_p1.html.twig', [
+            'form_task_p1_cw_add_back' => $form_p1_cw->createView(),
             'notification' => $notification
         ]);
     }
 
     /**
-     * @Route("/admin/liste-des-taches/modifier/id={id}", name="modify_task_cw_back")
+     * @Route("/admin/liste-des-taches/p2/ajouter", name="add_task_p2_cw_back")
      */
-    public function modifyTask(Request $request, Task $taskModify): Response
+    public function addTaskP2CurrentWeek(Request $request): Response
     {
-        $form = $this->createForm(ModifyTaskCurrentWeekType::class, $taskModify);
+        $taskP2cwAdd = new Task();
+        $form_p2_cw = $this->createForm(AddTaskP2CurrentWeekType::class, $taskP2cwAdd);
+        $notification = null;
+        $form_p2_cw->handleRequest($request);
+        if ($form_p2_cw->isSubmitted() && $form_p2_cw->isValid()) {
+            $this->entityManager->persist($taskP2cwAdd);
+            $this->entityManager->flush();
+            $notification = 'La tâche a bien été ajoutée';
+            $taskP2cwAdd = new Task();
+            $form = $this->createForm(AddTaskP2CurrentWeekType::class, $taskP2cwAdd);
+        }
+        return $this->render('back/current_week/task/add_p2.html.twig', [
+            'form_task_p2_cw_add_back' => $form_p2_cw->createView(),
+            'notification' => $notification
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/semaine-suivante/p1/ajouter", name="add_task_p1_nw_back")
+     */
+    public function addTaskP1NextWeek(Request $request): Response
+    {
+        $taskP1nwAdd = new Task();
+        $form_p1_nw = $this->createForm(AddTaskP1NextWeekType::class, $taskP1nwAdd);
+        $notification = null;
+        $form_p1_nw->handleRequest($request);
+        if ($form_p1_nw->isSubmitted() && $form_p1_nw->isValid()) {
+            $this->entityManager->persist($taskP1nwAdd);
+            $this->entityManager->flush();
+            $notification = 'La tâche a bien été ajoutée';
+            $taskP1cwAdd = new Task();
+            $form_p1_nw = $this->createForm(AddTaskP1NextWeekType::class, $taskP1cwAdd);
+        }
+        return $this->render('back/next_week/task/add_p1.html.twig', [
+            'form_task_p1_nw_add_back' => $form_p1_nw->createView(),
+            'notification' => $notification
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/semaine-suivante/p2/ajouter", name="add_task_p2_nw_back")
+     */
+    public function addTaskP2NextWeek(Request $request): Response
+    {
+        $taskP2nwAdd = new Task();
+        $form_p2_nw = $this->createForm(AddTaskP2NextWeekType::class, $taskP2nwAdd);
+        $notification = null;
+        $form_p2_nw->handleRequest($request);
+        if ($form_p2_nw->isSubmitted() && $form_p2_nw->isValid()) {
+            $this->entityManager->persist($taskP2nwAdd);
+            $this->entityManager->flush();
+            $notification = 'La tâche a bien été ajoutée';
+            $taskP2nwAdd = new Task();
+            $form = $this->createForm(AddTaskP2NextWeekType::class, $taskP2nwAdd);
+        }
+        return $this->render('back/next_week/task/add_p2.html.twig', [
+            'form_task_p2_nw_add_back' => $form_p2_nw->createView(),
+            'notification' => $notification
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/p1/modifier/id={id}", name="modify_task_p1_cw_back")
+     */
+    public function modifyTaskP1Cw(Request $request, Task $taskModify): Response
+    {
+        $form = $this->createForm(ModifyTaskP1CurrentWeekType::class, $taskModify);
         $notification = null;
         $form->handleRequest($request);
 
@@ -81,21 +129,21 @@ class TaskController extends AbstractController
             $this->entityManager->persist($taskModify);
             $this->entityManager->flush();
             $notification = 'La tâche a été mise à jour !';
-            $form = $this->createForm(ModifyTaskCurrentWeekType::class, $taskModify);
+            $form = $this->createForm(ModifyTaskP1CurrentWeekType::class, $taskModify);
         }
-        return $this->render('back/current_week/task/modify.html.twig',[
-            'form_task_cw_modify_back' => $form->createView(),
+        return $this->render('back/current_week/task/modify_p1.html.twig',[
+            'form_task_p1_cw_modify_back' => $form->createView(),
             'notification' => $notification,
             'task' => $taskModify
         ]);   
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/modifier/id={id}", name="modify_task_nw_back")
+     * @Route("/admin/liste-des-taches/p2/modifier/id={id}", name="modify_task_p2_cw_back")
      */
-    public function modifyTaskNextWeek(Request $request, Task $taskModify): Response
+    public function modifyTaskP2CurrentWeek(Request $request, Task $taskModify): Response
     {
-        $form = $this->createForm(ModifyTaskNextWeekType::class, $taskModify);
+        $form = $this->createForm(ModifyTaskP2CurrentWeekType::class, $taskModify);
         $notification = null;
         $form->handleRequest($request);
 
@@ -103,13 +151,59 @@ class TaskController extends AbstractController
             $taskModify = $form->getData();
             $this->entityManager->persist($taskModify);
             $this->entityManager->flush();
-            $notification = 'La tâche a bien été mise à jour !';
-            $form = $this->createForm(ModifyTaskNextWeekType::class, $taskModify);
+            $notification = 'La tâche a été mise à jour !';
+            $form = $this->createForm(ModifyTaskP2CurrentWeekType::class, $taskModify);
         }
-        return $this->render('back/next_week/task/modify.html.twig', [
-            'form_task_nw_modify_back' => $form->createView(),
+        return $this->render('back/current_week/task/modify_p2.html.twig', [
+            'form_task_p2_cw_modify_back' => $form->createView(),
             'notification' => $notification,
             'task' => $taskModify
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/semaine-suivante/p1/modifier/id={id}", name="modify_task_p1_nw_back")
+     */
+    public function modifyTaskP1NextWeek(Request $request, Task $taskP2ModifyCW): Response
+    {
+        $form_p1_nw = $this->createForm(ModifyTaskP1NextWeekType::class, $taskP2ModifyCW);
+        $notification = null;
+        $form_p1_nw->handleRequest($request);
+
+        if ($form_p1_nw->isSubmitted() && $form_p1_nw->isValid()) {
+            $taskP2ModifyCW = $form_p1_nw->getData();
+            $this->entityManager->persist($taskP2ModifyCW);
+            $this->entityManager->flush();
+            $notification = 'La tâche a bien été mise à jour !';
+            $form_p1_nw = $this->createForm(ModifyTaskP1NextWeekType::class, $taskP2ModifyCW);
+        }
+        return $this->render('back/next_week/task/modify_p1.html.twig', [
+            'form_task_p1_nw_modify_back' => $form_p1_nw->createView(),
+            'notification' => $notification,
+            'task' => $taskP2ModifyCW
+        ]);
+    }
+
+    /**
+     * @Route("/admin/liste-des-taches/semaine-suivante/p2/modifier/id={id}", name="modify_task_p2_nw_back")
+     */
+    public function modifyTaskP2NextWeek(Request $request, Task $taskP2ModifyNW): Response
+    {
+        $form_p2_nw = $this->createForm(ModifyTaskP2NextWeekType::class, $taskP2ModifyNW);
+        $notification = null;
+        $form_p2_nw->handleRequest($request);
+
+        if ($form_p2_nw->isSubmitted() && $form_p2_nw->isValid()) {
+            $taskP2ModifyNW = $form_p2_nw->getData();
+            $this->entityManager->persist($taskP2ModifyNW);
+            $this->entityManager->flush();
+            $notification = 'La tâche a bien été mise à jour !';
+            $form_p2_nw = $this->createForm(ModifyTaskP2NextWeekType::class, $taskP2ModifyNW);
+        }
+        return $this->render('back/next_week/task/modify_p2.html.twig', [
+            'form_task_p2_nw_modify_back' => $form_p2_nw->createView(),
+            'notification' => $notification,
+            'task' => $taskP2ModifyNW
         ]);
     }
 

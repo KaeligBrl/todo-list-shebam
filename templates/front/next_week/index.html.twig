@@ -52,7 +52,7 @@
 												|
 											<a href="{{ path('change_task_p1_nw_to_p1_cw_front', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>
 												|
-											<a href="{{ path('modify_task_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>											|
+											<a href="{{ path('modify_task_p1_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>											|
 											<a href="{{ path('delete_task_nw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
 										</td>
 									{% endif %}
@@ -66,7 +66,7 @@
 							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="#ajouterunetachep1">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('add_task_nw_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-yellow-shebam" href="{{ path('add_task_p1_nw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 				</div>
@@ -106,7 +106,7 @@
 												|
 											<a href="{{ path('change_task_p2_nw_to_p2_cw_front', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>
 												|
-											<a href="{{ path('modify_task_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
+											<a href="{{ path('modify_task_p2_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
 												|
 											<a href="{{ path('delete_task_nw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 										</td>
@@ -122,7 +122,7 @@
 							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="#ajouterunetachep2">Ajouter</a></p>
 						</div>
 						<div class="btn-add-task-home-mobile">
-							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('add_task_nw_back') }}">Ajouter</a></p>
+							<p class="mt-3 text-center"><a class="btn-green-light-shebam" href="{{ path('add_task_p2_nw_back') }}">Ajouter</a></p>
 						</div>
 					{% endif %}
 

@@ -1,0 +1,34 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Ajouter un tâche P1 - Semaine Suivante -{% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+{% block title_back_page %}Ajouter un tâche P1 - Semaine Suivante{% endblock %}
+	</div>
+	{% block back_content %}
+		<div class="was-validated form-back background-login is-valid">
+		{% if notification %}
+			<div class="alert alert-success">{{ notification }}<br>
+				<hr>
+				<a href="{{ path('list_nw_mission_back') }}">Retourner à la liste</a>
+			</div>
+		{% endif %}
+			{{ form_start(form_task_p1_nw_add_back) }}
+			<div class="form-group">
+				{{ form_row(form_task_p1_nw_add_back.customer) }}
+				{{ form_row(form_task_p1_nw_add_back.object) }}
+				{{ form_row(form_task_p1_nw_add_back.subobject1) }}
+				{{ form_row(form_task_p1_nw_add_back.subobject2) }}
+				{{ form_row(form_task_p1_nw_add_back.subobject3) }}
+				{{ form_row(form_task_p1_nw_add_back.users) }}
+				{{ form_row(form_task_p1_nw_add_back.p1) }}
+				{{ form_row(form_task_p1_nw_add_back.nextweek) }}
+				{{ form_row(form_task_p1_nw_add_back.submit) }}
+			</div>
+		</div>
+				{{ form_end(form_task_p1_nw_add_back) }}
+	{% endblock %}
+{% endblock %}
+
+
