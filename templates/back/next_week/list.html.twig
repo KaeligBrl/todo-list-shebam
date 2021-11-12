@@ -36,7 +36,7 @@
 										<td>
 											{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
 											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-											{% if task.subobject3 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
+											{% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
 											{% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
 										</td>
 										<td>{% for task in task.users %}
@@ -198,7 +198,7 @@
 			</div>
 			<div class="mb-5"></div>
 
-			<div class="mt-3 text-center btn-submit-back btn"><a href="{{path('change_task_to_cw_back') }}">Passer à la semaine suivante</a></div>
+			<div class="mt-3 text-center btn-submit-back btn"><a href="{{path('change_task_to_cw_back') }}">Transférer vers la semaine actuelle</a></div>
 			
         </div>
     </div>  

@@ -3,8 +3,7 @@
 namespace App\Controller\Back;
 
 use App\Entity\Task;
-use App\Entity\Quote;
-use App\Entity\Appointment;
+use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\Task\AddTaskNextWeekType;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,6 +12,8 @@ use App\Form\Back\Task\ModifyTaskNextWeekType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Back\Task\ModifyTaskCurrentWeekType;
+use App\Repository\AppointmentRepository;
+use App\Repository\QuoteRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -250,34 +251,15 @@ class TaskController extends AbstractController
     /**
      * @Route("/admin/liste-des-taches/changer-vers-semaine-actuelle/", name="change_task_to_cw_back")
      */
-    public function changeTaskToCurrentWeek(): Response
+    public function changeTaskToCurrentWeek(TaskRepository $taskRepository, AppointmentRepository $appointmentRepository, QuoteRepository $quoteRepository): Response
     {
 
-        $rep1 = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setRemoveTask();
-
-        $rep2 = $this->getDoctrine()
-            ->getRepository(Appointment::class)
-            ->setRemoveAppointment();
-
-        $rep3 = $this->getDoctrine()
-            ->getRepository(Quote::class)
-            ->setRemoveQuote();
-
-        $rep4 = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setchangeTaskToCurrentWeek();
-
-        $rep5 = $this->getDoctrine()
-            ->getRepository(Appointment::class)
-            ->setchangeAppointmentToCurrentWeek();
-
-        $rep6 = $this->getDoctrine()
-            ->getRepository(Quote::class)
-            ->setchangeQuoteToCurrentWeek();
-
-
+        $taskRepository->setRemoveTask();
+        $taskRepository->setChangeTaskToCurrentWeek();
+        $appointmentRepository->setRemoveAppointment();
+        $appointmentRepository->setChangeAppointmentToCurrentWeek();
+        $quoteRepository->setRemoveQuote();
+        $quoteRepository->setChangeQuoteToCurrentWeek();
 
         return $this->redirectToRoute("list_nw_mission_back");
     }

@@ -18,8 +18,7 @@ class QuoteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Quote::class);
     }
-    
-    // ** Quote **
+
     // Archived
     public function setQuoteForArchived($id)
     {
@@ -43,20 +42,6 @@ class QuoteRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function setRemoveQuote()
-    {
-        $sql = "delete from App\Entity\Quote as t where t.nextweek = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
-        return $query->getResult();
-    }
-
-    public function setchangeQuoteToCurrentWeek()
-    {
-        $sql = "update App\Entity\Quote as t set t.nextweek = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
-        return $query->getResult();
-    }
-
     public function setChangeQuoteCurrentWeekToNextWeek($id)
     {
         $sql = "update App\Entity\Quote as t set t.nextweek = 1 where t.id = :id";
@@ -68,6 +53,20 @@ class QuoteRepository extends ServiceEntityRepository
     {
         $sql = "update App\Entity\Quote as t set t.nextweek = 0 where t.id = :id";
         $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setRemoveQuote()
+    {
+        $sql = "delete from App\Entity\Quote as t where t.nextweek = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
+    public function setChangeQuoteToCurrentWeek()
+    {
+        $sql = "update App\Entity\Quote as t set t.nextweek = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
 }

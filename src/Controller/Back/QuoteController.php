@@ -150,7 +150,7 @@ class QuoteController extends AbstractController
             ->getRepository(Quote::class)
             ->setChangeQuoteCurrentWeekToNextWeek($quoteChange->getId());
 
-        return $this->redirectToRoute("list_nw_mission_back");
+        return $this->redirectToRoute("list_cw_mission_back");
     }
 
     /**
