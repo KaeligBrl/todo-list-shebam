@@ -81,7 +81,7 @@ class AddUserType extends AbstractType
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
+                'attr' => ['class' => 'btn-submit-front'],
             ])
         ;
         $builder->get('roles')

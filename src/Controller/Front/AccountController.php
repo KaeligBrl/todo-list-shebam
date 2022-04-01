@@ -21,30 +21,29 @@ class AccountController extends AbstractController
 
     public function index(Request $request, UserPasswordEncoderInterface $encoder)
     {
-        // $em = $this->getDoctrine()->getManager();
-        // $user = $this->getUser();
-        // $form = $this->createForm(ChangeCoordsType::class, $user);
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $form = $this->createForm(ChangeCoordsType::class);
 
-        // $notification = null;
+        $notification = null;
 
-        // $form->handleRequest($request);
-        // if ($form->isSubmitted() && $form->isValid()){
-        //     $old_pwd = $form->get('old_password')->getData();
-        //     if ($encoder->isPasswordValid($user, $old_pwd)){
-        //         $new_pwd = $form->get('new_password')->getData();
-        //         $password = $encoder->encodePassword($user, $new_pwd);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $old_pwd = $form->get('old_password')->getData();
+            if ($encoder->isPasswordValid($user, $old_pwd)) {
+                $new_pwd = $form->get('new_password')->getData();
+                $password = $encoder->encodePassword($user, $new_pwd);
 
-        //         $user->setPassword($password);
-        //         $this->entityManager->flush();
-        //         $notification = 'Les coordonnées ont été changées';
-        //     } else {
-        //         $notification = 'L\'ancien mot de passe n\'est pas correct';
-        //     }
-        // }
+                $user->setPassword($password);
+                $this->entityManager->flush();
+                $notification = 'Les coordonnées ont été changées';
+            } else {
+                $notification = 'L\'ancien mot de passe n\'est pas correct';
+            }
+        }
         return $this->render('front/account/index.html.twig', [
-
-       
+            'form' => $form->createView(),
+            'notification' => $notification
         ]);
-
     }
 }

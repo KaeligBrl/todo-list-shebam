@@ -30,19 +30,19 @@ class ModifyUserType extends AbstractType
             'label' => 'Nom de Famille',
             'label_attr' => ['class' => 'label-custom'],
         ])
-            ->add('roles', ChoiceType::class, array(
-                'choices' => array(
-                    'Utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN'
-                ),
-                'label' => 'Rôle',
-                'label_attr' => ['class' => 'label-custom'],
-            ))
+        ->add('roles', ChoiceType::class, array(
+            'choices' => array(
+                'Utilisateur' => 'ROLE_USER',
+                'Administrateur' => 'ROLE_ADMIN'
+            ),
+            'label' => 'Rôle',
+            'label_attr' => ['class' => 'label-custom'],
+        ))
 
-            ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
-            ])
+        ->add('submit', SubmitType::class, [
+            'label' => 'Enregistrer',
+            'attr' => ['class' => 'btn-submit-back'],
+        ])
         ;
         $builder->get('roles')
         ->addModelTransformer(new CallbackTransformer(

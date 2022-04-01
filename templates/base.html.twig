@@ -48,7 +48,7 @@
                     {% if app.user %}
                         {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur l'administration" href="{{ path('list_cw_mission_back')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur mon compte" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" title="Se déconnecter" href="{{ path('app_logout') }}">Déconnexion</a>
                     {% else %}
-                    <a class="navbar-text color-blue-dark-shebam" title="Se connecter" href="{{ path('app_login') }}">Connexion</a> <a class="navbar-text color-blue-dark-shebam" title="S'inscrire" href="{{ path('register') }}">Inscription</a>
+                        <a class="navbar-text color-blue-dark-shebam" title="S'inscrire" href="{{ path('register') }}">Inscription</a>
                     {% endif %}
                 </ul>
             </div>
@@ -79,11 +79,6 @@
                 {% endif %}
             {% endif %} 
             {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <div class="mobile-bottom-nav__item">
-                <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i><br>Connexion</a>
-                </div>		
-            </div>
             <div class="mobile-bottom-nav__item">
                 <div class="mobile-bottom-nav__item-content">
                     <a href="{{ path('register') }}"><i class="fas fa-user-plus"></i><br>Inscription</a>

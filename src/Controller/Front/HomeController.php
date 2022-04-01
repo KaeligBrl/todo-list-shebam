@@ -11,14 +11,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Form\Front\Task\AddTaskP1CurrentWeekType;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Front\Quote\AddQuoteCurrentWeekType;
+use App\Form\Front\Task\AddTaskP1CurrentWeekType;
 use App\Form\Front\Task\AddTaskP2CurrentWeekType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Form\Front\Appointment\AddAppointmentCurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class HomeController extends AbstractController
 {
@@ -30,8 +31,14 @@ class HomeController extends AbstractController
     /**
      * @Route("/", name="home")
      */
-    public function index(TaskRepository $taskList, AppointmentRepository $appointmentList, QuoteRepository $quoteList, Request $request): Response
+    public function index(TaskRepository $taskList, AppointmentRepository $appointmentList, QuoteRepository $quoteList, Request $request, AuthenticationUtils $authenticationUtils): Response
     {
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+    
         $taskAdd = new Task();
         $form_p1 = $this->createForm(AddTaskP1CurrentWeekType::class, $taskAdd);
         $notification = null;
@@ -83,6 +90,8 @@ class HomeController extends AbstractController
             'form_appointment_cw_add_front' => $formappointment->createView(),
             'form_quote_cw_add_front' => $formquote->createView(),
             'notification' => $notification,
+            'last_username' => $lastUsername,
+            'error' => $error
         ]);
     }
 
@@ -244,5 +253,13 @@ class HomeController extends AbstractController
         return new JsonResponse([
             'data' => gettype($request->request->get("context"))
         ]);
+    }
+
+    /**
+     * @Route("/deconnexion", name="app_logout")
+     */
+    public function logout()
+    {
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 }
