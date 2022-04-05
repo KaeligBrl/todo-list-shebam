@@ -5,6 +5,7 @@ namespace App\Controller\Back;
 use App\Entity\Changelog;
 use App\Repository\ChangelogRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Form\Back\Changelog\AddChangelogType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +35,7 @@ class ChangelogController extends AbstractController
     public function changelogAdd(Request $request,ChangelogRepository $changelogAdd): Response
     {
         $changelogAdd = new Changelog();
-        $form = $this->createForm(AdminChangelogAddType::class, $changelogAdd);
+        $form = $this->createForm(AddChangelogType::class, $changelogAdd);
         $notification = null;
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +43,7 @@ class ChangelogController extends AbstractController
             $this->entityManager->flush();
             $notification = 'L`historique a bien été ajouté';
             $changelogAdd = new Changelog();
-            $form = $this->createForm(AdminChangelogAddType::class, $changelogAdd);
+            $form = $this->createForm(AddChangelogType::class, $changelogAdd);
         }
         return $this->render('back/changelog/add.html.twig', [
             'form_changelog_add_back' => $form->createView(),

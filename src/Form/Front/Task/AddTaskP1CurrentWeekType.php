@@ -21,9 +21,8 @@ class AddTaskP1CurrentWeekType extends AbstractType
         $builder
         ->add('customer', EntityType::class, array(
             'required' => true,
-            'label' => 'Sujet',
+            'label' => false,
             'class' => Customer::class,
-            'label_attr' => ['class' => 'label-custom'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('c')
                     ->orderBy('c.name', 'ASC');
@@ -63,10 +62,11 @@ class AddTaskP1CurrentWeekType extends AbstractType
         ])
         ->add('users', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s)',
+            'label' => false,
             'class' => User::class,
+            'expanded' => true,
             'multiple' => true,
-            'label_attr' => ['class' => 'label-custom'],
+            'label_attr' => ['class' => 'label-form'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
@@ -74,15 +74,14 @@ class AddTaskP1CurrentWeekType extends AbstractType
         ))
         ->add('p1',  CheckboxType::class, [
             'required' => false,
-            'label' => 'P1',
+            'label' => 'Priorité 1',
             'attr' => [
-                'placeholder' => 'P1',
                 'checked'   => 'checked'
             ]
         ])
         ->add('submit', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-front'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
         ])
         ;
     }

@@ -38,11 +38,11 @@ class AddQuoteCurrentWeekType extends AbstractType
                 'label' => 'Personne(s) Désigné(e): ',
                 'class' => User::class,
                 'multiple' => true,
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
             ))
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-front'],
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
             ])
         ;
     }

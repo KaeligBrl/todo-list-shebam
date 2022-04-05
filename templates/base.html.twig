@@ -21,37 +21,39 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg fixed-top bg-white-shebam mx-auto ">
-            <a href="{{ path('home') }}">
-                <img class="navbar-img" src="{{ asset('assets/images/logo-to-do-list-hor.png') }}" alt="Logo de la to do list Shebam!">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
-                {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        {% if app.request.attributes.get('_route') == 'home' %}
-                            <li class="nav-item active"> 
-                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('next_week') }}">Aller vers la semaine suivante</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item active"> 
-                                <a class="navbar-text color-blue-dark-shebam" href="{{ path('home') }}">Aller vers la semaine actuelle</a>
-                            </li>
-                        {% endif %}
-                            <li class="nav-item active">
-                                <a href="https://projetsclients.shebam.fr/" target="new" class="navbar-text color-blue-shebam">Projets Clients</a>
-                            </li>
-                    {% endif %}
-                {% endif %}
-                </ul> 
-                <ul class="navbar-nav">
-                    {% if app.user %}
-                        {% if is_granted('ROLE_ADMIN') %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur l'administration" href="{{ path('list_cw_mission_back')}}">Administration</a> {% endif %}<a class="navbar-text color-blue-dark-shebam" title="Aller sur mon compte" href="{{ path('account') }}">Compte</a><a class="navbar-text color-blue-dark-shebam" title="Se déconnecter" href="{{ path('app_logout') }}">Déconnexion</a>
-                    {% else %}
-                        <a class="navbar-text color-blue-dark-shebam" title="S'inscrire" href="{{ path('register') }}">Inscription</a>
-                    {% endif %}
+        
+        <nav class="navbar-expand-sm navbar-dark bg-yellow">
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
+                    </li>
                 </ul>
             </div>
+        </nav>
+                
+        <nav class="navbar navbar-expand-lg bg-blue-dark mx-auto">
+            <a href="{{ path('current_week') }}">
+		        <img class="d-block mx-auto" src="{{ asset('/assets/images/logo-todolist.png') }}" alt="Logo de connexion To Do List">
+            </a>
+            <ul class="navbar-nav ml-auto">
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item active"> 
+                            <a class="navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                        </li>
+                        <li class="nav-item active"> 
+                            <a class="navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="https://projetsclients.shebam.fr/" target="new" class="navbar-text color-blue text-uppercase">Projets Clients</a>
+                        </li>
+                        <li>
+                            <a class="navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_cw_mission_back')}}">Administration</a>
+                        </li>
+                {% endif %}
+            {% endif %}
+            </ul> 
         </nav>
 
         <nav class="mobile-bottom-nav">
@@ -69,11 +71,6 @@
                     <div class="mobile-bottom-nav__item">
                         <div class="mobile-bottom-nav__item-content">
                             <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Tâches en cours</a>
-                        </div>		
-                    </div>
-                    <div class="mobile-bottom-nav__item">
-                        <div class="mobile-bottom-nav__item-content">
-                            <a href="{{ path('account') }}"><i class="fas fa-user-alt"></i><br>Compte</a>
                         </div>		
                     </div>
                 {% endif %}
@@ -103,6 +100,7 @@
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/locale/bootstrap-table-fr-FR.min.js"></script>
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js"></script>
     <script src="{{ asset('assets/js/motdepasse.js') }}"></script>
+<script src="{{ asset('assets/js/custom.js') }}"></script>
 {% endblock %}
 
 </body>

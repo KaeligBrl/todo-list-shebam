@@ -36,7 +36,7 @@ class AddAppointmentCurrentWeekType extends AbstractType
         ])
         ->add('hoursappointment', DateTimeType::class, [
             'label' => 'Heure du rendez-vous :',
-            'label_attr' => ['class' => 'label-custom'],
+            'label_attr' => ['class' => 'label-form'],
             'days' => range(1,31),
             'years' => range(2021,2022),
             'hours' => range(7,18),
@@ -47,15 +47,15 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'label' => 'Personne(s) :',
             'class' => User::class,
             'multiple' => true,
-            'label_attr' => ['class' => 'label-custom'],
+            'label_attr' => ['class' => 'label-form'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')
                     ->orderBy('u.firstname', 'ASC');
             }
         ))
         ->add('submit', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-front'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
         ])
         ;
     }
