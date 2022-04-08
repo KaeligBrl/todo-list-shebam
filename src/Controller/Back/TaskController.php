@@ -343,7 +343,7 @@ class TaskController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/changer-vers-semaine-actuelle/", name="change_task_to_cw_back")
+     * @Route("/admin/liste-des-taches/changer-vers-semaine-actuelle/", name="change_task_to_cw")
      */
     public function changeTaskToCurrentWeek(TaskRepository $taskRepository, AppointmentRepository $appointmentRepository, QuoteRepository $quoteRepository): Response
     {
@@ -355,7 +355,7 @@ class TaskController extends AbstractController
         $quoteRepository->setRemoveQuote();
         $quoteRepository->setChangeQuoteToCurrentWeek();
 
-        return $this->redirectToRoute("list_nw_mission_back");
+        return $this->redirectToRoute("next_week");
     }
 
 }

@@ -35,7 +35,7 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     /**
-     *@Route("/admin/liste-des-taches/generation-de-l-archive/", name="btn_task_archived_back")
+     *@Route("/generation-de-l-archive/", name="download")
      */
     public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, QuoteRepository $quote, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
@@ -89,7 +89,7 @@ class AdminController extends AbstractController
         $this->entityManager->persist($image);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute("download_list_back");
+        return $this->redirectToRoute("download_list");
     }
 
 }

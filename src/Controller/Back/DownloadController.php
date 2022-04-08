@@ -28,7 +28,7 @@ class DownloadController extends AbstractController
     }
 
     /**
-     * @Route("/admin/telechargement/{id}/supprimer", name="delete_download_back")
+     * @Route("/admin/telechargement/{id}/supprimer", name="delete_download")
      * @param File $downloadDelete
      * return RedirectResponse
      */
@@ -42,6 +42,6 @@ class DownloadController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($downloadDelete);
         $em->flush();
-        return $this->redirectToRoute("download_list_back");
+        return $this->redirectToRoute("download_list");
     }
 }

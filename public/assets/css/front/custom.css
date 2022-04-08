@@ -11,6 +11,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 
 /* Custom Buttons */
 .btn-yellow-form{background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
+.btn-yellow {background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
 
 
 /* Navbar */
