@@ -18,7 +18,7 @@ class DownloadController extends AbstractController
     }
 
     /**
-     * @Route("admin/telechargements", name="download_list_back")
+     * @Route("admin/telechargements", name="download_list")
      */
     public function listDownload(FileRepository $downloadList): Response
     {

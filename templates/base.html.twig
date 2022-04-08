@@ -49,7 +49,7 @@
                             <a class="{% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
                         </li>
                         <li>
-                            <a class="{% if app.request.attributes.get('_route') starts with 'admin' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="">Administration</a>
+                            <a class="{% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
                         </li>
                 {% endif %}
             {% endif %}

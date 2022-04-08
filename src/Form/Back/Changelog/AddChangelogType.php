@@ -57,13 +57,13 @@ class AddChangelogType extends AbstractType
         ])
         ->add('created_at', DateTimeType::class, [
             'label' => 'Créé le :',
-            'label_attr' => ['class' => 'label-custom'],
+            'label_attr' => ['class' => 'label-form text-bold'],
             'widget' => 'single_text',
             'minutes' => ['00', '15', '30', '45'],
         ])
         ->add('submit', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-back'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
         ])
         ;
     }

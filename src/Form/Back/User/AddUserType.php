@@ -3,7 +3,7 @@
 namespace App\Form\Back\User;
 
 use App\Entity\User;
-use App\Form\ShowHidePasswordType;
+use App\Form\Back\ShowHidePasswordType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -80,8 +80,8 @@ class AddUserType extends AbstractType
                 ]
             ))
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-front'],
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ])
         ;
         $builder->get('roles')

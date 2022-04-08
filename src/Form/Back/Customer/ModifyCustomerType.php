@@ -16,14 +16,13 @@ class ModifyCustomerType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'required' => true,
-                'label' => false,
-                'attr' => [
-                    'placeholder' => 'Nom du client',
-                ]
+                'label' => 'Nom du client :',
+                'label_attr' => ['class' =>'color-yellow text-bold mb-3'],
+                'attr' => [ 'placeholder' => 'Nom du client']
             ))
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ])
         ;
     }

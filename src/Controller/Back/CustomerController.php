@@ -20,7 +20,7 @@ class CustomerController extends AbstractController
     $this->entityManager = $entityManager;
     }
     /**
-     * @Route("/admin/client", name="list_customer_back")
+     * @Route("/admin/client", name="list_customer")
      */
     public function listCustomers(CustomerRepository $customerAdmin): Response
     {

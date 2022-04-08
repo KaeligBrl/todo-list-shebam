@@ -1,4 +1,4 @@
-{% extends 'back/index.html.twig' %}
+{% extends 'back/admin.html.twig' %}
 
 {% block title %}Ajouter un changement - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
@@ -6,7 +6,7 @@
 	<div>
 		{% block title_back_page %}Ajouter un changement{% endblock %}
 	</div>
-	{% block back_content %}
+	{% block content %}
 		{{ form_start(form_changelog_add_back) }}
 		<div class="was-validated form-back background-login is-valid">
 			{% if notification %}

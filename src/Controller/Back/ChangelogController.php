@@ -21,7 +21,7 @@ class ChangelogController extends AbstractController
         $this->entityManager = $entityManager;
     }
     /**
-     * @Route("/admin/historique-des-changements", name="changelog")
+     * @Route("/admin/changements", name="changelog")
      */
     public function index(ChangelogRepository $changelog): Response
     {
@@ -30,7 +30,7 @@ class ChangelogController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/historique-des-changements/ajouter", name="add_changelog_back")
+     * @Route("/admin/historique-des-changements/ajouter", name="add_changelog")
      */
     public function changelogAdd(Request $request,ChangelogRepository $changelogAdd): Response
     {
@@ -52,7 +52,7 @@ class ChangelogController extends AbstractController
     }
 
     /**
-     * @Route("/admin/changelog/{id}/supprimer", name="delete_changelog_back")
+     * @Route("/admin/changelog/{id}/supprimer", name="delete_changelog")
      * @param Changelog $changelogDelete
      * return RedirectResponse
      */

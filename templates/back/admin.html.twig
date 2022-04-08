@@ -17,15 +17,17 @@
         <link href="{{ asset('assets/css/front/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/motdepasse.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/front/responsive.css') }}" rel="stylesheet">
-<link href="{{ asset('assets/css/front/admin-template.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/back/admin-template.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
     <header>
-        
         <nav class="navbar-expand-sm navbar-dark bg-yellow">
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
                     </li>
@@ -40,14 +42,25 @@
             <ul class="navbar-nav ml-auto" id="navbarqaqa">
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item active"> 
-                            <a class="navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                        <li class="nav-item"> 
+                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="https://projetsclients.shebam.fr/" target="new" class="navbar-text color-blue text-uppercase">Projets Clients</a>
+                        <li>
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'user_list' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'download_list' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'changelog' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'list_customer_back' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'add_customer_back' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'user_add' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'user_modify' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
+                                        navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
                         </li>
                 {% endif %}
             {% endif %}
@@ -82,10 +95,46 @@
             {% endif %}
         </nav>
     </header>
-
     <main role="main">
-        <div class="container-fluid" style="margin-top: 150px;">
-            {% block content %}{% endblock %}
+        <div class="container" style="margin-top: 50px;">
+            <nav class="navbar navbar-expand-lg">
+                <ul class="navbar-nav mx-auto" id="navbarqaqa">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-item"> 
+                                <a class="
+                                            {% if app.request.attributes.get('_route') starts with 'list_customer' %} text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'add_customer_back' %} text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %} text-border-admin-active{% endif %}
+                                            navbar-text text-uppercase text-border-admin" href="{{ path('list_customer') }}">Clients</a>
+                            </li>
+                            <li class="nav-item"> 
+                                <a class="
+                                            {% if app.request.attributes.get('_route') starts with 'user_list' %}text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'user_add' %}text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'user_modify' %}text-border-admin-active{% endif %}                                             
+                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('user_list') }}">Équipe</a>
+                            </li>
+                            <li>
+                                <a class="
+                                            {% if app.request.attributes.get('_route') starts with 'download_list' %}text-border-admin-active{% endif %}
+                                            navbar-text color-blue-dark text-uppercase text-border-admin" title="Aller sur l'administration" href="{{ path('download_list') }}">Téléchargement</a>
+                            </li>
+                            <li>
+                                <a class="
+                                            {% if app.request.attributes.get('_route') starts with 'changelog' %}text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'add_changelog' %}text-border-admin-active{% endif %}
+                                            navbar-text color-blue-dark text-uppercase text-border-admin" title="Aller sur l'administration" href="{{ path('changelog') }}">Changements</a>
+                            </li>
+                    {% endif %}
+                {% endif %}
+                </ul> 
+            </nav>        
+        </div>
+        <div class="container-fluid" style="margin-top: 60px;">
+            {% block content %}
+                        
+            {% endblock %}
         </div>
     </main>
 

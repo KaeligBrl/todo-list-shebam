@@ -19,15 +19,15 @@ class ModifyUserType extends AbstractType
         $builder
         ->add('email', EmailType::class, [
             'disabled' => true,
-            'label' => 'Adresse mail',
+            'label' => false,
             'label_attr' => ['class' => 'label-custom'],
         ])
         ->add('firstname', TextType::class, [
-            'label' => 'Prénom',
+            'label' => false,
             'label_attr' => ['class' => 'label-custom'],
         ])
         ->add('lastname', TextType::class, [
-            'label' => 'Nom de Famille',
+            'label' => false,
             'label_attr' => ['class' => 'label-custom'],
         ])
         ->add('roles', ChoiceType::class, array(
@@ -35,13 +35,13 @@ class ModifyUserType extends AbstractType
                 'Utilisateur' => 'ROLE_USER',
                 'Administrateur' => 'ROLE_ADMIN'
             ),
-            'label' => 'Rôle',
+            'label' => false,
             'label_attr' => ['class' => 'label-custom'],
         ))
 
         ->add('submit', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-back'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
         ])
         ;
         $builder->get('roles')

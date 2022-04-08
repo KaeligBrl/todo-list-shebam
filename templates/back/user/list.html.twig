@@ -1,4 +1,4 @@
-{% extends 'back/index.html.twig' %}
+{% extends 'back/admin.html.twig' %}
 
 {% block title %}Liste de l'équipe - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
@@ -8,31 +8,34 @@
 	</div>
 
 
-	{% block back_content %}
+	{% block content %}
 		<div class="container">
-			<div class="add-icon-custom d-flex flex-row-reverse">
-				<a href="{{ path('user_add_admin') }}" title="Ajouter une personne dans léquipe" type="button" class="btn btn-outline-light mr-3 mb-2">
-					<i class="fas fa-plus-circle"></i>
-				</a>
-			</div>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+					<div class="mb-4  text-center">
+						<a class="color-yellow text-20 text-bold" href="{{ path('user_add') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un utilisateur</a>
+					</div>
+					<div class="btn-add-task-home-mobile">
+						<a class="color-yellow text-20 text-bold" href="{{ path('user_add') }}">Ajouter un utilisateur</a>
+					</div>
+				{% endif %}
 
-			<table class="table table-light" data-pagination="true" data-toggle="table" data-search="true">
-				<thead class="thead-light">
+			<table class="table" data-pagination="true" data-toggle="table" data-search="true">
+				<thead class="bg-blue-dark-light">
 					<tr>
-						<th scope="col">Nom</th>
-						<th scope="col">Prénom</th>
-						<th scope="col">Adresse Mail</th>
-						<th scope="col">Rôle</th>
-						<th scope="col">Action</th>
+						<th class="color-yellow" scope="col">Nom</th>
+						<th class="color-yellow" scope="col">Prénom</th>
+						<th class="color-yellow" scope="col">Adresse Mail</th>
+						<th class="color-yellow" scope="col">Rôle</th>
+						<th class="color-yellow" scope="col">Action</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="bg-blue-dark table-borderless">
 					{% for user in user %}
 						<tr>
-							<td>{{user.lastname}}</td>
-							<td>{{user.firstname}}</td>
-							<td>{{user.email}}</td>
-							<td>                        
+							<td class="color-white text-bold">{{user.lastname}}</td>
+							<td class="color-white text-bold">{{user.firstname}}</td>
+							<td class="color-white text-bold">{{user.email}}</td>
+							<td class="color-white text-bold">                        
 								{# On boucle sur les rôles #}
 								{% for role in user.roles %}
 									{% if role == "ROLE_USER" %}
@@ -45,9 +48,9 @@
 								{% endfor %}
 							</td>
 							<td>
-								<a href="{{ path('user_modify_admin', {"id": user.id}) }}"><i class="fas fa-cog"></i>
-								|
-								<a href="{{ path('user_admin_delete', {"id": user.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
+								<a class="color-yellow" href="{{ path('user_modify', {"id": user.id}) }}"><i class="fas fa-cog"></i>&nbsp;
+								
+								<a class="color-yellow" href="{{ path('user_delete', {"id": user.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}

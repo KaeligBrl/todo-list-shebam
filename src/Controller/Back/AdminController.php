@@ -29,6 +29,7 @@ class AdminController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
+
     // -------------------------------------------
     // ----------- Download All Missions ---------
     // -------------------------------------------
@@ -89,83 +90,6 @@ class AdminController extends AbstractController
         $this->entityManager->flush();
 
         return $this->redirectToRoute("download_list_back");
-    }
-
-
-    /**
-     * @Route("/admin/liste-des-taches/reorder", name="reorder_row_cw_back")
-     */
-    public function reorderRowCWback(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
-    {
-        $cpt = 0;
-        switch ($request->request->get("context")) {
-            case '1':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $task = $taskRow->find($row['id']); //on récupère la task
-                    $task->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
-                }
-                break;
-
-            case '2':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $appt = $appointmentRow->find($row['id']);
-                    $appt->setPosition($cpt);
-                    $cpt++;
-                }
-                break;
-
-            case '3':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $quote = $quoteRow->find($row['id']);
-                    $quote->setPosition($cpt);
-                    $cpt++;
-                }
-                break;
-        }
-
-        $this->entityManager->flush();
-        return new JsonResponse([
-            'data' => gettype($request->request->get("context"))
-        ]);
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/reorder", name="reorder_row_nw_back")
-     */
-    public function reorderRowNWback(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
-    {
-        $cpt = 0;
-        switch ($request->request->get("context")) {
-            case '1':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $task = $taskRow->find($row['id']); //on récupère la task
-                    $task->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
-                }
-                break;
-
-            case '2':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $appt = $appointmentRow->find($row['id']);
-                    $appt->setPosition($cpt);
-                    $cpt++;
-                }
-                break;
-
-            case '3':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $quote = $quoteRow->find($row['id']);
-                    $quote->setPosition($cpt);
-                    $cpt++;
-                }
-                break;
-        }
-
-        $this->entityManager->flush();
-        return new JsonResponse([
-            'data' => gettype($request->request->get("context"))
-        ]);
     }
 
 }

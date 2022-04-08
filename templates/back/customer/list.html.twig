@@ -14,11 +14,14 @@
 	</div>
 	{% block content %}
 		<div class="container">
-			<div class="d-flex flex-row-reverse">
-				<a href="{{ path('add_customer_back') }}" title="Ajouter un client" type="button" class="btn btn-outline-light mb-3">
-					<i class="fas fa-plus-circle"></i>
-				</a>
-			</div>
+				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+					<div class="mb-4  text-center">
+						<a class="color-yellow text-20 text-bold" href="{{ path('add_customer_back') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un client</a>
+					</div>
+					<div class="btn-add-task-home-mobile">
+						<a class="color-yellow text-20 text-bold" href="{{ path('add_customer_back') }}">Ajouter un client</a>
+					</div>
+				{% endif %}
 
 			<table id="testaa" class="table table-bordered" data-toggle="table" data-pagination="true" data-search="true">
 				<thead class="bg-blue-dark-light">

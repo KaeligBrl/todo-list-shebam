@@ -1,4 +1,4 @@
-{% extends 'back/index.html.twig' %}
+{% extends 'back/admin.html.twig' %}
 
 {% block title %}Ajouter un utilisateur - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
@@ -6,8 +6,8 @@
 	<div>
 		{% block title_back_page %}Ajouter un utilisateur{% endblock %}
 	</div>
-		{% block back_content %}
-			<div class="was-validated form-back background-login is-valid">
+		{% block content %}
+			<div class="form-back">
 					{{ form_start(form_admin_user_add) }}
 				<div class="form-group">
 					{{ form_row(form_admin_user_add.firstname) }}
