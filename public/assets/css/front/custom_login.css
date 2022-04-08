@@ -10,9 +10,8 @@
 .form-login input[type="submit"] {font-family: 'Gotham';font-size: 20px;}
 
 /* Buttons */
-.btn-yellow-login{background: var(--yellow-shebam);border: none;border-radius: 20px;color: #ffffff;padding:10px 20px;}
+.btn-yellow-login{background: var(--color-yellow);border: none;border-radius: 20px;color: #ffffff;padding:10px 20px;}
 
 /* Others */
-.text-login-link, .text-login-link:hover{color: var(--yellow-shebam);text-decoration: none;font-family: 'Gotham';}
-.text-login-link{color: var(--yellow-shebam);text-decoration: none;font-family: 'Gotham';}
-.text-login-link {color: var(--yellow-shebam);font-family: 'Gotham';}
+.text-login-link, .text-login-link:hover{color: var(--color-yellow);text-decoration: none;font-family: 'Gotham';}
+.text-login-link{color: var(--color-yellow);text-decoration: none;font-family: 'Gotham';}

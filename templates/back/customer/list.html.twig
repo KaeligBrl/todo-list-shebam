@@ -1,4 +1,4 @@
-{% extends 'back/index.html.twig' %}
+{% extends 'back/admin.html.twig' %}
 
 {% block title %}Liste des clients - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
@@ -12,7 +12,7 @@
 				{% endif %}{% endblock %}
 				
 	</div>
-	{% block back_content %}
+	{% block content %}
 		<div class="container">
 			<div class="d-flex flex-row-reverse">
 				<a href="{{ path('add_customer_back') }}" title="Ajouter un client" type="button" class="btn btn-outline-light mb-3">
@@ -20,27 +20,27 @@
 				</a>
 			</div>
 
-			<table class="table table-light" data-toggle="table" data-pagination="true" data-search="true">
-				<thead class="thead-light">
+			<table id="testaa" class="table table-bordered" data-toggle="table" data-pagination="true" data-search="true">
+				<thead class="bg-blue-dark-light">
 					<tr>
-						<th scope="col">Nom du client</th>
-                        <th scope="col">Action</th>
+						<th class="color-yellow" scope="col">Nom du client</th>
+                        <th class="color-yellow" scope="col">Action</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody class="bg-blue-dark table-borderless">
 					{% for customer in customer %}
 						<tr>
-							<td>{{customer.name}}</td>
+							<td class="color-white text-bold">{{customer.name}}</td>
 							<td>
-								<a href="{{ path('modify_customer_back', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>
-								|
-								<a href="{{ path('delete_customer_back', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
+								<a class="color-yellow" href="{{ path('modify_customer_back', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+								
+								<a class="color-yellow" href="{{ path('delete_customer_back', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<p class="text-center color-blue-dark-shebam">Si tu supprimes un client, penses à verifier avant si une tâche ne lui est pas attribuée.</p>
+			<p class="text-center text-bold color-white">Si tu supprimes un client, penses à verifier avant si une tâche ne lui est pas attribuée.</p>
 		</div>
 	{% endblock %}
 {% endblock %}

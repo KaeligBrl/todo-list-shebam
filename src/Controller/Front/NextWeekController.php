@@ -207,6 +207,7 @@ class NextWeekController extends AbstractController
         return $this->redirectToRoute("next_week");
     }
 
+
     /**
      * @Route("/semaine-suivante/changer-vers-semaine-actuelle/", name="mission_nw_change_to_cw_front")
      */

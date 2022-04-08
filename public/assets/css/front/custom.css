@@ -18,6 +18,8 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .navbar-text{padding: .5rem 1rem;font-weight: 500;color: var(--color-white)}
 .navbar-text:hover {text-decoration: none; color: var(--color-white)}
 .text-border{font-weight: bold;background: var(--color-yellow);color:var(--color-blue-dark);border-radius: 20px;padding: 8px 25px;}
+.activecurrent{ color:var(--color-yellow-dark)}
+.active{color: var(--color-yellow)}
 
 /* Connexion Page */
 .form-signin {width: 100%;max-width: 450px;padding: 70px;margin: 0 auto;border-radius: 15px;}
@@ -58,7 +60,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .tabs button:hover.tabs button:focus, .tabs .active{color: var(--color-blue-dark) !important;background: var(--color-yellow) !important;border-radius: 20px; outline: none;}
 .content-hide {display: none;}
 .tabstable a:hover {color: var(--color-white);}
+.bootstrap-table .fixed-table-container .table tbody tr.no-records-found td {color: var(--color-yellow);font-weight: bold;}
 
 /* Forms */
 .label-form {color: var(--color-yellow) !important;}
-.label-form input[type="checkbox"]:checked{color: red;box-shadow: 0 0 0 3px orange;}

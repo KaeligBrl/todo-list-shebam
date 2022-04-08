@@ -45,7 +45,8 @@ class AddAppointmentNextWeekType extends AbstractType
             ])
             ->add('user', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s) :',
+                'label' => false,
+                'expanded' => true,
                 'class' => User::class,
                 'multiple' => true,
                 'label_attr' => ['class' => 'label-form'],
@@ -62,11 +63,11 @@ class AddAppointmentNextWeekType extends AbstractType
                     'checked'   => 'checked'                    
                 ]
             ])
-        ->add('submit', SubmitType::class, [
-            'label' => 'Valider',
-            'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
-        ])
-        ;
+            ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

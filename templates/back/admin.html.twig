@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{%  block title %}{% block title_base %}Liste des tâches{% endblock %}{% endblock %}</title>
-    {# <link rel="icon" href="{{ asset('assets/images/logo-to-do-list-vert.ico') }}" /> #}
+    <link rel="icon" href="{{ asset('assets/images/logo-to-do-list-vert.ico') }}" />
     {% block stylesheets %}
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -17,17 +17,15 @@
         <link href="{{ asset('assets/css/front/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/motdepasse.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/front/responsive.css') }}" rel="stylesheet">
+<link href="{{ asset('assets/css/front/admin-template.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
     <header>
-
+        
         <nav class="navbar-expand-sm navbar-dark bg-yellow">
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
                     </li>
@@ -42,14 +40,14 @@
             <ul class="navbar-nav ml-auto" id="navbarqaqa">
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                        <li class="nav-item active"> 
+                            <a class="navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                            <a class="navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
                         </li>
-                        <li>
-                            <a class="{% if app.request.attributes.get('_route') starts with 'admin' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="">Administration</a>
+                        <li class="nav-item">
+                            <a href="https://projetsclients.shebam.fr/" target="new" class="navbar-text color-blue text-uppercase">Projets Clients</a>
                         </li>
                 {% endif %}
             {% endif %}
@@ -92,6 +90,7 @@
     </main>
 
 {% block javascripts %}
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/1.0.3/jquery.tablednd.min.js"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>

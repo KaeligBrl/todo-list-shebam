@@ -8,6 +8,7 @@ use App\Entity\File;
 use Psr\Log\LoggerInterface;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -26,31 +27,6 @@ class AdminController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
-    }
-    /**
-     * @Route("/admin/liste-des-taches/", name="list_cw_mission_back")
-     */
-    public function listTask(TaskRepository $taskListCW, AppointmentRepository $appointmentListCW, QuoteRepository $quoteListCW): Response
-    {
-        return $this->render('back/current_week/list.html.twig', [
-            'task' => $taskListCW->findBy([], ['position' => 'ASC']),
-            'appointment' => $appointmentListCW->findBy([], ['hoursappointment' => 'ASC']),
-            'quote' => $quoteListCW->findBy([], ['position' => 'ASC']),
-        ]);
-    }
-
-    /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/", name="list_nw_mission_back")
-     */
-    public function listTaskNextWeek(TaskRepository $taskListNW, AppointmentRepository $appointmentListNW, QuoteRepository $quoteListNW): Response
-    {
-        return $this->render('back/next_week/list.html.twig', [
-            'tasks' => $taskListNW->findBy([], ['position' => 'ASC']),
-            // $tasks = $taskListNW->findBy([], ['position' => 'ASC']),
-            // dd($tasks),
-            'appointments' => $appointmentListNW->findBy([], ['hoursappointment' => 'ASC']),
-            'quotes' => $quoteListNW->findBy([], ['position' => 'ASC']),
-        ]);
     }
 
     // -------------------------------------------

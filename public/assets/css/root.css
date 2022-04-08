@@ -27,7 +27,7 @@
 .bg-black{background: var(--color-black)}
 .bg-black-light { background: var(--color-black-light)}
 .bg-yellow-dark{background: var(--color-yellow-dark)}
-.bg-yellow{background: var(--yellow)}
+.bg-yellow{background: var(--color-yellow)}
 .bg-blue-light{background: var(--color-blue-light)}
 .bg-blue-dark{background: var(--color-blue-dark)}
 .bg-blue-dark-light {background: var(--color-blue-dark-light)}

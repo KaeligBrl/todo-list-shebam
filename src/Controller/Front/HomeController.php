@@ -31,7 +31,7 @@ class HomeController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('front/login/index.html.twig', [
+        return $this->render('front/home/index.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
         ]);

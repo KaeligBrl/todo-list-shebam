@@ -36,10 +36,11 @@ class AddQuoteNextWeekType extends AbstractType
 
             ->add('person', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s) Désigné(e): ',
+                'label' => false,
                 'class' => User::class,
+                'expanded' => true,
                 'multiple' => true,
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
             ))
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
@@ -50,9 +51,10 @@ class AddQuoteNextWeekType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-front'],
-            ]);
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -76,7 +76,7 @@ class CurentWeekController extends AbstractController
         }
 
 
-        return $this->render('front/home/index.html.twig', [
+        return $this->render('front/current_week/index.html.twig', [
             'task' => $taskList->findBy([], ['position' => 'ASC']),
             'appointment' => $appointmentList->findBy([], ['hoursappointment' => 'ASC']),
             'quote' => $quoteList->findBy([], ['position' => 'ASC']),
@@ -103,7 +103,7 @@ class CurentWeekController extends AbstractController
     }
 
     /**
-     * @Route("/rendez-vous/{id}/supprimer", name="detete_appointment_cw_front")
+     * @Route("/rendez-vous/{id}/supprimer", name="delete_appointment_cw_front")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
