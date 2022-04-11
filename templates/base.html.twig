@@ -28,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://rappels.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Rappels Clients</i></a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
                     </li>
@@ -43,10 +48,22 @@
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}activecurrent{% endif %}
+                                        navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_nw' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_nw' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_quote_nw' %}active{% endif %}
+                                        navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
                         </li>
                         <li>
                             <a class="{% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
@@ -86,7 +103,7 @@
     </header>
 
     <main role="main">
-        <div class="container-fluid" style="margin-top: 150px;">
+        <div class="container-fluid" style="margin-top: 100px;">
             {% block content %}{% endblock %}
         </div>
     </main>

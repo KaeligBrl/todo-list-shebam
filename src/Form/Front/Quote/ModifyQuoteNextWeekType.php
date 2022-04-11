@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back\Quote;
+namespace App\Form\Front\Quote;
 
 use App\Entity\User;
 use App\Entity\Quote;
@@ -11,17 +11,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AddQuoteCurrentWeekType extends AbstractType
+class ModifyQuoteNextWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', TextType::class, [
+            ->add('subject',  TextType::class, [
                 'required' => true,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sujet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('object', TextType::class, [
@@ -29,19 +29,20 @@ class AddQuoteCurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Objet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('person', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s) Désigné(e): ',
+                'label' => false,
+                'expanded' => true,
                 'class' => User::class,
                 'multiple' => true,
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
             ))
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ])
         ;
     }

@@ -23,7 +23,7 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Intitulé du rendez-vous',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('subject',  TextType::class, [
@@ -31,7 +31,7 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Sujet',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('hoursappointment', DateTimeType::class, [
@@ -44,9 +44,10 @@ class AddAppointmentCurrentWeekType extends AbstractType
         ])
         ->add('user', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s) :',
+            'label' => false,
             'class' => User::class,
             'multiple' => true,
+            'expanded' => true,
             'label_attr' => ['class' => 'label-form'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')

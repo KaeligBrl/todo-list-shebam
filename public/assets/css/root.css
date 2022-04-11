@@ -34,10 +34,9 @@
 
 /* Generic */
 body{background: var(--color-black-light);}
-a:hover{text-decoration: none;}
+a:hover{text-decoration: none;color: var(--color-blue-dark);}
 .table {text-align: center;}
 table {border-radius: 1em;overflow: hidden;}
 .text-20{font-size: 20px;}
-/* .table td {border-left: none ;border-right: none;border-bottom: 3px solid red;border-radius: 20px;} */
 .table-bordered td,
 .table-bordered th{border: 1px solid #023D5C !important}

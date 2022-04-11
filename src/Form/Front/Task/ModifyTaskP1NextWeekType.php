@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back\Task;
+namespace App\Form\Front\Task;
 
 use App\Entity\Task;
 use App\Entity\User;
@@ -14,14 +14,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class AddTaskP2NextWeekType extends AbstractType
+class ModifyTaskP1NextWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('customer', EntityType::class, array(
                 'required' => true,
-                'label' => 'Sujet',
+                'label' => false,
                 'class' => Customer::class,
                 'label_attr' => ['class' => 'label-custom'],
                 'query_builder' => function (EntityRepository $er) {
@@ -34,7 +34,7 @@ class AddTaskP2NextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Objet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject1',  TextType::class, [
@@ -42,7 +42,7 @@ class AddTaskP2NextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 1',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject2',  TextType::class, [
@@ -50,7 +50,7 @@ class AddTaskP2NextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 2',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject3',  TextType::class, [
@@ -58,26 +58,27 @@ class AddTaskP2NextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 3',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('users', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s)',
+                'label' => false,
                 'class' => User::class,
+                'expanded' => true,
                 'multiple' => true,
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
-                        ->orderBy('u.firstname', 'ASC');
+                    ->orderBy('u.firstname', 'ASC');
                 }
             ))
-            ->add('p2',  CheckboxType::class, [
+            ->add('p1',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'P2',
+                'label' => 'P1',
                 'attr' => [
-                    'placeholder' => 'P2',
-                    'checked' => 'checked'
+                    'placeholder' => 'P1',
+                    'checked'   => 'checked'
                 ]
             ])
             ->add('nextweek',  CheckboxType::class, [
@@ -89,9 +90,10 @@ class AddTaskP2NextWeekType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
-            ]);
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

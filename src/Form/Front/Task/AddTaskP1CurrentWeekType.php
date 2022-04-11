@@ -33,7 +33,7 @@ class AddTaskP1CurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Objet',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('subobject1',  TextType::class, [
@@ -41,7 +41,7 @@ class AddTaskP1CurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Sous-Objet 1',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('subobject2',  TextType::class, [
@@ -49,7 +49,7 @@ class AddTaskP1CurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Sous-Objet 2',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('subobject3',  TextType::class, [
@@ -57,7 +57,7 @@ class AddTaskP1CurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Sous-Objet 3',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('users', EntityType::class, array(

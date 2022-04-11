@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Form\Back\Appointment;
+namespace App\Form\Front\Appointment;
 
 use App\Entity\User;
 use App\Entity\Appointment;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -12,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
-class AddAppointmentCurrentWeekType extends AbstractType
+class ModifyAppointmentCurrentWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,7 +23,7 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Intitulé du rendez-vous',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('subject',  TextType::class, [
@@ -30,30 +31,37 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'label' => false,
             'attr' => [
                 'placeholder' => 'Sujet',
-                'class' => ' form-control is-invalid'
+                'class' => ' form-control'
             ]
         ])
         ->add('hoursappointment', DateTimeType::class, [
             'label' => 'Heure du rendez-vous :',
-            'label_attr' => ['class' => 'label-custom'],
+            'label_attr' => ['class' => 'label-form'],
+            'days' => range(1,31),
+            'years' => range(2021,2022),
+            'hours' => range(7,18),
             'widget' => 'single_text',
-            'minutes' => ['00', '15', '30', '45'],
         ])
         ->add('user', EntityType::class, array(
             'required' => true,
-            'label' => 'Personne(s) :',
+            'label' => false,
             'class' => User::class,
             'multiple' => true,
-            'label_attr' => ['class' => 'label-custom'],
+            'expanded' => true,
+            'label_attr' => ['class' => 'label-form'],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                    ->orderBy('u.firstname', 'ASC');
+            }
         ))
         ->add('submit', SubmitType::class, [
-            'label' => 'Enregistrer',
-            'attr' => ['class' => 'btn-submit-back'],
+            'label' => 'Valider',
+            'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
         ])
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Appointment::class,

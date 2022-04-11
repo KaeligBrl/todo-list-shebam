@@ -22,6 +22,30 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .activecurrent{ color:var(--color-yellow-dark)}
 .active{color: var(--color-yellow)}
 
+/* Form */
+.form-front {background: var(--color-blue-dark);width: 100%;max-width: 550px;padding: 70px;border-radius: 15px;margin: 0 auto;}
+.form-front .checkbox {font-weight: 400;}
+.form-front .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 16px;}
+.form-front .form-control:focus {z-index: 2;}
+
+.showHiddenPassword-toggle {color: var(--color-yellow) !important;}
+
+.form-front input[type="text"],
+.form-front input[type="email"],
+.form-front input[type="password"],
+.form-front input[type="datetime-local"],
+.form-front input[type="text"]::placeholder,
+.form-front input[type="email"]::placeholder,
+.form-front input[type="password"]::placeholder,
+.form-front select::placeholder,
+.form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-blue-dark-light);color: var(--color-blue-dark-light);}
+.form-front input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+
+.form-success {margin: 0 auto;color: var(--color-yellow);background: var(--color-blue-dark-light);width: 100%;max-width: 550px;border-radius: 20px;padding: 40px;margin-bottom: 20px;}
+
 /* Connexion Page */
 .form-signin {width: 100%;max-width: 450px;padding: 70px;margin: 0 auto;border-radius: 15px;}
 .form-signin .checkbox {font-weight: 400;}
@@ -43,6 +67,10 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .popup .content {max-height: 30%;overflow: auto;}
 .popup .content .users{padding: 20px 90px; border-radius: 20px;}
 .popup .content input[type="text"],.popup .content input[type="datetime-local"],.popup .content select{background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-blue-dark-light)}
+.users {
+    padding: 20px 90px;
+    border-radius: 20px;
+}
 
 
 /* Mobile Menu */
@@ -62,6 +90,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .content-hide {display: none;}
 .tabstable a:hover {color: var(--color-white);}
 .bootstrap-table .fixed-table-container .table tbody tr.no-records-found td {color: var(--color-yellow);font-weight: bold;}
+.bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {color: var(--color-yellow);font-weight: bold;}
 
 /* Forms */
 .label-form {color: var(--color-yellow) !important;}

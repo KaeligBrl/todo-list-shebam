@@ -19,9 +19,6 @@
 					<div class="mb-4">
 						<a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
 					</div>
-					<div class="btn-add-task-home-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('add_task_p1_nw_back') }}">Ajouter une tâche</a>
-					</div>
 				{% endif %}
 				<table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
 					<thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
@@ -57,7 +54,7 @@
 										
 										<a class="color-yellow" href="{{ path('change_task_p1_nw_to_p1_cw_front', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>&nbsp;
 											
-										<a class="color-yellow" href="{{ path('modify_task_p1_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+										<a class="color-yellow" href="{{ path('modify_task_p1_nw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 											
 										<a class="color-yellow" href="{{ path('delete_task_nw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
 									</td>
@@ -72,9 +69,6 @@
 				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 					<div class="mb-4">
 						<a class="color-yellow text-20 text-bold" href="#ajouterunetachep2"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
-					</div>
-					<div class="btn-add-task-home-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('add_task_p1_nw_back') }}">Ajouter une tâche</a>
 					</div>
 				{% endif %}
 				<table id="tableOrderTaskP2" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
@@ -110,7 +104,7 @@
 										
 										<a class="color-yellow" href="{{ path('change_task_p2_nw_to_p2_cw_front', {"id": task.id}) }}"><i class="fas fa-undo"></i></a>&nbsp;
 											
-										<a class="color-yellow" href="{{ path('modify_task_p2_nw_back', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+										<a class="color-yellow" href="{{ path('modify_task_p2_nw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 											
 										<a class="color-yellow" href="{{ path('delete_task_nw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>
 									</td>
@@ -125,9 +119,6 @@
 				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 					<div class="mb-4">
 						<a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
-					</div>
-					<div class="btn-add-task-home-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('add_appointment_nw_back') }}">Ajouter un rendez-vous</a>
 					</div>
 				{% endif %}
 				<table id="tableOrderAppointment" class="table table-bordered" data-toggle="table">
@@ -159,9 +150,10 @@
 									</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											{# <a class="color-yellow" href="{{ path('appointment_nw_modify_back', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp; #}
-											
+
 											<a class="color-yellow" href="{{ path('change_appointment_nw_to_cw_front', {"id": appointment.id}) }}"><i class="fas fa-undo"></i></a>&nbsp;
+
+											<a class="color-yellow" href="{{ path('modify_appointment_nw', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 												
 											<a class="color-yellow" href="{{ path('delete_appointment_nw_front', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										</td>
@@ -178,7 +170,7 @@
 						<p class="color-yellow text-20 text-bold"><a class="btn-blue-light-shebam" href="#ajouterundevis">&nbsp;<i class="fas fa-plus-circle"></i>&nbsp;Ajouter un devis</a></p>
 					</div>
 					<div class="btn-add-task-home-mobile">
-						<p class="color-yellow text-20 text-bold"><a class="btn-blue-light-shebam" href="{{ path('add_appointment_nw_back') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un devis</a></p>
+						<p class="color-yellow text-20 text-bold"><a class="btn-blue-light-shebam" href="{{ path('add_appointment_nw') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un devis</a></p>
 					</div>
 				{% endif %}
 					<table id="tableOrderQuote" class="table" data-toggle="table">
@@ -207,9 +199,9 @@
 										</td>
 									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 										<td>
-											<a class="color-yellow" href="{{ path('modify_quote_nw_back', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
-											&nbsp;
 											<a  class="color-yellow" href="{{ path('change_quote_nw_to_cw_front', {"id": quote.id}) }}"><i class="fas fa-redo"></i></a>
+											&nbsp;
+											<a class="color-yellow" href="{{ path('modify_quote_nw', {"id": quote.id}) }}"><i class="fas fa-cog"></i></a>
 											&nbsp;
 											<a  class="color-yellow" href="{{ path('delete_quote_nw_front', {"id": quote.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un devis')"><i class="fas fa-trash"></i></a>
 										</td>
@@ -220,7 +212,7 @@
 						</tbody>
 					</table>
 			</div>
-			<div class="mt-3 text-center btn-yellow btn"><a href="{{path('change_task_to_cw') }}">Transférer vers la semaine actuelle</a></div>
+				<div class="mt-3 text-center btn-yellow btn"><a href="{{path('change_task_to_cw') }}">Transférer vers la semaine actuelle</a></div>
 		</div>
 
 		<!-- POPUP -->

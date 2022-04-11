@@ -28,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
                     </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://rappels.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Rappels Clients</i></a>
+                    </li>
+                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
                     </li>
@@ -59,7 +64,7 @@
                                         {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'user_add' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'user_modify' %}active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
                                         navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
                         </li>
                 {% endif %}

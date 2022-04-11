@@ -29,7 +29,7 @@ class AddUserType extends AbstractType
                 ]),
                 'attr' => [
                     'placeholder' => 'Prénom',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('lastname', TextType::class, [
@@ -40,14 +40,14 @@ class AddUserType extends AbstractType
                 ]),
                 'attr' => [
                     'placeholder' => 'Nom de famille',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('email', EmailType::class, [
                 'label' => false,
                     'attr' => [
                         'placeholder' => 'Adresse email',
-                        'class' => ' form-control is-invalid'
+                        'class' => ' form-control'
                 ]
             ])
             ->add('password', RepeatedType::class, [

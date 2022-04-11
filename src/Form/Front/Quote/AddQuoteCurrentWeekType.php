@@ -21,7 +21,7 @@ class AddQuoteCurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sujet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('object', TextType::class, [
@@ -29,20 +29,21 @@ class AddQuoteCurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Objet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
 
             ->add('person', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s) Désigné(e): ',
+                'label' => false,
                 'class' => User::class,
+                'expanded' => true,
                 'multiple' => true,
                 'label_attr' => ['class' => 'label-form'],
             ))
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
-                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20 mt-3'],
             ])
         ;
     }

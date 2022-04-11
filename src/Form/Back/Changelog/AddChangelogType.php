@@ -19,7 +19,7 @@ class AddChangelogType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [
-                'class' => ' form-control is-invalid',
+                'class' => ' form-control',
                 'placeholder' => 'Numéro de la version :'
             ]
         ])
@@ -27,7 +27,7 @@ class AddChangelogType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [
-                'class' => ' form-control is-invalid',
+                'class' => ' form-control',
                 'placeholder' => 'Détails :'
             ]
         ])
@@ -35,7 +35,7 @@ class AddChangelogType extends AbstractType
             'required' => false,
             'label' => false,
             'attr' => [
-                'class' => ' form-control is-invalid',
+                'class' => ' form-control',
                 'placeholder' => 'Sous-Détail :'
             ]
         ])
@@ -43,7 +43,7 @@ class AddChangelogType extends AbstractType
             'required' => false,
             'label' => false,
             'attr' => [
-                'class' => ' form-control is-invalid',
+                'class' => ' form-control',
                 'placeholder' => 'Sous-Détail 2 :'
             ]
         ])
@@ -51,7 +51,7 @@ class AddChangelogType extends AbstractType
             'required' => false,
             'label' => false,
             'attr' => [
-                'class' => ' form-control is-invalid',
+                'class' => ' form-control',
                 'placeholder' => 'Sous-Détail 3 :'
             ]
         ])

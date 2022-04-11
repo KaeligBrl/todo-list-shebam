@@ -22,7 +22,7 @@ class AddQuoteNextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sujet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('object', TextType::class, [
@@ -30,7 +30,7 @@ class AddQuoteNextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Objet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
 

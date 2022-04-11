@@ -24,7 +24,7 @@ class AddAppointmentNextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Intitulé du rendez-vous',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subject',  TextType::class, [
@@ -32,7 +32,7 @@ class AddAppointmentNextWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sujet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('hoursappointment', DateTimeType::class, [

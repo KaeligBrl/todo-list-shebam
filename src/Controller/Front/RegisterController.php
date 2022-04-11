@@ -5,10 +5,11 @@ namespace App\Controller\Front;
 use App\Entity\User;
 use App\Form\Front\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegisterController extends AbstractController
@@ -22,6 +23,11 @@ class RegisterController extends AbstractController
      * @Route("/inscription", name="register")
      */
     public function index(Request $request, UserPasswordEncoderInterface $encoder){
+
+        if ($this->getUser() instanceof UserInterface === true) {
+            return $this->redirectToRoute('current_week');
+        }
+
         $user = new User();
 
         $form = $this->createForm(RegisterType:: class, $user);
@@ -47,7 +53,7 @@ class RegisterController extends AbstractController
             'notification' => $notification
         ]);
 
-        return $this->redirectToRoute('app_login');
+        return $this->redirectToRoute('home');
     }
     /**
      * @Route("/inscription/tu-es-bien-inscris", name="register_message_success")

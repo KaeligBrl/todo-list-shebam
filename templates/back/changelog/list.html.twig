@@ -23,16 +23,15 @@
             {% else %}
             {% for changelogList in changelogList %}
             <div class="col changelog">
-
+                    <span>
+                        <a href="{{ path('delete_changelog', {"id": changelogList.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un historique')"><i class="fas fa-trash color-yellow float-right"></i></a>
+                    </span>
                 <p class="text-bold text-center text-20 pchangleog">{{changelogList.version}}</p>
                 <p class="color-blue-dark-shebam fw-normal">- {{changelogList.name}}</p>
                 <p class="color-blue-dark-shebam">{% if changelogList.subname is empty %}{% else %} - {{changelogList.subname}}<br>{% endif %}</p>
                 <p class="color-blue-dark-shebam">{% if changelogList.subname2 is empty %}{% else %}- {{changelogList.subname2}}<br>{% endif %}</p>
                 <p class="color-blue-dark-shebam">{% if changelogList.subname3 is empty %}{% else %}- {{changelogList.subname3}}<br>{% endif %}</p>
                 <p class="color-blue-dark-shebam">Publié le: {{changelogList.createdat|date("d-m-Y")}} à {{changelogList.createdat|date((" H:i"))}}</p>
-                <span>
-                    <a href="{{ path('delete_changelog', {"id": changelogList.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un historique')"><i class="fas fa-trash"></i></a>
-                </span>
 
             </div>
             {% endfor %}

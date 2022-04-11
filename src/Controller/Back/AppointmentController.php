@@ -9,10 +9,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Form\Back\Appointment\AddAppointmentNextWeekType;
-use App\Form\Back\Appointment\ModifyAppointmentNextWeekType;
-use App\Form\Back\Appointment\AddAppointmentCurrentWeekType;
-use App\Form\Back\Appointment\ModifyAppointmentCurrentWeekType;
+use App\Form\Front\Appointment\AddAppointmentNextWeekType;
+use App\Form\Front\Appointment\ModifyAppointmentNextWeekType;
+use App\Form\Front\Appointment\AddAppointmentCurrentWeekType;
+use App\Form\Front\Appointment\ModifyAppointmentCurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AppointmentController extends AbstractController
@@ -24,7 +24,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/ajouter", name="add_appointment_cw_back")
+     * @Route("/semaine-actuelle/rendez-vous/ajouter", name="add_appointment_cw")
      */
     public function addTaskAppointment(Request $request): Response
     {
@@ -46,7 +46,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/semaine-suivante/rendez-vous/ajouter", name="add_appointment_nw_back")
+     * @Route("/semaine-suivante/rendez-vous/ajouter", name="add_appointment_nw")
      */
     public function addTaskAppointmentNextWeek(Request $request): Response
     {
@@ -68,7 +68,7 @@ class AppointmentController extends AbstractController
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/modifier/id={id}", name="modify_appointment_cw_back")
+     * @Route("/semaine-actuelle/rendez-vous/modifier/id={id}", name="modify_appointment_cw")
      */
     public function modifyAppointment(Request $request, Appointment $appointmentModify): Response
     {
@@ -83,15 +83,15 @@ class AppointmentController extends AbstractController
             $notification = 'Le rendez-vous a bien été mise à jour !';
             $form = $this->createForm(ModifyAppointmentCurrentWeekType::class, $appointmentModify);
         }
-        return $this->render('back/current_week/appointment/modify.html.twig', [
-            'form_appointment_nw_modify_back' => $form->createView(),
+        return $this->render('front/current_week/appointment/modify.html.twig', [
+            'form_appointment_nw_modify' => $form->createView(),
             'notification' => $notification,
             'appointment' => $appointmentModify
         ]);
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/modifier/id={id}", name="modify_appointment_nw_back")
+     * @Route("/semaine-suivante/rendez-vous/modifier/id={id}", name="modify_appointment_nw")
      */
     public function modifyAppointmentNextWeek(Request $request, Appointment $appointmentModify): Response
     {
@@ -106,15 +106,15 @@ class AppointmentController extends AbstractController
             $notification = 'Le rendez-vous a bien été mise à jour !';
             $form = $this->createForm(ModifyAppointmentNextWeekType::class, $appointmentModify);
         }
-        return $this->render('back/next_week/appointment/modify.html.twig', [
-            'form_appointment_nw_modify_back' => $form->createView(),
+        return $this->render('front/next_week/appointment/modify.html.twig', [
+            'form_appointment_nw_modify' => $form->createView(),
             'notification' => $notification,
             'appointment' => $appointmentModify
         ]);
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/supprimer/id={id}", name="delete_appointment_cw_back")
+     * @Route("/semaine-actuelle/rendez-vous/supprimer/id={id}", name="delete_appointment_cw_back")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -125,11 +125,11 @@ class AppointmentController extends AbstractController
         $em->remove($appointmentDelete);
         $em->flush();
 
-        return $this->redirectToRoute("list_cw_mission_back");;
+        return $this->redirectToRoute("current_week");;
     }
 
     /**
-     * @Route("/admin/liste-des-taches/rendez-vous/semaine-suivante/supprimer/id={id}", name="delete_appointment_nw_back")
+     * @Route("/semaine-suivante/rendez-vous/supprimer/id={id}", name="delete_appointment_nw_back")
      * @param Appointment $appointmentDelete
      * return RedirectResponse
      */
@@ -140,11 +140,11 @@ class AppointmentController extends AbstractController
         $em->remove($appointmentDelete);
         $em->flush();
 
-        return $this->redirectToRoute("mission_list_nw_back");;
+        return $this->redirectToRoute("next_week");;
     }
 
     /**
-     * @Route("/admin/liste-des-taches/basculer/rendez-vous/semaine-suivante/id={id}", name="change_appointment_cw_to_nw_back")
+     * @Route("/semaine-actuelle/basculer/rendez-vous/semaine-suivante/id={id}", name="change_appointment_cw_to_nw_back")
      * return RedirectResponse
      */
     public function changeQuoteCurrentToNextWeek(Appointment $quoteChange): Response
@@ -153,11 +153,11 @@ class AppointmentController extends AbstractController
             ->getRepository(Appointment::class)
             ->setChangeAppointmentCurrentWeekToNextWeek($quoteChange->getId());
 
-        return $this->redirectToRoute("list_cw_mission_back");
+        return $this->redirectToRoute("next_week");
     }
 
     /**
-     * @Route("/admin/liste-des-taches/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_back")
+     * @Route("/semaine-suivante/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_back")
      * return RedirectResponse
      */
     public function changeAppointmentNextToCurrentWeek(Appointment $appointmentChange): Response
@@ -166,7 +166,7 @@ class AppointmentController extends AbstractController
             ->getRepository(Appointment::class)
             ->setChangeAppointmentNextWeekToCurrentWeek($appointmentChange->getId());
 
-        return $this->redirectToRoute("list_nw_mission_back");
+        return $this->redirectToRoute("next_week");
     }
 
 }

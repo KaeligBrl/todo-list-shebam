@@ -1,33 +1,29 @@
 <?php
 
-namespace App\Form\Back\Task;
+namespace App\Form\Front\Task;
 
-use App\Entity\User;
 use App\Entity\Task;
+use App\Entity\User;
+use App\Entity\Customer;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-
-use App\Entity\Customer;
-use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class AddTaskP2CurrentWeekType extends AbstractType
+class ModifyTaskP2CurrentWeekType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('customer', EntityType::class, array(
                 'required' => true,
-                'label' => 'Sujet',
+                'label' => false,
                 'class' => Customer::class,
-                'attr' => [
-                    'class' => 'select-customer'
-                ],
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');
@@ -38,7 +34,7 @@ class AddTaskP2CurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Objet',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject1',  TextType::class, [
@@ -46,7 +42,7 @@ class AddTaskP2CurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 1',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject2',  TextType::class, [
@@ -54,7 +50,7 @@ class AddTaskP2CurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 2',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('subobject3',  TextType::class, [
@@ -62,32 +58,32 @@ class AddTaskP2CurrentWeekType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous-Objet 3',
-                    'class' => ' form-control is-invalid'
+                    'class' => ' form-control'
                 ]
             ])
             ->add('users', EntityType::class, array(
                 'required' => true,
-                'label' => 'Personne(s)',
+                'label' => false,
                 'class' => User::class,
+                'expanded' => true,
                 'multiple' => true,
-                'label_attr' => ['class' => 'label-custom'],
+                'label_attr' => ['class' => 'label-form'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.firstname', 'ASC');
                 }
-
             ))
             ->add('p2',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'P2',
+                'label' => 'Priorité 2',
+                'label_attr' => [ 'class' => 'color-yellow'],
                 'attr' => [
-                    'placeholder' => 'P2',
-                    'checked' => 'checked'
+                    'checked'   => 'checked'
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer',
-                'attr' => ['class' => 'btn-submit-back'],
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
             ]);
     }
 
