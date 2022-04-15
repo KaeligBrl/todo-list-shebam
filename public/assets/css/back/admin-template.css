@@ -33,3 +33,4 @@
 
 /* Bootstrap table line row */
 .bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {color: var(--color-yellow);font-weight: bold;}
+a:hover{color: var(--color-white)}

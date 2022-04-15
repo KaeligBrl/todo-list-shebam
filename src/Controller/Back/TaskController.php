@@ -267,4 +267,18 @@ class TaskController extends AbstractController
         return $this->redirectToRoute("next_week");
     }
 
+    /**
+     * @Route("/semaine-actuelle/fait/{id}", name="task_done_checkbox")
+     */
+    public function taskDone(Task $taskdone)
+    {
+        $taskdone->setDone(($taskdone->getDone()) ? false : true);
+        dump('test');
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($taskdone);
+        $em->flush();
+
+        return new Response("true");
+    }
+
 }
