@@ -36,7 +36,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .form-front input[type="email"]::placeholder,
 .form-front input[type="password"]::placeholder,
 .form-front select::placeholder,
-.form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-blue-dark-light);color: var(--color-blue-dark-light);}
+.form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-white);margin-right: 13px;}
 .form-front input[type="datetime-local"]::-webkit-calendar-picker-indicator {filter: invert(1);}
 .form-success {margin: 0 auto;color: var(--color-yellow);background: var(--color-blue-dark-light);width: 100%;max-width: 550px;border-radius: 20px;padding: 40px;margin-bottom: 20px;}
 
@@ -86,7 +86,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .table tbody tr:hover td {background-color: var(--color-yellow-dark) !important;}
 
 [type="checkbox"]:not(:checked),[type="checkbox"]:checked {position: absolute;}
-[type="checkbox"]:not(:checked),[type="checkbox"]:checked {position: relative;cursor: pointer;margin-bottom: 4px;display: inline-block;font-size: 16px;}
+[type="checkbox"]:not(:checked),[type="checkbox"]:checked {position: relative;cursor: pointer;margin-bottom: 4px;display: inline-block;font-size: 16px;margin-right: 13px;}
 [type="checkbox"]:not(:checked):before,
 [type="checkbox"]:checked:before {content: '';position: absolute;width: 20px;height: 20px;background: var(--color-white);border-radius: 4px;}
 [type="checkbox"]:checked:after {content: '\2714';position: absolute;font-size: 16px;line-height: 1.2;transition: all .2s;}

@@ -28,7 +28,7 @@
 .form-front input[type="text"]::placeholder,
 .form-front input[type="email"]::placeholder,
 .form-front select::placeholder,
-.form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-blue-dark-light);color: var(--color-blue-dark-light);}
+.form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-white);}
 .form-success{margin: 0 auto;color: var(--color-yellow);background: var(--color-blue-dark-light);width: 100%;max-width: 550px;border-radius: 20px;padding: 40px;margin-bottom:20px;}
 
 /* Bootstrap table line row */
