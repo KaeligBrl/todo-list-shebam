@@ -45,29 +45,6 @@ class QuoteController extends AbstractController
     }
 
     /**
-     * @Route("/semaine-actuelle/devis/modifier/id={id}", name="modify_quote_cw")
-     */
-    public function modifyQuote(Request $request, Quote $quoteModify): Response
-    {
-        $form = $this->createForm(ModifyQuoteCurrentWeekType::class, $quoteModify);
-        $notification = null;
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $quoteModify = $form->getData();
-            $this->entityManager->persist($quoteModify);
-            $this->entityManager->flush();
-            $notification = 'Le devis a bien été mis à jour !';
-            $form = $this->createForm(ModifyQuoteCurrentWeekType::class, $quoteModify);
-        }
-        return $this->render('front/current_week/quote/modify.html.twig', [
-            'form_quote_cw_modify' => $form->createView(),
-            'notification' => $notification,
-            'quote' => $quoteModify
-        ]);
-    }
-
-    /**
      * @Route("/basculer/quote/semaine-actuelle/id={id}", name="change_quote_nw_to_cw")
      * return RedirectResponse
      */

@@ -68,7 +68,7 @@ class CustomerController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($customerDelete);
         $em->flush();
-        return $this->redirectToRoute("list_customer_back");
+        return $this->redirectToRoute("list_customer");
     }
 
     /**

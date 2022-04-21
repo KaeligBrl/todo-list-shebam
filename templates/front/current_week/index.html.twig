@@ -8,7 +8,6 @@
 		<div class="mb-5"></div>
 		<div class="container">
 			<div class="tabs">
-				<button data-content="0" class="tab-button active" onclick="deactivateText(this)">priorité n°1</button>
 				<button data-content="1" class="tab-button" onclick="deactivateText(this)">priorité n°2</button>
 				<button data-content="2" class="tab-button" onclick="deactivateText(this)">rendez-vous</button>
 				<button data-content="3" class="tab-button" onclick="deactivateText(this)">devis</button>
@@ -17,27 +16,27 @@
 				<div class="tabstable mt-5">
 					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 						<div class="mb-4">
-							<a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
+							<a class="color-yellow text-20 text-bold" href="#ajouterunetachep2"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
 						</div>
 					{% endif %}
 					<table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
-						<thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
+						<thead class="bg-blue-dark-light table-borderless">
 							<tr style="border-right-style: none;">
 								<th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
 								<th class="color-yellow text-bold" data-field="customer"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Client</th>
 								<th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
-								<th  class="color-yellow text-bold"data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
+								<th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
 								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-									<th class="color-yellow" scope="col">Action</th>
-									<th class="color-yellow" scope="col">Fait</th>
+									<th class="color-yellow text-bold" scope="col">Action</th>
+									<th class="color-yellow text-bold" scope="col">Fait</th>
 								{% endif %}
 							</tr>
 						</thead>
 						<tbody class="bg-blue-dark">
 							{% for task in task %}
-								{% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0 %}
+								{% if task.p2 == 1 and task.p1 == 0 and task.nextweek == 0 %}
 									{% if task.done == 0 %}
-										<tr class="bg-white-shebam">
+										<tr class="">
 											<td>{{ task.id }}</td>
 											<td class="color-white text-bold">{{task.customer}}</td>
 											<td class="color-white text-bold">
@@ -52,17 +51,17 @@
 											</td>
 										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 											<td>
-												<a class="color-yellow text-bold" href="{{ path('task_cw_change_to_p2_front', {"id": task.id}) }}"><span>P2</span></a>&nbsp;
+												<a class="color-yellow text-bold" href="{{ path('task_cw_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>&nbsp;
 												
-												<a class="color-yellow" href="{{ path('task_change_p1_cw_to_p1_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
+												<a class="color-yellow" href="{{ path('task_change_p2_cw_to_p2_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
 													
-												<a class="color-yellow" href="{{ path('modify_task_p1_cw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+												<a class="color-yellow" href="{{ path('modify_task_p2_cw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 													
-												<a class="color-yellow" class="color-yellow" href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
+												<a class="color-yellow" href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
 											</td>
-											<td class="form-switch">											
-												<input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
-											</td>
+												<td class="form-switch">											
+													<input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
+												</td>
 										{% endif %}
 										</tr>
 									{% else %}
@@ -81,71 +80,20 @@
 											</td>
 										{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
 											<td>
-												<a class="color-blue-dark text-bold" href="{{ path('task_cw_change_to_p2_front', {"id": task.id}) }}"><span>P2</span></a>&nbsp;
+												<a class="color-blue-dark text-bold" href="{{ path('task_cw_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>&nbsp;
 												
-												<a class="color-blue-dark" href="{{ path('task_change_p1_cw_to_p1_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
+												<a class="color-blue-dark" href="{{ path('task_change_p2_cw_to_p2_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
 													
-												<a class="color-blue-dark" href="{{ path('modify_task_p1_cw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+												<a class="color-blue-dark" href="{{ path('modify_task_p2_cw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 													
-												<a class="color-blue-dark" class="color-yellow" href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
+												<a class="color-blue-dark" href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
 											</td>
-											<td class="form-switch">											
-												<input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
-											</td>
+												<td class="oui form-switch">											
+													<input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
+												</td>
 										{% endif %}
 										</tr>
 									{% endif %}
-								{% endif %}
-							{% endfor %}
-						</tbody>
-					</table>
-				</div>
-				<div class="tabstable mt-5">
-					{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-						<div class="mb-4">
-							<a class="color-yellow text-20 text-bold" href="#ajouterunetachep2"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
-						</div>
-					{% endif %}
-					<table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
-						<thead class="bg-blue-dark-light table-borderless">
-							<tr style="border-right-style: none;">
-								<th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
-								<th class="color-yellow text-bold" data-field="customer"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Client</th>
-								<th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
-								<th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
-								{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-									<th class="color-yellow text-bold" scope="col">Action</th>
-								{% endif %}
-							</tr>
-						</thead>
-						<tbody class="bg-blue-dark">
-							{% for task in task %}
-								{% if task.p2 == 1 and task.p1 == 0 and task.nextweek == 0 %}
-									<tr class="bg-white-shebam">
-										<td>{{ task.id }}</td>
-										<td class="color-white text-bold">{{task.customer}}</td>
-										<td class="color-white text-bold">
-											{% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
-											{% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-											{% if task.subobject1 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
-											{% if task.subobject1 is empty %}{% else %}{{task.subobject3}}{% endif %}
-										</td>
-										<td class="color-white text-bold">{% for task in task.users %}
-												{{ task.firstname }} <br>
-											{% endfor %}
-										</td>
-									{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-										<td>
-											<a class="color-yellow text-bold" href="{{ path('task_cw_change_to_p1_front', {"id": task.id}) }}"><span>P1</span></a>&nbsp;
-											
-											<a class="color-yellow" href="{{ path('task_change_p1_cw_to_p1_nw_front', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
-												
-											<a class="color-yellow" href="{{ path('modify_task_p2_cw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-												
-											<a class="color-yellow" href="{{ path('delete_task_cw_front', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
-										</td>
-									{% endif %}
-									</tr>
 								{% endif %}
 							{% endfor %}
 						</tbody>
@@ -245,42 +193,17 @@
 						</tbody>
 					</table>	
 				</div>
-				{% if task is empty and quote is empty and appointment is empty %}
-					<div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
-				{% else %}			
-					<div class="mt-3 text-center btn-yellow btn"><a href="{{ path('download') }}">Générer le téléchargement</a></div>
+				{% if app.user.email == 'kaelig@shebam.fr' %}
+					{% if task is empty and quote is empty and appointment is empty %}
+						<div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
+					{% else %}			
+						<div class="mt-3 text-center btn-yellow btn"><a href="{{ path('download') }}">Générer le téléchargement</a></div>
+					{% endif %}
 				{% endif %}
 			</div>
 		</div>
 
 		<!-- POPUP -->
-		<!-- Task P1 -->
-		<div id="ajouterunetachep1" class="overlay">
-			<div class="popup bg-blue-dark-light">
-				<a class="close" href=""><i class="fas fa-times"></i></a>
-					<div class="content">
-					{{ form_start(form_task_p1_cw_add_front) }}
-							<div class="form-group">
-								<div class="input">{{ form_row(form_task_p1_cw_add_front.customer) }}</div>
-								{{ form_row(form_task_p1_cw_add_front.object) }}
-								{{ form_row(form_task_p1_cw_add_front.subobject1) }}
-								{{ form_row(form_task_p1_cw_add_front.subobject2) }}
-								{{ form_row(form_task_p1_cw_add_front.subobject3) }}
-								<p class="text-left color-yellow text-bold">Personne(s)</p>
-								<div class="bg-blue-dark text-left users">
-									{{ form_row(form_task_p1_cw_add_front.users) }}
-								</div>
-								<div class="text-left mt-3 color-yellow">
-									{{ form_row(form_task_p1_cw_add_front.p1) }}
-								</div>
-							<div class="form-group">
-								{{ form_row(form_task_p1_cw_add_front.submit) }}
-							</div>
-						</div>
-					{{ form_end(form_task_p1_cw_add_front) }}
-				</div>
-			</div>
-		</div>
 
 		<!-- Task P2 -->
 		<div id="ajouterunetachep2" class=" overlay">

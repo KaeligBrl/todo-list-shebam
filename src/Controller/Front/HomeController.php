@@ -24,25 +24,17 @@ class HomeController extends AbstractController
     {
 
         if ($this->getUser() instanceof UserInterface === true) {
-            return $this->redirectToRoute('current_week');
+            return $this->redirectToRoute('current_week_p1');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        return $this->render('front/home/index.html.twig', [
+        return $this->render('front/home/list_p1.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error
         ]);
-    }
-
-    /**
-     * @Route("/deconnexion", name="app_logout")
-     */
-    public function logout()
-    {
-        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
 
 }

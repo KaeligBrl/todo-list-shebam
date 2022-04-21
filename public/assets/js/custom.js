@@ -20,3 +20,4 @@ function activatetext(arg) {
     arg.classList.toggle("active");
     contents[contentData].classList.toggle("content-hide");
 }
+

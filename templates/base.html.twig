@@ -41,7 +41,7 @@
         </nav>
                 
         <nav class="navbar navbar-expand-lg bg-blue-dark mx-auto pr-5 pl-5">
-            <a href="{{ path('current_week') }}">
+            <a href="{{ path('current_week_p1') }}">
 		        <img class="d-block mx-auto" src="{{ asset('/assets/images/logo-todolist.png') }}" alt="Logo de connexion To Do List">
             </a>
             <ul class="navbar-nav ml-auto" id="navbarqaqa">
@@ -49,21 +49,26 @@
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}activecurrent{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}activecurrent{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_quote' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p1' %}activecurrent{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p2' %}activecurrent{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}activecurrent{% endif %}
-                                        navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                                        navbar-text text-uppercase text-border" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_nw' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_p2' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_quote' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_appointment' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_nw_p2' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_nw' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_nw_appointment' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_quote_nw' %}active{% endif %}
-                                        navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                                        navbar-text color-blue-dark text-uppercase" href="{{ path('next_week_p1') }}">Semaine suivante</a>
                         </li>
                         <li>
                             <a class="{% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
@@ -119,7 +124,6 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js"></script>
     <script src="{{ asset('assets/js/motdepasse.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
-
 
 {% endblock %}
 

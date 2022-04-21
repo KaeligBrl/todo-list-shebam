@@ -49,7 +49,7 @@ class UserController extends AbstractController
                 $this->entityManager->flush();
                 $user = new User();
                 $form = $this->createForm(AddUserType:: class, $user);
-                return $this->redirectToRoute("user_list_admin");
+                return $this->redirectToRoute("user_list");
             }
         return $this->render('back/user/add.html.twig', [
             'form_admin_user_add' => $form->createView(),
@@ -94,7 +94,7 @@ class UserController extends AbstractController
         $em->remove($user);
         $em->flush();
 
-        return $this->redirectToRoute("user_list_admin");
+        return $this->redirectToRoute("user_list");
     }
     
 }

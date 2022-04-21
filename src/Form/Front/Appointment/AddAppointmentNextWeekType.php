@@ -58,6 +58,7 @@ class AddAppointmentNextWeekType extends AbstractType
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
                 'label' => 'Semaine Suivante',
+                'label_attr' => ['class' => 'color-yellow mb-3'],
                 'attr' => [
                     'placeholder' => 'Semaine Suivante',
                     'checked'   => 'checked'                    

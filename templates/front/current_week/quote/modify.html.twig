@@ -8,7 +8,7 @@
 	</div>
 	{% block content %}
 		<div class="container">
-			<div class="mb-3 text-center"><a class="btn-yellow-form" href="{{ path('current_week') }}">Retour</a></div>
+			<div class="mb-3 text-center"><a class="btn-yellow-form" href="{{ path('current_week_quote') }}">Retour</a></div>
 			<h4 class="color-white text-center mb-5"> Semaine Actuelle - Modification du devis : {{ quote.subject}} </h4>
 		</div>
 		<div class="form-front">
@@ -16,7 +16,7 @@
 				<hr>
 					<div class="form-success text-center text-bold">{{ notification }}<br>
 						<hr>
-							<a href="{{ path('current_week') }}">Retourner sur la liste</a>
+							<a href="{{ path('current_week_quote') }}">Retourner sur la liste</a>
 					</div>
 				<hr>
 			{% endif %}
