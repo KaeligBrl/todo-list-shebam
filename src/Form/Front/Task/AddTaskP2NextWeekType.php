@@ -64,6 +64,7 @@ class AddTaskP2NextWeekType extends AbstractType
             ->add('users', EntityType::class, array(
                 'required' => true,
                 'label' => false,
+                'label_attr' => ['class' => 'label-form'],
                 'class' => User::class,
                 'multiple' => true,
                 'expanded' => true,
