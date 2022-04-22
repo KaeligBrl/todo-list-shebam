@@ -75,7 +75,8 @@ class AddTaskP1NextWeekType extends AbstractType
             ))
             ->add('p1',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'P1',
+                'label' => 'Priorité 1',
+                'label_attr' => ['class' => 'label-form'],
                 'attr' => [
                     'placeholder' => 'P1',
                     'checked'   => 'checked'
@@ -84,6 +85,7 @@ class AddTaskP1NextWeekType extends AbstractType
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
                 'label' => 'Semaine Suivante',
+                'label_attr' => ['class' => 'label-form mb-3'],
                 'attr' => [
                     'placeholder' => 'Semaine Suivante',
                     'checked'   => 'checked'

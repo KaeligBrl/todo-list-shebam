@@ -104,7 +104,7 @@
                                     </td>
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                     <td>
-                                        <a class="color-blue-dark text-bold" href="{{ path('change_task_cw_p1_to_p2', {"id": task.id}) }}"><span>P1</span></a>&nbsp;
+                                        <a class="color-blue-dark text-bold" href="{{ path('change_task_cw_p1_to_p2', {"id": task.id}) }}"><span>P2</span></a>&nbsp;
                                         
                                         <a class="color-blue-dark" href="{{ path('change_task_p1_cw_to_p1_nw', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>
                                             

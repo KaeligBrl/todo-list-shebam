@@ -67,7 +67,6 @@ class AddTaskP2NextWeekType extends AbstractType
                 'class' => User::class,
                 'multiple' => true,
                 'expanded' => true,
-                'label_attr' => ['class' => 'label-form'],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.firstname', 'ASC');
@@ -75,15 +74,16 @@ class AddTaskP2NextWeekType extends AbstractType
             ))
             ->add('p2',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'P2',
+                'label' => 'Priorité 2',
+                'label_attr' => ['class' => 'label-form'],
                 'attr' => [
-                    'placeholder' => 'P2',
                     'checked'   => 'checked'
                 ]
             ])
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
                 'label' => 'Semaine Suivante',
+                'label_attr' => ['class' => 'label-form mb-3'],
                 'attr' => [
                     'placeholder' => 'Semaine Suivante',
                     'checked'   => 'checked'
