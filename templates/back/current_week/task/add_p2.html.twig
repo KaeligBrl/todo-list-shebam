@@ -1,0 +1,31 @@
+{% extends 'back/index.html.twig' %}
+
+{% block title %}Ajouter une tâche P2 - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+{% block title_back_page %}Ajouter une tâche P2 - Semaine Actuelle{% endblock %}
+	</div>
+	{% block back_content %}
+		<div class="was-validated form-back background-login is-valid">
+		{% if notification %}
+			<div class="alert alert-success">{{ notification }}<br>
+				<hr>
+				<a href="{{ path('list_cw_mission_back') }}">Retourner à la liste</a>
+			</div>
+		{% endif %}
+			{{ form_start(form_task_p2_cw_add_back) }}
+			<div class="form-group">
+				{{ form_row(form_task_p2_cw_add_back.customer) }}
+				{{ form_row(form_task_p2_cw_add_back.object) }}
+				{{ form_row(form_task_p2_cw_add_back.subobject1) }}
+				{{ form_row(form_task_p2_cw_add_back.subobject2) }}
+				{{ form_row(form_task_p2_cw_add_back.subobject3) }}
+				{{ form_row(form_task_p2_cw_add_back.users) }}
+				{{ form_row(form_task_p2_cw_add_back.p2) }}
+				{{ form_row(form_task_p2_cw_add_back.submit) }}
+			</div>
+		</div>
+				{{ form_end(form_task_p2_cw_add_back) }}
+	{% endblock %}
+{% endblock %}
