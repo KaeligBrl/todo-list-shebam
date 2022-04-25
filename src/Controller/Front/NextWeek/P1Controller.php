@@ -3,16 +3,18 @@
 namespace App\Controller\Front\NextWeek;
 
 use App\Entity\Task;
+use App\Entity\Quote;
+use App\Entity\Appointment;
 use App\Repository\TaskRepository;
 use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\Front\Task\AddTaskP1NextWeekType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\Front\Task\AddTaskP1NextWeekType;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\Front\Task\ModifyTaskP1NextWeekType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -162,4 +164,40 @@ class P1Controller extends AbstractController
             'data' => gettype($request->request->get("context"))
         ]);
     }
+
+    /**
+     * @Route("/semaine-suivante/changer-vers-semaine-actuelle/", name="mission_nw_change_to_cw_front")
+     */
+    public function changeTaskToCurrentWeek(): Response
+    {
+
+        $rep1 = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setRemoveTask();
+
+        $rep2 = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setRemoveAppointment();
+
+        $rep3 = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setRemoveQuote();
+
+        $rep4 = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->setchangeTaskToCurrentWeek();
+
+        $rep5 = $this->getDoctrine()
+            ->getRepository(Appointment::class)
+            ->setchangeAppointmentToCurrentWeek();
+
+        $rep6 = $this->getDoctrine()
+            ->getRepository(Quote::class)
+            ->setchangeQuoteToCurrentWeek();
+
+
+
+        return $this->redirectToRoute("next_week_p1");
+    }
+
 }

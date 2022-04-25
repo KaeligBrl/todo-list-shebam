@@ -81,7 +81,7 @@
                                             
                                         <a class="color-yellow" href="{{ path('modify_task_nw_p2', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
                                             
-                                        <a class="color-yellow" class="color-yellow" href="{{ path('delete_task_cw_p2', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
+                                        <a class="color-yellow" class="color-yellow" href="{{ path('delete_task_nw_p2', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
                                     </td>
                                     <td class="form-switch">											
                                         <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
@@ -110,7 +110,7 @@
                                             
                                         <a class="color-blue-dark" href="{{ path('modify_task_nw_p2', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
                                             
-                                        <a class="color-blue-dark" class="color-yellow" href="{{ path('delete_task_cw_p2', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
+                                        <a class="color-blue-dark" class="color-yellow" href="{{ path('delete_task_nw_p2', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
                                     </td>
                                     <td>											
                                         <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
@@ -122,14 +122,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-
-            {% if app.user.email == 'kaelig@shebam.fr' %}
-                {% if task is empty and quote is empty and appointment is empty %}
-                    <div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
-                {% else %}			
-                    <div class="mt-3 text-center btn-yellow btn"><a href="{{ path('download') }}">Générer le téléchargement</a></div>
-                {% endif %}
-            {% endif %}
         </div>
 
 		<!-- POPUP -->

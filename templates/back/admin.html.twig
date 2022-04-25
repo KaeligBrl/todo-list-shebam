@@ -41,17 +41,17 @@
         </nav>
                 
         <nav class="navbar navbar-expand-lg bg-blue-dark mx-auto pr-5 pl-5">
-            <a href="{{ path('current_week') }}">
+            <a href="{{ path('list_customer') }}">
 		        <img class="d-block mx-auto" src="{{ asset('/assets/images/logo-todolist.png') }}" alt="Logo de connexion To Do List">
             </a>
             <ul class="navbar-nav ml-auto" id="navbarqaqa">
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week') }}">Semaine actuelle</a>
+                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week_p1' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week') }}">Semaine suivante</a>
+                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week_p1') }}">Semaine suivante</a>
                         </li>
                         <li>
                             <a class="

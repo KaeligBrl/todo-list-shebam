@@ -5,7 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     maintenanceFilePath: '%kernel.project_dir%/public/.maintenance_on'
-    download_task_directory: '%kernel.project_dir%/public/file_tasks/'
+    download_task_directory: '%kernel.project_dir%/public/pdf/'
 
 
 services:
