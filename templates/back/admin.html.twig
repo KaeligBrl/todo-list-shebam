@@ -16,14 +16,17 @@
         <link href="{{ asset('assets/css/root.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/front/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/motdepasse.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/css/front/responsive.css') }}" rel="stylesheet">
+        <link href="{{ asset('assets/css/back/responsive.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/back/admin-template.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
     <header>
-        <nav class="navbar-expand-sm navbar-dark bg-yellow">
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <nav class="navbar-expand-lg text-right navbar-dark bg-yellow pr-2">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavTopBar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:#e6e6ff"></i></span>
+        </button>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNavTopBar">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
@@ -39,14 +42,18 @@
                 </ul>
             </div>
         </nav>
-                
-        <nav class="navbar navbar-expand-lg bg-blue-dark mx-auto pr-5 pl-5">
-            <a href="{{ path('list_customer') }}">
+
+        <nav class="navbar navbar-expand-lg bg-blue-dark">
+            <a href="{{ path('current_week_p1') }}">
 		        <img class="d-block mx-auto" src="{{ asset('/assets/images/logo-todolist.png') }}" alt="Logo de connexion To Do List">
             </a>
-            <ul class="navbar-nav ml-auto" id="navbarqaqa">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:#e6e6ff"></i></span>
+            </button>
+            <div class="collapse navbar-collapse bg-blue-dark text-center p-4" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
                             <a class="{% if app.request.attributes.get('_route') starts with 'current_week_p1' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
                         </li>
@@ -67,41 +74,15 @@
                                         {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
                                         navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
                         </li>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-            </ul> 
-        </nav>
-
-        <nav class="mobile-bottom-nav">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="mobile-bottom-nav__item">
-                        <div class="mobile-bottom-nav__item-content">
-                            <a href=""><i class="fas fa-tools"></i><br>Admin</a>
-                        </div>		
-                    </div>
-                {% endif %}
-            {% endif %}
-            {% if app.user %}
-                {% if is_granted('ROLE_USER') %}
-                    <div class="mobile-bottom-nav__item">
-                        <div class="mobile-bottom-nav__item-content">
-                            <a href="{{ path('home') }}"><i class="fas fa-home"></i><br>Tâches en cours</a>
-                        </div>		
-                    </div>
-                {% endif %}
-            {% endif %} 
-            {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <div class="mobile-bottom-nav__item">
-                <div class="mobile-bottom-nav__item-content">
-                    <a href="{{ path('register') }}"><i class="fas fa-user-plus"></i><br>Inscription</a>
-                </div>		
+                </ul> 
             </div>
-            {% endif %}
         </nav>
+            
     </header>
     <main role="main">
-        <div class="container" style="margin-top: 50px;">
+        <div class="container padding-dopdown-mobile" style="margin-top: 50px;">
             <nav class="navbar navbar-expand-lg">
                 <ul class="navbar-nav mx-auto" id="navbarqaqa">
                 {% if app.user %}

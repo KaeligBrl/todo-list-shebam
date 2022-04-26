@@ -10,11 +10,8 @@
     {% block content %}
     <div class="container">
             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                <div class="mb-4  text-center">
+                <div class="mb-4 text-center padding-dopdown-mobile">
                     <a class="color-yellow text-20 text-bold" href="{{ path('add_changelog') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un changement</a>
-                </div>
-                <div class="btn-add-task-home-mobile">
-                    <a class="color-yellow text-20 text-bold" href="{{ path('add_changelog') }}">Ajouter un changement</a>
                 </div>
             {% endif %}
         <div class="row">

@@ -3,23 +3,11 @@
 {% block title %}Liste des clients - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
-	<div>
-		{% block title_back_page %}Liste des clients - Il y a
-				{% if totalCustomer <= 1 %}
-					{{ totalCustomer }} <span> client </span>
-				{% else %}
-					{{ totalCustomer }} <span> clients </span>
-				{% endif %}{% endblock %}
-				
-	</div>
 	{% block content %}
 		<div class="container">
 				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-					<div class="mb-4  text-center">
+					<div class="mb-4 text-center padding-dopdown-mobile">
 						<a class="color-yellow text-20 text-bold" href="{{ path('add_customer_back') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un client</a>
-					</div>
-					<div class="btn-add-task-home-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('add_customer_back') }}">Ajouter un client</a>
 					</div>
 				{% endif %}
 

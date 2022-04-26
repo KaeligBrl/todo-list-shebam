@@ -2,10 +2,10 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <title>{%  block title %}Semaine Actuelle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
+    <title>{%  block title %}Semaine Suivante - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
 	<div class="mb-5">
 		<img class="d-block mx-auto" src="{{ asset('/assets/images/todo.png') }}" alt="Logo de connexion To Do List">
-		<h1 class="text-center color-white mb-3">Semaine Actuelle</h1>
+		<h1 class="text-center color-white mb-3">Semaine Suivante</h1>
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto " id="navbarqaqa">
             {% if app.user %}
@@ -38,7 +38,7 @@
             {% endif %}
             </ul> 
         </nav>
-		<div class="container text-center">
+		<div class="container text-center padding-dopdown-mobile">
             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>

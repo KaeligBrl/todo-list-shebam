@@ -14,13 +14,13 @@
     .box{width: auto;}
     .popup{width: auto;}
     .btn-add-task-home{display: none;}
-    .padding-mobile{margin-bottom: 15px;}
+    .padding-dopdown-mobile{margin-top: 100px;}
     .text-padding{padding-bottom: 50px;}
 }
 @media (min-width: 768px) and (max-width: 900px){
     .btn-add-task-home-mobile{display: none;}
 }
 @media (min-width: 900px){
-    .mobile-bottom-nav{display: none !important;}
+    .mobile-nav{display: none !important;}
     .btn-add-task-home-mobile{display: none;}
 }

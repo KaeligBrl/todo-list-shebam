@@ -6,7 +6,7 @@
 		<img class="d-block mx-auto" src="{{ asset('/assets/images/todo.png') }}" alt="Logo de connexion To Do List">
 		<h1 class="text-center color-white mb-3">Semaine Actuelle</h1>
         <nav class="navbar navbar-expand-lg">
-            <ul class="navbar-nav mx-auto " id="navbarqaqa">
+            <ul class="navbar-nav mx-auto">
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
@@ -37,7 +37,7 @@
             {% endif %}
             </ul> 
         </nav>
-		<div class="container text-center">
+		<div class="container text-center padding-mobile">
             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
