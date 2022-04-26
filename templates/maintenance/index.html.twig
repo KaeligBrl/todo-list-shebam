@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{%  block title %}Accueil - Liste des tâches{% endblock %}</title>
+    <title>{%  block title %}Surprise - Liste des tâches{% endblock %}</title>
 
     {% block stylesheets %}
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -21,14 +21,15 @@
   <body>
 
     <header class="home bg-white-shebam">
-        <a class="navbar-brand p-3" href="{{ path('home') }}"><img src="{{ asset('assets/images/logo-to-do-list-hor.png') }}"/></a>
+        <a class="navbar-brand p-3" href="{{ path('home') }}"><img src="{{ asset('/assets/images/logo-todolist.png') }}"/></a>
     </header>
 
     {% block content %}
-            <div class="container text-center bg-white-shebam form-signin mt-5">
-                <h2 class="text-center">Maintenance</h2>
-                <p class="text-center mb-4">L'application est en cours de développement...</p>
-                <p class="text-center mb-4">Revenez plus tard !</p>
+            <div class="container text-center form-front mt-5">
+		            <img class="d-block mx-auto" src="{{ asset('/assets/images/todo.png') }}" alt="Logo de connexion To Do List">
+                <h1 class=" color-yellow mt-4 mb-3">Site en cours de construction</h1>
+                <p class="color-white mb-4">L'application est en cours de développement...</p>
+                <p class="color-white mb-4">Revenez plus tard !</p>
             </div>
     {% endblock %}
 
