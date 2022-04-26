@@ -24,7 +24,7 @@
 							<td  class="color-white text-bold">{{ file.name }}</a></td>
 							<td  class="color-white text-bold">{{ file.createdat|date("d-m-Y")}} à {{file.createdat|date((" H:i"))}}</td>
                             <td>
-								<a class="color-yellow" href="{{ asset("file_tasks/" ~ file.name) }}" target="new"><i class="fas fa-eye"></i></a>&nbsp;
+								<a class="color-yellow" href="{{ asset("pdf/" ~ file.name) }}" target="new"><i class="fas fa-eye"></i></a>&nbsp;
 								
 								<a class="color-yellow" href="{{ path('delete_download', {"id": file.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un téléchargement')"><i class="fas fa-trash"></i></a>
                             </td>

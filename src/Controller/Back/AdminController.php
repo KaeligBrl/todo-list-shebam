@@ -45,7 +45,7 @@ class AdminController extends AbstractController
         $pdfOptions->setIsRemoteEnabled(true);
         $dompdf = new Dompdf($pdfOptions);
         $dompdf->setPaper('A3', 'landscape');
-        $html = $this->renderView('back/current_week/task/download.html.twig', [
+        $html = $this->renderView('back/current_week/file/download.html.twig', [
             'task' => $task->findAll(),
             'appointment' => $appointment->findBy([], ['hoursappointment' => 'DESC']),
             'quote' => $quote->findAll(),
