@@ -107,14 +107,14 @@ class TaskRepository extends ServiceEntityRepository
 
     public function setRemoveTask()
     {
-        $sql = "delete from App\Entity\Task as t where t.nextweek = 0";
+        $sql = "delete from App\Entity\Task as t where t.nextweek = 0 or t.done = 1";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
 
     public function setChangeTaskToCurrentWeek()
     {
-        $sql = "update App\Entity\Task as t set t.nextweek = 0";
+        $sql = "update App\Entity\Task as t set t.nextweek = 0 ";
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
