@@ -22,7 +22,7 @@ class ResetPasswordRequestFormType extends AbstractType
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [
-                    'class' => 'btn-blue-shebam mt-3 mb-2'],
+                    'class' => 'btn-md btn-yellow-login mt-3'],
             ])
         ;
     }

@@ -5,8 +5,8 @@ namespace App\Controller\Front;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use Symfony\Component\Mime\Address;
-use App\Form\ChangePasswordFormType;
-use App\Form\ResetPasswordRequestFormType;
+use App\Form\Front\ChangePasswordFormType;
+use App\Form\Front\ResetPasswordRequestFormType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -19,9 +19,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 
-/**
- * @Route("/connexion/reinitialiser-le-mot-de-passe")
- */
 class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
@@ -36,7 +33,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Display & process form to request a password reset.
      *
-     * @Route("", name="app_forgot_password_request")
+     * @Route("/reinitialiser-le-mot-de-passe", name="app_forgot_password_request")
      */
     public function request(Request $request, MailerInterface $mailer): Response
     {
@@ -59,7 +56,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Confirmation page after a user has requested a password reset.
      *
-     * @Route("/email-envoye", name="app_check_email")
+     * @Route("/reinitialiser-le-mot-de-passe/email-envoye", name="app_check_email")
      */
     public function checkEmail(): Response
     {
@@ -76,7 +73,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Validates and process the reset URL that the user clicked in their email.
      *
-     * @Route("/changer/{token}", name="app_reset_password")
+     * @Route("/reinitialiser-le-mot-de-passe/changer/{token}", name="app_reset_password")
      */
     public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
     {
@@ -162,9 +159,9 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('nepasrepondre@cityaccess.kaeligberel.fr', 'Réinitialiser le mot de passe - To Do List'))
+            ->from(new Address('contact@shebam.fr', 'Réinitialiser le mot de passe'))
             ->to($user->getEmail())
-            ->subject('Lien de réinitialisation du mot de passe - To Do List')
+            ->subject('Lien de réinitialisation du mot de passe - To do')
             ->htmlTemplate('front/reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
@@ -177,7 +174,7 @@ class ResetPasswordController extends AbstractController
     }
 
     /**
-     * @Route("/succes", name="reset_password_change_message_sucess")
+     * @Route("/reinitialiser-le-mot-de-passe/changer-avec-succes", name="reset_password_change_message_sucess")
      */
     public function changePasswordMessageSuccess(): Response
     {

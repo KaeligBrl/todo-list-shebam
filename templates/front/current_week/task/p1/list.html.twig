@@ -127,7 +127,7 @@
                 {% if task is empty and quote is empty and appointment is empty %}
                     <div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
                 {% else %}			
-                    <div class="mt-3 text-center btn-yellow btn"><a href="{{ path('download') }}">Générer le téléchargement</a></div>
+                    <a class="mt-3 text-center btn-yellow btn" href="{{ path('download') }}">Générer le téléchargement</a>
                 {% endif %}
             {% endif %}
         </div>
