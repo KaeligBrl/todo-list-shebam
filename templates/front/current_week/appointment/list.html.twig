@@ -1,0 +1,169 @@
+  
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <title>{%  block title %}Semaine Actuelle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}</title>
+	<div class="mb-5">
+		<img class="d-block mx-auto" src="{{ asset('/assets/images/todo.png') }}" alt="Logo de connexion To Do List">
+		<h1 class="text-center color-white mb-3">Semaine Actuelle</h1>
+        <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav mx-auto " id="navbarqaqa">
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item"> 
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_quote' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_quote') }}">Devis</a>
+                        </li>
+                {% endif %}
+            {% endif %}
+            </ul> 
+        </nav>
+		<div class="container text-center padding-dopdown-mobile">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                <div class="mb-4">
+                    <a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
+                </div>
+            {% endif %}
+            <table id="tableOrderAppointment" class="table table-bordered" data-toggle="table">
+                <thead class="bg-blue-dark-light table-borderless">
+                    <tr>
+                        <th data-field="id" data-visible="false">ID</th>
+                        <th class="color-yellow text-bold" scope="col">Date et heure</th>
+                        <th class="color-yellow text-bold" scope="col">Client</th>
+                        <th class="color-yellow text-bold" scope="col">Objet</th>
+                        <th class="color-yellow text-bold" scope="col">Equipe</th>
+                        
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                        <th class="color-yellow text-bold" scope="col">Action</th>
+                    {% endif %}
+                    </tr>
+                </thead>
+                <tbody class="bg-blue-dark">
+                    {% for appointment in appointment %}
+                        {% if appointment.nextweek == 0 %}					
+                            <tr class="bg-white-shebam">
+                                <td class="color-white text-bold">{{appointment.id}}</td>
+                                <td class="color-white text-bold">{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+                                <td class="color-white text-bold">{{appointment.name}}</td>
+                                <td class="color-white text-bold">{{appointment.subject}}</td>
+                                <td class="color-white text-bold">
+                                {% for appointment in appointment.user %}
+                                    {{ appointment.firstname }} <br>
+                                {% endfor %}
+                                </td>
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                                <td class="color-yellow">
+                                        
+                                    <a class="color-yellow" href="{{ path('change_cw_to_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-redo"></i></a>&nbsp;
+                                        
+                                    <a class="color-yellow" href="{{ path('modify_cw_appointment', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+
+                                    <a class="color-yellow" href="{{ path('delete_cw_appointment', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+                                </td>
+                            {% endif %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+		</div>
+
+		<!-- POPUP -->
+		<!-- Appointment -->
+		<div id="ajouterunrendezvous" class="overlay">
+			<div class="popup bg-blue-dark-light">
+			<a class="close" href=""><i class="fas fa-times"></i></a>
+					{{ form_start(form_appointment_cw_add_front) }}
+						<div class="row">
+							<div class="col">
+								{{ form_row(form_appointment_cw_add_front.name) }}
+								{{ form_row(form_appointment_cw_add_front.subject) }}
+								<div class="text-bold color-yellow text-left">
+									{{ form_row(form_appointment_cw_add_front.hoursappointment) }}
+								</div>
+							</div>
+							<div class="col">
+								<p class="text-left color-yellow text-bold">Personne(s)</p>
+								<div class="bg-black-light text-left users mb-3">
+									{{ form_row(form_appointment_cw_add_front.user) }}
+								</div>
+								{{ form_row(form_appointment_cw_add_front.submit) }}
+							</div>
+						</div>
+					{{ form_end(form_appointment_cw_add_front) }}
+				</div>
+			</div>
+		</div>
+	</div>
+{%  endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(()=>{
+			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
+				$.ajax({
+					url: "{{ path('reorder')}}",
+					method: "POST",
+					data: {
+						table: JSON.stringify(table),
+						context: 1
+					},
+					dataType: "JSON"
+				})
+			})
+			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
+				$.ajax({
+					url: "{{ path('reorder')}}",
+					method: "POST",
+					data: {
+						table: JSON.stringify(table),
+						context: 1
+					},
+					dataType: "JSON"
+				})
+			})
+			$("#tableOrderAppointment").on("reorder-row.bs.table", (e, table, row, old) => {
+				$.ajax({
+					url: "{{ path('reorder')}}",
+					method: "POST",
+					data: {
+						table: JSON.stringify(table),
+						context: 2
+					},
+					dataType: "JSON"
+				})
+			})
+			$("#tableOrderQuote").on("reorder-row.bs.table", (e, table, row, old) => {
+				$.ajax({
+					url: "{{ path('reorder')}}",
+					method: "POST",
+					data: {
+						table: JSON.stringify(table),
+						context: 3
+					},
+					dataType: "JSON"
+				})
+			})
+		})
+	</script>
+{% endblock %}

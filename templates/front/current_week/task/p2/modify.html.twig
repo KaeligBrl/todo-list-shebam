@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de la tâche P2: {{ task.customer }} - Semaine Actuelle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Modification de la tâche P2: {{ task.customer }} - Semaine Actuelle{% endblock %}
+	</div>
+	{% block content %}
+		<div class="container">
+		<div class="mb-3 text-center"><a class="btn-yellow-form" href="{{ path('current_week_p2') }}">Retour</a></div>
+		<h4 class="color-white text-center mb-5"> Semaine Actuelle - P2 - Modification de la tâche : {{ task.customer}} </h4>
+		{% if notification %}
+			<hr>
+				<div class="form-success text-center text-bold">{{ notification }}<br>
+					<hr>
+						<a href="{{ path('current_week_p2') }}">Retourner sur la liste</a>
+				</div>
+			<hr>
+		{% endif %}
+		{{ form_start(form_task_p2_cw_modify) }}
+		<div class="form-front">
+			{{ form_row(form_task_p2_cw_modify.customer) }}
+			{{ form_row(form_task_p2_cw_modify.object) }}
+			{{ form_row(form_task_p2_cw_modify.subobject1) }}
+			{{ form_row(form_task_p2_cw_modify.subobject2) }}
+			{{ form_row(form_task_p2_cw_modify.subobject3) }}
+			<p class="text-left color-yellow text-bold">Personne(s)</p>
+			<div class="bg-black-light text-left users mb-3">
+				{{ form_row(form_task_p2_cw_modify.users) }}
+			</div>
+			{{ form_row(form_task_p2_cw_modify.p2) }}
+			{{ form_row(form_task_p2_cw_modify.submit) }}
+		</div>
+		{{ form_end(form_task_p2_cw_modify) }}
+	{% endblock %}
+	</div>
+{% endblock %}

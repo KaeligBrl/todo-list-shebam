@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du rendez-vous de {{ appointment.name }} - Semaine Suivante - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Modification du rendez-vous de {{ appointment.name }} - Semaine Suivante{% endblock %}
+	</div>
+	{% block content %}
+		<div class="container">
+			<div class="mb-3 text-center"><a class="btn-yellow-form" href="{{ path('next_week_appointment') }}">Retour</a></div>
+			<h4 class="color-white text-center mb-5"> Semaine Suivante - Modification du rendez-vous de : {{ appointment.name}} </h4>
+		</div>
+		<div class="form-front">
+			{% if notification %}
+				<hr>
+					<div class="form-success text-center text-bold">{{ notification }}<br>
+						<hr>
+							<a href="{{ path('next_week_appointment') }}">Retourner sur la liste</a>
+					</div>
+				<hr>
+			{% endif %}
+				{{ form_start(form_appointment_nw_modify) }}
+			<div class="form-group">
+				{{ form_row(form_appointment_nw_modify.name) }}
+				{{ form_row(form_appointment_nw_modify.subject) }}
+				{{ form_row(form_appointment_nw_modify.hoursappointment) }}
+				<p class="text-left color-yellow text-bold">Personne(s)</p>
+				<div class="bg-black-light text-left users mb-3">
+					{{ form_row(form_appointment_nw_modify.user) }}
+				</div>
+				{{ form_row(form_appointment_nw_modify.nextweek) }}
+				{{ form_row(form_appointment_nw_modify.submit) }}
+			</div>
+				{{ form_end(form_appointment_nw_modify) }}
+	{% endblock %}
+	</div>
+{% endblock %}

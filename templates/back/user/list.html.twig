@@ -1,0 +1,59 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Liste de l'équipe - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div class="d-flex flex-row">
+		{% block title_back_page %}Liste de l'équipe{% endblock %}
+	</div>
+
+
+	{% block content %}
+		<div class="container">
+				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+					<div class="mb-4 text-center padding-dopdown-mobile">
+						<a class="color-yellow text-20 text-bold" href="{{ path('user_add') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un utilisateur</a>
+					</div>
+				{% endif %}
+
+			<table class="table" data-pagination="true" data-toggle="table" data-search="true">
+				<thead class="bg-blue-dark-light">
+					<tr>
+						<th class="color-yellow" scope="col">Nom</th>
+						<th class="color-yellow" scope="col">Prénom</th>
+						<th class="color-yellow" scope="col">Adresse Mail</th>
+						<th class="color-yellow" scope="col">Rôle</th>
+						<th class="color-yellow" scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody class="bg-blue-dark table-borderless">
+					{% for user in user %}
+						<tr>
+							<td class="color-white text-bold">{{user.lastname}}</td>
+							<td class="color-white text-bold">{{user.firstname}}</td>
+							<td class="color-white text-bold">{{user.email}}</td>
+							<td class="color-white text-bold">                        
+								{# On boucle sur les rôles #}
+								{% for role in user.roles %}
+									{% if role == "ROLE_USER" %}
+										Utilisateur
+									{% elseif role == "ROLE_PRO" %}
+										Entreprise
+									{% elseif role == "ROLE_ADMIN" %}
+										Administrateur
+									{% endif %}
+								{% endfor %}
+							</td>
+							<td>
+								<a class="color-yellow" href="{{ path('user_modify', {"id": user.id}) }}"><i class="fas fa-cog"></i>&nbsp;
+								
+								<a class="color-yellow" href="{{ path('user_delete', {"id": user.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endblock %}
+{% endblock %}
+

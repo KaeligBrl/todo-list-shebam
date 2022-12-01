@@ -1,0 +1,21 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Modifier le client - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	{% block content %}
+		<div class="container">
+			{% if notification %}
+					<div class="form-success text-center text-bold">
+						{{ notification }}<br>
+						<a href="{{ path('list_customer') }}">Retourner sur la liste des clients</a>
+					</div>
+			{% endif %}
+			<div class="form-back">
+				{{ form_start(form_customer_modify_admin)}}
+					{{ form(form_customer_modify_admin) }}
+				{{ form_end(form_customer_modify_admin)}}
+			</div>
+	{% endblock %}
+	</div>
+{% endblock %}

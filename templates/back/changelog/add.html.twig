@@ -1,0 +1,32 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Ajouter un changement - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Ajouter un changement{% endblock %}
+	</div>
+	{% block content %}
+		{{ form_start(form_changelog_add_back) }}
+		<div class="form-back">
+			{% if notification %}
+				<div class="alert alert-success">{{ notification }}<br>
+					<hr>
+					<a href="{{ path('changelog') }}">Retourner à la liste</a>
+				</div>
+			{% endif %}
+				<div class="form-group">
+					{{ form_row(form_changelog_add_back.version) }}
+					{{ form_row(form_changelog_add_back.name) }}
+					{{ form_row(form_changelog_add_back.subname) }}
+					{{ form_row(form_changelog_add_back.subname2) }}
+					{{ form_row(form_changelog_add_back.subname3) }}
+					{{ form_row(form_changelog_add_back.created_at) }}
+                    {{ form_row(form_changelog_add_back.submit) }}
+				</div>
+		</div>
+        {{ form_end(form_changelog_add_back) }}
+	{% endblock %}
+{% endblock %}
+
+
