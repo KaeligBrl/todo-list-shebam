@@ -164,4 +164,18 @@ class P1Controller extends AbstractController
             'data' => gettype($request->request->get("context"))
         ]);
     }
+    /**
+     * @Route("/update-task-status", name="update_task_status", methods={"POST"})
+     */
+    public function updateTaskStatus(Request $request)
+    {
+        // Récupérez les données de la requête
+        $taskId = $request->request->get('taskId');
+        $isChecked = $request->request->get('isChecked');
+
+        // Mettez à jour le statut de la tâche dans votre système de stockage de données (par exemple, base de données)
+
+        // Retournez une réponse JSON pour indiquer le succès de la mise à jour
+        return new JsonResponse(['success' => true]);
+    }
 }
