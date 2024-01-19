@@ -1,5 +1,5 @@
 /* Custom */
-@font-face {font-family: "Gotham";src: url("https://todo.local/assets/fonts/Gotham-Bold.otf") format("truetype");}
+@font-face {font-family: "Kiro";src: url("https://todo.local/assets/fonts/KiroLight.otf") format("opentype");}
 h4{color: var(--color-white)}
 td,td a{color: var(--color-black)}
 a{color: var(--blue-dark);}
@@ -15,8 +15,8 @@ td a:hover{color: var(--color-white);}
 .bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {color: var(--color-yellow);font-weight: bold;}
 
 /* Custom Buttons */
-.btn-yellow-form{font-family: 'Gotham';background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
-.btn-yellow {font-family: 'Gotham';background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
+.btn-yellow-form{font-family: 'Kiro', sans-serif;background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
+.btn-yellow {font-family: 'Kiro', sans-serif;background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
 
 /* Navbar */
 .navbar{height: 92px;padding: 20px 10px;}
@@ -25,7 +25,7 @@ td a:hover{color: var(--color-white);}
 .text-border{font-weight: bold;background: var(--color-yellow);color:var(--color-blue-dark);border-radius: 20px;padding: 8px 25px;margin-right: 20px;}
 .activecurrent{ color:var(--color-white)}
 .active{color: var(--color-yellow);}
-.active-filters {color: var(--color-blue-dark);background: var(--color-yellow);padding: 10px 20px;border-radius: 20px;margin-top: -4px;font-family: 'Gotham';}
+.active-filters {color: var(--color-blue-dark);background: var(--color-yellow);padding: 10px 20px;border-radius: 20px;margin-top: -4px;font-family: 'Kiro', sans-serif;}
 
 /* Form */
 .form-front {background: var(--color-blue-dark);width: 100%;max-width: 550px;padding: 70px;border-radius: 15px;margin: 0 auto;}
@@ -94,6 +94,6 @@ td a:hover{color: var(--color-white);}
 .form-general .checkbox {font-weight: 400;}
 .form-general .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 16px;}
 .form-general .form-control:focus {z-index: 2;}
-.form-general input[type="email"] {font-family: 'Gotham';margin-bottom: -1px;border-radius: 20px;color: #939090;padding-left: 30px;}
-.form-general input[type="password"] {font-family: 'Gotham';margin-bottom: 10px;border-radius: 20px;color: #939090;padding-left: 30px;}
-.form-general input[type="submit"] {font-family: 'Gotham';font-size: 20px;}
+.form-general input[type="email"] {font-family: 'Kiro', sans-serif;margin-bottom: -1px;border-radius: 20px;color: #939090;padding-left: 30px;}
+.form-general input[type="password"] {font-family: 'Kiro', sans-serif;margin-bottom: 10px;border-radius: 20px;color: #939090;padding-left: 30px;}
+.form-general input[type="submit"] {font-family: 'Kiro', sans-serif;font-size: 20px;}
