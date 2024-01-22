@@ -54,14 +54,14 @@
                     {% if is_granted('ROLE_ADMIN') %}
                             <li class="nav-item"> 
                                 <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'current_week_quote' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p1' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p2' %}activecurrent{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}activecurrent{% endif %}
-                                            navbar-text text-uppercase text-border" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
+                                            {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'current_week_quote' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p1' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'modify_task_cw_p2' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}active{% endif %}
+                                            navbar-text text-uppercase" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
                             </li>
                             <li class="nav-item"> 
                                 <a class="
