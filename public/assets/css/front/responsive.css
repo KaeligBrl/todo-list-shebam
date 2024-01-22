@@ -17,10 +17,24 @@
     .padding-dopdown-mobile{margin-top: 100px;}
     .text-padding{padding-bottom: 50px;}
 }
+
 @media (min-width: 768px) and (max-width: 900px){
     .btn-add-task-home-mobile{display: none;}
 }
+
 @media (min-width: 900px){
     .mobile-nav{display: none !important;}
     .btn-add-task-home-mobile{display: none;}
+}
+
+@media (min-width: 1200px) {
+    .container,.container-lg,.container-md,.container-sm,.container-xl {max-width: 1240px !important;}
+}
+
+@media screen and (min-width: 1366px) and (max-width: 1500px){
+    .popup{top: 14%;width: 70%;}
+}
+
+@media screen and (min-width: 1501px) {
+    .popup {width: 40%;}
 }
