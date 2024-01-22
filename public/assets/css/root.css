@@ -41,7 +41,8 @@ a{color: var(--blue-dark);}
 
 /* Buttons */
 .btn-yellow-form{background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
-.btn-yellow {background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
+.btn-yellow {background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;font-size: 20px;margin-top: 20px !important}
+.btn-yellow:hover{color: var(--color-white);}
 /* END Buttons */
 
 /* Generic */
