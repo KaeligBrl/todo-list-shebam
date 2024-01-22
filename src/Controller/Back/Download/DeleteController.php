@@ -1,32 +1,14 @@
 <?php
 
-namespace App\Controller\Back;
+namespace App\Controller\Back\Download;
 
 use App\Entity\File;
-use App\Repository\FileRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DownloadController extends AbstractController
+class DeleteController extends AbstractController
 {
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    /**
-     * @Route("admin/telechargements", name="download_list")
-     */
-    public function listDownload(FileRepository $downloadList): Response
-    {
-        return $this->render('back/current_week/file/list.html.twig', [
-            'file' => $downloadList->findBy(array(), array('created_at' => 'desc')),
-        ]);
-    }
-
     /**
      * @Route("/admin/telechargement/{id}/supprimer", name="delete_download")
      * @param File $downloadDelete

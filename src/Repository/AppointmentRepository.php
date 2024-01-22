@@ -19,8 +19,6 @@ class AppointmentRepository extends ServiceEntityRepository
         parent::__construct($registry, Appointment::class);
     }
     
-    // ** Appointment **
-    // Archived
     public function setAppointmentForArchived($id)
     {
         $sql = "update App\Entity\Appointment as t set t.archived = t where t.id = :id";
@@ -49,19 +47,27 @@ class AppointmentRepository extends ServiceEntityRepository
         $query = $this->getEntityManager()->createQuery($sql);
         return $query->getResult();
     }
-    
-    public function setChangeAppointmentCurrentWeekToNextWeek($id)
+
+    public function changeAppointmentCurrentWeekToNextWeek($id)
     {
-        $sql = "update App\Entity\Appointment as t set t.nextweek = 1 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
-        return $query->getResult();
+        $qb = $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.nextweek', 1)
+            ->where('t.id = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->execute();
     }
 
     public function setChangeAppointmentNextWeekToCurrentWeek($id)
     {
-        $sql = "update App\Entity\Appointment as t set t.nextweek = 0 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
-        return $query->getResult();
+        $qb = $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.nextweek', 0)
+            ->where('t.id = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->execute();
     }
 
     public function setRemoveAppointment()
