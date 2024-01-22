@@ -1,5 +1,6 @@
 /* Generic Tag */
-body{font-family: 'Kiro', sans-serif;}
+@font-face {font-family: "Kiro";src: url("https://todo.local/assets/fonts/KiroLight.otf") format("opentype");}
+body{font-family: 'Kiro', sans-serif;background: var(--color-black-light);}
 :root{
     --color-white: #ffffff;
     --color-black: #000000;
@@ -21,6 +22,7 @@ body{font-family: 'Kiro', sans-serif;}
 .color-blue-light{color: var(--color-blue-light)}
 .color-blue-dark{color: var(--color-blue-dark)}
 .color-blue-dark-light {color: var(--color-blue-dark-light)}
+/* END Texts */
 
 /* Backgrounds */
 .bg-white{background: var(--color-white)}
@@ -32,14 +34,22 @@ body{font-family: 'Kiro', sans-serif;}
 .bg-blue-light{background: var(--color-blue-light)}
 .bg-blue-dark{background: var(--color-blue-dark)}
 .bg-blue-dark-light {background: var(--color-blue-dark-light)}
+/* END Backgrounds */
+
+/* Buttons */
+.btn-yellow-form{background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
+.btn-yellow {background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
+/* END Buttons */
 
 /* Generic */
-body{background: var(--color-black-light);}
-a:hover{text-decoration: none;color: var(--color-blue-dark);}
+a:hover{text-decoration: none;color: var(--color-blue-dark);transition: 0.25s ease;}
+a{color: var(--blue-dark);}
+
+.text-20{font-size: 20px;}
+/* END Generic */
+
+/* Table */
 .table {text-align: center;}
 table {border-radius: 1em;overflow: hidden;}
-.text-20{font-size: 20px;}
-.table-bordered td,
-.table-bordered th{border: 1px solid #023D5C !important}
-
-.redtest{background: red;}
+.table-bordered td,.table-bordered th{border: 1px solid #023D5C !important}
+/* END Table */

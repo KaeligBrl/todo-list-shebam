@@ -1,9 +1,7 @@
 /* Custom */
-@font-face {font-family: "Kiro";src: url("https://todo.local/assets/fonts/KiroLight.otf") format("opentype");}
+
 h4{color: var(--color-white)}
-td,td a{color: var(--color-black)}
-a{color: var(--blue-dark);}
-a:hover{transition: 0.25s ease;}
+
 hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .notification-success-custom{color: var(--color-blue) !important}
 .text-uppercase{text-transform: uppercase;}
@@ -14,9 +12,6 @@ td a:hover{color: var(--color-white);}
 .bootstrap-table .fixed-table-container .table tbody tr.no-records-found td {color: var(--color-yellow);font-weight: bold;}
 .bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {color: var(--color-yellow);font-weight: bold;}
 
-/* Custom Buttons */
-.btn-yellow-form{font-family: 'Kiro', sans-serif;background: var(--color-yellow);color: var(--color-blue-dark); padding: 5px 30px;border-radius: 20px;}
-.btn-yellow {font-family: 'Kiro', sans-serif;background: var(--color-yellow);color: var(--color-blue-dark);padding: 5px 30px;border-radius: 20px;}
 
 /* Navbar */
 .navbar{height: 92px;padding: 20px 10px;}
@@ -25,7 +20,8 @@ td a:hover{color: var(--color-white);}
 .text-border{font-weight: bold;background: var(--color-yellow);color:var(--color-blue-dark);border-radius: 20px;padding: 8px 25px;margin-right: 20px;}
 .activecurrent{ color:var(--color-white)}
 .active{color: var(--color-yellow);}
-.active-filters {color: var(--color-blue-dark);background: var(--color-yellow);padding: 10px 20px;border-radius: 20px;margin-top: -4px;font-family: 'Kiro', sans-serif;}
+.active-filters {color: var(--color-blue-dark);background: var(--color-yellow);padding: 10px 20px;border-radius: 20px;margin-top: -4px;}
+/* END Navbar */
 
 /* Form */
 .form-front {background: var(--color-blue-dark);width: 100%;max-width: 550px;padding: 70px;border-radius: 15px;margin: 0 auto;}
@@ -45,6 +41,7 @@ td a:hover{color: var(--color-white);}
 .form-front select {background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-white);margin-right: 13px;}
 .form-front input[type="datetime-local"]::-webkit-calendar-picker-indicator {filter: invert(1);}
 .form-success {margin: 0 auto;color: var(--color-yellow);background: var(--color-blue-dark-light);width: 100%;max-width: 550px;border-radius: 20px;padding: 40px;margin-bottom: 20px;}
+/* END Form */
 
 /* Connexion Page */
 .form-signin {width: 100%;max-width: 450px;padding: 70px;margin: 0 auto;border-radius: 15px;}
@@ -53,9 +50,11 @@ td a:hover{color: var(--color-white);}
 .form-signin .form-control:focus {z-index: 2;}
 .form-signin input[type="email"] {margin-bottom: -1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
 .form-signin input[type="password"] {margin-bottom: 10px;border-top-left-radius: 0;border-top-right-radius: 0;}
+/* END Connexion Page */
 
 /* Error Message */
 .message-error{padding: 10px 20px; background: var(--color-blue-dark);color: var(--color-white);border-radius: 5px;}
+/* END Error Message */
 
 /* Popups */
 .overlay {position: fixed;top: -40px;bottom: 0;left: 0;right: 0;background: rgba(0, 0, 0, 0.7);transition: opacity 500ms;visibility: hidden;opacity: 0;padding-bottom: 15px;}
@@ -67,7 +66,7 @@ td a:hover{color: var(--color-white);}
 .popup .users{padding: 20px 90px; border-radius: 20px;}
 .popup input[type="text"],.popup input[type="datetime-local"],.popup select{background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-white)}
 .popup input[type="text"]::placeholder{color: var(--color-white);border-radius: 20px;}
-
+/* END Popups */
 
 /* Mobile Menu */
 .mobile-bottom-nav {margin-top:50px;position: fixed;bottom: 0;left: 0;right: 0;z-index: 1000;will-change: transform;transform: translateZ(0);display: flex;height: 50px;box-shadow: 0 -2px 5px -2px #333;background: var(--color-blue-dark);}
@@ -81,19 +80,20 @@ td a:hover{color: var(--color-white);}
 [type="checkbox"]:not(:checked),[type="checkbox"]:checked {position: relative;cursor: pointer;margin-bottom: 4px;display: inline-block;font-size: 16px;margin-right: 13px;}
 [type="checkbox"]:not(:checked):before,
 [type="checkbox"]:checked:before {content: '';position: absolute;width: 20px;height: 20px;background: var(--color-white);border-radius: 4px;}
-[type="checkbox"]:checked:after {content: '\2714';position: absolute;font-size: 16px;line-height: 1.2;transition: all .2s;top: 4px}
+[type="checkbox"]:checked:after {content: '\2714';position: absolute;font-size: 16px;line-height: 1.2;transition: all .2s;left: 4px}
 [type="checkbox"]:not(:checked):after {opacity: 0;transform: scale(0);}
 [type="checkbox"]:checked:after {opacity: 1;transform: scale(1);}
 @media (min-width: 1200px) {.container,.container-lg,.container-md,.container-sm,.container-xl {max-width: 1240px !important;}}
 @media screen and (min-width: 1366px) and (max-width: 1500px){.popup{top: 14%;width: 70%;}}
 @media screen and (min-width: 1501px) {.popup {width: 40%;}}
+/* END Mobile Menu */
 
 /* Forms */
 .label-form {color: var(--color-yellow) !important;}
 .form-general {width: 100%;max-width: 550px;padding: 70px;margin: 0 auto;border-radius: 20%;}
 .form-general .checkbox {font-weight: 400;}
-.form-general .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 16px;}
+.form-general .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 17px;}
 .form-general .form-control:focus {z-index: 2;}
-.form-general input[type="email"] {font-family: 'Kiro', sans-serif;margin-bottom: -1px;border-radius: 20px;color: #939090;padding-left: 30px;}
-.form-general input[type="password"] {font-family: 'Kiro', sans-serif;margin-bottom: 10px;border-radius: 20px;color: #939090;padding-left: 30px;}
-.form-general input[type="submit"] {font-family: 'Kiro', sans-serif;font-size: 20px;}
+.form-general input[type="email"] {margin-bottom: -1px;border-radius: 20px;color: #939090;padding-left: 30px;}
+.form-general input[type="password"] {margin-bottom: 10px;border-radius: 20px;color: #939090;padding-left: 30px;}
+.form-general input[type="submit"] {font-size: 20px;}

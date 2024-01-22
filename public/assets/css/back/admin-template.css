@@ -1,22 +1,23 @@
 /* General */
-/* Chnagelog */
+/* Change Log */
 .changelog{margin: 0 25px 25px 0;padding: 20px;background: var(--color-blue-dark); border-radius: 10px;width: 70%;}
 .changelog p{clear: both;color: var(--color-white)}
 .changelog a{color: var(--blue-dark-shebam);}
 .changelog a:hover{color: var(--color-yellow-dark)}
 .pchangleog{color: var(--color-yellow) !important;}
 .pointer-event{pointer-events: none;}
+/* END Changelog */
 
 /* Navbar */
 .activecurrent {color: var(--color-yellow-dark);}
 .active {color: var(--color-yellow)}
+/* END Navbar */
 
 /* Text Border */
 .text-border-admin {font-weight: bold;background: var(--color-blue-dark);color: var(--color-yellow);border-radius: 20px;padding: 8px 25px;margin-right: 20px;}
 .text-border-admin-active {font-weight: bold;background: var(--color-yellow);color: var(--color-blue-dark);border-radius: 20px;padding: 8px 25px;margin-right: 20px;}
 
 /* Form */
-
 .form-back {background: var(--color-blue-dark);width: 100%;max-width: 550px;padding: 70px;border-radius: 15px;margin: 0 auto;}
 .form-back .checkbox {font-weight: 400;}
 .form-back .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 16px;}
