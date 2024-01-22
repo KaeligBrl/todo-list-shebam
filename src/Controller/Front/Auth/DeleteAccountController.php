@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Front;
+namespace App\Controller\Front\Auth;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -40,7 +39,6 @@ public function deleteUserAction(Request $request,$userId, EntityManagerInterfac
                 'message' => $translator->trans('USER_DELETED_SUCCESS')
             ));
         }else{
-
             $errors = $errorCollector->getErrors($deleteUserForm);
 
             return new JsonResponse(array(
@@ -50,9 +48,7 @@ public function deleteUserAction(Request $request,$userId, EntityManagerInterfac
         }
 
     }else{
-
         return new JsonResponse('FORBIDEN');
-
     }
 }
 }

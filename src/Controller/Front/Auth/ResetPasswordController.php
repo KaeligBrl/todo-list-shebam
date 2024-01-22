@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front;
+namespace App\Controller\Front\Auth;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
