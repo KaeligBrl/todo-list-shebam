@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front;
+namespace App\Controller\Front\CurrentWeek\P1;
 
 use App\Repository\TaskRepository;
 use App\Repository\AppointmentRepository;
