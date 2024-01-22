@@ -1,20 +1,18 @@
 <?php
 
-namespace App\Controller\Front\Auth;
+namespace App\Controller\Front\Auth\Register;
 
 use App\Entity\User;
 use App\Form\Front\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class RegisterController extends AbstractController
+class IndexController extends AbstractController
 {
-
     private $entityManager;
     public function __construct(EntityManagerInterface $entityManager){
         $this->entityManager = $entityManager;
@@ -54,13 +52,6 @@ class RegisterController extends AbstractController
         ]);
 
         return $this->redirectToRoute('home');
-    }
-    /**
-     * @Route("/inscription/tu-es-bien-inscris", name="register_message_success")
-     */
-    public function registerOk(): Response
-    {
-        return $this->render('front/register/register_message_success.twig');
     }
     
 }
