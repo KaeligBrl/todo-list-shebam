@@ -30,9 +30,9 @@
                         </li>
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with '' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with '' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
                         </li>
                 {% endif %}
             {% endif %}
