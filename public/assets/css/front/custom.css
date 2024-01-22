@@ -81,7 +81,7 @@ td a:hover{color: var(--color-white);}
 [type="checkbox"]:not(:checked),[type="checkbox"]:checked {position: relative;cursor: pointer;margin-bottom: 4px;display: inline-block;font-size: 16px;margin-right: 13px;}
 [type="checkbox"]:not(:checked):before,
 [type="checkbox"]:checked:before {content: '';position: absolute;width: 20px;height: 20px;background: var(--color-white);border-radius: 4px;}
-[type="checkbox"]:checked:after {content: '\2714';position: absolute;font-size: 16px;line-height: 1.2;transition: all .2s;}
+[type="checkbox"]:checked:after {content: '\2714';position: absolute;font-size: 16px;line-height: 1.2;transition: all .2s;top: 4px}
 [type="checkbox"]:not(:checked):after {opacity: 0;transform: scale(0);}
 [type="checkbox"]:checked:after {opacity: 1;transform: scale(1);}
 @media (min-width: 1200px) {.container,.container-lg,.container-md,.container-sm,.container-xl {max-width: 1240px !important;}}
