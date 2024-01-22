@@ -63,11 +63,6 @@ class User implements UserInterface
      */
     private $appointments;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Quote::class, mappedBy="person")
-     */
-    private $quotes;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -227,33 +222,6 @@ class User implements UserInterface
             if ($appointmentt->getUser() === $this) {
                 $appointmentt->setUser(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Quote[]
-     */
-    public function getQuotes(): Collection
-    {
-        return $this->quotes;
-    }
-
-    public function addQuote(Quote $quote): self
-    {
-        if (!$this->quotes->contains($quote)) {
-            $this->quotes[] = $quote;
-            $quote->addPerson($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuote(Quote $quote): self
-    {
-        if ($this->quotes->removeElement($quote)) {
-            $quote->removePerson($this);
         }
 
         return $this;
