@@ -13,25 +13,25 @@
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1</a>
+                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'next_week_p2' %}active-filters{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_task_p2_nw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2</a>
+                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'next_week_appointment' %}active-filters{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'modify_appointment_nw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous</a>
+                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="">Attente retour</a>
+                                        {% if app.request.attributes.get('_route') starts with '' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with '' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
                         </li>
                 {% endif %}
             {% endif %}
