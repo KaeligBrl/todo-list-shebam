@@ -4,7 +4,6 @@ namespace App\Controller\Front\NextWeek;
 
 use App\Entity\Appointment;
 use App\Repository\TaskRepository;
-use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,11 +87,10 @@ class AppointmentController extends AbstractController
      * @Route("/semaine-suivante/rendez-vous/basculer/semaine-actuelle/{id}", name="change_nw_to_nw_appointment")
      * return RedirectResponse
      */
-    public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointmentChange): Response
+    public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
-        $rep = $this->getDoctrine()
-            ->getRepository(Appointment::class)
-            ->setChangeAppointmentNextWeekToCurrentWeek($appointmentChange->getId());
+        $appointmentRepository->setChangeAppointmentNextWeekToCurrentWeek($appointment->getId());
+
 
         return $this->redirectToRoute("next_week_appointment");
     }
@@ -100,7 +98,7 @@ class AppointmentController extends AbstractController
     /**
      * @Route("/reorder", name="reorder")
      */
-    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow)
     {
         $cpt = 0;
         switch ($request->request->get("context")) {
@@ -116,14 +114,6 @@ class AppointmentController extends AbstractController
                 foreach (json_decode($request->request->get("table"), true) as $row) {
                     $appt = $appointmentRow->find($row['id']);
                     $appt->setPosition($cpt);
-                    $cpt++;
-                }
-            break;
-
-            case '3':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $quote = $quoteRow->find($row['id']);
-                    $quote->setPosition($cpt);
                     $cpt++;
                 }
             break;

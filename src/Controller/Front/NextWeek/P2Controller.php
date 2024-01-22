@@ -4,7 +4,6 @@ namespace App\Controller\Front\NextWeek;
 
 use App\Entity\Task;
 use App\Repository\TaskRepository;
-use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,12 +86,10 @@ class P2Controller extends AbstractController
      * @Route("/semaine-suivante/basculer/p2-en-p1/{id}", name="change_task_nw_to_p1")
      * return RedirectResponse
      */
-    public function changeTaskToP1Front(Task $task): Response
+    public function changeTaskToP1Front(Task $task, TaskRepository $taskRepository): Response
     {
 
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskForP1CurrentWeek($task->getId());
+        $taskRepository->setChangeTaskForP1CurrentWeek($task->getId());
 
         return $this->redirectToRoute("next_week_p2");
     }
@@ -101,11 +98,9 @@ class P2Controller extends AbstractController
      * @Route("/semaine-suivante/basculer/p2/semaine-actuelle/{id}", name="change_task_p2_nw_to_p2_cw")
      * return RedirectResponse
      */
-    public function changeTaskP1NextWeekToP1NextWeek(Task $task): Response
+    public function changeTaskP1NextWeekToP1NextWeek(Task $task, TaskRepository $taskRepository): Response
     {
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskP1NextWeekToP1CurrentWeek($task->getId());
+        $taskRepository->setChangeTaskP1NextWeekToP1CurrentWeek($task->getId());
 
         return $this->redirectToRoute("next_week_p2");
     }
@@ -114,11 +109,9 @@ class P2Controller extends AbstractController
      * @Route("/semaine-suivante/basculer/p2/semaine-actuelle/{id}", name="change_task_p2_nw_to_p2_cw")
      * return RedirectResponse
      */
-    public function changeTaskP2CurrentWeekToP2NextWeek(Task $task): Response
+    public function changeTaskP2CurrentWeekToP2NextWeek(Task $task, TaskRepository $taskRepository): Response
     {
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskP2NextWeekToP2CurrentWeek($task->getId());
+        $taskRepository->setChangeTaskP2NextWeekToP2CurrentWeek($task->getId());
 
         return $this->redirectToRoute("next_week_p2");
     }
@@ -139,7 +132,7 @@ class P2Controller extends AbstractController
     /**
      * @Route("/reorder", name="reorder")
      */
-    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow)
     {
         $cpt = 0;
         switch ($request->request->get("context")) {
@@ -155,14 +148,6 @@ class P2Controller extends AbstractController
                 foreach (json_decode($request->request->get("table"), true) as $row) {
                     $appt = $appointmentRow->find($row['id']);
                     $appt->setPosition($cpt);
-                    $cpt++;
-                }
-            break;
-
-            case '3':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $quote = $quoteRow->find($row['id']);
-                    $quote->setPosition($cpt);
                     $cpt++;
                 }
             break;

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controller\Front\CurrentWeek;
+namespace App\Controller\Front\CurrentWeek\P1;
 
 use App\Entity\Task;
 use App\Repository\TaskRepository;
-use App\Repository\QuoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +15,7 @@ use App\Form\Front\Task\ModifyTaskP1CurrentWeekType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class P1Controller extends AbstractController
+class IndexController extends AbstractController
 {
     private $entityManager;
     public function __construct(EntityManagerInterface $entityManager)
@@ -26,7 +25,7 @@ class P1Controller extends AbstractController
     /**
      * @Route("/semaine-actuelle/p1", name="current_week_p1")
      */
-    public function index(TaskRepository $taskList,AppointmentRepository $appointment, QuoteRepository $quote,Request $request): Response
+    public function index(TaskRepository $taskList,AppointmentRepository $appointment, Request $request): Response
     {
     
         $taskAdd = new Task();
@@ -42,33 +41,9 @@ class P1Controller extends AbstractController
 
         return $this->render('front/current_week/task/p1/list.html.twig', [
             'task' => $taskList->findBy([], ['position' => 'ASC']),
-            'quote' => $quote,
             'appointment' => $appointment,
             'form_task_cw_p1_add' => $form_p1->createView(),
             'notification' => $notification,
-        ]);
-    }
-
-    /**
-     * @Route("/semaine-actuelle/p1/modifier/{id}", name="modify_task_p1_cw")
-     */
-    public function modifyTaskP1Cw(Request $request, Task $taskModify): Response
-    {
-        $form = $this->createForm(ModifyTaskP1CurrentWeekType::class, $taskModify);
-        $notification = null;
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $taskModify = $form->getData();
-            $this->entityManager->persist($taskModify);
-            $this->entityManager->flush();
-            $notification = 'La tâche a été mise à jour !';
-            $form = $this->createForm(ModifyTaskP1CurrentWeekType::class, $taskModify);
-        }
-        return $this->render('front/current_week/task/p1/modify.html.twig', [
-            'form_task_p1_cw_modify' => $form->createView(),
-            'notification' => $notification,
-            'task' => $taskModify
         ]);
     }
 
@@ -91,12 +66,9 @@ class P1Controller extends AbstractController
      * @Route("/semaine-actuelle/basculer/tache/p1-en-p2/{id}", name="change_task_cw_p1_to_p2")
      * return RedirectResponse
      */
-    public function changeTaskToP2Front(Task $task): Response
+    public function changeTaskToP2Front(Task $task, TaskRepository $taskRepository): Response
     {
-
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskForP2CurrentWeek($task->getId());
+        $taskRepository->setChangeTaskForP2CurrentWeek($task->getId());
 
         return $this->redirectToRoute("current_week_p1");
     }
@@ -105,11 +77,9 @@ class P1Controller extends AbstractController
      * @Route("/semaine-actuelle/basculer/tache/p1/semaine-suivante/{id}", name="change_task_p1_cw_to_p1_nw")
      * return RedirectResponse
      */
-    public function changeTaskP1CurrentWeekToP1NextWeek(Task $task): Response
+    public function changeTaskP1CurrentWeekToP1NextWeek(Task $task, TaskRepository $taskRepository): Response
     {
-        $rep = $this->getDoctrine()
-            ->getRepository(Task::class)
-            ->setChangeTaskP1CurrentWeekToP1NextWeek($task->getId());
+        $taskRepository->setChangeTaskP1CurrentWeekToP1NextWeek($task->getId());
 
         return $this->redirectToRoute("current_week_p1");
     }
@@ -130,7 +100,7 @@ class P1Controller extends AbstractController
     /**
      * @Route("/reorder", name="reorder")
      */
-    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow, QuoteRepository $quoteRow)
+    public function reorderTaskP1Row(Request $request, TaskRepository $taskRow, AppointmentRepository $appointmentRow)
     {
         $cpt = 0;
         switch ($request->request->get("context")) {
@@ -146,14 +116,6 @@ class P1Controller extends AbstractController
                 foreach (json_decode($request->request->get("table"), true) as $row) {
                     $appt = $appointmentRow->find($row['id']);
                     $appt->setPosition($cpt);
-                    $cpt++;
-                }
-            break;
-
-            case '3':
-                foreach (json_decode($request->request->get("table"), true) as $row) {
-                    $quote = $quoteRow->find($row['id']);
-                    $quote->setPosition($cpt);
                     $cpt++;
                 }
             break;

@@ -70,6 +70,17 @@ class AppointmentRepository extends ServiceEntityRepository
         return $qb->getQuery()->execute();
     }
 
+    public function setChangeAppointmentCurrentWeekToNextWeek($id)
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->update()
+            ->set('t.nextweek', 1)
+            ->where('t.id = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->execute();
+    }
+
     public function setRemoveAppointment()
     {
         $sql = "delete from App\Entity\Appointment as t where t.nextweek = 0";

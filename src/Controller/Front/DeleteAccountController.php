@@ -2,21 +2,22 @@
 
 namespace App\Controller\Front;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class DeleteAccountController extends AbstractController
 {
     /**
      * @Route("/delete/account/{userId}", name="delete_account")
      */
-public function deleteUserAction(Request $request,$userId,
-                                  EntityManagerInterface $em,
-                                 TranslatorInterface $translator,
-                                 FormErrorCollector $errorCollector,
-                                 SessionInterface $session,
-                                 TokenStorageInterface $tokenStorage)
+public function deleteUserAction(Request $request,$userId, EntityManagerInterface $em, TranslatorInterface $translator, FormErrorCollector $errorCollector, SessionInterface $session, TokenStorageInterface $tokenStorage)
 {
     $user = $this->getUser();
     $deleteUserForm = $this->createForm(ConfirmPasswordType::class);

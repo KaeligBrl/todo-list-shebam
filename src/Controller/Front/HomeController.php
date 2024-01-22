@@ -26,9 +26,7 @@ class HomeController extends AbstractController
         if ($this->getUser() instanceof UserInterface === true) {
             return $this->redirectToRoute('current_week_p1');
         }
-        // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('front/home/index.html.twig', [
