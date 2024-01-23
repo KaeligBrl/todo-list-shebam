@@ -13,14 +13,11 @@ class DeleteController extends AbstractController
 
     /**
      * @Route("/semaine-actuelle/p1/supprimer/{id}", name="delete_task_cw_p1")
-     * @param Task $taskDelete
-     * return RedirectResponse
      */
-    public function deleteTask(Task $taskDelete): RedirectResponse
+    public function deleteTask(Task $taskDelete, EntityManagerInterface $entityManager): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($taskDelete);
-        $em->flush();
+        $entityManager->remove($taskDelete);
+        $entityManager->flush();
 
         return $this->redirectToRoute("current_week_p1");
     }

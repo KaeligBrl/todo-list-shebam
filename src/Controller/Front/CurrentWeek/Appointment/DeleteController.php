@@ -18,14 +18,11 @@ class DeleteController extends AbstractController
 
     /**
      * @Route("/semaine-actuelle/rendez-vous/supprimer/{id}", name="delete_cw_appointment")
-     * @param Appointment $appointmentDelete
-     * return RedirectResponse
      */
-    public function deleteAppointment(Appointment $appointmentDelete): RedirectResponse
+    public function deleteAppointment(Appointment $appointmentDelete, EntityManagerInterface $entityManager): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($appointmentDelete);
-        $em->flush();
+        $entityManager->remove($appointmentDelete);
+        $entityManager->flush();
 
         return $this->redirectToRoute("current_week_appointment");
     }

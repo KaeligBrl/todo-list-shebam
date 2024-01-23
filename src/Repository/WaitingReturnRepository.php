@@ -18,4 +18,18 @@ class WaitingReturnRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, WaitingReturn::class);
     }
+
+    public function setChangeWaitingReturnCurrentWeekToWaitingReturnNextWeek($id)
+    {
+        $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeWaitingReturnNextWeekToWaitingReturnCurrentWeek($id)
+    {
+        $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 0 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
 }

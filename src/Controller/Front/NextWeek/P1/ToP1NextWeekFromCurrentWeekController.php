@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Front\NextWeek\P2;
+namespace App\Controller\Front\NextWeek\P1;
 
 use App\Entity\Task;
 use App\Repository\TaskRepository;
@@ -19,7 +19,7 @@ class ToP1NextWeekFromCurrentWeekController extends AbstractController
     {
         $taskRepository->setChangeTaskP1NextWeekToP1CurrentWeek($task->getId());
 
-        return $this->redirectToRoute("next_week_p2");
+        return $this->redirectToRoute("next_week_p1");
     }
 
 }

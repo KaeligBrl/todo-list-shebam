@@ -18,6 +18,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .active-filters {color: var(--color-blue-dark);background: var(--color-yellow);padding: 10px 20px;border-radius: 20px;margin-top: -4px;}
 .active-filters i{color: var(--color-blue-dark);margin-left: 5px}
 .nav-item i{margin-left: 5px}
+.nav-item:hover i{ color: var(--color-yellow-dark)}
 /* END Navbar */
 
 /* Form */

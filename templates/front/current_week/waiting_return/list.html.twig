@@ -68,14 +68,13 @@
                                     {% endfor %}
                                 </td>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                                <td>
-                                    <a class="color-yellow text-bold" href=""><span>P2</span></a>&nbsp;
-                                    
-                                    <a class="color-yellow" href=""><i class="fas fa-redo"></i>&nbsp;</a>
+                                <td>                 
+
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_nw', {"id": waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
                                         
                                     <a class="color-yellow" href=""><i class="fas fa-cog"></i></a>&nbsp;
-                                        
-                                    <a class="color-yellow" href=""><i class="fas fa-trash"></i></a>
+
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('current_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
                                 </td>
                             {% endif %}
                             </tr>

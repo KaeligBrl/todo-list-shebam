@@ -48,3 +48,5 @@ security:
         - { path: ^/semaine-suivante/p2, roles: ROLE_ADMIN }
         - { path: ^/semaine-suivante/devis, roles: ROLE_ADMIN }
         - { path: ^/semaine-suivante/rendez-vous, roles: ROLE_ADMIN }
+        - { path: ^/semaine-actuelle/attente-retour, roles: ROLE_ADMIN }
+        
