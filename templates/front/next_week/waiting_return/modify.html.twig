@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification de l'attente de retour: {{ waitingReturns.customer }} - Semaine Suivante - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+	<div>
+		{% block title_back_page %}Modification de l'attente de retour: {{ waitingReturns.customer }} - Semaine Suivante{% endblock %}
+	</div>
+	{% block content %}
+		<div class="container">
+		<div class="mb-3 text-center"><a class="btn-yellow-form" href="{{ path('next_week_waiting_return') }}">Retour</a></div>
+		<h4 class="color-white text-center mb-5"> Semaine sUIVANTE - Modification de l'attente de retour : {{ waitingReturns.customer}} </h4>
+		{% if notification %}
+			<hr>
+				<div class="form-success text-center text-bold">{{ notification }}<br>
+					<hr>
+						<a href="{{ path('next_week_waiting_return') }}">Retourner sur la liste</a>
+				</div>
+			<hr>
+		{% endif %}
+		{{ form_start(form_waiting_return_nw_modify) }}
+		<div class="form-front">
+			{{ form_row(form_waiting_return_nw_modify.customer) }}
+			{{ form_row(form_waiting_return_nw_modify.object) }}
+			<p class="text-left color-yellow text-bold">Personne(s)</p>
+			<div class="bg-black-light text-left users mb-3">
+				{{ form_row(form_waiting_return_nw_modify.users) }}
+			</div>
+			{{ form_row(form_waiting_return_nw_modify.submit) }}
+		</div>
+		{{ form_end(form_waiting_return_nw_modify) }}
+	{% endblock %}
+	</div>
+{% endblock %}

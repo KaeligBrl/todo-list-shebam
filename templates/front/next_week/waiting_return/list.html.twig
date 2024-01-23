@@ -10,28 +10,19 @@
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
                         </li>
                 {% endif %}
             {% endif %}
@@ -57,7 +48,7 @@
                 </thead>
                 <tbody class="bg-blue-dark">
                     {% for waitingReturn in waitingReturns %}
-                        {% if waitingReturn.nextweek == 0 %}
+                        {% if waitingReturn.nextweek == 1 %}
                             <tr>
                                 <td>{{ waitingReturn.id }}</td>
                                 <td class="color-white text-bold">{{waitingReturn.customer}}</td>
@@ -70,11 +61,11 @@
                             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                 <td>                 
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_nw', {"id": waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id": waitingReturn.id}) }}"><i class="fas fa-undo"></i></a>
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('current_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('current_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('next_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
                                 </td>
                             {% endif %}
                             </tr>
@@ -85,21 +76,21 @@
         <div id="ajouterunretour" class="overlay">
             <div class="popup bg-blue-dark-light">
                 <a class="close" href=""><i class="fas fa-times"></i></a>
-                {{ form_start(form_cw_waiting_return_add) }}
+                {{ form_start(form_nw_waiting_return_add) }}
                 <div class="row">
                     <div class="col">
-                        <div class="input">{{ form_row(form_cw_waiting_return_add.customer) }}</div>
-                        {{ form_row(form_cw_waiting_return_add.object) }}
+                        <div class="input">{{ form_row(form_nw_waiting_return_add.customer) }}</div>
+                        {{ form_row(form_nw_waiting_return_add.object) }}
                         <p class="color-yellow text-bold">Personne(s)</p>
                         <div class="bg-blue-dark text-left users">
-                            {{ form_row(form_cw_waiting_return_add.users) }}
+                            {{ form_row(form_nw_waiting_return_add.users) }}
                         </div>
                         <div class="text-left mt-3 color-yellow">
-                            {{ form_row(form_cw_waiting_return_add.submit) }}
+                            {{ form_row(form_nw_waiting_return_add.submit) }}
                         </div>
                     </div>
                 </div>
-                {{ form_end(form_cw_waiting_return_add) }}
+                {{ form_end(form_nw_waiting_return_add) }}
             </div>
         </div>
         </div>
