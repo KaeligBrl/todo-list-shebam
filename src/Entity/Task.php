@@ -75,6 +75,11 @@ class Task
      */
     private $done;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $color;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -237,6 +242,20 @@ class Task
     public function setDone(?bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getColor(): ?bool
+    {
+        return $this->color;
+    }
+
+    public function setColor(bool $isChecked): self
+    {
+        // Convertissez le booléen en entier (1 pour true, 0 pour false)
+        $colorValue = $isChecked ? 1 : 0;
+        $this->color = $colorValue;
 
         return $this;
     }

@@ -25,6 +25,21 @@ class WaitingReturn
     private $object;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_object1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_object2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $sub_object3;
+
+    /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
      */
     private $users;
@@ -81,6 +96,42 @@ class WaitingReturn
     public function setObject(string $object): self
     {
         $this->object = $object;
+
+        return $this;
+    }
+
+    public function getSubObject1(): ?string
+    {
+        return $this->sub_object1;
+    }
+
+    public function setSubObject1(?string $sub_object1): self
+    {
+        $this->sub_object1 = $sub_object1;
+
+        return $this;
+    }
+
+    public function getSubObject2(): ?string
+    {
+        return $this->sub_object2;
+    }
+
+    public function setSubObject2(?string $sub_object2): self
+    {
+        $this->sub_object2 = $sub_object2;
+
+        return $this;
+    }
+
+    public function getSubObject3(): ?string
+    {
+        return $this->sub_object3;
+    }
+
+    public function setSubObject3(?string $sub_object3): self
+    {
+        $this->sub_object3 = $sub_object3;
 
         return $this;
     }

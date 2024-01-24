@@ -10,13 +10,13 @@
             {% if app.user %}
                 {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="
@@ -53,14 +53,18 @@
                                 <td>{{ waitingReturn.id }}</td>
                                 <td class="color-white text-bold">{{waitingReturn.customer}}</td>
                                 <td class="color-white text-bold">
-                                    {% if waitingReturn.object is empty %}{% else %}{{waitingReturn.object}}<br>{% endif %}                                    </td>
+                                        {% if waitingReturn.object is empty %}{% else %}{{waitingReturn.object}}<br>{% endif %}
+                                        {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject1}}<br>{% endif %}
+                                        {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject2}}<br>{% endif %}
+                                        {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject3}}{% endif %}
+                                </td>
                                 <td class="color-white text-bold">{% for waitingReturn in waitingReturn.users %}
                                         {{ waitingReturn.firstname }} <br>
                                     {% endfor %}
                                 </td>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                 <td>                 
-
+                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_nw', {"id": waitingReturn.id }) }}">P1</a>
                                     <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id": waitingReturn.id}) }}"><i class="fas fa-undo"></i></a>
 
                                     <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
