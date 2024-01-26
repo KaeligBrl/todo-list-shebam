@@ -31,7 +31,7 @@ class IndexController extends AbstractController
         if ($form_p2->isSubmitted() && $form_p2->isValid()) {
             $this->entityManager->persist($taskp2Add);
             $this->entityManager->flush();
-            return $this->redirectToRoute("home");
+            return $this->redirectToRoute("current_week_p2");
         }
 
         return $this->render('front/current_week/task/p2/list.html.twig', [

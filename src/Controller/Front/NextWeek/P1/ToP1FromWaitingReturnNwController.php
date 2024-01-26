@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ToP1FromWaitingReturnNwController extends AbstractController
 {
-
     /**
      * @Route("/semaine-suivante/passer-p1-vers-attente-retour/{id}", name="to_p1_from_waiting_return_nw")
      */
