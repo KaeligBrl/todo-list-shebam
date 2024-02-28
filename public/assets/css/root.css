@@ -1,6 +1,6 @@
 /* Generic Tag */
 @font-face {font-family: "Kiro";src: url("https://todo.local/assets/fonts/KiroLight.otf") format("opentype");}
-body{font-family: 'Kiro', sans-serif;background: var(--color-black-light);font-size: 20px;}
+body{font-family: 'Kiro', sans-serif;background: var(--color-black-light);font-size: 17px;}
 a:hover{text-decoration: none;color: var(--color-blue-dark);transition: 0.25s ease;}
 a{color: var(--blue-dark);}
 
@@ -54,5 +54,5 @@ a{color: var(--blue-dark);}
 /* Table */
 .table {text-align: center;}
 table {border-radius: 1em;overflow: hidden;}
-.table-bordered td,.table-bordered th{border: 1px solid #023D5C !important;font-size: 20px;}
+.table-bordered td,.table-bordered th{border: 1px solid #023D5C !important;font-size: 19px;}
 /* END Table */
