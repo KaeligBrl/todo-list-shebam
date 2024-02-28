@@ -65,7 +65,9 @@
                             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                 <td>                 
                                     <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_nw', {"id": waitingReturn.id }) }}">P1</a>
-
+                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_nw', {"id": waitingReturn.id }) }}">P2</a>
+                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id":
+                                        waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
                                     <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
 
                                     <a class="color-yellow" class="color-yellow" href="{{ path('next_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>

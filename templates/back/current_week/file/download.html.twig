@@ -97,7 +97,7 @@
 
     <div class="mb-5"></div>
 
-    <div style="background-color: #00263A; color: #FFD600; font-weight: bold;" class="text-center p-3">Devis</div>
+    <div style="background-color: #00263A; color: #FFD600; font-weight: bold;" class="text-center p-3">Attente retour</div>
     <table class="table" data-toggle="table">
         <thead style="background-color: #00263A; color: #FFD600">
             <tr>
@@ -107,14 +107,19 @@
             </tr>
         </thead>
         <tbody>
-            {% for quote in quote %}
-                {% if quote.nextweek == 0 %}
+            {% for waitingReturn in waitingReturn %}
+                {% if waitingReturn.nextweek == 0 %}
                     <tr style="background: #023D5C">
-                        <td style="color: #ffffff">{{ quote.subject }}</td>
-                        <td style="color: #ffffff">{{ quote.object }}</td>
+                        <td style="color: #ffffff">{{waitingReturn.customer}}</td>
                         <td style="color: #ffffff">
-                        {% for quote in quote.person %}
-                            {{ quote.firstname }} <br>
+                            {% if waitingReturn.object is empty %}{% else %}{{waitingReturn.object}}<br>{% endif %}
+                            {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject1}}<br>{% endif %} 
+                            {% if waitingReturn.subobject2 is empty %}{% else %}{{waitingReturn.subobject2}}<br>{% endif %}
+                            {% if waitingReturn.subobject3 is empty %}{% else %}{{waitingReturn.subobject3}}<br>{% endif %}
+                        </td>
+                        <td style="color: #ffffff">
+                        {% for waitingReturn in waitingReturn.users %}
+                            {{ waitingReturn.firstname }} <br>
                         {% endfor %}
                         </td>
                     </tr>

@@ -27,6 +27,7 @@ class WaitingReturnRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
     public function setChangeWaitingReturnNextWeekToWaitingReturnCurrentWeek($id)
     {
         $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 0 where t.id = :id";
@@ -98,6 +99,30 @@ class WaitingReturnRepository extends ServiceEntityRepository
         $task->setCustomer($waitingReturn->getCustomer());
         $task->setNextweek(true);
         $task->setP1(true);
+
+        $this->_em->remove($waitingReturn);
+        $this->_em->persist($task);
+        $this->_em->flush();
+
+        return $task;
+    }
+
+    public function moveWaitingReturnToP2Nw(WaitingReturn $waitingReturn)
+    {
+
+        $task = new Task();
+        $task->setObject($waitingReturn->getObject());
+        $task->setSubObject1($waitingReturn->getSubObject1());
+        $task->setSubObject2($waitingReturn->getSubObject2());
+        $task->setSubObject3($waitingReturn->getSubObject3());
+
+        foreach ($waitingReturn->getUsers() as $user) {
+            $task->addUser($user);
+        }
+
+        $task->setCustomer($waitingReturn->getCustomer());
+        $task->setNextweek(true);
+        $task->setP2(true);
 
         $this->_em->remove($waitingReturn);
         $this->_em->persist($task);
