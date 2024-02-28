@@ -66,6 +66,8 @@
                                 </td>
                             {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                 <td>
+                                    <a class="color-yellow" href="{{ path('to_p2_from_waiting_return_cw', {"id": task.id }) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
+
                                     <a class="color-yellow text-bold" href="{{ path('change_task_cw_to_p1', {"id": task.id}) }}"><span>P1</span></a>&nbsp;
                                     
                                     <a class="color-yellow" href="{{ path('change_task_p2_cw_to_p2_nw', {"id": task.id}) }}"><i class="fas fa-redo"></i>&nbsp;</a>

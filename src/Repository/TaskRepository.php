@@ -147,7 +147,7 @@ class TaskRepository extends ServiceEntityRepository
         return $waitingReturn;
     }
 
-    public function moveP1ToWaitingReturnNw(Task $task)
+    public function moveTaskToWaitingReturnNw(Task $task)
     {
         // Créez une nouvelle instance de WaitingReturn
         $waitingReturn = new WaitingReturn();
@@ -173,4 +173,5 @@ class TaskRepository extends ServiceEntityRepository
 
         return $waitingReturn;
     }
+
 }
