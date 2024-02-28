@@ -58,6 +58,30 @@ class WaitingReturnRepository extends ServiceEntityRepository
         return $task;
     }
 
+    public function moveWaitingReturnToP2Cw(WaitingReturn $waitingReturn)
+    {
+
+        $task = new Task();
+        $task->setObject($waitingReturn->getObject());
+        $task->setSubObject1($waitingReturn->getSubObject1());
+        $task->setSubObject2($waitingReturn->getSubObject2());
+        $task->setSubObject3($waitingReturn->getSubObject3());
+
+        foreach ($waitingReturn->getUsers() as $user) {
+            $task->addUser($user);
+        }
+
+        $task->setCustomer($waitingReturn->getCustomer());
+        $task->setNextweek(false);
+        $task->setP2(true);
+
+        $this->_em->remove($waitingReturn);
+        $this->_em->persist($task);
+        $this->_em->flush();
+
+        return $task;
+    }
+
     public function moveWaitingReturnToP1Nw(WaitingReturn $waitingReturn)
     {
 
