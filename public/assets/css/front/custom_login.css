@@ -1,5 +1,4 @@
 
-@font-face {font-family: "Kiro";src: url("/fonts/Kiro-Bold.otf") format("truetype");}
 /* Connexion Page */
 .form-login {width: 100%;max-width: 550px;padding: 70px;margin: 0 auto;border-radius: 20%;}
 .form-login .checkbox {font-weight: 400;}
