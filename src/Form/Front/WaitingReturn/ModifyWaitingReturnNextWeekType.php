@@ -36,7 +36,7 @@ class ModifyWaitingReturnNextWeekType extends AbstractType
                 ]
             ])
             ->add('sub_object1',  TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous objet 1',
@@ -44,7 +44,7 @@ class ModifyWaitingReturnNextWeekType extends AbstractType
                 ]
             ])
             ->add('sub_object2',  TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous objet 2',
@@ -52,7 +52,7 @@ class ModifyWaitingReturnNextWeekType extends AbstractType
                 ]
             ])
             ->add('sub_object3',  TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Sous objet 3',
