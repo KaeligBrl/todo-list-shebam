@@ -54,6 +54,11 @@ class WaitingReturn
      */
     private $nextweek;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $position;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -156,6 +161,18 @@ class WaitingReturn
     public function setNextweek(?bool $nextweek): self
     {
         $this->nextweek = $nextweek;
+
+        return $this;
+    }
+
+    public function getPosition(): ?int
+    {
+        return $this->position;
+    }
+
+    public function setPosition(int $position): self
+    {
+        $this->position = $position;
 
         return $this;
     }

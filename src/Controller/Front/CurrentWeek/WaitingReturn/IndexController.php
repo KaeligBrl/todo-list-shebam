@@ -36,7 +36,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('front/current_week/waiting_return/list.html.twig', [
-            'waitingReturns' => $waitingReturnList->findBy([], ['object' => 'ASC']),
+            'waitingReturns' => $waitingReturnList->findBy([], ['position' => 'ASC']),
             'form_cw_waiting_return_add' => $form_waiting_return->createView(),
             'notification' => $notification,
         ]);

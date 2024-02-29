@@ -43,7 +43,7 @@
                     <a class="color-yellow text-20 text-bold" href="#ajouterunretour"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un retour</a>
                 </div>
             {% endif %}
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" {% endif %}>
+            <table id="tableOrderWaitingReturn" class="table mb-5 table-bordered" data-toggle="table"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
@@ -110,3 +110,22 @@
         </div>
 	</div>
 {%  endblock %}
+{% block javascripts %}
+
+{{ parent() }}
+<script>
+    $(() => {
+        $("#tableOrderWaitingReturn").on("reorder-row.bs.table", (e, table, row, old) => {
+            $.ajax({
+                url: "{{ path('reorder-waiting-return-current-week')}}",
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 1
+                },
+                dataType: "JSON"
+            })
+        })
+    })
+</script>
+{% endblock %}

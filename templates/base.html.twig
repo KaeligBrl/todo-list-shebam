@@ -63,6 +63,7 @@
                                             {% if app.request.attributes.get('_route') starts with 'modify_quote_cw' %}active{% endif %}
                                             {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active{% endif %}
                                             {% if app.request.attributes.get('_route') starts with 'current_week_modify_waiting_return' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'current_week_modify_waiting_return' %}active{% endif %}
                                             navbar-text text-uppercase" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
                             </li>
                             <li class="nav-item"> 
@@ -76,6 +77,7 @@
                                             {% if app.request.attributes.get('_route') starts with 'modify_nw_appointment' %}active{% endif %}
                                             {% if app.request.attributes.get('_route') starts with 'modify_quote_nw' %}active{% endif %}
                                             {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'next_week_modify_waiting_return' %}active{% endif %}
                                             navbar-text color-blue-dark text-uppercase" href="{{ path('next_week_p1') }}">Semaine suivante</a>
                             </li>
                             <li>

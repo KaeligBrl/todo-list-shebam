@@ -35,6 +35,30 @@ class ModifyWaitingReturnNextWeekType extends AbstractType
                     'class' => ' form-control'
                 ]
             ])
+            ->add('sub_object1',  TextType::class, [
+                'required' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Sous objet 1',
+                    'class' => ' form-control'
+                ]
+            ])
+            ->add('sub_object2',  TextType::class, [
+                'required' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Sous objet 2',
+                    'class' => ' form-control'
+                ]
+            ])
+            ->add('sub_object3',  TextType::class, [
+                'required' => true,
+                'label' => false,
+                'attr' => [
+                    'placeholder' => 'Sous objet 3',
+                    'class' => ' form-control'
+                ]
+            ])
             ->add('users', EntityType::class, array(
                 'required' => true,
                 'label' => false,
