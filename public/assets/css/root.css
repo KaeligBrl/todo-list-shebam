@@ -1,5 +1,5 @@
 /* Generic Tag */
-@font-face {font-family: "Kiro";src: url("https://todo.local/assets/fonts/KiroLight.otf") format("opentype");}
+@font-face {font-family: "Kiro";src: url("onts/KiroLight.otf") format("opentype");}
 body{font-family: 'Kiro', sans-serif;background: var(--color-black-light);font-size: 17px;}
 a:hover{text-decoration: none;color: var(--color-blue-dark);transition: 0.25s ease;}
 a{color: var(--blue-dark);}

@@ -179,4 +179,11 @@ class WaitingReturnRepository extends ServiceEntityRepository
         return $task;
     }
 
+    public function setChangeWaitingReturnToCurrentWeek()
+    {
+        $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 0";
+        $query = $this->getEntityManager()->createQuery($sql);
+        return $query->getResult();
+    }
+
 }
