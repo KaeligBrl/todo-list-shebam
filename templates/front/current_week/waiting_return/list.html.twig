@@ -23,15 +23,15 @@
                         </li>
                         <li class="nav-item"> 
                             <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
                                         {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
                                         navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="
+                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
+                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
                         </li>
                 {% endif %}
             {% endif %}

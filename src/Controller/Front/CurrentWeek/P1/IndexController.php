@@ -24,7 +24,6 @@ class IndexController extends AbstractController
      */
     public function index(TaskRepository $taskList,AppointmentRepository $appointment, Request $request): Response
     {
-    
         $taskAdd = new Task();
         $form_p1 = $this->createForm(AddTaskP1CurrentWeekType::class, $taskAdd);
         $notification = null;

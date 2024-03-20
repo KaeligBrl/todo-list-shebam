@@ -16,13 +16,13 @@
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
-                        </li>
-                        <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active-filters{% endif %}
                                         navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
                         </li>
                 {% endif %}
             {% endif %}
@@ -67,7 +67,7 @@
                                     <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_nw', {"id": waitingReturn.id }) }}">P1</a>
                                     <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_nw', {"id": waitingReturn.id }) }}">P2</a>
                                     <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id":
-                                        waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
+                                        waitingReturn.id}) }}"><i class="fas fa-undo"></i></a>
                                     <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
 
                                     <a class="color-yellow" class="color-yellow" href="{{ path('next_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
