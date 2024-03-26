@@ -36,6 +36,14 @@ class AddWaitingReturnNextWeekType extends AbstractType
                     'class' => ' form-control'
                 ]
             ])
+            ->add('nextweek',  CheckboxType::class, [
+                'required' => false,
+                'label' => 'Priorité 2',
+                'label_attr' => ['class' => 'label-form'],
+                'attr' => [
+                    'checked' => 'checked',
+                ]
+            ])
             ->add('users', EntityType::class, array(
                 'required' => true,
                 'label' => false,
@@ -48,6 +56,7 @@ class AddWaitingReturnNextWeekType extends AbstractType
                         ->orderBy('u.firstname', 'ASC');
                 }
             ))
+
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => ['class' => 'btn-yellow-form text-bold text-20'],
