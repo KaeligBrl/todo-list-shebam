@@ -38,7 +38,7 @@ class AddWaitingReturnNextWeekType extends AbstractType
             ])
             ->add('nextweek',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'Priorité 2',
+                'label' => 'Semaine suivante',
                 'label_attr' => ['class' => 'label-form'],
                 'attr' => [
                     'checked' => 'checked',
