@@ -23,7 +23,7 @@ class ToNextWeekController extends AbstractController
      */
     public function changeTaskP1CurrentWeekToP1NextWeek(Task $task, TaskRepository $taskRepository): Response
     {
-        $taskRepository->setChangeTaskP1CurrentWeekToP1NextWeek($task->getId());
+        $taskRepository->setChangeTaskP2CurrentWeekToP2NextWeek($task->getId());
 
         return $this->redirectToRoute("current_week_p2");
     }
