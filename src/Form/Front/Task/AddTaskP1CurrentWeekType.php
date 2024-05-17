@@ -6,9 +6,11 @@ use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityRepository;
+use App\Form\Front\Conditions\SelectedUsers;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -64,6 +66,10 @@ class AddTaskP1CurrentWeekType extends AbstractType
             'required' => true,
             'label' => false,
             'class' => User::class,
+            'constraints' => [
+                new NotBlank(),
+                new SelectedUsers(),
+            ],
             'expanded' => true,
             'multiple' => true,
             'label_attr' => ['class' => 'label-form'],

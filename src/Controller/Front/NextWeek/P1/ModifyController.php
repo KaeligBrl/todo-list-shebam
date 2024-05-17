@@ -28,11 +28,13 @@ class ModifyController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $taskModify = $form->getData();
             $this->entityManager->persist($taskModify);
             $this->entityManager->flush();
             $notification = 'La tâche a été mise à jour !';
             $form = $this->createForm(ModifyTaskP1NextWeekType::class, $taskModify);
+
         }
         return $this->render('front/next_week/task/p1/modify.html.twig', [
             'form_task_p1_nw_modify' => $form->createView(),

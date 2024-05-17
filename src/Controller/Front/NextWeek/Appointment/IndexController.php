@@ -27,11 +27,11 @@ class IndexController extends AbstractController
         $formappointment = $this->createForm(AddAppointmentNextWeekType::class, $appointmentAdd);
         $notification = null;
         $formappointment->handleRequest($request);
+
         if ($formappointment->isSubmitted() && $formappointment->isValid()) {
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             return $this->redirectToRoute("next_week_appointment");
-            
         }
 
         return $this->render('front/next_week/appointment/list.html.twig', [

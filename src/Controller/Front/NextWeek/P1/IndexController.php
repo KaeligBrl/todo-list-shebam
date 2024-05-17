@@ -29,6 +29,7 @@ class IndexController extends AbstractController
         $form_p1 = $this->createForm(AddTaskP1NextWeekType::class, $taskAdd);
         $notification = null;
         $form_p1->handleRequest($request);
+
         if ($form_p1->isSubmitted() && $form_p1->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();

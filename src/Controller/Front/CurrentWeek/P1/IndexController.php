@@ -22,12 +22,13 @@ class IndexController extends AbstractController
     /**
      * @Route("/semaine-actuelle/p1", name="current_week_p1")
      */
-    public function index(TaskRepository $taskList,AppointmentRepository $appointment, Request $request): Response
+    public function index(TaskRepository $taskList, AppointmentRepository $appointment, Request $request): Response
     {
         $taskAdd = new Task();
         $form_p1 = $this->createForm(AddTaskP1CurrentWeekType::class, $taskAdd);
         $notification = null;
         $form_p1->handleRequest($request);
+
         if ($form_p1->isSubmitted() && $form_p1->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
@@ -41,5 +42,6 @@ class IndexController extends AbstractController
             'notification' => $notification,
         ]);
     }
+
 
 }

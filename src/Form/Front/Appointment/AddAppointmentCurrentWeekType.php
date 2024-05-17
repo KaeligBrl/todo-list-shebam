@@ -6,8 +6,10 @@ use App\Entity\User;
 use App\Entity\Appointment;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
+use App\Form\Front\Conditions\SelectedUsers;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -46,6 +48,10 @@ class AddAppointmentCurrentWeekType extends AbstractType
             'required' => true,
             'label' => false,
             'class' => User::class,
+            'constraints' => [
+                new NotBlank(),
+                new SelectedUsers(),
+            ],
             'multiple' => true,
             'expanded' => true,
             'label_attr' => ['class' => 'label-form'],

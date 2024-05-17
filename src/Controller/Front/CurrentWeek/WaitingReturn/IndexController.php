@@ -29,6 +29,7 @@ class IndexController extends AbstractController
         $form_waiting_return = $this->createForm(AddWaitingReturnCurrentWeekType::class, $waitingReturnAdd);
         $notification = null;
         $form_waiting_return->handleRequest($request);
+        
         if ($form_waiting_return->isSubmitted() && $form_waiting_return->isValid()) {
             $this->entityManager->persist($waitingReturnAdd);
             $this->entityManager->flush();

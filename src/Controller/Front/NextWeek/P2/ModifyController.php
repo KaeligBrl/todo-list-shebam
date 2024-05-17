@@ -37,6 +37,7 @@ class ModifyController extends AbstractController
             $notification = 'La tâche a été mise à jour !';
             $form = $this->createForm(ModifyTaskP2NextWeekType::class, $taskModify);
         }
+        
         return $this->render('front/next_week/task/p2/modify.html.twig', [
             'form_task_p2_cw_modify' => $form->createView(),
             'notification' => $notification,

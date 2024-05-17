@@ -52,7 +52,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .popup h2 {margin-top: 0;color: #333;text-align: center;}
 .popup .close {position: absolute;top: 10px;right: 30px;transition: all 200ms;font-size: 30px;text-decoration: none;color: var(--color-yellow);}
 .popup .close:hover {color: var(--color-white);transition: 0.5s ease-in-out;}
-.popup .users{padding: 20px 90px; border-radius: 20px;}
+.popup .users{padding: 10px 10px; border-radius: 20px;}
 .popup input[type="text"],.popup input[type="datetime-local"],.popup select{background: var(--color-black-light);border-radius: 20px;border: none;color: var(--color-white)}
 .popup input[type="text"]::placeholder{color: var(--color-white);border-radius: 20px;}
 /* END Popups */
