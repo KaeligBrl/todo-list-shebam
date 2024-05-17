@@ -51,7 +51,7 @@
                 <tbody class="bg-blue-dark">
                     {% for task in task %}
                         {% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0 %}
-                            <tr class="popKeke {% if task.done == 1 %}bg-yellow-dark {% endif %}"  data-taskdone="{{task.id}}">
+                            <tr class="{% if task.done == 1 %}bg-yellow-dark {% endif %}"  data-taskdone="{{task.id}}">
                                 <td>{{ task.id }}</td>
                                 <td class="color-white text-bold">{{task.customer}}</td>
                                 <td class="color-white text-bold">
@@ -125,55 +125,60 @@
 		</div>
 	</div>
 {%  endblock %}
-{% block javascripts %}
 
-	{{ parent() }}
-	<script>
-		$(()=>{
-			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 1
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 1
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderAppointment").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 2
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderQuote").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 3
-					},
-					dataType: "JSON"
-				})
-			})
-		})
-	</script>
+{% block javascripts %}
+{{ parent() }}
+<script>
+      
+
+    $(() => {
+        $("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
+            $.ajax({
+                url: "{{ path('reorder') }}",
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 1
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
+            $.ajax({
+                url: "{{ path('reorder') }}",
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 1
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $("#tableOrderAppointment").on("reorder-row.bs.table", (e, table, row, old) => {
+            $.ajax({
+                url: "{{ path('reorder') }}",
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 2
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $("#tableOrderQuote").on("reorder-row.bs.table", (e, table, row, old) => {
+            $.ajax({
+                url: "{{ path('reorder') }}",
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 3
+                },
+                dataType: "JSON"
+            });
+        });
+    });
+</script>
 {% endblock %}
