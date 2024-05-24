@@ -13,6 +13,8 @@
             <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
         </div>
         {% endif %}
+        {% set today = date() %}
+        <p class="color-white">Prochaine réunion pour les idées le : {{ last_friday_of_month(today) }}</p>
     </div>
 
     <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" 
