@@ -45,6 +45,7 @@ class AddIdeaBamType extends AbstractType
             }
         ))
         ->add('date', DateTimeType::class, [
+            'required' => false,
             'label' => 'Date de l\'évènement :',
             'label_attr' => ['class' => 'label-form'],
             'days' => range(1, 31),
