@@ -176,7 +176,7 @@ class TaskRepository extends ServiceEntityRepository
 
     public function findAllOrderByUsers()
     {
-        return $this->createQueryBuilder('c')
+        return $this->createQueryBuilder('t')
             ->leftJoin('t.users', 'u')
             ->addSelect('u')
             ->orderBy('u.firstname', 'ASC')
