@@ -24,6 +24,9 @@ class DateExtension extends AbstractExtension
             $lastDayDateTime->modify('-1 day');
         }
 
-        return $lastDayDateTime->format('d/m/Y');
+        // Set the time to 11:00
+        $lastDayDateTime->setTime(11, 0);
+
+        return $lastDayDateTime->format('d/m/Y \à H\hi');
     }
 }
