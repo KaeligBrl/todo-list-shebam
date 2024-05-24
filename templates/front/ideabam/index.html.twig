@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Idébam - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block content %}
+<div class="mb-5">
+    <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}"
+        alt="Logo de connexion To Do List">
+
+    <div class="container text-center padding-mobile">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+        <div class="mb-4">
+            <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp;
+                Ajouter une idée</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if
+        is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-use-row-attr-func="true"
+        data-reorderable-rows="true" {% endif %}>
+        <thead class="bg-blue-dark-light table-borderless" style="border-right-style: none;">
+            <tr style="border-right-style: none;">
+                <th class="color-yellow text-bold" data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and
+                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Idée</th>
+                <th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and
+                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Personne</th>
+                <th class="color-yellow text-bold" data-field="date" {% if is_granted('IS_AUTHENTICATED_FULLY') and
+                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Date</th>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                <th class="color-yellow" scope="col">Action</th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody class="bg-blue-dark">
+            {% for idea in ideas %}
+            <tr>
+                <td class="color-white text-bold">{{ idea.subject }}</td>
+                <td class="color-white text-bold">
+                    {% for person in idea.person %}
+                        {{ person.firstname }} <br>
+                    {% endfor %}
+                </td>
+                <td class="color-white text-bold">
+                    {% if idea.date is empty %}
+                        <span>A définir</span>
+                    {% else %}
+                    {{ idea.date|date("d-m-Y") }} à {{idea.date|date('H:i')}}
+                    {% endif %}
+                </td>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                <td>
+                    <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+                    <a class="color-yellow" href=""
+                        onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i
+                            class="fas fa-trash"></i></a>
+                </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- POPUP -->
+
+    <div id="ajouteruneidebam" class="overlay">
+        <div class="popup bg-blue-dark-light">
+            <a class="close" href=""><i class="fas fa-times"></i></a>
+            {{ form_start(form_idea_add) }}
+            <div class="row">
+                <div class="col">
+                    {{ form_row(form_idea_add.subject) }}
+                    {{ form_row(form_idea_add.date) }}
+                </div>
+                <div class="col">
+                    <p class="color-yellow text-bold">Personne(s)</p>
+                    <div class="bg-blue-dark text-left users">
+                        {{ form_row(form_idea_add.person) }}
+                    </div>
+                    <div class="text-left mt-3 color-yellow">
+                        {{ form_row(form_idea_add.submit) }}
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form_idea_add) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

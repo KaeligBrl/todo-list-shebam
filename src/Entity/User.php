@@ -63,6 +63,16 @@ class User implements UserInterface
      */
     private $appointments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=IdeaBam::class, mappedBy="person")
+     */
+    private $ideaBams;
+
+    public function __construct()
+    {
+        $this->ideaBams = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -39,7 +39,7 @@
             </nav>
         <nav class="navbar navbar-expand-lg bg-blue-dark">
             <a href="{{ path('current_week_p1') }}">
-		        <img class="d-block mx-auto" src="{{ asset('/assets/images/logo-todolist.png') }}" alt="Logo de connexion To Do List">
+		        <img class="d-block mx-auto" style="width: 142px" src="{{ asset('/assets/images/logo-todo.png') }}" alt="Logo de connexion To Do List">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:#e6e6ff"></i></span>
@@ -75,6 +75,11 @@
                                             {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active{% endif %}
                                             {% if app.request.attributes.get('_route') starts with 'next_week_modify_waiting_return' %}active{% endif %}
                                             navbar-text color-blue-dark text-uppercase" href="{{ path('next_week_p1') }}">Semaine suivante</a>
+                            </li>
+                            <li>
+                                <a class="{% if app.request.attributes.get('_route') starts with 'modify_ideabam' %}active{% endif %}{% if app.request.attributes.get('_route') starts with 'ideabam' %}active{% endif %}
+                                navbar-text color-blue-dark text-uppercase"
+                                    title="Aller sur la vie d'agence" href="{{ path('ideabam') }}">Idébam</a>
                             </li>
                             <li>
                                 <a class="{% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
