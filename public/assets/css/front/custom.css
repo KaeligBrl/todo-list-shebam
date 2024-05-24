@@ -40,8 +40,8 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .form-signin input[type="email"] {margin-bottom: -1px;border-bottom-right-radius: 0;border-bottom-left-radius: 0;}
 .form-signin input[type="password"] {margin-bottom: 10px;border-top-left-radius: 0;border-top-right-radius: 0;}
 /* END Connexion Page */
-
-/* Error Message */
+.container-custom{width: 900px !important;position: absolute; top: 50%;left: 50%; transform: translate(-50%, -50%);}
+/* Error M.container-custom{width: 500px !important}essage */
 .message-error{padding: 10px 20px; background: var(--color-blue-dark);color: var(--color-white);border-radius: 5px;}
 /* END Error Message */
 

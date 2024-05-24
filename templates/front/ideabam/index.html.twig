@@ -3,6 +3,7 @@
 {% block title %}Idébam - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block content %}
+<div class="container-custom">
 <div class="mb-5">
     <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}" alt="Logo de connexion To Do List">
 
@@ -78,5 +79,5 @@
             {{ form_end(form_idea_add) }}
         </div>
     </div>
-</div>
+</div></div>
 {% endblock %}
