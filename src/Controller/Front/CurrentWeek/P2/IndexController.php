@@ -35,7 +35,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('front/current_week/task/p2/list.html.twig', [
-            'task' => $taskList->findBy([], ['position' => 'ASC']),
+            'task' => $taskList->findAllOrderByUsers(),
             'form_task_cw_p2_add' => $form_p2->createView(),
             'notification' => $notification,
         ]);
