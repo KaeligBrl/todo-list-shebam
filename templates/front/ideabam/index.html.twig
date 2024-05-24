@@ -4,31 +4,23 @@
 
 {% block content %}
 <div class="mb-5">
-    <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}"
-        alt="Logo de connexion To Do List">
+    <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}" alt="Logo de connexion To Do List">
 
     <div class="container text-center padding-mobile">
         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
         <div class="mb-4">
-            <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp;
-                Ajouter une idée</a>
+            <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
         </div>
         {% endif %}
     </div>
 
-    <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if
-        is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-use-row-attr-func="true"
-        data-reorderable-rows="true" {% endif %}>
+    <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" 
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-use-row-attr-func="true" {% endif %}>
         <thead class="bg-blue-dark-light table-borderless" style="border-right-style: none;">
             <tr style="border-right-style: none;">
-                <th class="color-yellow text-bold" data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and
-                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Idée</th>
-                <th class="color-yellow text-bold" data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and
-                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Objet</th>
-                <th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and
-                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Personne</th>
-                <th class="color-yellow text-bold" data-field="date" {% if is_granted('IS_AUTHENTICATED_FULLY') and
-                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Date</th>
+                <th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Idée</th>
+                <th class="color-yellow text-bold" data-field="object" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Objet</th>
+                <th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Personne</th>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
                 <th class="color-yellow" scope="col">Action</th>
                 {% endif %}
@@ -38,7 +30,14 @@
             {% for idea in ideas %}
             <tr>
                 <td class="color-white text-bold">{{ idea.subject }}</td>
-                <td class="color-white text-bold">{{ idea.object }}</td>
+                <td class="color-white text-bold">
+                    {% if idea.object is empty %}
+                        <span>Non renseigné</span>
+                    {% else %}
+                        {{ idea.object }}
+                    {% endif %}
+                        
+                </td>
                 <td class="color-white text-bold">
                     {% for person in idea.person %}
                         {{ person.firstname }} <br>
@@ -47,9 +46,7 @@
                 {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
                 <td>
                     <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-                    <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}"
-                        onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i
-                            class="fas fa-trash"></i></a>
+                    <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
                 </td>
                 {% endif %}
             </tr>
