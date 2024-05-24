@@ -174,4 +174,14 @@ class TaskRepository extends ServiceEntityRepository
         return $waitingReturn;
     }
 
+    public function findAllOrderByUsers()
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.users', 'p')
+            ->addSelect('p')
+            ->orderBy('p.firstname', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
