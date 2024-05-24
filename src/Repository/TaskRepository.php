@@ -180,8 +180,8 @@ class TaskRepository extends ServiceEntityRepository
             ->leftJoin('t.users', 'u')
             ->addSelect('u')
             ->orderBy('u.firstname', 'ASC')
-            ->addOrderBy('t.position', 'ASC')
             ->addOrderBy('t.done', 'ASC')
+            ->addOrderBy('t.position', 'ASC')
             ->getQuery()
             ->getResult();
     }
