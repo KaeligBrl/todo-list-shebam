@@ -35,7 +35,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('front/ideabam/index.html.twig', [
-            'ideas' => $ideaBamList->findBy([], ['subject' => 'ASC']),
+            'ideas' => $ideaBamList->findBy([], ['person' => 'ASC']),
             'form_idea_add' => $form->createView(),
         ]);
     }

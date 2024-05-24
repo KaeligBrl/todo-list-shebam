@@ -31,14 +31,7 @@
             {% for idea in ideas %}
             <tr>
                 <td class="color-white text-bold">{{ idea.subject }}</td>
-                <td class="color-white text-bold">
-                    {% if idea.object is empty %}
-                        <span>Non renseigné</span>
-                    {% else %}
-                        {{ idea.object }}
-                    {% endif %}
-                        
-                </td>
+                <td class="color-white text-bold">{{ idea.object }}</td>
                 <td class="color-white text-bold">
                     {% for person in idea.person %}
                         {{ person.firstname }} <br>
