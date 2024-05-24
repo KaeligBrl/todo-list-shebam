@@ -23,6 +23,8 @@
             <tr style="border-right-style: none;">
                 <th class="color-yellow text-bold" data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and
                     is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Idée</th>
+                <th class="color-yellow text-bold" data-field="customer" {% if is_granted('IS_AUTHENTICATED_FULLY') and
+                    is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Objet</th>
                 <th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and
                     is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Personne</th>
                 <th class="color-yellow text-bold" data-field="date" {% if is_granted('IS_AUTHENTICATED_FULLY') and
@@ -36,22 +38,16 @@
             {% for idea in ideas %}
             <tr>
                 <td class="color-white text-bold">{{ idea.subject }}</td>
+                <td class="color-white text-bold">{{ idea.object }}</td>
                 <td class="color-white text-bold">
                     {% for person in idea.person %}
                         {{ person.firstname }} <br>
                     {% endfor %}
                 </td>
-                <td class="color-white text-bold">
-                    {% if idea.date is empty %}
-                        <span>A définir</span>
-                    {% else %}
-                    {{ idea.date|date("d-m-Y") }} à {{idea.date|date('H:i')}}
-                    {% endif %}
-                </td>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
                 <td>
                     <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-                    <a class="color-yellow" href=""
+                    <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}"
                         onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i
                             class="fas fa-trash"></i></a>
                 </td>
@@ -70,7 +66,7 @@
             <div class="row">
                 <div class="col">
                     {{ form_row(form_idea_add.subject) }}
-                    {{ form_row(form_idea_add.date) }}
+                    {{ form_row(form_idea_add.object) }}
                 </div>
                 <div class="col">
                     <p class="color-yellow text-bold">Personne(s)</p>

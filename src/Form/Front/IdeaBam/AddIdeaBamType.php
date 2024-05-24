@@ -24,6 +24,14 @@ class AddIdeaBamType extends AbstractType
             'required' => true,
             'label' => false,
             'attr' => [
+                'placeholder' => 'Sujet',
+                'class' => ' form-control'
+            ]
+        ])
+        ->add('object',  TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
                 'placeholder' => 'Objet',
                 'class' => ' form-control'
             ]
@@ -44,14 +52,6 @@ class AddIdeaBamType extends AbstractType
                     ->orderBy('u.firstname', 'ASC');
             }
         ))
-        ->add('date', DateTimeType::class, [
-            'required' => false,
-            'label' => 'Date de l\'évènement :',
-            'label_attr' => ['class' => 'label-form'],
-            'days' => range(1, 31),
-            'hours' => range(7, 18),
-            'widget' => 'single_text',
-        ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
             'attr' => ['class' => 'btn-yellow-form text-bold text-20'],

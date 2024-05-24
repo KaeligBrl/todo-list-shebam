@@ -26,9 +26,9 @@ class IdeaBam
     private $subject;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $date;
+    private $object;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="ideaBams")
@@ -58,14 +58,14 @@ class IdeaBam
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getObject(): ?string
     {
-        return $this->date;
+        return $this->object;
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setObject(string $object): self
     {
-        $this->date = $date;
+        $this->object = $object;
 
         return $this;
     }
