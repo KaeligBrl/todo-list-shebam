@@ -19,4 +19,17 @@ class IdeaBamRepository extends ServiceEntityRepository
         parent::__construct($registry, IdeaBam::class);
     }
 
+    /**
+     * @return IdeaBam[]
+     */
+    public function findAllOrderByPerson()
+    {
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.person', 'p')
+            ->addSelect('p')
+            ->orderBy('p.firstname', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }
