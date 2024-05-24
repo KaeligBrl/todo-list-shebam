@@ -26,7 +26,7 @@ class IdeaBam
     private $subject;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $date;
 
