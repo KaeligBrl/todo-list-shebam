@@ -4,7 +4,6 @@
 {% block content %}
 {% block title %}Idébam - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 <div class="mb-5">
-    <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}" alt="Logo de connexion To Do List">
 
     <div class="container text-center padding-mobile">
         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
