@@ -21,7 +21,7 @@ class IndexController extends AbstractController
     /**
      * @Route("/idebam", name="ideabam")
      */
-    public function index(IdeaBamRepository $ideaBamList, Request $request): Response
+    public function index(IdeaBamRepository $ideaBamListRepository, Request $request): Response
     {
 
         $ideaBamAdd = new IdeaBam();
@@ -35,7 +35,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('front/ideabam/index.html.twig', [
-            'ideas' => $ideaBamList->findAllOrderByPerson(),
+            'ideas' => $ideaBamListRepository->findIdeabamByWaitingReturnTrue(),
             'form_idea_add' => $form->createView(),
         ]);
     }

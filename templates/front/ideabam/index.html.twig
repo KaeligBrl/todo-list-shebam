@@ -5,7 +5,21 @@
 
 <div class="mb-5">
     <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}" alt="Logo de connexion To Do List">
-
+        <nav class="navbar navbar-expand-lg">
+            <ul class="navbar-nav mx-auto " id="navbarqaqa">
+                {% if app.user %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="
+                                                    {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
+                                                    {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active-filters{% endif %}
+                                                    navbar-text text-uppercase text-margin"
+                            href="{{ path('ideabam_waiting_return') }}">Attente retour <i class="color-white fas fa-tasks"></i></a>
+                    </li>
+                    {% endif %}
+                {% endif %}
+            </ul>
+        </nav>
     <div class="container text-center padding-mobile">
         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
         <div class="mb-4">
@@ -30,21 +44,24 @@
         </thead>
         <tbody class="bg-blue-dark">
             {% for idea in ideas %}
-            <tr>
-                <td class="color-white text-bold">{{ idea.subject }}</td>
-                <td class="color-white text-bold">{{ idea.object }}</td>
-                <td class="color-white text-bold">
-                    {% for person in idea.person %}
-                        {{ person.firstname }} <br>
-                    {% endfor %}
-                </td>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
-                <td>
-                    <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-                    <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
-                </td>
-                {% endif %}
-            </tr>
+               
+                    <tr>
+                        <td class="color-white text-bold">{{ idea.subject }}</td>
+                        <td class="color-white text-bold">{{ idea.object }}</td>
+                        <td class="color-white text-bold">
+                            {% for person in idea.person %}
+                                {{ person.firstname }} <br>
+                            {% endfor %}
+                        </td>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <a class="color-yellow" class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-redo"></i></a>&nbsp;
+                            <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+                            <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
+                        </td>
+                        {% endif %}
+                    </tr>
+               
             {% endfor %}
         </tbody>
     </table>
@@ -66,6 +83,7 @@
                         {{ form_row(form_idea_add.person) }}
                     </div>
                     <div class="text-left mt-3 color-yellow">
+                        {{ form_row(form_idea_add.waitingReturn) }}
                         {{ form_row(form_idea_add.submit) }}
                     </div>
                 </div>

@@ -32,6 +32,7 @@ parent() }}{% endblock %}{% endblock %}
         <div class="bg-black-light text-left users mb-3">
             {{ form_row(form_idea_modify.person) }}
         </div>
+        {{ form_row(form_idea_modify.waitingReturn) }}
         {{ form_row(form_idea_modify.submit) }}
     </div>
     {{ form_end(form_idea_modify) }}

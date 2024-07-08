@@ -35,6 +35,10 @@ class IdeaBam
      */
     private $person;
 
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $waitingReturn;
 
     public function __construct()
     {
@@ -90,6 +94,18 @@ class IdeaBam
     public function removePerson(User $person): self
     {
         $this->person->removeElement($person);
+
+        return $this;
+    }
+
+    public function getWaitingReturn()
+    {
+        return $this->waitingReturn;
+    }
+
+    public function setWaitingReturn(?bool $waitingReturn): self
+    {
+        $this->waitingReturn = $waitingReturn;
 
         return $this;
     }

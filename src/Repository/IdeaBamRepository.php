@@ -19,17 +19,40 @@ class IdeaBamRepository extends ServiceEntityRepository
         parent::__construct($registry, IdeaBam::class);
     }
 
-    /**
-     * @return IdeaBam[]
-     */
-    public function findAllOrderByPerson()
+    public function findIdeabamByWaitingReturnTrue()
+    {
+        return $this->createQueryBuilder('i')
+        ->leftJoin('i.person', 'p')
+        ->addSelect('p')
+        ->where('i.waitingReturn IS NULL')
+        ->orderBy('p.firstname', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function findIdeabamByWaitingReturnFalse()
     {
         return $this->createQueryBuilder('i')
             ->leftJoin('i.person', 'p')
             ->addSelect('p')
+            ->where('i.waitingReturn IS NOT NULL')
             ->orderBy('p.firstname', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function setChangeIdeabamIdeabamWaitingReturn($id)
+    {
+        $sql = "update App\Entity\IdeaBam as t set t.waitingReturn = 1 where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
+    }
+
+    public function setChangeIdeabamWaitingReturnToIdeabam($id)
+    {
+        $sql = "update App\Entity\IdeaBam as t set t.waitingReturn = NULL where t.id = :id";
+        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        return $query->getResult();
     }
 
 }
