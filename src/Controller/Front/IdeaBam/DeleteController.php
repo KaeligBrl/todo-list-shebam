@@ -18,7 +18,7 @@ class DeleteController extends AbstractController
         $entityManager->remove($taskIdeamBam);
         $entityManager->flush();
 
-        return $this->redirectToRoute("idebam");
+        return $this->redirectToRoute("ideabam");
     }
 
 

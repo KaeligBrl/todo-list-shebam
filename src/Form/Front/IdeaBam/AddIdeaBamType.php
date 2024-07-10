@@ -58,7 +58,7 @@ class AddIdeaBamType extends AbstractType
                 'label_attr' => ['class' => 'label-form'],
                 'choices' => [
                     'Oui' => true,
-                    'Non' => false,
+                    'Non' => null,
                 ],
                 'expanded' => true,
                 'multiple' => false,
