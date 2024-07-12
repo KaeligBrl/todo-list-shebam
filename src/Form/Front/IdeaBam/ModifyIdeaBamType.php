@@ -53,17 +53,17 @@ class ModifyIdeaBamType extends AbstractType
                     ->orderBy('u.firstname', 'ASC');
             }
         ))
-            ->add('waitingReturn', ChoiceType::class, [
-                'label' => 'En attente de retour ?',
-                'label_attr' => ['class' => 'label-form'],
-                'choices' => [
-                    'Oui' => true,
-                    'Non' => false,
-                ],
-                'expanded' => true,
-                'multiple' => false,
-                'attr' => ['class' => 'form-check-inline'],
-            ])
+        ->add('waitingReturn', ChoiceType::class, [
+            'label' => 'En attente de retour ?',
+            'label_attr' => ['class' => 'label-form'],
+            'choices' => [
+                'Oui' => true,
+                'Non' => null,
+            ],
+            'expanded' => true,
+            'multiple' => false,
+            'attr' => ['class' => 'form-check-inline'],
+        ])
         ->add('submit', SubmitType::class, [
             'label' => 'Enregistrer',
             'attr' => ['class' => 'btn-yellow-form text-bold text-20'],

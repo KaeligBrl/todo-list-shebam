@@ -55,7 +55,7 @@
                         </td>
                         {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
                         <td>
-                            <a class="color-yellow" class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-redo"></i></a>&nbsp;
+                            <a class="color-yellow" class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
                             <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
                             <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
                         </td>
