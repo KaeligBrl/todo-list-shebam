@@ -43,8 +43,8 @@
                     <a class="color-yellow" class="color-yellow" href="{{ path('ideabam_waiting_return_to_ideabam', { 'id': idea.id }) }}"><i class="fas fa-undo"></i></a>&nbsp;
                     <a class="color-yellow" href="{{ path('modify_ideabam', { 'id': idea.id }) }}"><i
                             class="fas fa-cog"></i></a>&nbsp;
-                    <a class="color-yellow" href="{{ path('delete_ideabam', { 'id': idea.id }) }}"
-                        onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i
+                    <a class="color-yellow" href="{{ path('delete_waiting_return_ideabam', { 'id': idea.id }) }}"
+                        onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée en attente de retour')"><i
                             class="fas fa-trash"></i></a>
                 </td>
                 {% endif %}
