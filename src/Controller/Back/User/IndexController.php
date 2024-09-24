@@ -29,20 +29,6 @@ class IndexController extends AbstractController
         return $this->render('back/user/list.html.twig', [
             'user' => $userAdmin->findBy(array(), array('firstname' => 'ASC')),
         ]);
-    }  
-
-    /**
-    * @Route("/admin/utilisateurs/{id}/supprimer", name="user_delete")
-    * @param User $user
-    * return RedirectResponse
-    */
-    public function deleteUser(User $user): RedirectResponse
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
-
-        return $this->redirectToRoute("user_list");
     }
     
 }

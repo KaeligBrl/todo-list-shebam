@@ -48,6 +48,7 @@ a{color: var(--blue-dark);}
 
 
 .text-20{font-size: 20px !important}
+.text-center{text-align: center;}
 /* END Generic */
 
 /* Table */

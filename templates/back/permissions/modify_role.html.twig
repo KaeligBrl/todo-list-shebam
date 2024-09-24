@@ -1,0 +1,27 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Modifier le rôle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+    {% block content %}
+        <div class="d-flex justify-content-center color-white">
+            <h1>Modifier le rôle : {{ roleName }}</h1>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+        
+        {% for message in app.flashes('warning') %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+
+        {{ form_start(form) }}
+        <div class="form-back">
+            {{ form_row(form.role) }} {# Champ caché pour le rôle #}
+            {{ form_row(form.label) }} {# Champ pour la description #}
+            {{ form_row(form.submit) }}
+        </div>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}

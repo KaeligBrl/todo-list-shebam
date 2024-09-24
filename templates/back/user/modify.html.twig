@@ -3,13 +3,13 @@
 {% block title %}Modifier utilisateur - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
 
 {% block body %}
-	<div>
-{% block title_back_page %}Modifier l'utilisateur {{user.firstname}} {{user.lastname}}{% endblock %}
-	</div>
 	{% block content %}
-
+	<div>
+		{% block title_back_page %}Modifier l'utilisateur {{user.firstname}} {{user.lastname}}{% endblock %}
+	</div>
 		{{ form_start(form_user_modify_admin) }}
 		<div class="form-back">
+			
 			{% if notification %}
 					<div class="form-success text-center text-bold">
 						{{ notification }}<br>

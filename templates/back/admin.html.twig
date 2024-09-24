@@ -102,6 +102,12 @@
                                             {% if app.request.attributes.get('_route') starts with 'user_modify' %}text-border-admin-active{% endif %}                                             
                                             navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('user_list') }}">Équipe</a>
                             </li>
+                            <li class="nav-item"> 
+                                <a class="
+                                            {% if app.request.attributes.get('_route') starts with 'permissions_role_list' %}text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'permission_role_add' %}text-border-admin-active{% endif %}                                             
+                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('permissions_role_list') }}">Permissions</a>
+                            </li>
                             <li>
                                 <a class="
                                             {% if app.request.attributes.get('_route') starts with 'download_list' %}text-border-admin-active{% endif %}

@@ -1,0 +1,29 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Liste des roles - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
+{% block body %}
+    {% block content %}
+    
+        <div class="d-flex justify-content-center color-white">
+            <h1>Ajouter un rôle</h1>
+        </div>
+        
+
+        
+        {{ form_start(form) }}
+        <div class="form-back">
+                        {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">{{ message }}</div>
+                        {% endfor %}
+                        
+                        {% for message in app.flashes('warning') %}
+                        <div class="alert alert-warning">{{ message }}</div>
+                        {% endfor %}
+            {{ form_row(form.role) }}
+            {{ form_row(form.label) }}
+            {{ form_row(form.submit) }}
+        </div>
+        {{ form_end(form) }}
+    {% endblock %}
+{% endblock %}
