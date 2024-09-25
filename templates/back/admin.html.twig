@@ -73,6 +73,9 @@
                                         {% if app.request.attributes.get('_route') starts with 'user_add' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'user_modify' %}active{% endif %}
                                         {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'role_list' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'role_add' %}active{% endif %}
+                                        {% if app.request.attributes.get('_route') starts with 'role_modify' %}active{% endif %}
                                         navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
                         </li>
                     {% endif %}
@@ -104,9 +107,9 @@
                             </li>
                             <li class="nav-item"> 
                                 <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'permissions_role_list' %}text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'permission_role_add' %}text-border-admin-active{% endif %}                                             
-                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('permissions_role_list') }}">Permissions</a>
+                                            {% if app.request.attributes.get('_route') starts with 'role_list' %}text-border-admin-active{% endif %}
+                                            {% if app.request.attributes.get('_route') starts with 'role_add' %}text-border-admin-active{% endif %}                                             
+                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('role_list') }}">Role</a>
                             </li>
                             <li>
                                 <a class="

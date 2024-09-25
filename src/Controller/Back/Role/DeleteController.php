@@ -1,7 +1,6 @@
 <?php
-// src/Controller/Back/Permissions/RoleController.php
 
-namespace App\Controller\Back\Permissions;
+namespace App\Controller\Back\Role;
 
 use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Permission\AddRoleType;
@@ -10,10 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class DeleteRoleController extends AbstractController
+class DeleteController extends AbstractController
 {
     /**
-     * @Route("/admin/permissions/role/supprimer/{roleName}", name="permission_role_delete")
+     * @Route("/admin/role/supprimer/{roleName}", name="role_delete")
      */
     public function deleteRole(string $roleName): Response
     {
@@ -25,7 +24,7 @@ class DeleteRoleController extends AbstractController
         // Vérifier si le rôle existe
         if (!isset($roles['roles'][$roleName])) {
             $this->addFlash('warning', 'Le rôle n\'existe pas.');
-            return $this->redirectToRoute('permissions_role_list'); // Redirigez vers la liste des rôles
+            return $this->redirectToRoute('role_list'); // Redirigez vers la liste des rôles
         }
 
         // Supprimer le rôle
@@ -37,7 +36,7 @@ class DeleteRoleController extends AbstractController
         // Ajouter un message de succès
         $this->addFlash('success', 'Rôle supprimé avec succès.');
 
-        return $this->redirectToRoute('permissions_role_list'); // Redirigez vers la liste des rôles
+        return $this->redirectToRoute('role_list'); // Redirigez vers la liste des rôles
     }
 
 }

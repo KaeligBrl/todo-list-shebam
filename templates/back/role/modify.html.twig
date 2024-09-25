@@ -8,18 +8,23 @@
             <h1>Modifier le rôle : {{ roleName }}</h1>
         </div>
 
+        {{ form_start(form) }}
+        <div class="form-back">
+
         {% for message in app.flashes('success') %}
-            <div class="alert alert-success">{{ message }}</div>
+        <div class="alert alert-success">{{ message }}</div>
         {% endfor %}
         
         {% for message in app.flashes('warning') %}
-            <div class="alert alert-warning">{{ message }}</div>
+        <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
-
-        {{ form_start(form) }}
-        <div class="form-back">
-            {{ form_row(form.role) }} {# Champ caché pour le rôle #}
-            {{ form_row(form.label) }} {# Champ pour la description #}
+            {{ form_row(form.role) }}
+            {{ form_row(form.label) }}
+            <p class="form-role-title">Tâche P1</p>
+            {{ form_row(form.show_p2_button) }} 
+            {{ form_row(form.show_task_p1_cw_to_p1_nw_button) }}
+            {{ form_row(form.show_task_p1_modify_button) }} 
+            {{ form_row(form.show_task_p1_delete_button) }}
             {{ form_row(form.submit) }}
         </div>
         {{ form_end(form) }}

@@ -35,3 +35,5 @@
 /* Bootstrap table line row */
 .bootstrap-table .fixed-table-pagination>.pagination-detail .pagination-info {color: var(--color-yellow);font-weight: bold;}
 a:hover{color: var(--color-white)}
+
+.form-role-title{font-size: 23px;color: var(--color-white);text-underline-offset: 8px;text-decoration: underline; text-decoration-color: var(--color-yellow-dark);}

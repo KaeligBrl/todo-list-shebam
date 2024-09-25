@@ -42,3 +42,17 @@ services:
             - '@twig' # Permet de dire à l'argument qu'il doit passer twig dansEvent Listener
         tags:
             - { name: kernel.event_listener, event: kernel.request }
+    App\Service\RoleService:
+        arguments:
+            $security: '@security.helper'
+
+    App\Twig\RoleExtension:
+        arguments:
+            $roleService: '@App\Service\RoleService'
+        tags:
+            - { name: twig.extension }
+    App\Twig\GlobalVariables:
+        arguments:
+            $roleService: '@App\Service\RoleService'
+        tags:
+            - { name: twig.extension }

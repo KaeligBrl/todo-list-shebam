@@ -1,7 +1,7 @@
 <?php
-// src/Controller/Back/Permissions/RoleController.php
+// src/Controller/Back/Role/RController.php
 
-namespace App\Controller\Back\Permissions;
+namespace App\Controller\Back\Role;
 
 use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Permission\AddRoleType;
@@ -10,10 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AddRoleController extends AbstractController
+class AddController extends AbstractController
 {
     /**
-     * @Route("/admin/permissions/role/ajouter", name="permission_role_add")
+     * @Route("/admin/permissions/role/ajouter", name="role_add")
      */
     public function addRole(Request $request): Response
     {
@@ -28,7 +28,7 @@ class AddRoleController extends AbstractController
             // Valider le format du rôle (il doit commencer par 'ROLE_')
             if (strpos($newRole, 'ROLE_') !== 0) {
                 $this->addFlash('warning', 'Le rôle doit commencer par "ROLE_".');
-                return $this->redirectToRoute('permission_role_add');
+                return $this->redirectToRoute('role_add');
             }
 
             // Chemin vers le fichier roles.yaml
@@ -39,7 +39,10 @@ class AddRoleController extends AbstractController
 
             // Si le rôle n'existe pas déjà, on l'ajoute
             if (!array_key_exists($newRole, $rolesConfig['roles'])) {
-                $rolesConfig['roles'][$newRole] = $roleLabel;
+                // Modifier la structure pour correspondre à { label: nomdulabel }
+                $rolesConfig['roles'][$newRole] = [
+                    'label' => $roleLabel,
+                ];
 
                 // Sauvegarder les nouveaux rôles dans roles.yaml
                 file_put_contents($rolesFilePath, Yaml::dump($rolesConfig, 2));
@@ -49,10 +52,10 @@ class AddRoleController extends AbstractController
                 $this->addFlash('warning', 'Ce rôle existe déjà.');
             }
 
-            return $this->redirectToRoute('permission_role_add');
+            return $this->redirectToRoute('role_add');
         }
 
-        return $this->render('back/permissions/add_role.html.twig', [
+        return $this->render('back/permissions/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }

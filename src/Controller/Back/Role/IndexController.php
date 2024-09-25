@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Back\Permissions;
+namespace App\Controller\Back\Role;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class RoleController extends AbstractController
+class IndexController extends AbstractController
 {
     private ParameterBagInterface $parameterBag;
 
@@ -18,12 +18,12 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @Route("/admin/permissions/role/", name="permissions_role_list")
+     * @Route("/admin/role/", name="role_list")
      */
     public function index(): Response
     {
         $roles = $this->getRolesFromConfig();
-        return $this->render('back/permissions/role.html.twig', [
+        return $this->render('back/role/list.html.twig', [
             'roles' => $roles,
         ]);
     }
@@ -36,6 +36,22 @@ class RoleController extends AbstractController
         // Lire le fichier et parser le contenu YAML
         $config = Yaml::parseFile($configFilePath);
 
-        return $config['roles'] ?? []; // Retourne les rôles
+        // Traiter les rôles pour s'assurer qu'ils ont une structure uniforme
+        $roles = [];
+        foreach ($config['roles'] ?? [] as $role => $properties) {
+            if (is_array($properties)) {
+                // Si les propriétés sont un tableau, ajoutez-les
+                $roles[$role] = $properties;
+            } else {
+                // Si ce n'est pas un tableau, créez un tableau avec des valeurs par défaut
+                $roles[$role] = [
+                    'label' => $properties,
+                    'show_p2_button' => false, // Valeur par défaut
+                ];
+            }
+        }
+
+        return $roles; // Retourne les rôles
     }
+
 }

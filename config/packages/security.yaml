@@ -42,7 +42,6 @@ security:
         - { path: ^/admin/utilisateurs, roles: ROLE_ADMIN }
         - { path: ^/admin/telechargement, roles: ROLE_ADMIN }
         - { path: ^/admin/changements, roles: ROLE_ADMIN }
-        - { path: ^/semaine-actuelle/p1, roles: ROLE_ADMIN }
         - { path: ^/semaine-actuelle/p2, roles: ROLE_ADMIN }
         - { path: ^/semaine-actuelle/devis, roles: ROLE_ADMIN }
         - { path: ^/semaine-actuelle/rendez-vous, roles: ROLE_ADMIN }
