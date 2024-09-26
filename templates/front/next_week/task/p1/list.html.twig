@@ -38,8 +38,26 @@
                         <th class="color-yellow text-bold" data-field="customer" scope="col">Client</th>
                         <th class="color-yellow text-bold" data-field="subject"  scope="col">Sujet</th>
                         <th  class="color-yellow text-bold"data-field="person" scope="col">Équipe</th>
-                            <th class="color-yellow" scope="col">Action</th>
-                            <th class="color-yellow" scope="col">Fait</th>
+                        {% if userRole is not null and roles[userRole] is defined %}
+                            {% set showActions =
+                            roles[userRole].show_waiting_return_in_p1_nw is defined and roles[userRole].show_waiting_return_in_p1_nw or
+                            roles[userRole].show_task_p1_nw_to_p1_cw_button is defined and roles[userRole].show_task_p1_nw_to_p1_cw_button or
+                            roles[userRole].show_task_p1_nw_modify_button is defined and roles[userRole].show_task_p1_nw_modify_button or
+                            roles[userRole].show_task_p1_nw_to_p1_nw_button is defined and roles[userRole].show_task_p1_nw_to_p1_nw_button or
+                            roles[userRole].show_task_p1_nw_delete_button is defined and roles[userRole].show_task_p1_nw_delete_button or
+                            roles[userRole].show_p2_button_in_nw is defined and roles[userRole].show_p2_button_in_nw
+                            %}
+                            {% if showActions %}
+                                <th class="color-yellow" scope="col">Action</th>
+                            {% endif %}
+                        {% endif %}
+
+                            {% set showDoneButtonNw = roles[userRole].show_button_done_in_nw is defined and roles[userRole].show_button_done_in_nw
+                            %}
+                        
+                            {% if showDoneButtonNw %}
+                                <th class="color-yellow" scope="col">Fait</th>
+                            {% endif %}
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
@@ -58,19 +76,52 @@
                                         {{ task.firstname }} <br>
                                     {% endfor %}
                                 </td>
-                                <td>
-                                    <a class="color-yellow" href="{{ path('to_p1_from_waiting_return_nw', {"id": task.id }) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
-                                    <a class="color-yellow text-bold" href="{{ path('change_task_nw_p1_to_p2', {"id": task.id}) }}"><span>P2</span></a>&nbsp;
-                                    
-                                    <a class="color-yellow" href="{{ path('change_task_p1_nw_to_p1_cw', {"id": task.id}) }}"><i class="fas fa-undo"></i>&nbsp;</a>
-                                        
-                                    <a class="color-yellow" href="{{ path('modify_task_p1_nw', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-                                        
-                                    <a class="color-yellow" href="{{ path('delete_task_nw_p1', {"id": task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
-                                </td>
-                                <td class="form-switch">											
-                                    <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
-                                </td>
+                                {% if userRole is not null and roles[userRole] is defined %}
+                                    {% set showActions =
+                                    roles[userRole].show_waiting_return_in_p1_nw is defined and roles[userRole].show_waiting_return_in_p1_nw or
+                                    roles[userRole].show_task_p1_nw_to_p1_cw_button is defined and roles[userRole].show_task_p1_nw_to_p1_cw_button or
+                                    roles[userRole].show_task_p1_nw_modify_button is defined and roles[userRole].show_task_p1_nw_modify_button or
+                                    roles[userRole].show_task_p1_nw_to_p1_nw_button is defined and roles[userRole].show_task_p1_nw_to_p1_nw_button or
+                                    roles[userRole].show_task_p1_nw_delete_button is defined and roles[userRole].show_task_p1_nw_delete_button or
+                                    roles[userRole].show_p2_button_in_nw is defined and roles[userRole].show_p2_button_in_nw
+                                    %}
+                                    {% if showActions %}
+                                        <td>
+                                            {% if roles[userRole].show_waiting_return_in_p1_nw is defined and roles[userRole].show_waiting_return_in_p1_nw %}
+                                            <a class="color-yellow" href="{{ path('to_p1_from_waiting_return_nw', {'id': task.id }) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
+                                            {% endif %}
+
+                                            {% if roles[userRole].show_p2_button_in_nw is defined and roles[userRole].show_p2_button_in_nw %}
+                                            <a class="color-yellow text-bold" href="{{ path('change_task_nw_p1_to_p2', {'id': task.id}) }}"><span>P2</span></a>&nbsp;
+                                            {% endif %}
+
+                                            {% if roles[userRole].show_task_p1_nw_to_p1_cw_button is defined and roles[userRole].show_task_p1_nw_to_p1_cw_button %}
+                                            <a class="color-yellow" href="{{ path('change_task_p1_nw_to_p1_cw', {'id': task.id}) }}"><i class="fas fa-undo"></i>&nbsp;</a>
+                                            {% endif %}
+                                            {% if roles[userRole].show_task_p1_nw_modify_button is defined and roles[userRole].show_task_p1_nw_modify_button %}                                        
+                                            <a class="color-yellow" href="{{ path('modify_task_p1_nw', {'id': task.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+                                            {% endif %}
+                                                
+                                            {% if roles[userRole].show_task_p1_nw_delete_button is defined and roles[userRole].show_task_p1_nw_delete_button %}
+                                            <a class="color-yellow" href="{{ path('delete_task_nw_p1', {'id': task.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
+                                										                                
+                                {% set showDoneButtonNw = roles[userRole].show_button_done_in_nw is defined and roles[userRole].show_button_done_in_nw %}
+
+                                {% if showDoneButtonNw %}
+                                    <td class="form-switch">
+                                        {% if roles[userRole].show_button_done_in_nw is defined and roles[userRole].show_button_done_in_nw %}
+                                        <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : '' }} data-taskdone="{{task.id}}">
+                                        {% endif %}
+                                    </td>
+                                {% endif %}
+                                
+                                </tr>
+                                
+
            
                             </tr>
                         {% endif %}

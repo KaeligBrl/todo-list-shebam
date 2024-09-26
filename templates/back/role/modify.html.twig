@@ -24,13 +24,21 @@
                 <div class="row">
                     <div class="col">
                         <p class="form-role-title">Tâche P1</p>
-                        {{ form_row(form.show_p2_button) }} 
+                        {{ form_row(form.show_p2_button_in_cw) }} 
                         {{ form_row(form.show_task_p1_cw_to_p1_nw_button) }}
                         {{ form_row(form.show_task_p1_modify_button) }} 
+                        {{ form_row(form.show_waiting_return_in_p1_cw)}}
                         {{ form_row(form.show_task_p1_delete_button) }}
+                        {{ form_row(form.show_button_done_in_cw) }}
                     </div>
                     <div class="col">
                         <p class="form-role-title">Tâche P2</p>
+                        {{ form_row(form.show_p2_button_in_nw) }}
+                        {{ form_row(form.show_task_p1_nw_to_p1_cw_button) }}
+                        {{ form_row(form.show_task_p1_nw_modify_button)}}
+                        {{ form_row(form.show_waiting_return_in_p1_nw)}}
+                        {{ form_row(form.show_task_p1_nw_delete_button) }}
+                        {{ form_row(form.show_button_done_in_nw) }}
                         {{ form_row(form.show_switch_to_cw) }}
                     </div>
                 </div>
