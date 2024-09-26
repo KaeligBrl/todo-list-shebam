@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form\Back\Permission;
+namespace App\Form\Back\Role;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AddRoleType extends AbstractType
+class AddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

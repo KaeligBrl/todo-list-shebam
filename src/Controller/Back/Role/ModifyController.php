@@ -2,7 +2,7 @@
 
 namespace App\Controller\Back\Role;
 
-use App\Form\Back\Permission\ModifyRoleType;
+use App\Form\Back\Role\ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,15 +26,17 @@ class ModifyController extends AbstractController
         $currentShowP1CwToP1NwButton = $roles['roles'][$roleName]['show_task_p1_cw_to_p1_nw_button'] ?? false;
         $currentTaskModifyP1Button = $roles['roles'][$roleName]['show_task_p1_modify_button'] ?? false;
         $currentTaskDeleteP1Button = $roles['roles'][$roleName]['show_task_p1_delete_button'] ?? false;
+        $switchToCw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
 
         // Créer le formulaire avec les données
-        $form = $this->createForm(ModifyRoleType::class, null, [
+        $form = $this->createForm(ModifyType::class, null, [
             'role' => $roleName,
             'label' => $currentLabel, // Remplir avec le label existant
             'show_p2_button' => $currentShowP2Button,
             'show_task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
             'show_task_p1_modify_button' => $currentTaskModifyP1Button,
-            'show_task_p1_delete_button' => $currentTaskDeleteP1Button
+            'show_task_p1_delete_button' => $currentTaskDeleteP1Button,
+            'show_switch_to_cw' => $switchToCw
         ]);
 
         $form->handleRequest($request);
@@ -49,11 +51,13 @@ class ModifyController extends AbstractController
                 'show_p2_button' => $data['show_p2_button'],
                 'show_task_p1_cw_to_p1_nw_button' => $data['show_task_p1_cw_to_p1_nw_button'],
                 'show_task_p1_modify_button' => $data['show_task_p1_modify_button'],
-                'show_task_p1_delete_button' => $data['show_task_p1_delete_button']
+                'show_task_p1_delete_button' => $data['show_task_p1_delete_button'],
+                'show_switch_to_cw' => $data['show_switch_to_cw']
             ];
 
             // Sauvegarder les changements dans le fichier
-            file_put_contents($rolesFilePath, Yaml::dump($roles));
+            
+            file_put_contents($rolesFilePath, Yaml::dump($roles, 4));
 
             $this->addFlash('success', 'Rôle modifié avec succès.');
 

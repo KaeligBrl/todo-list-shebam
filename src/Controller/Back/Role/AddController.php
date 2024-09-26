@@ -4,7 +4,7 @@
 namespace App\Controller\Back\Role;
 
 use Symfony\Component\Yaml\Yaml;
-use App\Form\Back\Permission\AddRoleType;
+use App\Form\Back\Role\AddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +17,7 @@ class AddController extends AbstractController
      */
     public function addRole(Request $request): Response
     {
-        $form = $this->createForm(AddRoleType::class);
+        $form = $this->createForm(AddType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

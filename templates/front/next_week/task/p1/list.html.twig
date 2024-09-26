@@ -8,8 +8,6 @@
 		<h1 class="text-center color-white mb-3">Semaine Suivante</h1>
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto " id="navbarqaqa">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
@@ -26,27 +24,22 @@
                         <li class="nav-item"> 
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
                         </li>
-                {% endif %}
-            {% endif %}
             </ul> 
         </nav>
 		<div class="container text-center padding-dopdown-mobile">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
                 </div>
-            {% endif %}
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" data-use-row-attr-func="true" data-reorderable-rows="true">
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
-                        <th class="color-yellow text-bold" data-field="customer"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Client</th>
-                        <th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
-                        <th  class="color-yellow text-bold"data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                        <th class="color-yellow text-bold" data-field="customer" scope="col">Client</th>
+                        <th class="color-yellow text-bold" data-field="subject"  scope="col">Sujet</th>
+                        <th  class="color-yellow text-bold"data-field="person" scope="col">Équipe</th>
                             <th class="color-yellow" scope="col">Action</th>
                             <th class="color-yellow" scope="col">Fait</th>
-                        {% endif %}
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
@@ -65,7 +58,6 @@
                                         {{ task.firstname }} <br>
                                     {% endfor %}
                                 </td>
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
                                 <td>
                                     <a class="color-yellow" href="{{ path('to_p1_from_waiting_return_nw', {"id": task.id }) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
                                     <a class="color-yellow text-bold" href="{{ path('change_task_nw_p1_to_p2', {"id": task.id}) }}"><span>P2</span></a>&nbsp;
@@ -79,20 +71,21 @@
                                 <td class="form-switch">											
                                     <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
                                 </td>
-                            {% endif %}
+           
                             </tr>
                         {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
 
-				{% if app.user.email == 'kaelig@shebam.fr' %}
+                {% if roles[userRole].show_switch_to_cw is defined and roles[userRole].show_switch_to_cw %}
 					{% if task is empty and appointment is empty %}
-						<div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour faire le basculement</span></div>
+						<div style="pointer-events: none" class="mt-5 text-center color-yellow"><span>Il faut au moins une donnée pour faire le basculement</span></div>
 					{% else %}			
-						<a class="mt-3 text-center btn-yellow btn" href="{{ path('mission_nw_change_to_cw_front') }}">Basculer vers la semaine actuelle</a>
+						<a class="mt-3 text-center btn-yellow btn" href="{{ path('mission_nw_change_to_cw_front') }}">Basculer en semaine actuelle</a>
 					{% endif %}
-				{% endif %}
+                {% endif %}
+				
         </div>
 
 		<!-- POPUP -->
