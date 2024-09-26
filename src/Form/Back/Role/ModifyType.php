@@ -102,7 +102,31 @@ class ModifyType extends AbstractType
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['show_waiting_return_in_p1_nw'],
-            ]) 
+            ])
+            ->add('show_waiting_return_add', CheckboxType::class, [
+                'label' => 'Bouton ajouter attente retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['show_waiting_return_add'],
+            ])
+            ->add('add_task_cw', CheckboxType::class, [
+                'label' => 'Ajouter une tâche',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['add_task_cw'],
+            ])
+            ->add('reorder_task_cw', CheckboxType::class, [
+                'label' => 'Trier les tâches',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['reorder_task_cw'],
+            ])
+            ->add('generate_archive_task', CheckboxType::class, [
+                'label' => 'Générer l\'archive des tâches',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['generate_archive_task'],
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',
                 'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
@@ -127,7 +151,11 @@ class ModifyType extends AbstractType
             'show_task_p1_nw_modify_button' => null,
             'show_task_p1_nw_delete_button' => null,
             'show_button_done_in_cw' => null,
-            'show_button_done_in_nw' => null
+            'show_button_done_in_nw' => null,
+            'reorder_task_cw' => null,
+            'add_task_cw' => null,
+            'generate_archive_task' => null,
+            'show_waiting_return_add' => null
         ]);
     }
 }

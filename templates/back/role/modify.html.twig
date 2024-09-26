@@ -9,7 +9,7 @@
         </div>
 
         {{ form_start(form) }}
-        <div class="form-back" style="max-width: 750px !important">
+        <div class="form-back" style="max-width: 1000px !important">
 
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
@@ -21,6 +21,7 @@
             {{ form_row(form.role) }}
             {{ form_row(form.label) }}
             <div class="inputRole">
+                <p class="form-role-title text-center mb-4">Semaine Actuelle</p>
                 <div class="row">
                     <div class="col">
                         <p class="form-role-title">Tâche P1</p>
@@ -41,9 +42,34 @@
                         {{ form_row(form.show_button_done_in_nw) }}
                         {{ form_row(form.show_switch_to_cw) }}
                     </div>
+                    <div class="col">
+                        <p class="form-role-title">Attente Retour</p>
+                        {{ form_row(form.show_waiting_return_add) }}
+                    </div>
                 </div>
+                <p class="form-role-title text-center mb-4 mt-4">Semaine Suivante</p>
+                <div class="row">
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                        
+                    </div>
+                </div>
+                <p class="form-role-title text-center mb-4 mt-4">Global</p>
+                <div class="row">
+                    <div class="col">
+                        <p class="form-role-title">Fonctionnalités</p>
+                        {{ form_row(form.add_task_cw) }}
+                        {{ form_row(form.generate_archive_task) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.reorder_task_cw) }}
+                    </div>
+                </div>
+                
+                
             </div>
-            {{ form_row(form.submit) }}
+            <div class="d-flex justify-content-center mt-3">{{ form_row(form.submit) }}</div>
 
         </div>
         {{ form_end(form) }}

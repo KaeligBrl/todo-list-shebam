@@ -31,7 +31,7 @@
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
                 </div>
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" data-use-row-attr-func="true" data-reorderable-rows="true">
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if roles[userRole].reorder_task_cw is defined and roles[userRole].reorder_task_cw %} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>

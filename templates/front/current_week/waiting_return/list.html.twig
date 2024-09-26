@@ -8,52 +8,49 @@
 		<h1 class="text-center color-white mb-3">Attente retour</h1>
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
-                        </li>
-                {% endif %}
-            {% endif %}
+                <li class="nav-item"> 
+                    <a class="
+                                {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active-filters{% endif %}
+                                {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}active-filters{% endif %}
+                                navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="
+                                {% if app.request.attributes.get('_route') starts with 'current_week_p2' %}active-filters{% endif %}
+                                {% if app.request.attributes.get('_route') starts with 'modify_task_p2_cw' %}active-filters{% endif %}
+                                navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="
+                                {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
+                                {% if app.request.attributes.get('_route') starts with 'current_week_waiting_return' %}active-filters{% endif %}
+                                navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="
+                                {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
+                                {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
+                                navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
+                </li>
             </ul> 
         </nav>
 		<div class="container text-center padding-mobile">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+            {% if roles[userRole].show_waiting_return_add is defined and roles[userRole].show_waiting_return_add %}
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunretour"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un retour</a>
                 </div>
             {% endif %}
-            <table id="tableOrderWaitingReturn" class="table mb-5 table-bordered" data-toggle="table"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
+
+            <table id="tableOrderWaitingReturn" class="table mb-5 table-bordered" data-toggle="table" {% if roles[userRole].reorder_task_cw is defined and roles[userRole].reorder_task_cw %} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
-                        <th class="color-yellow text-bold" data-field="customer"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Client</th>
-                        <th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
-                        <th  class="color-yellow text-bold"data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                        <th class="color-yellow text-bold" data-field="customer" scope="col">Client</th>
+                        <th class="color-yellow text-bold" data-field="subject" scope="col">Sujet</th>
+                        <th  class="color-yellow text-bold"data-field="person" scope="col">Équipe</th>
+                        
                             <th class="color-yellow" scope="col">Action</th>
-                        {% endif %}
+                        
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
@@ -72,7 +69,7 @@
                                         {{ waitingReturn.firstname }} <br>
                                     {% endfor %}
                                 </td>
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+                            
                                 <td>                 
                                     <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_cw', {"id": waitingReturn.id }) }}">P1</a>
                                     <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_cw', {"id": waitingReturn.id }) }}">P2</a>
@@ -82,7 +79,7 @@
 
                                     <a class="color-yellow" class="color-yellow" href="{{ path('current_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
                                 </td>
-                            {% endif %}
+                            
                             </tr>
                         {% endif %}
                     {% endfor %}

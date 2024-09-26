@@ -28,6 +28,10 @@ class ModifyController extends AbstractController
         $currentTaskDeleteP1Button = $roles['roles'][$roleName]['show_task_p1_delete_button'] ?? false;
         $waintinReturnInP1Cw = $roles['roles'][$roleName]['show_waiting_return_in_p1_cw'] ?? false;
         $currentShowButtonDone = $roles['roles'][$roleName]['show_button_done_in_cw'] ?? false;
+        $currentAddTaskCw = $roles['roles'][$roleName]['add_task_cw'] ?? false;
+        $currentReorderTaskCw = $roles['roles'][$roleName]['reorder_task_cw'] ?? false;
+        $currentGenerateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
+        $currentWaintingReturnAdd = $roles['roles'][$roleName]['show_waiting_return_add'] ?? false;
         $switchToCw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
         $nextShowP2Button = $roles['roles'][$roleName]['show_p2_button_in_nw'] ?? false;
         $currentShowP1NwToP1CwButton = $roles['roles'][$roleName]['show_task_p1_nw_to_p1_cw_button'] ?? false;
@@ -35,6 +39,7 @@ class ModifyController extends AbstractController
         $nextTaskDeleteP1Button = $roles['roles'][$roleName]['show_task_p1_nw_delete_button'] ?? false;
         $nextShowButtonDone = $roles['roles'][$roleName]['show_button_done_in_nw'] ?? false;
         $waintinReturnInP1Nw = $roles['roles'][$roleName]['show_waiting_return_in_p1_nw'] ?? false;
+    
 
         // Créer le formulaire avec les données
         $form = $this->createForm(ModifyType::class, null, [
@@ -46,6 +51,10 @@ class ModifyController extends AbstractController
             'show_task_p1_delete_button' => $currentTaskDeleteP1Button,
             'show_waiting_return_in_p1_cw' => $waintinReturnInP1Cw,
             'show_button_done_in_cw' => $currentShowButtonDone,
+            'reorder_task_cw' => $currentReorderTaskCw,
+            'add_task_cw' => $currentAddTaskCw,
+            'generate_archive_task' => $currentGenerateArchiveTask,
+            'show_waiting_return_add' => $currentWaintingReturnAdd,
             'show_switch_to_cw' => $switchToCw,
             'show_p2_button_in_nw' => $nextShowP2Button,
             'show_task_p1_nw_to_p1_cw_button' => $currentShowP1NwToP1CwButton,
@@ -76,6 +85,10 @@ class ModifyController extends AbstractController
                 'show_task_p1_nw_delete_button' =>  $data['show_task_p1_nw_delete_button'],
                 'show_button_done_in_cw' => $data['show_button_done_in_cw'],
                 'show_button_done_in_nw' => $data['show_button_done_in_nw'],
+                'reorder_task_cw' => $data['reorder_task_cw'],
+                'add_task_cw' => $data['add_task_cw'],
+                'generate_archive_task' => $data['generate_archive_task'],
+                'show_waiting_return_add' => $data['show_waiting_return_add'],
             ];
 
             file_put_contents($rolesFilePath, Yaml::dump($roles, 4));
