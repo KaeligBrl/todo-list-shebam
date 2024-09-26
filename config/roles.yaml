@@ -5,7 +5,7 @@ roles:
         show_task_p1_cw_to_p1_nw_button: false
         show_task_p1_modify_button: false
         show_task_p1_delete_button: false
-        show_switch_to_cw: true
+        show_switch_to_cw: false
     ROLE_STUDENT:
         label: Stagiaire
         show_task_p2_button: false

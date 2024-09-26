@@ -52,7 +52,7 @@ class ModifyType extends AbstractType
                 'data' => $options['show_task_p1_delete_button'], // Valeur par défaut
             ]) 
             ->add('show_switch_to_cw', CheckboxType::class, [
-                'label' => 'Basculter en semaine actuelle',
+                'label' => 'Basculer en semaine actuelle',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false, // Ne pas obliger ce champ
                 'data' => $options['show_switch_to_cw'], // Valeur par défaut
