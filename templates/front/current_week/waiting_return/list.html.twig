@@ -35,7 +35,7 @@
             </ul> 
         </nav>
 		<div class="container text-center padding-mobile">
-            {% if roles[userRole].show_waiting_return_add is defined and roles[userRole].show_waiting_return_add %}
+            {% if roles[userRole].add_wainting_return is defined and roles[userRole].add_wainting_return %}
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunretour"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un retour</a>
                 </div>
@@ -48,8 +48,20 @@
                         <th class="color-yellow text-bold" data-field="customer" scope="col">Client</th>
                         <th class="color-yellow text-bold" data-field="subject" scope="col">Sujet</th>
                         <th  class="color-yellow text-bold"data-field="person" scope="col">Équipe</th>
-                        
-                            <th class="color-yellow" scope="col">Action</th>
+                    
+                        {% if userRole is not null and roles[userRole] is defined %}
+                            {% set showActions =
+                            roles[userRole].wainting_return_to_p1 is defined and roles[userRole].wainting_return_to_p1 or
+                            roles[userRole].wainting_return_to_p2 is defined and roles[userRole].wainting_return_to_p2 or
+                            roles[userRole].wainting_return_from_cw_to_nw is defined and roles[userRole].wainting_return_from_cw_to_nw or
+                            roles[userRole].wainting_return_modify_cw is defined and roles[userRole].wainting_return_modify_cw or
+                            roles[userRole].wainting_return_delete_cw is defined and roles[userRole].wainting_return_delete_cw
+                            %}
+
+                            {% if showActions %}
+                                <th class="color-yellow" scope="col">Action</th>
+                            {% endif %}
+                        {% endif %}
                         
                     </tr>
                 </thead>
@@ -69,17 +81,41 @@
                                         {{ waitingReturn.firstname }} <br>
                                     {% endfor %}
                                 </td>
-                            
-                                <td>                 
-                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_cw', {"id": waitingReturn.id }) }}">P1</a>
-                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_cw', {"id": waitingReturn.id }) }}">P2</a>
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_nw', {"id": waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('current_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
+                                {% if userRole is not null and roles[userRole] is defined %}
+                                {% set showActions =
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('current_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
-                                </td>
+                                roles[userRole].wainting_return_to_p1 is defined and roles[userRole].wainting_return_to_p1 or
+                                roles[userRole].wainting_return_to_p2 is defined and roles[userRole].wainting_return_to_p2 or
+                                roles[userRole].wainting_return_from_cw_to_nw is defined and roles[userRole].wainting_return_from_cw_to_nw or
+                                roles[userRole].wainting_return_modify_cw is defined and roles[userRole].wainting_return_modify_cw or
+                                roles[userRole].wainting_return_delete_cw is defined and roles[userRole].wainting_return_delete_cw
+                                %}
+                                    {% if showActions %}
                             
+                                        <td>                 
+                                            {% if roles[userRole].wainting_return_to_p1 is defined and roles[userRole].wainting_return_to_p1 %}
+                                                <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_cw', {"id": waitingReturn.id }) }}">P1</a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_to_p2 is defined and roles[userRole].wainting_return_to_p2 %}
+                                                <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_cw', {"id": waitingReturn.id }) }}">P2</a>
+                                            {% endif %}
+                                            
+                                            {% if roles[userRole].wainting_return_from_cw_to_nw is defined and roles[userRole].wainting_return_from_cw_to_nw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_nw', {"id": waitingReturn.id}) }}"><i class="fas fa-redo"></i></a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_modify_cw is defined and roles[userRole].wainting_return_modify_cw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('current_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_delete_cw is defined and roles[userRole].wainting_return_modify_cw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('current_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
                             </tr>
                         {% endif %}
                     {% endfor %}

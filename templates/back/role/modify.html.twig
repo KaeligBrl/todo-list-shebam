@@ -9,7 +9,7 @@
         </div>
 
         {{ form_start(form) }}
-        <div class="form-back" style="max-width: 1000px !important">
+        <div class="form-back" style="max-width: 1100px !important">
 
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
@@ -25,49 +25,61 @@
                 <div class="row">
                     <div class="col">
                         <p class="form-role-title">Tâche P1</p>
-                        {{ form_row(form.show_p2_button_in_cw) }} 
-                        {{ form_row(form.show_task_p1_cw_to_p1_nw_button) }}
-                        {{ form_row(form.show_task_p1_modify_button) }} 
-                        {{ form_row(form.show_waiting_return_in_p1_cw)}}
-                        {{ form_row(form.show_task_p1_delete_button) }}
-                        {{ form_row(form.show_button_done_in_cw) }}
+                        {{ form_row(form.p2_button_in_p1_cw) }} 
+                        {{ form_row(form.task_p1_cw_to_p1_nw_button) }}
+                        {{ form_row(form.task_p1_modify_button) }} 
+                        {{ form_row(form.task_p1_delete_button) }}
+                        {{ form_row(form.waiting_return_in_p1_cw)}}
+                        
                     </div>
                     <div class="col">
                         <p class="form-role-title">Tâche P2</p>
-                        {{ form_row(form.show_p2_button_in_nw) }}
-                        {{ form_row(form.show_task_p1_nw_to_p1_cw_button) }}
-                        {{ form_row(form.show_task_p1_nw_modify_button)}}
-                        {{ form_row(form.show_waiting_return_in_p1_nw)}}
-                        {{ form_row(form.show_task_p1_nw_delete_button) }}
-                        {{ form_row(form.show_button_done_in_nw) }}
-                        {{ form_row(form.show_switch_to_cw) }}
+                        {{ form_row(form.p1_button_in_p2_cw) }}
+                        {{ form_row(form.task_p2_cw_to_p1_nw_button) }}
+                        {{ form_row(form.task_p2_modify_button) }}
+                        {{ form_row(form.task_p2_delete_button) }}
+                        {{ form_row(form.waiting_return_in_p2_cw) }}
                     </div>
                     <div class="col">
                         <p class="form-role-title">Attente Retour</p>
-                        {{ form_row(form.show_waiting_return_add) }}
+                        {{ form_row(form.wainting_return_to_p1) }}
+                        {{ form_row(form.wainting_return_to_p2) }}
+                        {{ form_row(form.wainting_return_from_cw_to_nw) }}
+                        {{ form_row(form.wainting_return_modify_cw) }}
+                        {{ form_row(form.wainting_return_delete_cw) }}
                     </div>
                 </div>
                 <p class="form-role-title text-center mb-4 mt-4">Semaine Suivante</p>
                 <div class="row">
                     <div class="col">
+                        <p class="form-role-title">Tâche P1</p>
+                        {{ form_row(form.task_p1_to_p2_nw)}}
+                        {{ form_row(form.task_p1_nw_to_p1_cw_button) }}
+                        {{ form_row(form.task_p1_modify_nw) }}
+                        {{ form_row(form.task_p1_delete_nw) }}
+                        {{ form_row(form.waiting_return_in_p1_nw)}}
                     </div>
                     <div class="col">
-                        
+                        <p class="form-role-title">Tâche P2</p>
+                    </div>
+                    <div class="col">
+                        <p class="form-role-title text-center mb-4 mt-4">Semaine Suivante</p>
                     </div>
                 </div>
                 <p class="form-role-title text-center mb-4 mt-4">Global</p>
                 <div class="row">
                     <div class="col">
                         <p class="form-role-title">Fonctionnalités</p>
-                        {{ form_row(form.add_task_cw) }}
-                        {{ form_row(form.generate_archive_task) }}
+                        {{ form_row(form.add_task) }}
+                        {{ form_row(form.add_wainting_return) }}
                     </div>
                     <div class="col">
-                        {{ form_row(form.reorder_task_cw) }}
+                        {{ form_row(form.reorder_task) }}
+                        {{ form_row(form.button_done) }}
+                        {{ form_row(form.generate_archive_task) }}
                     </div>
+                    <div class="col"></div>
                 </div>
-                
-                
             </div>
             <div class="d-flex justify-content-center mt-3">{{ form_row(form.submit) }}</div>
 

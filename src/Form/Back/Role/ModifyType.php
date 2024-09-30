@@ -25,107 +25,162 @@ class ModifyType extends AbstractType
                 'data' => $options['label'],
                 'constraints' => [new NotBlank()],
             ])
-            ->add('show_p2_button_in_cw', CheckboxType::class, [
+            // Current WEEK -> P1
+            ->add('p2_button_in_p1_cw', CheckboxType::class, [
                 'label' => 'Bouton P2',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false, 
-                'data' => $options['show_p2_button_in_cw'], 
+                'data' => $options['p2_button_in_p1_cw'], 
             ])
-            ->add('show_task_p1_cw_to_p1_nw_button', CheckboxType::class, [
-                'label' => 'Bouton P1 vers semaine suivante',
+            ->add('task_p1_cw_to_p1_nw_button', CheckboxType::class, [
+                'label' => 'De P1 vers semaine suivante',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_task_p1_cw_to_p1_nw_button'],
+                'data' => $options['task_p1_cw_to_p1_nw_button'],
             ])
-            ->add('show_task_p1_modify_button', CheckboxType::class, [
-                'label' => 'Bouton  modifier',
+            ->add('task_p1_modify_button', CheckboxType::class, [
+                'label' => 'Bouton modifier',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_task_p1_modify_button'], 
+                'data' => $options['task_p1_modify_button'], 
             ])
-            ->add('show_task_p1_delete_button', CheckboxType::class, [
+            ->add('task_p1_delete_button', CheckboxType::class, [
                 'label' => 'Bouton supprimer',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false, 
-                'data' => $options['show_task_p1_delete_button'],
+                'data' => $options['task_p1_delete_button'],
             ])
-            ->add('show_waiting_return_in_p1_cw', CheckboxType::class, [
+            ->add('waiting_return_in_p1_cw', CheckboxType::class, [
                 'label' => 'Bouton Attente Retour',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_waiting_return_in_p1_cw'],
-            ]) 
-            ->add('show_switch_to_cw', CheckboxType::class, [
-                'label' => 'Basculer en semaine actuelle',
-                'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false, 
-                'data' => $options['show_switch_to_cw'], 
+                'data' => $options['waiting_return_in_p1_cw'],
             ])
-            ->add('show_p2_button_in_nw', CheckboxType::class, [
+            // Current Week -> P2
+            ->add('p1_button_in_p2_cw', CheckboxType::class, [
+                'label' => 'Bouton P1',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['p1_button_in_p2_cw'],
+            ])
+            ->add('task_p2_modify_button', CheckboxType::class, [
+                'label' => 'Bouton modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_modify_button'],
+            ])
+            ->add('task_p2_delete_button', CheckboxType::class, [
+                'label' => 'Bouton supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_delete_button'],
+            ])
+            ->add('waiting_return_in_p2_cw', CheckboxType::class, [
+                'label' => 'Bouton attente Retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['waiting_return_in_p2_cw'],
+            ])
+            ->add('task_p2_cw_to_p1_nw_button', CheckboxType::class, [
+                'label' => 'De P2 vers semaine actuelle',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_cw_to_p1_nw_button'],
+            ])
+            // Current Week -> Wainting Return
+            ->add('wainting_return_to_p1', CheckboxType::class, [
+                'label' => 'Vers P1',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_to_p1'],
+            ])
+            ->add('wainting_return_to_p2', CheckboxType::class, [
+                'label' => 'Vers P2',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_to_p2'],
+            ])
+            ->add('wainting_return_from_cw_to_nw', CheckboxType::class, [
+                'label' => 'Vers semaine suivante',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_from_cw_to_nw'],
+            ])
+            ->add('wainting_return_modify_cw', CheckboxType::class, [
+                'label' => 'Bouton Modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_modify_cw'],
+            ])
+            ->add('wainting_return_delete_cw', CheckboxType::class, [
+                'label' => 'Bouton Supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_delete_cw'],
+            ])
+            // Next WEEK -> P1
+            ->add('waiting_return_in_p1_nw', CheckboxType::class, [
+                'label' => 'Bouton Attente Retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['waiting_return_in_p1_nw'],
+            ])
+            ->add('task_p1_to_p2_nw', CheckboxType::class, [
                 'label' => 'Bouton P2',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_p2_button_in_nw'],
+                'data' => $options['task_p1_to_p2_nw'],
             ])
-            ->add('show_task_p1_nw_to_p1_cw_button', CheckboxType::class, [
-                'label' => 'Bouton P1 vers semaine actuelle',
+            ->add('task_p1_nw_to_p1_cw_button', CheckboxType::class, [
+                'label' => 'De P1 vers semaine actuelle',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_task_p1_nw_to_p1_cw_button'],
+                'data' => $options['task_p1_nw_to_p1_cw_button'],
             ])
-            ->add('show_task_p1_nw_modify_button', CheckboxType::class, [
-                'label' => 'Bouton  modifier',
+            ->add('task_p1_modify_nw', CheckboxType::class, [
+                'label' => 'Bouton Modifier',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_task_p1_nw_modify_button'],
+                'data' => $options['task_p1_modify_nw'],
             ])
-            ->add('show_task_p1_nw_delete_button', CheckboxType::class, [
-                'label' => 'Bouton supprimer',
+            ->add('task_p1_delete_nw', CheckboxType::class, [
+                'label' => 'Bouton Supprimer',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_task_p1_nw_delete_button'],
+                'data' => $options['task_p1_delete_nw'],
             ])
-            ->add('show_button_done_in_cw', CheckboxType::class, [
-                'label' => 'Bouton "Fait""',
+            // Next WEEK -> P2
+            // Next WEEK -> Wainting Return     
+            // Global
+            ->add('button_done', CheckboxType::class, [
+                'label' => 'Bouton "Fait"',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['show_button_done_in_cw'],
+                'data' => $options['button_done'],
             ])
-            ->add('show_button_done_in_nw', CheckboxType::class, [
-                'label' => 'Bouton "Fait""',
-                'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false,
-                'data' => $options['show_button_done_in_nw'],
-            ])
-            ->add('show_waiting_return_in_p1_nw', CheckboxType::class, [
-                'label' => 'Bouton Attente Retour',
-                'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false,
-                'data' => $options['show_waiting_return_in_p1_nw'],
-            ])
-            ->add('show_waiting_return_add', CheckboxType::class, [
-                'label' => 'Bouton ajouter attente retour',
-                'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false,
-                'data' => $options['show_waiting_return_add'],
-            ])
-            ->add('add_task_cw', CheckboxType::class, [
+            ->add('add_task', CheckboxType::class, [
                 'label' => 'Ajouter une tâche',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['add_task_cw'],
+                'data' => $options['add_task'],
             ])
-            ->add('reorder_task_cw', CheckboxType::class, [
+            ->add('reorder_task', CheckboxType::class, [
                 'label' => 'Trier les tâches',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
-                'data' => $options['reorder_task_cw'],
+                'data' => $options['reorder_task'],
             ])
             ->add('generate_archive_task', CheckboxType::class, [
                 'label' => 'Générer l\'archive des tâches',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['generate_archive_task'],
+            ])
+            ->add('add_wainting_return', CheckboxType::class, [
+                'label' => 'Ajouter une attente retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['add_wainting_return'],
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',
@@ -139,23 +194,39 @@ class ModifyType extends AbstractType
             'data_class' => null,
             'role' => null, 
             'label' => null,
-            'show_p2_button_in_cw' => null,
-            'show_task_p1_cw_to_p1_nw_button' => null,
-            'show_task_p1_modify_button' => null,
-            'show_task_p1_delete_button' => null,
-            'show_waiting_return_in_p1_cw' => null,
-            'show_switch_to_cw' => null,
-            'show_p2_button_in_nw' => null,
-            'show_waiting_return_in_p1_nw' => null,
-            'show_task_p1_nw_to_p1_cw_button' => null,
-            'show_task_p1_nw_modify_button' => null,
-            'show_task_p1_nw_delete_button' => null,
-            'show_button_done_in_cw' => null,
-            'show_button_done_in_nw' => null,
-            'reorder_task_cw' => null,
-            'add_task_cw' => null,
+            // Current WEEK -> P1
+            'p2_button_in_p1_cw' => null,
+            'task_p1_cw_to_p1_nw_button' => null,
+            'task_p1_modify_button' => null,
+            'task_p1_delete_button' => null,
+            'waiting_return_in_p1_cw' => null,
+            'task_p1_nw_modify_button' => null,
+            // Current Week -> P2
+            'p1_button_in_p2_cw' => null,
+            'task_p2_modify_button' => null,
+            'task_p2_delete_button' => null,
+            'waiting_return_in_p2_cw' => null,
+            'task_p2_cw_to_p1_nw_button' => null,
+            // Current Week -> Wainting Return
+            'wainting_return_to_p1' => null,
+            'wainting_return_to_p2' => null,
+            'wainting_return_from_cw_to_nw' => null,
+            'wainting_return_modify_cw' => null,
+            'wainting_return_delete_cw' => null,
+            // Next WEEK -> P1
+            'waiting_return_in_p1_nw' => null,
+            'task_p1_nw_to_p1_cw_button' => null,
+            'task_p1_to_p2_nw' => null,
+            'task_p1_modify_nw' => null,
+            'task_p1_delete_nw' => null,
+            // Next WEEK -> P2
+            // Next WEEK -> Wainting Return
+            // Global
+            'reorder_task' => null,
+            'add_task' => null,
             'generate_archive_task' => null,
-            'show_waiting_return_add' => null
+            'button_done' => null,
+            'add_wainting_return' => null
         ]);
     }
 }

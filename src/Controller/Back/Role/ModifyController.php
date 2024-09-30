@@ -20,48 +20,80 @@ class ModifyController extends AbstractController
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
         $roles = Yaml::parseFile($rolesFilePath);
 
-        // Récupérer le label du rôle existant
-        $currentLabel = $roles['roles'][$roleName]['label'] ?? ''; // Correction ici
-        $currentShowP2Button = $roles['roles'][$roleName]['show_p2_button_in_cw'] ?? false;
-        $currentShowP1CwToP1NwButton = $roles['roles'][$roleName]['show_task_p1_cw_to_p1_nw_button'] ?? false;
-        $currentTaskModifyP1Button = $roles['roles'][$roleName]['show_task_p1_modify_button'] ?? false;
-        $currentTaskDeleteP1Button = $roles['roles'][$roleName]['show_task_p1_delete_button'] ?? false;
-        $waintinReturnInP1Cw = $roles['roles'][$roleName]['show_waiting_return_in_p1_cw'] ?? false;
-        $currentShowButtonDone = $roles['roles'][$roleName]['show_button_done_in_cw'] ?? false;
-        $currentAddTaskCw = $roles['roles'][$roleName]['add_task_cw'] ?? false;
-        $currentReorderTaskCw = $roles['roles'][$roleName]['reorder_task_cw'] ?? false;
-        $currentGenerateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
-        $currentWaintingReturnAdd = $roles['roles'][$roleName]['show_waiting_return_add'] ?? false;
-        $switchToCw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
-        $nextShowP2Button = $roles['roles'][$roleName]['show_p2_button_in_nw'] ?? false;
-        $currentShowP1NwToP1CwButton = $roles['roles'][$roleName]['show_task_p1_nw_to_p1_cw_button'] ?? false;
-        $nextTaskModifyP1Button = $roles['roles'][$roleName]['show_task_p1_nw_modify_button'] ?? false;
-        $nextTaskDeleteP1Button = $roles['roles'][$roleName]['show_task_p1_nw_delete_button'] ?? false;
-        $nextShowButtonDone = $roles['roles'][$roleName]['show_button_done_in_nw'] ?? false;
-        $waintinReturnInP1Nw = $roles['roles'][$roleName]['show_waiting_return_in_p1_nw'] ?? false;
-    
+        $currentLabel = $roles['roles'][$roleName]['label'] ?? '';
 
-        // Créer le formulaire avec les données
+        // Current Week -> P1
+        $currentShowP2Button = $roles['roles'][$roleName]['p2_button_in_p1_cw'] ?? false;
+        $currentShowP1CwToP1NwButton = $roles['roles'][$roleName]['task_p1_cw_to_p1_nw_button'] ?? false;
+        $currentTaskModifyP1Button = $roles['roles'][$roleName]['task_p1_modify_button'] ?? false;
+        $currentTaskDeleteP1Button = $roles['roles'][$roleName]['task_p1_delete_button'] ?? false;
+        $waintinReturnInP1Cw = $roles['roles'][$roleName]['waiting_return_in_p1_cw'] ?? false;
+        
+        // Current Week -> P2
+        $currentP2ShowP1Button = $roles['roles'][$roleName]['p1_button_in_p2_cw'] ?? false;
+        $currentTaskModifyP2Button = $roles['roles'][$roleName]['task_p2_modify_button'] ?? false;
+        $currentTaskDeleteP2Button = $roles['roles'][$roleName]['task_p2_delete_button'] ?? false;
+        $waintinReturnInP2Cw = $roles['roles'][$roleName]['waiting_return_in_p2_cw'] ?? false;
+        $currentP2CwToP1NwButton = $roles['roles'][$roleName]['task_p2_cw_to_p1_nw_button'] ?? false;
+
+        // Current Week -> Wainting Return
+        $waintingReturnToP1 = $roles['roles'][$roleName]['wainting_return_to_p1'] ?? false;
+        $waintingReturnToP2 = $roles['roles'][$roleName]['wainting_return_to_p2'] ?? false;
+        $waintingReturnFromCwToNw = $roles['roles'][$roleName]['wainting_return_from_cw_to_nw'] ?? false;
+        $waintingReturnModifyCw = $roles['roles'][$roleName]['wainting_return_modify_cw'] ?? false;
+        $waintingReturnDeleteCw = $roles['roles'][$roleName]['wainting_return_delete_cw'] ?? false;
+
+        // Next WEEK -> P1
+        $waintinReturnInP1Nw = $roles['roles'][$roleName]['waiting_return_in_p1_nw'] ?? false;
+        $taskP1ToP2Nw = $roles['roles'][$roleName]['task_p1_to_p2_nw'] ?? false;
+        $taskP1NwToP1CwButton = $roles['roles'][$roleName]['task_p1_nw_to_p1_cw_button'] ?? false;
+        $taskP1NwToModifyButton = $roles['roles'][$roleName]['task_p1_modify_nw'] ?? false;
+        $taskP1NwToDeleteButton = $roles['roles'][$roleName]['task_p1_delete_nw'] ?? false;
+        // Next WEEK -> P2
+        // Next WEEK -> Wainting Return
+
+        // Global
+        $buttonDone = $roles['roles'][$roleName]['button_done'] ?? false;
+        $addTask = $roles['roles'][$roleName]['add_task'] ?? false;
+        $reorderTask = $roles['roles'][$roleName]['reorder_task'] ?? false;
+        $generateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
+        $addWaintingReturn = $roles['roles'][$roleName]['add_wainting_return'] ?? false;
+
         $form = $this->createForm(ModifyType::class, null, [
             'role' => $roleName,
-            'label' => $currentLabel, // Remplir avec le label existant
-            'show_p2_button_in_cw' => $currentShowP2Button,
-            'show_task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
-            'show_task_p1_modify_button' => $currentTaskModifyP1Button,
-            'show_task_p1_delete_button' => $currentTaskDeleteP1Button,
-            'show_waiting_return_in_p1_cw' => $waintinReturnInP1Cw,
-            'show_button_done_in_cw' => $currentShowButtonDone,
-            'reorder_task_cw' => $currentReorderTaskCw,
-            'add_task_cw' => $currentAddTaskCw,
-            'generate_archive_task' => $currentGenerateArchiveTask,
-            'show_waiting_return_add' => $currentWaintingReturnAdd,
-            'show_switch_to_cw' => $switchToCw,
-            'show_p2_button_in_nw' => $nextShowP2Button,
-            'show_task_p1_nw_to_p1_cw_button' => $currentShowP1NwToP1CwButton,
-            'show_task_p1_nw_modify_button' => $nextTaskModifyP1Button,
-            'show_waiting_return_in_p1_nw' => $waintinReturnInP1Nw,
-            'show_task_p1_nw_delete_button' => $nextTaskDeleteP1Button,
-            'show_button_done_in_nw' => $nextShowButtonDone
+            'label' => $currentLabel,
+            // Current Week -> P1
+            'p2_button_in_p1_cw' => $currentShowP2Button,
+            'task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
+            'task_p1_modify_button' => $currentTaskModifyP1Button,
+            'task_p1_delete_button' => $currentTaskDeleteP1Button,
+            'waiting_return_in_p1_cw' => $waintinReturnInP1Cw,
+            // Current Week -> P2
+            'p1_button_in_p2_cw' => $currentP2ShowP1Button,
+            'task_p2_modify_button' => $currentTaskModifyP2Button,
+            'task_p2_delete_button' => $currentTaskDeleteP2Button,
+            'waiting_return_in_p2_cw' => $waintinReturnInP2Cw,
+            'task_p2_cw_to_p1_nw_button' => $currentP2CwToP1NwButton,
+            // Current Week -> Wainting Return
+            'wainting_return_to_p1'=> $waintingReturnToP1,
+            'wainting_return_to_p2' => $waintingReturnToP2,
+            'wainting_return_from_cw_to_nw' => $waintingReturnFromCwToNw,
+            'wainting_return_modify_cw' => $waintingReturnModifyCw,
+            'wainting_return_delete_cw' => $waintingReturnDeleteCw,
+            // Next WEEK -> P1
+            'waiting_return_in_p1_nw' => $waintinReturnInP1Nw,
+            'task_p1_to_p2_nw' => $taskP1ToP2Nw,
+            'task_p1_nw_to_p1_cw_button' => $taskP1NwToP1CwButton,
+            'task_p1_modify_nw' => $taskP1NwToModifyButton,
+            'task_p1_delete_nw' => $taskP1NwToDeleteButton,
+            // Next WEEK -> P2
+            // Next WEEK -> Wainting Return
+            // Global
+            'reorder_task' => $reorderTask,
+            'add_task' => $addTask,
+            'generate_archive_task' => $generateArchiveTask,
+            'button_done' => $buttonDone,
+            'add_wainting_return' => $addWaintingReturn
         ]);
 
         $form->handleRequest($request);
@@ -72,23 +104,38 @@ class ModifyController extends AbstractController
 
             $roles['roles'][$data['role']] = [
                 'label' => $data['label'],
-                'show_p2_button_in_cw' => $data['show_p2_button_in_cw'],
-                'show_task_p1_cw_to_p1_nw_button' => $data['show_task_p1_cw_to_p1_nw_button'],
-                'show_task_p1_modify_button' => $data['show_task_p1_modify_button'],
-                'show_task_p1_delete_button' => $data['show_task_p1_delete_button'],
-                'show_waiting_return_in_p1_cw' => $data['show_waiting_return_in_p1_cw'],
-                'show_switch_to_cw' => $data['show_switch_to_cw'],
-                'show_p2_button_in_nw' => $data['show_p2_button_in_nw'],
-                'show_task_p1_nw_to_p1_cw_button' => $data['show_task_p1_nw_to_p1_cw_button'],
-                'show_task_p1_nw_modify_button' => $data['show_task_p1_nw_modify_button'],
-                'show_waiting_return_in_p1_nw' => $data['show_waiting_return_in_p1_nw'],
-                'show_task_p1_nw_delete_button' =>  $data['show_task_p1_nw_delete_button'],
-                'show_button_done_in_cw' => $data['show_button_done_in_cw'],
-                'show_button_done_in_nw' => $data['show_button_done_in_nw'],
-                'reorder_task_cw' => $data['reorder_task_cw'],
-                'add_task_cw' => $data['add_task_cw'],
+                // Current Week -> P1
+                'p2_button_in_p1_cw' => $data['p2_button_in_p1_cw'],
+                'task_p1_cw_to_p1_nw_button' => $data['task_p1_cw_to_p1_nw_button'],
+                'task_p1_modify_button' => $data['task_p1_modify_button'],
+                'task_p1_delete_button' => $data['task_p1_delete_button'],
+                'waiting_return_in_p1_cw' => $data['waiting_return_in_p1_cw'],
+                // Current Week -> P2
+                'p1_button_in_p2_cw' => $data['p1_button_in_p2_cw'],
+                'task_p2_modify_button' => $data['task_p2_modify_button'],
+                'task_p2_delete_button' => $data['task_p2_delete_button'],
+                'waiting_return_in_p2_cw' => $data['waiting_return_in_p2_cw'],
+                'task_p2_cw_to_p1_nw_button' => $data['task_p2_cw_to_p1_nw_button'],
+                // Current Week -> Wainting Return
+                'wainting_return_to_p1' => $data['wainting_return_to_p1'],
+                'wainting_return_to_p2' => $data['wainting_return_to_p2'],
+                'wainting_return_from_cw_to_nw' => $data['wainting_return_from_cw_to_nw'],
+                'wainting_return_modify_cw' => $data['wainting_return_modify_cw'],
+                'wainting_return_delete_cw' => $data['wainting_return_delete_cw'],
+                // Next WEEK -> P1
+                'waiting_return_in_p1_nw' => $data['waiting_return_in_p1_nw'],
+                'task_p1_to_p2_nw' => $data['task_p1_to_p2_nw'],
+                'task_p1_nw_to_p1_cw_button' => $data['task_p1_nw_to_p1_cw_button'],
+                'task_p1_modify_nw' => $data['task_p1_modify_nw'],
+                'task_p1_delete_nw' => $data['task_p1_delete_nw'],
+                // Next WEEK -> P2
+                // Next WEEK -> Wainting Return                
+                // Global
+                'button_done' => $data['button_done'],
+                'reorder_task' => $data['reorder_task'],
+                'add_task' => $data['add_task'],
                 'generate_archive_task' => $data['generate_archive_task'],
-                'show_waiting_return_add' => $data['show_waiting_return_add'],
+                'add_wainting_return' => $data['add_wainting_return']
             ];
 
             file_put_contents($rolesFilePath, Yaml::dump($roles, 4));
