@@ -150,6 +150,37 @@ class ModifyType extends AbstractType
                 'data' => $options['task_p1_delete_nw'],
             ])
             // Next WEEK -> P2
+            ->add('waiting_return_in_p2_nw', CheckboxType::class, [
+                'label' => 'Bouton Attente Retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['waiting_return_in_p2_nw'],
+            ])
+            ->add('task_p2_to_p1_nw', CheckboxType::class, [
+                'label' => 'Bouton P1',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_to_p1_nw'],
+            ])
+            ->add('task_p2_modify_nw', CheckboxType::class, [
+                'label' => 'Bouton Modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_modify_nw'],
+            ])
+            ->add('task_p2_delete_nw', CheckboxType::class, [
+                'label' => 'Bouton Supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_delete_nw'],
+            ])
+            ->add('task_p2_nw_to_p2_cw_button', CheckboxType::class, [
+                'label' => 'De P2 vers semaine actuelle',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['task_p2_nw_to_p2_cw_button'],
+            ])
+        
             // Next WEEK -> Wainting Return     
             // Global
             ->add('button_done', CheckboxType::class, [
@@ -220,6 +251,11 @@ class ModifyType extends AbstractType
             'task_p1_modify_nw' => null,
             'task_p1_delete_nw' => null,
             // Next WEEK -> P2
+            'task_p2_to_p1_nw' => null,
+            'task_p2_modify_nw' => null,
+            'task_p2_delete_nw' => null,
+            'task_p2_nw_to_p2_cw_button' => null,
+            'waiting_return_in_p2_nw' => null,
             // Next WEEK -> Wainting Return
             // Global
             'reorder_task' => null,

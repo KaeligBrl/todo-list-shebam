@@ -49,7 +49,14 @@ class ModifyController extends AbstractController
         $taskP1NwToP1CwButton = $roles['roles'][$roleName]['task_p1_nw_to_p1_cw_button'] ?? false;
         $taskP1NwToModifyButton = $roles['roles'][$roleName]['task_p1_modify_nw'] ?? false;
         $taskP1NwToDeleteButton = $roles['roles'][$roleName]['task_p1_delete_nw'] ?? false;
+
         // Next WEEK -> P2
+        $taskP2ToP1Nw = $roles['roles'][$roleName]['task_p2_to_p1_nw'] ?? false;
+        $taskP2ModifyNw= $roles['roles'][$roleName]['task_p2_modify_nw '] ?? false;
+        $taskP2DeleteNw = $roles['roles'][$roleName]['task_p2_delete_nw '] ?? false;
+        $taskP2NwToP2CwButton = $roles['roles'][$roleName]['task_p2_nw_to_p2_cw_button '] ?? false;
+        $waintinReturnInP2Nw = $roles['roles'][$roleName]['waiting_return_in_p2_nw'] ?? false;
+
         // Next WEEK -> Wainting Return
 
         // Global
@@ -87,6 +94,11 @@ class ModifyController extends AbstractController
             'task_p1_modify_nw' => $taskP1NwToModifyButton,
             'task_p1_delete_nw' => $taskP1NwToDeleteButton,
             // Next WEEK -> P2
+            'waiting_return_in_p2_nw' => $waintinReturnInP2Nw,
+            'task_p2_to_p1_nw' => $taskP2ToP1Nw,
+            'task_p2_modify_nw' => $taskP2ModifyNw,
+            'task_p2_delete_nw' => $taskP2DeleteNw,
+            'task_p2_nw_to_p2_cw_button' => $taskP2NwToP2CwButton,
             // Next WEEK -> Wainting Return
             // Global
             'reorder_task' => $reorderTask,
@@ -129,6 +141,11 @@ class ModifyController extends AbstractController
                 'task_p1_modify_nw' => $data['task_p1_modify_nw'],
                 'task_p1_delete_nw' => $data['task_p1_delete_nw'],
                 // Next WEEK -> P2
+                'waiting_return_in_p2_nw' => $data['waiting_return_in_p2_nw'],
+                'task_p2_to_p1_nw' => $data['task_p2_to_p1_nw'],
+                'task_p2_modify_nw' => $data['task_p2_modify_nw'],
+                'task_p2_delete_nw' => $data['task_p2_delete_nw'],
+                'task_p2_nw_to_p2_cw_button' => $data['task_p2_nw_to_p2_cw_button'],
                 // Next WEEK -> Wainting Return                
                 // Global
                 'button_done' => $data['button_done'],
