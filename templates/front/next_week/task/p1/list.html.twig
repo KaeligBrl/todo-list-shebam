@@ -37,9 +37,9 @@
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
-                        <th class="color-yellow text-bold" data-field="customer" scope="col">Client</th>
-                        <th class="color-yellow text-bold" data-field="subject"  scope="col">Sujet</th>
-                        <th  class="color-yellow text-bold"data-field="person" scope="col">Équipe</th>
+                        <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
+                        <th class="color-yellow text-bold" data-field="subject"  data-sortable="true" scope="col">Sujet</th>
+                        <th  class="color-yellow text-bold"data-field="person" data-sortable="true" scope="col">Équipe</th>
                         {% if userRole is not null and roles[userRole] is defined %}
                             {% set showActions =
                             roles[userRole].waiting_return_in_p1_nw is defined and roles[userRole].waiting_return_in_p1_nw or
