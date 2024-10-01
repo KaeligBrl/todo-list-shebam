@@ -8,42 +8,53 @@
 		<h1 class="text-center color-white mb-3">Attente retour</h1>
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
-                        </li>
-                {% endif %}
-            {% endif %}
+
+                <li class="nav-item"> 
+                    <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="
+                                {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
+                                {% if app.request.attributes.get('_route') starts with 'next_week_waiting_return' %}active-filters{% endif %}
+                                navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
+                </li>
+                <li class="nav-item"> 
+                    <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
+                </li>
+
             </ul> 
         </nav>
 		<div class="container text-center padding-mobile">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+            {% if roles[userRole].add_wainting_return is defined and roles[userRole].add_wainting_return %}
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunretour"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un retour</a>
                 </div>
             {% endif %}
-            <table id="tableOrderWaitingReturn" class="table mb-5 table-bordered" data-toggle="table" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
+
+            <table id="tableOrderWaitingReturn" class="table mb-5 table-bordered" data-toggle="table"  data-use-row-attr-func="true" data-reorderable-rows="true">
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
-                        <th class="color-yellow text-bold" data-field="customer"{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Client</th>
-                        <th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Sujet</th>
-                        <th  class="color-yellow text-bold"data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}data-sortable="true"{% endif %} scope="col">Équipe</th>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                            <th class="color-yellow" scope="col">Action</th>
+                        <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
+                        <th class="color-yellow text-bold" data-field="subject" data-sortable="true" scope="col">Sujet</th>
+                        <th  class="color-yellow text-bold"data-field="person" data-sortable="true" scope="col">Équipe</th>
+
+                        {% if userRole is not null and roles[userRole] is defined %}
+                            {% set showActions =
+                            roles[userRole].wainting_return_nw_to_p1 is defined and roles[userRole].wainting_return_nw_to_p1 or
+                            roles[userRole].wainting_return_nw_to_p2 is defined and roles[userRole].wainting_return_nw_to_p2 or
+                            roles[userRole].wainting_return_nw_to_nw is defined and roles[userRole].wainting_return_nw_to_nw or
+                            roles[userRole].wainting_return_modify_nw is defined and roles[userRole].wainting_return_modify_nw or
+                            roles[userRole].wainting_return_delete_nw is defined and roles[userRole].wainting_return_delete_nw
+                            %}
+
+                            {% if showActions %}
+                                <th class="color-yellow" scope="col">Action</th>
+                            {% endif %}
+
                         {% endif %}
                     </tr>
                 </thead>
@@ -52,28 +63,56 @@
                         {% if waitingReturn.nextweek == 1 %}
                             <tr>
                                 <td>{{ waitingReturn.id }}</td>
+
                                 <td class="color-white text-bold">{{waitingReturn.customer}}</td>
+
                                 <td class="color-white text-bold">
                                         {% if waitingReturn.object is empty %}{% else %}{{waitingReturn.object}}<br>{% endif %}
                                         {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject1}}<br>{% endif %}
                                         {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject2}}<br>{% endif %}
                                         {% if waitingReturn.subobject1 is empty %}{% else %}{{waitingReturn.subobject3}}{% endif %}
                                 </td>
+
                                 <td class="color-white text-bold">{% for waitingReturn in waitingReturn.users %}
                                         {{ waitingReturn.firstname }} <br>
                                     {% endfor %}
                                 </td>
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                                <td>                 
-                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_nw', {"id": waitingReturn.id }) }}">P1</a>
-                                    <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_nw', {"id": waitingReturn.id }) }}">P2</a>
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id":
-                                        waitingReturn.id}) }}"><i class="fas fa-undo"></i></a>
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
+                                {% if userRole is not null and roles[userRole] is defined %}
+                                {% set showActions =
+                                
+                                roles[userRole].wainting_return_nw_to_p1 is defined and roles[userRole].wainting_return_nw_to_p1 or
+                                roles[userRole].wainting_return_nw_to_p2 is defined and roles[userRole].wainting_return_nw_to_p2 or
+                                roles[userRole].wainting_return_nw_to_nw is defined and roles[userRole].wainting_return_nw_to_nw or
+                                roles[userRole].wainting_return_modify_nw is defined and roles[userRole].wainting_return_modify_nw or
+                                roles[userRole].wainting_return_delete_nw is defined and roles[userRole].wainting_return_delete_nw
+                                %}
+                                    {% if showActions %}
+                                        <td>                 
 
-                                    <a class="color-yellow" class="color-yellow" href="{{ path('next_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
-                                </td>
-                            {% endif %}
+                                            {% if roles[userRole].wainting_return_nw_to_p1 is defined and roles[userRole].wainting_return_nw_to_p1 %}
+                                                <a class="color-yellow" href="{{ path('to_waiting_return_from_p1_nw', {"id": waitingReturn.id }) }}">P1</a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_nw_to_p2 is defined and roles[userRole].wainting_return_nw_to_p2 %}
+                                                <a class="color-yellow" href="{{ path('to_waiting_return_from_p2_nw', {"id": waitingReturn.id }) }}">P2</a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_nw_to_nw is defined and roles[userRole].wainting_return_nw_to_nw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('change_waiting_return_to_waiting_return_cw', {"id":
+                                                waitingReturn.id}) }}"><i class="fas fa-undo"></i></a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_delete_nw is defined and roles[userRole].wainting_return_delete_nw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('next_week_modify_waiting_return', {"id": waitingReturn.id}) }}"><i class="fas fa-cog"></i></a>
+                                            {% endif %}
+
+                                            {% if roles[userRole].wainting_return_modify_nw is defined and roles[userRole].wainting_return_delete_nw %}
+                                                <a class="color-yellow" class="color-yellow" href="{{ path('next_week_delete_waiting_return', {"id": waitingReturn.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer une attente de retour')"><i class="fas fa-trash"></i></a>
+                                            {% endif %}
+                                        </td>
+                                    {% endif %}
+                                {% endif %}
+                            
                             </tr>
                         {% endif %}
                     {% endfor %}

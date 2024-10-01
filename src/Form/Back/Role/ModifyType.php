@@ -118,6 +118,25 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['wainting_return_delete_cw'],
             ])
+            // Current Week -> Appointment
+            ->add('appointment_cw_to_nw', CheckboxType::class, [
+                'label' => 'Vers semaine suivante',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_cw_to_nw'],
+            ])
+            ->add('appointment_modify_cw', CheckboxType::class, [
+                'label' => 'Bouton modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_modify_cw'],
+            ])
+            ->add('appointment_delete_cw', CheckboxType::class, [
+                'label' => 'Bouton supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_delete_cw'],
+            ])
             // Next WEEK -> P1
             ->add('waiting_return_in_p1_nw', CheckboxType::class, [
                 'label' => 'Bouton Attente Retour',
@@ -180,8 +199,57 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['task_p2_nw_to_p2_cw_button'],
             ])
-        
-            // Next WEEK -> Wainting Return     
+
+            // Next WEEK -> Wainting Return
+            ->add('wainting_return_nw_to_p1', CheckboxType::class, [
+                'label' => 'Vers P1',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_nw_to_p1'],
+            ])
+            ->add('wainting_return_nw_to_p2', CheckboxType::class, [
+                'label' => 'Vers P2',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_nw_to_p2'],
+            ])
+            ->add('wainting_return_nw_to_cw', CheckboxType::class, [
+                'label' => 'Vers semaine actuelle',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_nw_to_cw'],
+            ])
+            ->add('wainting_return_modify_nw', CheckboxType::class, [
+                'label' => 'Bouton modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_modify_nw'],
+            ])
+            ->add('wainting_return_delete_nw', CheckboxType::class, [
+                'label' => 'Bouton supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['wainting_return_delete_nw'],
+            ])
+            // Current Week -> Appointment
+            ->add('appointment_nw_to_cw', CheckboxType::class, [
+                'label' => 'Vers semaine suivante',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_nw_to_cw'],
+            ])
+            ->add('appointment_modify_nw', CheckboxType::class, [
+                'label' => 'Bouton modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_modify_nw'],
+            ])
+            ->add('appointment_delete_nw', CheckboxType::class, [
+                'label' => 'Bouton supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['appointment_delete_nw'],
+            ])
             // Global
             ->add('button_done', CheckboxType::class, [
                 'label' => 'Bouton "Fait"',
@@ -244,6 +312,10 @@ class ModifyType extends AbstractType
             'wainting_return_from_cw_to_nw' => null,
             'wainting_return_modify_cw' => null,
             'wainting_return_delete_cw' => null,
+            // Current Week -> Appointment
+            'appointment_cw_to_nw' => null,
+            'appointment_modify_cw'=> null,
+            'appointment_delete_cw' => null,
             // Next WEEK -> P1
             'waiting_return_in_p1_nw' => null,
             'task_p1_nw_to_p1_cw_button' => null,
@@ -257,6 +329,14 @@ class ModifyType extends AbstractType
             'task_p2_nw_to_p2_cw_button' => null,
             'waiting_return_in_p2_nw' => null,
             // Next WEEK -> Wainting Return
+            'wainting_return_nw_to_p1' => null,
+            'wainting_return_nw_to_p2' => null,
+            'wainting_return_nw_to_cw' => null,
+            'wainting_return_modify_nw' => null,
+            'wainting_return_delete_nw' => null,
+            'appointment_nw_to_cw' => null,
+            'appointment_modify_nw' => null,
+            'appointment_delete_nw' => null,
             // Global
             'reorder_task' => null,
             'add_task' => null,

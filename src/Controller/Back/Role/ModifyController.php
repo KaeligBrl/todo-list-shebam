@@ -43,6 +43,11 @@ class ModifyController extends AbstractController
         $waintingReturnModifyCw = $roles['roles'][$roleName]['wainting_return_modify_cw'] ?? false;
         $waintingReturnDeleteCw = $roles['roles'][$roleName]['wainting_return_delete_cw'] ?? false;
 
+        // Current Week -> Appointment
+        $appointmentCwToNw = $roles['roles'][$roleName]['appointment_cw_to_nw'] ?? false;
+        $appointmentModifyCw = $roles['roles'][$roleName]['appointment_modify_cw'] ?? false;
+        $appointmentDeleteCw = $roles['roles'][$roleName]['appointment_delete_cw'] ?? false;
+
         // Next WEEK -> P1
         $waintinReturnInP1Nw = $roles['roles'][$roleName]['waiting_return_in_p1_nw'] ?? false;
         $taskP1ToP2Nw = $roles['roles'][$roleName]['task_p1_to_p2_nw'] ?? false;
@@ -58,7 +63,17 @@ class ModifyController extends AbstractController
         $waintinReturnInP2Nw = $roles['roles'][$roleName]['waiting_return_in_p2_nw'] ?? false;
 
         // Next WEEK -> Wainting Return
+        $waintingReturnNwToP1 = $roles['roles'][$roleName]['wainting_return_nw_to_p1'] ?? false;
+        $waintingReturnNwToP2 = $roles['roles'][$roleName]['wainting_return_nw_to_p2'] ?? false;
+        $waintingReturnNwToCw = $roles['roles'][$roleName]['wainting_return_nw_to_cw'] ?? false;
+        $waintingReturnDeleteNw = $roles['roles'][$roleName]['wainting_return_delete_nw'] ?? false;
+        $waintingReturnModifyNw = $roles['roles'][$roleName]['wainting_return_modify_nw'] ?? false;
 
+        // Current Week -> Appointment
+        $appointmentNwToCw = $roles['roles'][$roleName]['appointment_nw_to_cw'] ?? false;
+        $appointmentModifyNw = $roles['roles'][$roleName]['appointment_modify_nw'] ?? false;
+        $appointmentDeleteNw = $roles['roles'][$roleName]['appointment_delete_nw'] ?? false;
+        
         // Global
         $buttonDone = $roles['roles'][$roleName]['button_done'] ?? false;
         $addTask = $roles['roles'][$roleName]['add_task'] ?? false;
@@ -87,6 +102,10 @@ class ModifyController extends AbstractController
             'wainting_return_from_cw_to_nw' => $waintingReturnFromCwToNw,
             'wainting_return_modify_cw' => $waintingReturnModifyCw,
             'wainting_return_delete_cw' => $waintingReturnDeleteCw,
+            // Current Week -> Appointment
+            'appointment_cw_to_nw' => $appointmentCwToNw,
+            'appointment_modify_cw' => $appointmentModifyCw,
+            'appointment_delete_cw' => $appointmentDeleteCw,
             // Next WEEK -> P1
             'waiting_return_in_p1_nw' => $waintinReturnInP1Nw,
             'task_p1_to_p2_nw' => $taskP1ToP2Nw,
@@ -100,6 +119,15 @@ class ModifyController extends AbstractController
             'task_p2_delete_nw' => $taskP2DeleteNw,
             'task_p2_nw_to_p2_cw_button' => $taskP2NwToP2CwButton,
             // Next WEEK -> Wainting Return
+            'wainting_return_nw_to_p1' => $waintingReturnNwToP1,
+            'wainting_return_nw_to_p2' => $waintingReturnNwToP2,
+            'wainting_return_nw_to_cw' => $waintingReturnNwToCw,
+            'wainting_return_delete_nw' => $waintingReturnDeleteNw,
+            'wainting_return_modify_nw' => $waintingReturnModifyNw,
+            // Next Week -> Appointment
+            'appointment_nw_to_cw' => $appointmentNwToCw,
+            'appointment_modify_nw' => $appointmentModifyNw,
+            'appointment_delete_nw' => $appointmentDeleteNw,
             // Global
             'reorder_task' => $reorderTask,
             'add_task' => $addTask,
@@ -134,6 +162,10 @@ class ModifyController extends AbstractController
                 'wainting_return_from_cw_to_nw' => $data['wainting_return_from_cw_to_nw'],
                 'wainting_return_modify_cw' => $data['wainting_return_modify_cw'],
                 'wainting_return_delete_cw' => $data['wainting_return_delete_cw'],
+                // Current Week -> Appointment
+                'appointment_cw_to_nw' => $data['appointment_cw_to_nw'],
+                'appointment_modify_cw' => $data['appointment_modify_cw'],
+                'appointment_delete_cw' => $data['appointment_delete_cw'],
                 // Next WEEK -> P1
                 'waiting_return_in_p1_nw' => $data['waiting_return_in_p1_nw'],
                 'task_p1_to_p2_nw' => $data['task_p1_to_p2_nw'],
@@ -146,7 +178,16 @@ class ModifyController extends AbstractController
                 'task_p2_modify_nw' => $data['task_p2_modify_nw'],
                 'task_p2_delete_nw' => $data['task_p2_delete_nw'],
                 'task_p2_nw_to_p2_cw_button' => $data['task_p2_nw_to_p2_cw_button'],
-                // Next WEEK -> Wainting Return                
+                // Next WEEK -> Wainting Return
+                'wainting_return_nw_to_p1' =>  $data['wainting_return_nw_to_p1'],
+                'wainting_return_nw_to_p2' =>  $data['wainting_return_nw_to_p2'],
+                'wainting_return_nw_to_cw' => $data['wainting_return_nw_to_cw'],
+                'wainting_return_nw' => $data['wainting_return_nw_to_cw'],
+                'wainting_return_delete_nw' => $data['wainting_return_delete_nw'],
+                // Next  -> Appointment
+                'appointment_nw_to_cw' => $data['appointment_nw_to_cw'],
+                'appointment_modify_nw' => $data['appointment_modify_nw'],
+                'appointment_delete_nw' => $data['appointment_delete_nw'],
                 // Global
                 'button_done' => $data['button_done'],
                 'reorder_task' => $data['reorder_task'],

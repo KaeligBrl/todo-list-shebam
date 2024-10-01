@@ -9,35 +9,30 @@
 		<h1 class="text-center color-white mb-3">Semaine Suivante</h1>
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto " id="navbarqaqa">
-            {% if app.user %}
-                {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-						<li class="nav-item">
-							<a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i
-									class="color-white fas fa-hourglass-start"></i></a>
-						</li>
-                        <li class="nav-item"> 
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'next_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_nw' %}active-filters{% endif %}
-                                        navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
-                        </li>
-
-                {% endif %}
-            {% endif %}
+				<li class="nav-item"> 
+					<a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
+				</li>
+				<li class="nav-item"> 
+					<a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
+				</li>
+				<li class="nav-item">
+					<a class="navbar-text text-uppercase text-margin" href="{{ path('next_week_waiting_return') }}">Attente retour <i
+							class="color-white fas fa-hourglass-start"></i></a>
+				</li>
+				<li class="nav-item"> 
+					<a class="
+								{% if app.request.attributes.get('_route') starts with 'next_week_appointment' %}active-filters{% endif %}
+								{% if app.request.attributes.get('_route') starts with 'modify_appointment_nw' %}active-filters{% endif %}
+								navbar-text text-uppercase text-margin" href="{{ path('next_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
+				</li>
             </ul> 
         </nav>
 		<div class="container text-center padding-dopdown-mobile">
-            {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
+
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
                 </div>
-            {% endif %}
+
             <table id="tableOrderAppointment" class="table table-bordered" data-toggle="table">
                 <thead class="bg-blue-dark-light table-borderless">
                     <tr>
@@ -47,9 +42,19 @@
                         <th class="color-yellow text-bold" scope="col">Objet</th>
                         <th class="color-yellow text-bold" scope="col">Equipe</th>
                         
-                    {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                        <th class="color-yellow text-bold" scope="col">Action</th>
-                    {% endif %}
+						{% if userRole is not null and roles[userRole] is defined %}
+						{% set showActions =
+						roles[userRole].appointment_nw_to_cw is defined and roles[userRole].appointment_nw_to_cw or
+						roles[userRole].appointment_modify_nw is defined and roles[userRole].appointment_modify_nw or
+						roles[userRole].appointment_delete_nw is defined and roles[userRole].appointment_delete_nw
+						%}
+						
+						{% if showActions %}
+						<th class="color-yellow" scope="col">Action</th>
+						{% endif %}
+						
+						
+						{% endif %}
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
@@ -65,16 +70,31 @@
                                     {{ appointment.firstname }} <br>
                                 {% endfor %}
                                 </td>
-                                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-                                <td class="color-yellow">
-                                        
-                                    <a class="color-yellow" href="{{ path('change_nw_to_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-undo"></i></a>&nbsp;
-                                        
-                                    <a class="color-yellow" href="{{ path('modify_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
 
-                                    <a class="color-yellow" href="{{ path('delete_nw_appointment', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
-                                </td>
-                            {% endif %}
+								{% if userRole is not null and roles[userRole] is defined %}
+								{% set showActions =
+								
+								roles[userRole].appointment_nw_to_cw is defined and roles[userRole].appointment_nw_to_cw or
+								roles[userRole].appointment_modify_nw is defined and roles[userRole].appointment_modify_nw or
+								roles[userRole].appointment_delete_nw is defined and roles[userRole].appointment_delete_nw
+								%}
+									{% if showActions %}
+										<td class="color-yellow">
+												
+											{% if roles[userRole].appointment_nw_to_cw is defined and roles[userRole].appointment_nw_to_cw %}
+												<a class="color-yellow" href="{{ path('change_nw_to_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-undo"></i></a>&nbsp;
+											{% endif %}
+
+											{% if roles[userRole].appointment_modify_nw is defined and roles[userRole].appointment_modify_nw %}
+												<a class="color-yellow" href="{{ path('modify_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+											{% endif %}
+
+											{% if roles[userRole].appointment_delete_nw is defined and roles[userRole].appointment_delete_nw %}
+												<a class="color-yellow" href="{{ path('delete_nw_appointment', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
+											{% endif %}
+										</td>
+									{% endif %}
+								{% endif %}
                             </tr>
                         {% endif %}
                     {% endfor %}

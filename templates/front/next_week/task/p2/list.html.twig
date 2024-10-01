@@ -34,7 +34,7 @@
                 </div>
             {% endif %}
 
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if roles[userRole].reorder_task is defined and roles[userRole].reorder_task %} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table"  data-use-row-attr-func="true" data-reorderable-rows="true">
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
@@ -116,9 +116,9 @@
                                 {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
                                 {% if showDoneButtonCw %}
                                     <td class="form-switch">
-                                        {# {% if roles[userRole].show_button_done_in_nw is defined and roles[userRole].show_button_done_in_nw %} #}
-                                        <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : '' }} data-taskdone="{{task.id}}">
-                                        {# {% endif %} #}
+                                        {% if roles[userRole].show_button_done_in_nw is defined and roles[userRole].show_button_done_in_nw %}
+                                            <input type="checkbox" class="taskdone" {{ (task.done) ? 'checked' : '' }} data-taskdone="{{task.id}}">
+                                        {% endif %}
                                     </td>
                                 {% endif %}
                                 </tr>
