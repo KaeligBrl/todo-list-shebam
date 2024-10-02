@@ -40,6 +40,12 @@ class RoleService
         return $roles[$roleName] ?? [];
     }
 
+    public function getRoutePermissions(string $roleName): array
+    {
+        $roleData = $this->getRoleData($roleName);
+        return $roleData['routes'] ?? []; // Retourne les permissions des routes
+    }
+
     private function getRolesFilePath(): string
     {
         return __DIR__ . '/../../config/roles.yaml';

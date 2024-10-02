@@ -51,6 +51,7 @@ class RouteService
         return $filteredRoutes;
     }
 
+
     /**
      * Vérifie si le contrôleur appartient aux namespaces Back ou Front.
      *
