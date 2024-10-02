@@ -7,21 +7,24 @@ use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Role\ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
 {
     private $allRouteService;
+    private $router;
 
-    public function __construct(AllRouteService $allRouteService)
+    public function __construct(RouterInterface $router,AllRouteService $allRouteService)
     {
+        $this->router = $router;
         $this->allRouteService = $allRouteService;
     }
     /**
      * @Route("/admin/role/modifier/{roleName}", name="role_edit")
      */
-    public function editRole(Request $request, string $roleName): Response
+    public function editRole(AllRouteService $allRouteService,Request $request, string $roleName): Response
     {
         // Lire le fichier roles.yaml
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
@@ -151,13 +154,13 @@ class ModifyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
      
             $data = $form->getData();
-            $formData = [];
-            // Mettre à jour les rôles en fonction des données du formulaire
-            foreach ($routes as $routeInfo) {
-                $routeName = $routeInfo['name'];
-                $roles['roles'][$roleName][$routeName] = $data['route_' . $routeName]; // Met à jour avec la valeur du formulaire
-            }
+            var_dump($data);
 
+            // Mettre à jour les rôles en fonction des données du formulaire
+            $allRoutesService = new AllRouteService($this->router); // Assurez-vous de l'injecter correctement
+            $routes = $allRoutesService->getRoutesFromControllers();
+
+            // Supposons que vous ayez déjà récupéré toutes les données de $data et $allRouteService
             $roles['roles'][$data['role']] = [
                 'label' => $data['label'],
                 // Current Week -> P1
@@ -212,11 +215,20 @@ class ModifyController extends AbstractController
                 'add_wainting_return' => $data['add_wainting_return'],
             ];
 
+            foreach ($allRouteService->getRoutesFromControllers() as $route) {
+
+                // Vérifiez si la route existe dans $data et ajoutez la valeur correspondante
+                $routeKey = '' . $route['name'];
+                if (isset($data[$routeKey])) {
+                    // Ajoutez la donnée pour chaque route dans le tableau des rôles
+                    $roles['roles'][$data['role']]['routes'][$route['name']] = $data[$routeKey];
+                }
+            }
+
             file_put_contents($rolesFilePath, Yaml::dump($roles, 4));
 
             $this->addFlash('success', 'Rôle modifié avec succès.');
 
-            return $this->redirectToRoute('role_edit', ['roleName' => $roleName]);
         }
 
         return $this->render('back/role/modify.html.twig', [

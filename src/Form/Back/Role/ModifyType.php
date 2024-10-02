@@ -22,8 +22,18 @@ class ModifyType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $routes = $this->allRouteService->getRoutesFromControllers();
 
+        // Ajouter des cases à cocher pour chaque route
+        foreach ($routes as $route) {
+            $builder->add('route_' . $route['name'], CheckboxType::class, [
+                'required' => false,
+                'label' => $route['name'],
+                'label_attr' => ['class' => 'color-yellow text-bold mb-3'],
+                'data' => $options['roles'][$route['name']] ?? false, // Pré-remplir avec la valeur existante
+            ]);
+        }
         $builder
             ->add('role', HiddenType::class, [
                 'data' => $options['role'],
@@ -297,20 +307,6 @@ class ModifyType extends AbstractType
                 'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ]);
 
-            // Ajouter chaque route comme case à cocher dans le formulaire
-            foreach ($options['routes'] as $routeInfo) {
-                // Si $routeInfo est un tableau avec une clé 'name'
-                $routeName = is_array($routeInfo) ? $routeInfo['name'] : $routeInfo->getName();
-
-                // Utiliser le nom de la route pour générer une clé unique
-                $builder->add('route_' . $routeName, CheckboxType::class, [
-                    'label' => $routeName,
-                    'label_attr' => ['class' => 'color-yellow text-bold'],
-                    'required' => false,
-                ]);
-            }
-
-        $builder->setData(['routes' => $routes]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

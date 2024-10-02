@@ -109,36 +109,36 @@
                 </div>
             </div>
                 <p class="form-role-title text-center mb-4 mt-4">Accès aux URLS</p>
-<div class="row">
-    <div class="col-md-6">
-        {% set count = 0 %}
-        {% for field in form %}
-        {% if field.vars.name starts with 'route_' %}
-        {% if count < (form|length / 3) %} <div class="form-check">
-            {{ form_widget(field) }}
-            {{ form_label(field) }}
-    </div>
-    {% set count = count + 1 %}
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-</div>
+                <div class="row">
+                    <div class="col-md-6">
+                        {% set count = 0 %}
+                        {% for field in form %}
+                        {% if field.vars.name starts with 'route_' %}
+                        {% if count < (form|length / 3) %} <div class="form-check">
+                            {{ form_widget(field) }}
+                            {{ form_label(field) }}
+                    </div>
+                    {% set count = count + 1 %}
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
 
-<div class="col-md-6">
-    {% set count = 0 %}
-    {% for field in form %}
-    {% if field.vars.name starts with 'route_' %}
-    {% if count >= (form|length / 3) %}
-    <div class="form-check">
-        {{ form_widget(field) }}
-        {{ form_label(field) }}
-    </div>
-    {% endif %}
-    {% set count = count + 1 %}
-    {% endif %}
-    {% endfor %}
-</div>
-</div>
+                    <div class="col-md-6">
+                        {% set count = 0 %}
+                        {% for field in form %}
+                        {% if field.vars.name starts with 'route_' %}
+                        {% if count >= (form|length / 3) %}
+                        <div class="form-check">
+                            {{ form_widget(field) }}
+                            {{ form_label(field) }}
+                        </div>
+                        {% endif %}
+                        {% set count = count + 1 %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
 
                 
                 <div class="row">
