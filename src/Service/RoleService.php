@@ -34,8 +34,15 @@ class RoleService
         return null;
     }
 
+    public function getRoleData(string $roleName): array
+    {
+        $roles = $this->getRoles();
+        return $roles[$roleName] ?? [];
+    }
+
     private function getRolesFilePath(): string
     {
         return __DIR__ . '/../../config/roles.yaml';
     }
 }
+

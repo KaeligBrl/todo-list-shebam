@@ -2,7 +2,7 @@
 
 namespace App\Form\Back\Role;
 
-use App\Service\AllRouteService;
+use App\Service\RouteService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -14,26 +14,16 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ModifyType extends AbstractType
 {
-    private $allRouteService;
+    private RouteService $routeService;
 
-    public function __construct(AllRouteService $allRouteService)
+    public function __construct(RouteService $routeService)
     {
-        $this->allRouteService = $allRouteService;
+        $this->routeService = $routeService;
     }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $routes = $this->routeService->getRoutesFromControllers();
 
-        $routes = $this->allRouteService->getRoutesFromControllers();
-
-        // Ajouter des cases à cocher pour chaque route
-        foreach ($routes as $route) {
-            $builder->add('route_' . $route['name'], CheckboxType::class, [
-                'required' => false,
-                'label' => $route['name'],
-                'label_attr' => ['class' => 'color-yellow text-bold mb-3'],
-                'data' => $options['roles'][$route['name']] ?? false, // Pré-remplir avec la valeur existante
-            ]);
-        }
         $builder
             ->add('role', HiddenType::class, [
                 'data' => $options['role'],
@@ -307,6 +297,20 @@ class ModifyType extends AbstractType
                 'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ]);
 
+        foreach ($routes as $route) {
+            // Vérifiez le nom de la route
+            $routeName = $route['name']; // Cela dépend de la structure de $route
+            $checkboxName = $routeName; // Nom de la case à cocher
+
+            $builder->add($checkboxName, CheckboxType::class, [
+                'label' => $routeName,
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options[$checkboxName] ?? false,
+            ]);
+        }
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -365,7 +369,6 @@ class ModifyType extends AbstractType
             'generate_archive_task' => null,
             'button_done' => null,
             'add_wainting_return' => null,
-            // Urls
             'routes' => []
         ]);
     }

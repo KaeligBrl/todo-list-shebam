@@ -2,37 +2,33 @@
 
 namespace App\Controller\Back\Role;
 
-use App\Service\AllRouteService;
+
+use App\Service\RouteService;
 use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Role\ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
 {
-    private $allRouteService;
-    private $router;
+    private $routeService;
 
-    public function __construct(RouterInterface $router,AllRouteService $allRouteService)
+    public function __construct(RouteService $routeService)
     {
-        $this->router = $router;
-        $this->allRouteService = $allRouteService;
+        $this->routeService = $routeService;
     }
     /**
      * @Route("/admin/role/modifier/{roleName}", name="role_edit")
      */
-    public function editRole(AllRouteService $allRouteService,Request $request, string $roleName): Response
+    public function editRole(Request $request, string $roleName): Response
     {
         // Lire le fichier roles.yaml
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
         $roles = Yaml::parseFile($rolesFilePath);
 
         $currentLabel = $roles['roles'][$roleName]['label'] ?? '';
-
-        $routes = $this->allRouteService->getRoutesFromControllers();
 
         // Current Week -> P1
         $currentShowP2Button = $roles['roles'][$roleName]['p2_button_in_p1_cw'] ?? false;
@@ -93,10 +89,12 @@ class ModifyController extends AbstractController
         $generateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
         $addWaintingReturn = $roles['roles'][$roleName]['add_wainting_return'] ?? false;
 
+        $routes = $this->routeService->getRoutesFromControllers();
+
         $form = $this->createForm(ModifyType::class, null, [
             'role' => $roleName,
+            'routes' => $this->routeService->getRoutesFromControllers(),
             'label' => $currentLabel,
-            'routes' => $routes, // Passer les routes à l'option du formulaire
             // Current Week -> P1
             'p2_button_in_p1_cw' => $currentShowP2Button,
             'task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
@@ -154,12 +152,7 @@ class ModifyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
      
             $data = $form->getData();
-            var_dump($data);
-
-            // Mettre à jour les rôles en fonction des données du formulaire
-            $allRoutesService = new AllRouteService($this->router); // Assurez-vous de l'injecter correctement
-            $routes = $allRoutesService->getRoutesFromControllers();
-
+            
             // Supposons que vous ayez déjà récupéré toutes les données de $data et $allRouteService
             $roles['roles'][$data['role']] = [
                 'label' => $data['label'],
@@ -215,7 +208,9 @@ class ModifyController extends AbstractController
                 'add_wainting_return' => $data['add_wainting_return'],
             ];
 
-            foreach ($allRouteService->getRoutesFromControllers() as $route) {
+            // Récupérer les données de chaque route
+
+            foreach ($this->routeService->getRoutesFromControllers() as $route) {
 
                 // Vérifiez si la route existe dans $data et ajoutez la valeur correspondante
                 $routeKey = '' . $route['name'];
@@ -229,11 +224,13 @@ class ModifyController extends AbstractController
 
             $this->addFlash('success', 'Rôle modifié avec succès.');
 
+            return $this->redirectToRoute('role_edit', ['roleName' => $roleName]);
         }
 
         return $this->render('back/role/modify.html.twig', [
             'form' => $form->createView(),
             'roleName' => $roleName,
+            'routes' => $routes,
         ]);
     }
 }
