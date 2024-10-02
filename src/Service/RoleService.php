@@ -27,11 +27,11 @@ class RoleService
         $user = $this->security->getUser();
 
         if ($user) {
-            $roles = $user->getRoles(); // Récupère les rôles de l'utilisateur
-            return $roles[0] ?? null;    // On retourne le premier rôle trouvé
+            $roles = $user->getRoles();
+            return $roles[0] ?? null;
         }
 
-        return null; // Retourne null si aucun utilisateur connecté
+        return null;
     }
 
     private function getRolesFilePath(): string

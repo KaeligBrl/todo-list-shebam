@@ -30,23 +30,21 @@ class IndexController extends AbstractController
 
     private function getRolesFromConfig(): array
     {
-        // Chemin vers le fichier roles.yaml
+        
         $configFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
-
-        // Lire le fichier et parser le contenu YAML
+        
         $config = Yaml::parseFile($configFilePath);
 
-        // Traiter les rôles pour s'assurer qu'ils ont une structure uniforme
         $roles = [];
         foreach ($config['roles'] ?? [] as $role => $properties) {
             if (is_array($properties)) {
-                // Si les propriétés sont un tableau, ajoutez-les
+                
                 $roles[$role] = $properties;
             } else {
-                // Si ce n'est pas un tableau, créez un tableau avec des valeurs par défaut
+                
                 $roles[$role] = [
                     'label' => $properties,
-                    'show_p2_button' => false, // Valeur par défaut
+                    'show_p2_button' => false,
                 ];
             }
         }

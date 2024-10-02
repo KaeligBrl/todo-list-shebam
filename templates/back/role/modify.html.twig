@@ -9,7 +9,7 @@
         </div>
 
         {{ form_start(form) }}
-        <div class="form-back" style="max-width: 900px !important">
+        <div class="form-back" style="max-width: 950px !important">
 
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
@@ -108,6 +108,43 @@
                     </div>
                 </div>
             </div>
+                <p class="form-role-title text-center mb-4 mt-4">Accès aux URLS</p>
+<div class="row">
+    <div class="col-md-6">
+        {% set count = 0 %}
+        {% for field in form %}
+        {% if field.vars.name starts with 'route_' %}
+        {% if count < (form|length / 3) %} <div class="form-check">
+            {{ form_widget(field) }}
+            {{ form_label(field) }}
+    </div>
+    {% set count = count + 1 %}
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="col-md-6">
+    {% set count = 0 %}
+    {% for field in form %}
+    {% if field.vars.name starts with 'route_' %}
+    {% if count >= (form|length / 3) %}
+    <div class="form-check">
+        {{ form_widget(field) }}
+        {{ form_label(field) }}
+    </div>
+    {% endif %}
+    {% set count = count + 1 %}
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+
+                
+                <div class="row">
+                    <div class="col">
+                    </div>
+                </div>
             <div class="d-flex justify-content-center mt-3">{{ form_row(form.submit) }}</div>
 
         </div>

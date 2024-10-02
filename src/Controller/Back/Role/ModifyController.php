@@ -2,15 +2,22 @@
 
 namespace App\Controller\Back\Role;
 
+use App\Service\AllRouteService;
+use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Role\ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Yaml\Yaml;
 
 class ModifyController extends AbstractController
 {
+    private $allRouteService;
+
+    public function __construct(AllRouteService $allRouteService)
+    {
+        $this->allRouteService = $allRouteService;
+    }
     /**
      * @Route("/admin/role/modifier/{roleName}", name="role_edit")
      */
@@ -21,6 +28,8 @@ class ModifyController extends AbstractController
         $roles = Yaml::parseFile($rolesFilePath);
 
         $currentLabel = $roles['roles'][$roleName]['label'] ?? '';
+
+        $routes = $this->allRouteService->getRoutesFromControllers();
 
         // Current Week -> P1
         $currentShowP2Button = $roles['roles'][$roleName]['p2_button_in_p1_cw'] ?? false;
@@ -84,6 +93,7 @@ class ModifyController extends AbstractController
         $form = $this->createForm(ModifyType::class, null, [
             'role' => $roleName,
             'label' => $currentLabel,
+            'routes' => $routes, // Passer les routes à l'option du formulaire
             // Current Week -> P1
             'p2_button_in_p1_cw' => $currentShowP2Button,
             'task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
@@ -133,7 +143,7 @@ class ModifyController extends AbstractController
             'add_task' => $addTask,
             'generate_archive_task' => $generateArchiveTask,
             'button_done' => $buttonDone,
-            'add_wainting_return' => $addWaintingReturn
+            'add_wainting_return' => $addWaintingReturn,
         ]);
 
         $form->handleRequest($request);
@@ -141,6 +151,12 @@ class ModifyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
      
             $data = $form->getData();
+            $formData = [];
+            // Mettre à jour les rôles en fonction des données du formulaire
+            foreach ($routes as $routeInfo) {
+                $routeName = $routeInfo['name'];
+                $roles['roles'][$roleName][$routeName] = $data['route_' . $routeName]; // Met à jour avec la valeur du formulaire
+            }
 
             $roles['roles'][$data['role']] = [
                 'label' => $data['label'],
@@ -193,7 +209,7 @@ class ModifyController extends AbstractController
                 'reorder_task' => $data['reorder_task'],
                 'add_task' => $data['add_task'],
                 'generate_archive_task' => $data['generate_archive_task'],
-                'add_wainting_return' => $data['add_wainting_return']
+                'add_wainting_return' => $data['add_wainting_return'],
             ];
 
             file_put_contents($rolesFilePath, Yaml::dump($roles, 4));

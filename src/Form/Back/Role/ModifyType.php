@@ -2,19 +2,28 @@
 
 namespace App\Form\Back\Role;
 
+use App\Service\AllRouteService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class ModifyType extends AbstractType
 {
+    private $allRouteService;
+
+    public function __construct(AllRouteService $allRouteService)
+    {
+        $this->allRouteService = $allRouteService;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $routes = $this->allRouteService->getRoutesFromControllers();
+
         $builder
             ->add('role', HiddenType::class, [
                 'data' => $options['role'],
@@ -281,10 +290,27 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['add_wainting_return'],
             ])
+            // Urls
+            
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',
                 'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ]);
+
+            // Ajouter chaque route comme case à cocher dans le formulaire
+            foreach ($options['routes'] as $routeInfo) {
+                // Si $routeInfo est un tableau avec une clé 'name'
+                $routeName = is_array($routeInfo) ? $routeInfo['name'] : $routeInfo->getName();
+
+                // Utiliser le nom de la route pour générer une clé unique
+                $builder->add('route_' . $routeName, CheckboxType::class, [
+                    'label' => $routeName,
+                    'label_attr' => ['class' => 'color-yellow text-bold'],
+                    'required' => false,
+                ]);
+            }
+
+        $builder->setData(['routes' => $routes]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -342,7 +368,9 @@ class ModifyType extends AbstractType
             'add_task' => null,
             'generate_archive_task' => null,
             'button_done' => null,
-            'add_wainting_return' => null
+            'add_wainting_return' => null,
+            // Urls
+            'routes' => []
         ]);
     }
 }
