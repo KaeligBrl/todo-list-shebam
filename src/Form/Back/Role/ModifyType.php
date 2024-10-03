@@ -302,14 +302,15 @@ class ModifyType extends AbstractType
             $routeName = $route['name']; // Cela dépend de la structure de $route
             $checkboxName = $routeName; // Nom de la case à cocher
 
+            $status = $route['status'];
+
             $builder->add($checkboxName, CheckboxType::class, [
                 'label' => $routeName,
                 'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false,
-                'data' => $options[$checkboxName] ?? false,
+                'attr' => ['checked' => $status],
+                'required' => false
             ]);
         }
-
 
     }
 

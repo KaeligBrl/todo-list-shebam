@@ -209,7 +209,6 @@ class ModifyController extends AbstractController
             ];
 
             // Récupérer les données de chaque route
-
             foreach ($this->routeService->getRoutesFromControllers() as $route) {
 
                 // Vérifiez si la route existe dans $data et ajoutez la valeur correspondante
@@ -226,6 +225,7 @@ class ModifyController extends AbstractController
 
             return $this->redirectToRoute('role_edit', ['roleName' => $roleName]);
         }
+
 
         return $this->render('back/role/modify.html.twig', [
             'form' => $form->createView(),

@@ -9,7 +9,7 @@
         </div>
 
         {{ form_start(form) }}
-        <div class="form-back" style="max-width: 950px !important">
+        <div class="form-back" style="max-width: 1050px !important">
 
         {% for message in app.flashes('success') %}
         <div class="alert alert-success">{{ message }}</div>
@@ -113,8 +113,7 @@
                 {% for route in routes %}
                 <div class="col">
                     <label class="color-yellow text-bold">
-                        {{ form_row(form[route.name], {'label': route.name, 'attr': {'class': route.status ? 'checkbox-checked' :
-                        'checkbox-unchecked'}}) }}
+                        {{ form_row(form[route.name]) }}
                     </label>
                 </div>
                 {% endfor %}
