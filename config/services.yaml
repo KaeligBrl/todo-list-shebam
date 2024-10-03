@@ -34,11 +34,10 @@ services:
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
     App\EventListener\MaintenanceListener:
         arguments:
             - '%maintenanceFilePath%'
-            - '@twig' # Permet de dire à l'argument qu'il doit passer twig dansEvent Listener
+            - '@twig' 
         tags:
             - { name: kernel.event_listener, event: kernel.request }
     App\Service\RoleService:
@@ -55,3 +54,9 @@ services:
             $roleService: '@App\Service\RoleService'
         tags:
             - { name: twig.extension }
+    App\Service\RoleConfigService:
+        arguments:
+            $rolesFilePath: '%kernel.project_dir%/config/roles.yaml'
+    App\EventListener\RouteAccessListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
