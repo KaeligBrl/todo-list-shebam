@@ -1,4 +1,5 @@
 <?php
+// src/Form/Back/User/ModifyUserType.php
 
 namespace App\Form\Back\User;
 
@@ -17,50 +18,49 @@ class ModifyUserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('email', EmailType::class, [
-            'disabled' => true,
-            'label' => false,
-            'label_attr' => ['class' => 'label-custom'],
-        ])
-        ->add('firstname', TextType::class, [
-            'label' => false,
-            'label_attr' => ['class' => 'label-custom'],
-        ])
-        ->add('lastname', TextType::class, [
-            'label' => false,
-            'label_attr' => ['class' => 'label-custom'],
-        ])
-        ->add('roles', ChoiceType::class, array(
-            'choices' => array(
-                'Utilisateur' => 'ROLE_USER',
-                'Administrateur' => 'ROLE_ADMIN'
-            ),
-            'label' => false,
-            'label_attr' => ['class' => 'label-custom'],
-        ))
+            ->add('email', EmailType::class, [
+                'disabled' => true,
+                'label' => false,
+                'label_attr' => ['class' => 'label-custom'],
+            ])
+            ->add('firstname', TextType::class, [
+                'label' => false,
+                'label_attr' => ['class' => 'label-custom'],
+            ])
+            ->add('lastname', TextType::class, [
+                'label' => false,
+                'label_attr' => ['class' => 'label-custom'],
+            ])
+            ->add('roles', ChoiceType::class, [
+                'choices' => $options['roles_choices'], // Utiliser les choix passés
+                'label' => false,
+                'label_attr' => ['class' => 'label-custom color-yellow'],
+                'expanded' => false, // Liste déroulante (par défaut, expanded est false)
+                'multiple' => false, // Sélection unique
+            ])
+            ->add('submit', SubmitType::class, [
+                'label' => 'Valider',
+                'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
+            ]);
 
-        ->add('submit', SubmitType::class, [
-            'label' => 'Valider',
-            'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
-        ])
-        ;
-        $builder->get('roles')
-        ->addModelTransformer(new CallbackTransformer(
+        $builder->get('roles')->addModelTransformer(new CallbackTransformer(
             function ($rolesArray) {
-                // transform the array to a string
-                return count($rolesArray)? $rolesArray[0]: null;
+                // Transforme le tableau en une chaîne, prends seulement le premier rôle
+                return isset($rolesArray[0]) ? $rolesArray[0] : null;
             },
-            function ($rolesString) {
-                // transform the string back to an array
-                return [$rolesString];
+            function ($roleString) {
+                // Transforme la chaîne en tableau
+                return [$roleString];
             }
         ));
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'roles_choices' => [], // Ajoutez cette ligne pour définir une option par défaut
         ]);
     }
 }

@@ -119,6 +119,7 @@ class User implements UserInterface
         return $this;
     }
 
+
     /**
      * @see UserInterface
      */

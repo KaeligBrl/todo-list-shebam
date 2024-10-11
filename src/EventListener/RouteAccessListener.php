@@ -2,37 +2,36 @@
 
 namespace App\EventListener;
 
-use Symfony\Component\HttpKernel\Event\RequestEvent;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Yaml\Yaml;
 use App\Service\RoleConfigService;
+use Symfony\Component\Security\Core\Security;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class RouteAccessListener
 {
     private $security;
     private $roleConfigService;
+    private ParameterBagInterface $parameterBag;
 
-    // Liste des routes accessibles sans connexion
-    private $publicRoutes = [
-        'register',
-        'register_message_success',
-        'app_forgot_password_request',
-        'app_logout',
-        'app_check_email',
-        'app_reset_password',
-        'home',
-    ];
-
-    public function __construct(Security $security, RoleConfigService $roleConfigService)
+    public function __construct(Security $security, RoleConfigService $roleConfigService, ParameterBagInterface $parameterBag)
     {
         $this->security = $security;
         $this->roleConfigService = $roleConfigService;
+        $this->parameterBag = $parameterBag;
     }
 
     public function onKernelRequest(RequestEvent $event)
     {
         // Récupérer l'utilisateur connecté
         $user = $this->security->getUser();
+        if (!$user) {
+            return;
+        }
+
+        // Récupérer le rôle de l'utilisateur
+        $role = $user->getRoles()[0]; // Exemple de récupération du rôle principal
 
         // Récupérer la route demandée
         $routeName = $event->getRequest()->attributes->get('_route');
@@ -42,22 +41,41 @@ class RouteAccessListener
             return; // Ou vous pouvez lancer une exception si nécessaire
         }
 
-        // Vérifiez si la route est publique
-        if (in_array($routeName, $this->publicRoutes)) {
-            return; // Permettre l'accès sans vérification
-        }
-
-        // Si l'utilisateur n'est pas connecté, refusez l'accès
-        if (!$user) {
-            throw new AccessDeniedHttpException('Accès refusé');
-        }
-
-        // Récupérer le rôle de l'utilisateur
-        $role = $user->getRoles()[0]; // Exemple de récupération du rôle principal
-
         // Vérifier si la route est accessible selon le rôle dans le fichier roles.yaml
         if (!$this->roleConfigService->isRouteAccessible($role, $routeName)) {
             throw new AccessDeniedHttpException('Accès refusé');
         }
+
     }
+
+    /**
+     * Récupère les données des rôles à partir de roles.yaml.
+     *
+     * @return array
+     */
+    public function getRolesData(): array
+    {
+        $rolesFilePath = $this->parameterBag->get('kernel.project_dir') . '/config/roles.yaml';
+
+        // Analyse le fichier YAML et le retourne sous forme de tableau
+        return Yaml::parseFile($rolesFilePath);
+    }
+
+    /**
+     * Récupère les rôles disponibles sous forme de tableau.
+     *
+     * @return array
+     */
+    public function getAvailableRoles(): array
+    {
+        $rolesData = $this->getRolesData();
+        $roles = [];
+        foreach ($rolesData['roles'] as $roleConfig) {
+            if (isset($roleConfig['label']) && isset($roleConfig['role'])) {
+                $roles[$roleConfig['label']] = $roleConfig['role'];
+            }
+        }
+        return $roles;
+    }
+
 }
