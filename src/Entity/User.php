@@ -42,7 +42,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    // autres propriétés et méthodes...
+    #[ORM\Column(length: 255)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $lastname = null;
 
     public function getId(): ?int
     {
@@ -125,5 +129,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // Si vous stockez des données sensibles temporaires, nettoyez-les ici
         // $this->plainPassword = null;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): static
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(string $lastname): static
+    {
+        $this->lastname = $lastname;
+
+        return $this;
     }
 }
