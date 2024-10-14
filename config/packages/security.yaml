@@ -13,13 +13,19 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             security: true
             lazy: true
             provider: app_user_provider
-            custom_authenticators:
-                - App\Security\LoginFormAuthenticator # remplace guard
             logout:
-                path: app_logout
+                path: /deconnexion
+            custom_authenticator: App\Security\AppCustomAuthenticator
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
 
     access_control: []

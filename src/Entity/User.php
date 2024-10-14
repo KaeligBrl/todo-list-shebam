@@ -4,9 +4,8 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Symfony\Component\HttpFoundation\File\File;
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -28,7 +27,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * Assert\Email()
      */
     private $email;
 
@@ -43,35 +41,7 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $lastname;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Task::class, mappedBy="users")
-     */
-    private $tasks;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Appointment::class, mappedBy="user")
-     */
-    private $appointments;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=IdeaBam::class, mappedBy="person")
-     */
-    private $ideaBams;
-
-    public function __construct()
-    {
-        $this->ideaBams = new ArrayCollection();
-    }
+    // autres propriétés et méthodes...
 
     public function getId(): ?int
     {
@@ -91,9 +61,15 @@ class User implements UserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
      * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email; // Remplace getUsername()
+    }
+
+    /**
+     * @see UserInterface (Obsolète, mais peut être conservé pour compatibilité)
      */
     public function getUsername(): string
     {
@@ -106,8 +82,7 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_USER'; // Garantie que chaque utilisateur a le rôle ROLE_USER
 
         return array_unique($roles);
     }
@@ -118,7 +93,6 @@ class User implements UserInterface
 
         return $this;
     }
-
 
     /**
      * @see UserInterface
@@ -140,7 +114,7 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        // Non nécessaire avec bcrypt ou argon2
     }
 
     /**
@@ -148,93 +122,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
+        // Si vous stockez des données sensibles temporaires, nettoyez-les ici
         // $this->plainPassword = null;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Task[]
-     */
-    public function getTaches(): Collection
-    {
-        return $this->tasks;
-    }
-
-    public function addTach(Task $tas): self
-    {
-        if (!$this->tasks->contains($tas)) {
-            $this->tasks[] = $tas;
-            $tas->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTach(Task $tas): self
-    {
-        if ($this->tasks->removeElement($tas)) {
-            $tas->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-    return $this->firstname;
-    }
-
-    /**
-     * @return Collection|Appointment[]
-     */
-    public function getAppointments(): Collection
-    {
-        return $this->appointments;
-    }
-
-    public function addAppointments(Appointment $appointmentt): self
-    {
-        if (!$this->appointments->contains($appointmentt)) {
-            $this->appointments[] = $appointmentt;
-            $appointmentt->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRendezvouse(Appointment $appointmentt): self
-    {
-        if ($this->appointments->removeElement($appointmentt)) {
-            // set the owning side to null (unless already changed)
-            if ($appointmentt->getUser() === $this) {
-                $appointmentt->setUser(null);
-            }
-        }
-
-        return $this;
     }
 }
