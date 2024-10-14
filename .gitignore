@@ -12,11 +12,10 @@ var/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-<<<<<<< ours
-=======
+
 
 ###> symfony/phpunit-bridge ###
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
->>>>>>> theirs
+
