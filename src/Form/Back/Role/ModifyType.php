@@ -36,37 +36,37 @@ class ModifyType extends AbstractType
             ])
             // Current WEEK -> P1
             ->add('p2_button_in_p1_cw', CheckboxType::class, [
-                'label' => 'Bouton P2',
+                'label' => $options['p2_button_in_p1_cw_label'] ?? 'Bouton P2',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false, 
                 'data' => $options['p2_button_in_p1_cw'], 
             ])
             ->add('add_task_cw', CheckboxType::class, [
-                'label' => 'Ajouter une tâche',
+                'label' => $options['add_task_cw_label'] ?? 'Ajouter une tâche',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['add_task_cw'],
             ])
             ->add('task_p1_cw_to_p1_nw_button', CheckboxType::class, [
-                'label' => 'De P1 vers semaine suivante',
+                'label' => $options['task_p1_cw_to_p1_nw_button_label'] ?? 'De P1 vers semaine suivante',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['task_p1_cw_to_p1_nw_button'],
             ])
             ->add('task_p1_modify_button', CheckboxType::class, [
-                'label' => 'Bouton modifier',
+                'label' => $options['task_p1_modify_button_label'] ?? 'Bouton modifier',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['task_p1_modify_button'], 
             ])
             ->add('task_p1_delete_button', CheckboxType::class, [
-                'label' => 'Bouton supprimer',
+                'label' => $options['task_p1_delete_button_label'] ?? 'Bouton supprimer',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false, 
                 'data' => $options['task_p1_delete_button'],
             ])
             ->add('waiting_return_in_p1_cw', CheckboxType::class, [
-                'label' => 'Bouton Attente Retour',
+                'label' => $options['waiting_return_in_p1_cw_label'] ?? 'Bouton Attente Retour',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['waiting_return_in_p1_cw'],
@@ -323,33 +323,28 @@ class ModifyType extends AbstractType
                 'data' => $options['modify_ideabam'],
             ])
             ->add('delete_ideabam', CheckboxType::class, [
-                'label' => 'Bouton supprimer',
+                'label' => $options['delete_ideabam_label'] ?? 'Bouton supprimer',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'required' => false,
                 'data' => $options['delete_ideabam'],
-            ])
-
-            // Urls
-            
-            ->add('submit', SubmitType::class, [
-                'label' => 'Mettre à jour',
-                'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
             ]);
 
+        // Ajout dynamique de chaque route trouvée
         foreach ($routes as $route) {
-            // Vérifiez le nom de la route
-            $routeName = $route['name']; // Cela dépend de la structure de $route
-            $checkboxName = $routeName; // Nom de la case à cocher
-
+            $routeName = $route['name'];
             $status = $route['status'];
-
-            $builder->add($checkboxName, CheckboxType::class, [
-                'label' => $routeName,
+            $builder->add($routeName, CheckboxType::class, [
+                'label' => '' . str_replace('_', ' ', $routeName),
                 'label_attr' => ['class' => 'color-yellow text-bold'],
                 'attr' => ['checked' => $status],
                 'required' => false
             ]);
         }
+
+        $builder->add('submit', SubmitType::class, [
+            'label' => 'Mettre à jour',
+            'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],
+        ]);
 
     }
 

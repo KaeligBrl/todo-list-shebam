@@ -123,16 +123,30 @@
 
             </div>
                 <p class="form-role-title text-center mb-4 mt-4">Accès aux URLS</p>
-                <div class="row">
+                {% set last_category = null %}
+                {% set routes_by_category = {} %}
+                {# Regrouper les routes par controller #}
                 {% for route in routes %}
-                <div class="col">
-                    <label class="color-yellow text-bold">
-                        {{ form_row(form[route.name]) }}
-                    </label>
-                </div>
+                    {% set cat = attribute(route, 'controller') %}
+                    {% if routes_by_category[cat] is not defined %}
+                        {% set routes_by_category = routes_by_category|merge({ (cat): [route] }) %}
+                    {% else %}
+                        {% set routes_by_category = routes_by_category|merge({ (cat): routes_by_category[cat]|merge([route]) }) %}
+                    {% endif %}
                 {% endfor %}
 
-                </div>
+                {% for cat, cat_routes in routes_by_category %}
+                    <div class="row">
+                        {% for route in cat_routes %}
+                            <div class="col-6">
+                                <label class="color-yellow text-bold">
+                                    {{ form_row(form[route.name]) }}
+                                </label>
+                            </div>
+                            {% if loop.index is divisible by(2) and not loop.last %}</div><div class="row">{% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             <div class="d-flex justify-content-center mt-3">{{ form_row(form.submit) }}</div>
 
         </div>
