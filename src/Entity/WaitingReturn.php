@@ -7,56 +7,36 @@ use App\Repository\WaitingReturnRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
-/**
- * @ORM\Entity(repositoryClass=WaitingReturnRepository::class)
- */
+#[ORM\Entity(repositoryClass: WaitingReturnRepository::class)]
 class WaitingReturn
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $object;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $sub_object1;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $sub_object2;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $sub_object3;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="tasks")
-     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'tasks')]
     private $users;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Customer::class, inversedBy="tasks")
-     */
+    #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'tasks')]
     private $customer;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $nextweek;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $position;
 
     public function __construct()
