@@ -9,6 +9,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class RouteService
 {
+    // Permissions à exclure de la liste des routes pour les formulaires
+    private array $excludedPermissions = [
+        'add_ideabam',
+        'modify_ideabam',
+        'delete_ideabam',
+    ];
     private RouterInterface $router;
     private ParameterBagInterface $parameterBag;
 
@@ -48,6 +54,10 @@ class RouteService
         }
 
         foreach ($routes as $routeName => $route) {
+            // Exclure les permissions spécifiques
+            if (in_array($routeName, $this->excludedPermissions, true)) {
+                continue;
+            }
             // Si la route est dans la liste des routes publiques, on l'ajoute directement
             if (in_array($routeName, $this->publicRoutes)) {
                 $filteredRoutes[] = [

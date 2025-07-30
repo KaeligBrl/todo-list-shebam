@@ -8,20 +8,21 @@
         <nav class="navbar navbar-expand-lg">
             <ul class="navbar-nav mx-auto " id="navbarqaqa">
                 {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="
+            {% if userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and roles[userRole].routes.ideabam_waiting_return is defined and roles[userRole].routes.ideabam_waiting_return %}
+            <li class="nav-item">
+                <a class="
                                                     {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
                                                     {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active-filters{% endif %}
                                                     navbar-text text-uppercase text-margin"
-                            href="{{ path('ideabam_waiting_return') }}">Attente retour <i class="color-white fas fa-tasks"></i></a>
-                    </li>
-                    {% endif %}
-                {% endif %}
+                    href="{{ path('ideabam_waiting_return') }}">Attente retour <i class="color-white fas fa-tasks"></i></a>
+            </li>
+            {% endif %}
+        {% endif %}
             </ul>
         </nav>
     <div class="container text-center padding-mobile">
-        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+        {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].add_ideabam is defined and
+        roles[userRole].add_ideabam %}
         <div class="mb-4">
             <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
         </div>
@@ -31,13 +32,17 @@
     </div>
 
     <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" 
-        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-use-row-attr-func="true" {% endif %}>
+        {% if app.user and userRole is not null and roles[userRole] is defined %} data-use-row-attr-func="true" {% endif %}>
         <thead class="bg-blue-dark-light table-borderless" style="border-right-style: none;">
             <tr style="border-right-style: none;">
-                <th class="color-yellow text-bold" data-field="subject" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Idée</th>
-                <th class="color-yellow text-bold" data-field="object" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Objet</th>
-                <th class="color-yellow text-bold" data-field="person" {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %} data-sortable="true" {% endif %} scope="col">Personne</th>
-                {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                <th class="color-yellow text-bold" data-field="subject" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Idée</th>
+                <th class="color-yellow text-bold" data-field="object" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Objet</th>
+                <th class="color-yellow text-bold" data-field="person" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Personne</th>
+                {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
+                    (roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return) or
+                    (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
+                    (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
+                ) %}
                 <th class="color-yellow" scope="col">Action</th>
                 {% endif %}
             </tr>
@@ -53,11 +58,21 @@
                                 {{ person.firstname }} <br>
                             {% endfor %}
                         </td>
-                        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+                        {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
+                            (roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return) or
+                            (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
+                            (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
+                        ) %}
                         <td>
-                            <a class="color-yellow" class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
+                            {% if roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return %}
+                            <a class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
+                            {% endif %}
+                            {% if roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam %}
                             <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+                            {% endif %}
+                            {% if roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam %}
                             <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
+                            {% endif %}
                         </td>
                         {% endif %}
                     </tr>

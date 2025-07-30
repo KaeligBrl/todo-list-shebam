@@ -302,7 +302,33 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['show_switch_to_cw'],
             ])
-        
+
+            // Ideabam
+            ->add('add_ideabam', CheckboxType::class, [
+                'label' => 'Ajouter une idée',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['add_ideabam'],
+            ])
+            ->add('ideabam_to_waiting_return', CheckboxType::class, [
+                'label' => 'Vers attente retour',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['ideabam_to_waiting_return'],
+            ])
+            ->add('modify_ideabam', CheckboxType::class, [
+                'label' => 'Bouton modifier',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['modify_ideabam'],
+            ])
+            ->add('delete_ideabam', CheckboxType::class, [
+                'label' => 'Bouton supprimer',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['delete_ideabam'],
+            ])
+
             // Urls
             
             ->add('submit', SubmitType::class, [
@@ -385,7 +411,12 @@ class ModifyType extends AbstractType
             'button_done' => null,
             'add_wainting_return' => null,
             'show_switch_to_cw' => null,
-            'routes' => []
+            'routes' => [],
+            //Ideabam
+            'add_ideabam' => null,
+            'ideabam_to_waiting_return' => null,
+            'modify_ideabam' => null,
+            'delete_ideabam' => null,
         ]);
     }
 }

@@ -63,9 +63,9 @@ class ModifyController extends AbstractController
 
         // Next WEEK -> P2
         $taskP2ToP1Nw = $roles['roles'][$roleName]['task_p2_to_p1_nw'] ?? false;
-        $taskP2ModifyNw= $roles['roles'][$roleName]['task_p2_modify_nw '] ?? false;
-        $taskP2DeleteNw = $roles['roles'][$roleName]['task_p2_delete_nw '] ?? false;
-        $taskP2NwToP2CwButton = $roles['roles'][$roleName]['task_p2_nw_to_p2_cw_button '] ?? false;
+        $taskP2ModifyNw= $roles['roles'][$roleName]['task_p2_modify_nw'] ?? false;
+        $taskP2DeleteNw = $roles['roles'][$roleName]['task_p2_delete_nw'] ?? false;
+        $taskP2NwToP2CwButton = $roles['roles'][$roleName]['task_p2_nw_to_p2_cw_button'] ?? false;
         $waintinReturnInP2Nw = $roles['roles'][$roleName]['waiting_return_in_p2_nw'] ?? false;
 
         // Next WEEK -> Wainting Return
@@ -87,6 +87,12 @@ class ModifyController extends AbstractController
         $generateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
         $addWaintingReturn = $roles['roles'][$roleName]['add_wainting_return'] ?? false;
         $btnSwitchNwToNw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
+
+        // Ideabam
+        $addIdeabam = $roles['roles'][$roleName]['add_ideabam'] ?? false;
+        $ideabamToWaitingReturn = $roles['roles'][$roleName]['ideabam_to_waiting_return'] ?? false;
+        $modifyIdeabam = $roles['roles'][$roleName]['modify_ideabam'] ?? false;
+        $deleteIdeabam = $roles['roles'][$roleName]['delete_ideabam'] ?? false;
 
         $routes = $this->routeService->getRoutesFromControllers();
 
@@ -146,6 +152,11 @@ class ModifyController extends AbstractController
             'button_done' => $buttonDone,
             'add_wainting_return' => $addWaintingReturn,
             'show_switch_to_cw' => $btnSwitchNwToNw,
+            // Ideabam
+            'add_ideabam' => $addIdeabam,
+            'ideabam_to_waiting_return' => $ideabamToWaitingReturn,
+            'modify_ideabam' => $modifyIdeabam, 
+            'delete_ideabam' => $deleteIdeabam,
         ]);
 
         $form->handleRequest($request);
@@ -192,16 +203,20 @@ class ModifyController extends AbstractController
                 'task_p2_modify_nw' => $data['task_p2_modify_nw'],
                 'task_p2_delete_nw' => $data['task_p2_delete_nw'],
                 'task_p2_nw_to_p2_cw_button' => $data['task_p2_nw_to_p2_cw_button'],
+
                 // Next WEEK -> Wainting Return
                 'wainting_return_nw_to_p1' =>  $data['wainting_return_nw_to_p1'],
                 'wainting_return_nw_to_p2' =>  $data['wainting_return_nw_to_p2'],
                 'wainting_return_nw_to_cw' => $data['wainting_return_nw_to_cw'],
                 'wainting_return_nw' => $data['wainting_return_nw_to_cw'],
+                'wainting_return_modify_nw' => $data['wainting_return_modify_nw'],
                 'wainting_return_delete_nw' => $data['wainting_return_delete_nw'],
+
                 // Next  -> Appointment
                 'appointment_nw_to_cw' => $data['appointment_nw_to_cw'],
                 'appointment_modify_nw' => $data['appointment_modify_nw'],
                 'appointment_delete_nw' => $data['appointment_delete_nw'],
+
                 // Global
                 'button_done' => $data['button_done'],
                 'reorder_task' => $data['reorder_task'],
@@ -209,6 +224,12 @@ class ModifyController extends AbstractController
                 'generate_archive_task' => $data['generate_archive_task'],
                 'add_wainting_return' => $data['add_wainting_return'],
                 'show_switch_to_cw' => $data['show_switch_to_cw'],
+
+                // Ideabam
+                'add_ideabam' => $data['add_ideabam'],
+                'ideabam_to_waiting_return' => $data['ideabam_to_waiting_return'],
+                'modify_ideabam' => $data['modify_ideabam'],
+                'delete_ideabam' => $data['delete_ideabam'],
             ];
 
             // Récupérer les données de chaque route
