@@ -55,7 +55,7 @@ class AddController extends AbstractController
             return $this->redirectToRoute('role_add');
         }
 
-        return $this->render('back/permissions/add.html.twig', [
+        return $this->render('back/role/add.html.twig', [
             'form' => $form->createView(),
         ]);
     }

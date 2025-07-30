@@ -31,6 +31,7 @@ class ModifyController extends AbstractController
         $currentLabel = $roles['roles'][$roleName]['label'] ?? '';
 
         // Current Week -> P1
+        $currentweekAddTaskBtn = $roles['roles'][$roleName]['add_task_cw'] ?? false;
         $currentShowP2Button = $roles['roles'][$roleName]['p2_button_in_p1_cw'] ?? false;
         $currentShowP1CwToP1NwButton = $roles['roles'][$roleName]['task_p1_cw_to_p1_nw_button'] ?? false;
         $currentTaskModifyP1Button = $roles['roles'][$roleName]['task_p1_modify_button'] ?? false;
@@ -88,6 +89,7 @@ class ModifyController extends AbstractController
         $reorderTask = $roles['roles'][$roleName]['reorder_task'] ?? false;
         $generateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
         $addWaintingReturn = $roles['roles'][$roleName]['add_wainting_return'] ?? false;
+        $btnSwitchNwToNw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
 
         $routes = $this->routeService->getRoutesFromControllers();
 
@@ -96,6 +98,7 @@ class ModifyController extends AbstractController
             'routes' => $this->routeService->getRoutesFromControllers(),
             'label' => $currentLabel,
             // Current Week -> P1
+            'add_task_cw' => $currentweekAddTaskBtn,
             'p2_button_in_p1_cw' => $currentShowP2Button,
             'task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
             'task_p1_modify_button' => $currentTaskModifyP1Button,
@@ -145,6 +148,7 @@ class ModifyController extends AbstractController
             'generate_archive_task' => $generateArchiveTask,
             'button_done' => $buttonDone,
             'add_wainting_return' => $addWaintingReturn,
+            'show_switch_to_cw' => $btnSwitchNwToNw,
         ]);
 
         $form->handleRequest($request);
@@ -157,6 +161,7 @@ class ModifyController extends AbstractController
             $roles['roles'][$data['role']] = [
                 'label' => $data['label'],
                 // Current Week -> P1
+                'add_task_cw' => $data['add_task_cw'],
                 'p2_button_in_p1_cw' => $data['p2_button_in_p1_cw'],
                 'task_p1_cw_to_p1_nw_button' => $data['task_p1_cw_to_p1_nw_button'],
                 'task_p1_modify_button' => $data['task_p1_modify_button'],
@@ -206,6 +211,7 @@ class ModifyController extends AbstractController
                 'add_task' => $data['add_task'],
                 'generate_archive_task' => $data['generate_archive_task'],
                 'add_wainting_return' => $data['add_wainting_return'],
+                'show_switch_to_cw' => $data['show_switch_to_cw'],
             ];
 
             // Récupérer les données de chaque route

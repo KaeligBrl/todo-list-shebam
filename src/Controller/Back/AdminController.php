@@ -53,14 +53,10 @@ class AdminController extends AbstractController
         $image = new File;
         $charactersLength = strlen($characters);
         $randomString = '';
-        for (
-            $i = 0;
-            $i < $length;
-            $i++
-        ) {
+        for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        $path = $this->getParameter('download_task_directory');
+        $path = $this->getParameter('kernel.project_dir') . '/public/downloads/';
 
         $dateFile = date("d-m-y");
         $fileName = 'liste-des-taches-du-' . $dateFile . '-' . $randomString . '.pdf';

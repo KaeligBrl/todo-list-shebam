@@ -3,6 +3,7 @@
 namespace App\Controller\Back\Download;
 
 use App\Entity\File;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,15 +16,14 @@ class DeleteController extends AbstractController
      * return RedirectResponse
      */
 
-    public function deleteStatus(File $downloadDelete): RedirectResponse
+    public function deleteStatus(File $downloadDelete, EntityManagerInterface $entityManager): RedirectResponse
     {
-        $fileName = $this->getParameter('download_task_directory') . '/' . $downloadDelete->getName();
+        $fileName = $this->getParameter('kernel.project_dir') . '/public/downloads/' . $downloadDelete->getName();
         if(file_exists($fileName)){
             unlink($fileName);
             }
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($downloadDelete);
-        $em->flush();
+        $entityManager->remove($downloadDelete);
+        $entityManager->flush();
         return $this->redirectToRoute("download_list");
     }
 }

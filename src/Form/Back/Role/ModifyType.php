@@ -41,6 +41,12 @@ class ModifyType extends AbstractType
                 'required' => false, 
                 'data' => $options['p2_button_in_p1_cw'], 
             ])
+            ->add('add_task_cw', CheckboxType::class, [
+                'label' => 'Ajouter une tâche',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['add_task_cw'],
+            ])
             ->add('task_p1_cw_to_p1_nw_button', CheckboxType::class, [
                 'label' => 'De P1 vers semaine suivante',
                 'label_attr' => ['class' => 'color-yellow text-bold'],
@@ -290,6 +296,13 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['add_wainting_return'],
             ])
+            ->add('show_switch_to_cw', CheckboxType::class, [
+                'label' => 'Basculer vers semaine actuelle',
+                'label_attr' => ['class' => 'color-yellow text-bold'],
+                'required' => false,
+                'data' => $options['show_switch_to_cw'],
+            ])
+        
             // Urls
             
             ->add('submit', SubmitType::class, [
@@ -321,6 +334,7 @@ class ModifyType extends AbstractType
             'role' => null, 
             'label' => null,
             // Current WEEK -> P1
+            'add_task_cw' => null,
             'p2_button_in_p1_cw' => null,
             'task_p1_cw_to_p1_nw_button' => null,
             'task_p1_modify_button' => null,
@@ -370,6 +384,7 @@ class ModifyType extends AbstractType
             'generate_archive_task' => null,
             'button_done' => null,
             'add_wainting_return' => null,
+            'show_switch_to_cw' => null,
             'routes' => []
         ]);
     }

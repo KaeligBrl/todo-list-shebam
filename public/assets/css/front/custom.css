@@ -22,6 +22,7 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 /* END Navbar */
 
 /* Form */
+.form-check-label {color: var(--color-white)}
 .form-front {background: var(--color-blue-dark);width: 100%;max-width: 550px;padding: 70px;border-radius: 15px;margin: 0 auto;}
 .form-front .checkbox {font-weight: 400;}
 .form-front .form-control {position: relative;box-sizing: border-box;height: auto;padding: 10px;font-size: 20px;}
@@ -85,4 +86,5 @@ hr{height: 3px;background: var(--color-yellow-dark); width: 10%;}
 .form-general input[type="password"] {margin-bottom: 10px;border-radius: 20px;color: #939090;padding-left: 30px;}
 .form-general input[type="submit"] {font-size: 20px;}
 .form-check {padding: 7px 0 3px 30px;}
+..form-check-label {color: var(--color-white) !important;}
 /* END Forms */

@@ -42,11 +42,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $password;
 
-    #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $firstname;
 
-    #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $lastname;
 
     public function getId(): ?int
     {
@@ -153,5 +157,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->lastname = $lastname;
 
         return $this;
+    }
+
+    /**
+     * Méthode pour convertir l'objet User en chaîne de caractères
+     */
+    public function __toString(): string
+    {
+        return $this->firstname;
     }
 }

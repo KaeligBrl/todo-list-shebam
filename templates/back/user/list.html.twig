@@ -35,10 +35,10 @@
 							<td class="color-white text-bold">                        
 								{# On boucle sur les rôles #}
 								{% for role in user.roles %}
-									{% if role == "ROLE_USER" %}
+									{% if role == "ROLE_UTILISATEUR" %}
 										Utilisateur
-									{% elseif role == "ROLE_PRO" %}
-										Entreprise
+									{% elseif role == "ROLE_STAGIAIRE" %}
+										Stagiaire
 									{% elseif role == "ROLE_ADMIN" %}
 										Administrateur
 									{% endif %}

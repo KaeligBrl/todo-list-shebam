@@ -13,13 +13,13 @@ class DeleteController extends AbstractController
     /**
     * @Route("/admin/utilisateurs/{id}/supprimer", name="user_delete")
     * @param User $user
+    * @param EntityManagerInterface $entityManager
     * return RedirectResponse
     */
-    public function deleteUser(User $user): RedirectResponse
+    public function deleteUser(User $user, EntityManagerInterface $entityManager): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($user);
-        $em->flush();
+        $entityManager->remove($user);
+        $entityManager->flush();
 
         return $this->redirectToRoute("user_list");
     }
