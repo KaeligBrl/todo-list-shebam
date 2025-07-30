@@ -8,41 +8,25 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Entity(repositoryClass=CustomerRepository::class)
- * @UniqueEntity(
- * fields= {"name"},
- * message= "Le client existe déjà !"
- * )
- * 
- */
+#[ORM\Entity(repositoryClass: CustomerRepository::class)]
+#[UniqueEntity(
+    fields: ["name"],
+    message: "Le client existe déjà !"
+)]
 class Customer
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $name;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Task::class, inversedBy="customer")
-     */
-    private $task;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="customer")
-     */
+    #[ORM\OneToMany(targetEntity: Task::class, mappedBy: "customer")]
     private $tasks;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+    #[ORM\Column(type: "boolean", nullable: true)]
     private $archived;
 
     public function __construct()
@@ -69,19 +53,7 @@ class Customer
 
     public function __toString()
     {
-    return $this->name;
-    }
-
-    public function getTache(): ?Task
-    {
-        return $this->task;
-    }
-
-    public function setTache(?Task $task): self
-    {
-        $this->task = $task;
-
-        return $this;
+        return $this->name;
     }
 
     /**
@@ -89,10 +61,8 @@ class Customer
      */
     public function getTaches(): Collection
     {
-        return $this->task;
-    }
-
-    public function addTach(Task $tach): self
+        return $this->tasks;
+    }    public function addTach(Task $tach): self
     {
         if (!$this->tasks->contains($tach)) {
             $this->tasks[] = $tach;
@@ -104,7 +74,7 @@ class Customer
 
     public function removeTach(task $tach): self
     {
-        if ($this->taskS->removeElement($tach)) {
+        if ($this->tasks->removeElement($tach)) {
             // set the owning side to null (unless already changed)
             if ($tach->getCustomer() === $this) {
                 $tach->setCustomer(null);
