@@ -16,10 +16,7 @@ class ToNextWeekController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/basculer/p2/semaine-suivante/{id}", name="change_task_p2_cw_to_p2_nw")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-actuelle/basculer/p2/semaine-suivante/{id}', name: 'change_task_p2_cw_to_p2_nw')]
     public function changeTaskP1CurrentWeekToP1NextWeek(Task $task, TaskRepository $taskRepository): Response
     {
         $taskRepository->setChangeTaskP2CurrentWeekToP2NextWeek($task->getId());

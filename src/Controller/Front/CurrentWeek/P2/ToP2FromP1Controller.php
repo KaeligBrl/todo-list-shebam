@@ -11,10 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ToP2FromP1Controller extends AbstractController
 {
 
-    /**
-     * @Route("/semaine-actuelle/basculer/p2-en-p1/{id}", name="change_task_cw_to_p1")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-actuelle/basculer/p2-en-p1/{id}', name: 'change_task_cw_to_p1')]
     public function changeTaskToP1Front(Task $task, TaskRepository $taskRepository): Response
     {
         $taskRepository->setChangeTaskForP1CurrentWeek($task->getId());

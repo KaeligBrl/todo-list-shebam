@@ -10,12 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeleteController extends AbstractController
 {
-    /**
-     * @Route("/admin/telechargement/{id}/supprimer", name="delete_download")
-     * @param File $downloadDelete
-     * return RedirectResponse
-     */
-
+    #[Route('/admin/telechargement/{id}/supprimer', name: 'delete_download')]
     public function deleteStatus(File $downloadDelete, EntityManagerInterface $entityManager): RedirectResponse
     {
         $fileName = $this->getParameter('kernel.project_dir') . '/public/downloads/' . $downloadDelete->getName();

@@ -15,15 +15,10 @@ class DeleteController extends AbstractController
     $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/admin/client/{id}/supprimer", name="delete_customer_back")
-     * @param Customer $customerDelete
-     * return RedirectResponse
-     */
+    #[Route('/admin/client/{id}/supprimer', name: 'delete_customer_back')]
     public function deleteStatut(Customer $customerDelete): RedirectResponse {
-        $em = $entityManager;
-        $entityManager->remove($customerDelete);
-        $entityManager->flush();
+        $this->entityManager->remove($customerDelete);
+        $this->entityManager->flush();
         return $this->redirectToRoute("list_customer");
     }
     

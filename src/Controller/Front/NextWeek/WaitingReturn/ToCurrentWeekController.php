@@ -16,10 +16,7 @@ class ToCurrentWeekController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-suivante/basculer/attente-retour/semaine-actuelle/{id}", name="change_waiting_return_to_waiting_return_cw")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-suivante/basculer/attente-retour/semaine-actuelle/{id}', name: 'change_waiting_return_to_waiting_return_cw')]
     public function changeWaitingReturnNextWeekWeekToWaitingReturnCurrentWeek(WaitingReturn $waitingReturn, WaitingReturnRepository $waitingReturnRepository): Response
     {
         $waitingReturnRepository->setChangeWaitingReturnNextWeekToWaitingReturnCurrentWeek($waitingReturn->getId());

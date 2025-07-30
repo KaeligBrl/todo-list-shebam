@@ -11,10 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ToNextWeekFromCurrentWeekController extends AbstractController
 {
 
-    /**
-     * @Route("/semaine-suivante/rendez-vous/basculer/semaine-actuelle/{id}", name="change_nw_to_nw_appointment")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-suivante/rendez-vous/basculer/semaine-actuelle/{id}', name: 'change_nw_to_nw_appointment')]
     public function changeAppointmentNextWeekToCurrentWeek(Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
         $appointmentRepository->setChangeAppointmentNextWeekToCurrentWeek($appointment->getId());
