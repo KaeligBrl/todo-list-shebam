@@ -4,7 +4,7 @@ namespace App\EventListener;
 
 use Symfony\Component\Yaml\Yaml;
 use App\Service\RoleConfigService;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
