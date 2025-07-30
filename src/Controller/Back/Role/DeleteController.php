@@ -6,14 +6,12 @@ use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Permission\AddRoleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeleteController extends AbstractController
 {
-    /**
-     * @Route("/admin/role/supprimer/{roleName}", name="role_delete")
-     */
+    #[Route('/admin/role/supprimer/{roleName}', name: 'role_delete')]
     public function deleteRole(string $roleName): Response
     {
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';

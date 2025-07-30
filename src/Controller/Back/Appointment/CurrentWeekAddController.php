@@ -6,21 +6,18 @@ use App\Entity\Appointment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Appointment\AddAppointmentCurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CurrentWeekAddController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/rendez-vous/ajouter", name="add_appointment_cw")
-     */
+    #[Route('/semaine-actuelle/rendez-vous/ajouter', name: 'add_appointment_cw')]
     public function addTaskAppointment(Request $request): Response
     {
         $appointmentAdd = new Appointment();

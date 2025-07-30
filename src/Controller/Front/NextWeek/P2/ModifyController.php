@@ -7,7 +7,7 @@ use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Task\AddTaskP2NextWeekType;
 use App\Form\Front\Task\ModifyTaskP2NextWeekType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,14 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ModifyController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
     
-    /**
-     * @Route("/semaine-suivante/p2/modifier/{id}", name="modify_task_nw_p2")
-     */
+    #[Route('/semaine-suivante/p2/modifier/{id}', name: 'modify_task_nw_p2')]
     public function modifyTaskP2CurrentWeek(Request $request, Task $taskModify): Response
     {
         $form = $this->createForm(ModifyTaskP2NextWeekType::class, $taskModify);

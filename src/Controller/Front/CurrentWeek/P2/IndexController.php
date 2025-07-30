@@ -7,20 +7,17 @@ use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Task\AddTaskP2CurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/semaine-actuelle/p2", name="current_week_p2")
-     */
+    #[Route('/semaine-actuelle/p2', name: 'current_week_p2')]
     public function index(TaskRepository $taskList,Request $request): Response
     {
 

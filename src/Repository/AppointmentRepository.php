@@ -22,7 +22,7 @@ class AppointmentRepository extends ServiceEntityRepository
     public function setAppointmentForArchived($id)
     {
         $sql = "update App\Entity\Appointment as t set t.archived = t where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
@@ -30,21 +30,21 @@ class AppointmentRepository extends ServiceEntityRepository
     public function setAppointmentForUnArchived($id)
     {
         $sql = "update App\Entity\Appointment as t set t.archived = 0 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
     public function setAppointmentArchivedBtn()
     {
         $sql = "update App\Entity\Appointment as t set t.archived = 1";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
 
     public function setAppointmentUnArchivedBtn()
     {
         $sql = "update App\Entity\Appointment as t set t.archived = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
 
@@ -84,14 +84,14 @@ class AppointmentRepository extends ServiceEntityRepository
     public function setRemoveAppointment()
     {
         $sql = "delete from App\Entity\Appointment as t where t.nextweek = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
 
     public function setChangeAppointmentToCurrentWeek()
     {
         $sql = "update App\Entity\Appointment as t set t.nextweek = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
 }

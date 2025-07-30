@@ -4,14 +4,14 @@ namespace App\Controller\Back\Customer;
 
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeleteController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
     $this->entityManager = $entityManager;
     }
 
@@ -21,9 +21,9 @@ class DeleteController extends AbstractController
      * return RedirectResponse
      */
     public function deleteStatut(Customer $customerDelete): RedirectResponse {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($customerDelete);
-        $em->flush();
+        $em = $entityManager;
+        $entityManager->remove($customerDelete);
+        $entityManager->flush();
         return $this->redirectToRoute("list_customer");
     }
     

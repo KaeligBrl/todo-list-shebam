@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use App\Repository\WaitingReturnRepository;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,8 +20,7 @@ class AdminController extends AbstractController
 {
 
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
@@ -30,9 +29,7 @@ class AdminController extends AbstractController
     // ----------- Download All Missions ---------
     // -------------------------------------------
 
-    /**
-     *@Route("/generation-de-l-archive/", name="download")
-     */
+    #[Route('/generation-de-l-archive/', name: 'download')]
     public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, WaitingReturnRepository $waitingReturn, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
 

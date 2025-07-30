@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\User\ModifyUserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -17,15 +17,12 @@ class ModifyController extends AbstractController
     private $entityManager;
     private $parameterBag;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag)
-    {
+    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag) {
         $this->entityManager = $entityManager;
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @Route("/admin/utilisateurs/{id}/modifier", name="user_modify")
-     */
+    #[Route('/admin/utilisateurs/{id}/modifier', name: 'user_modify')]
     public function modifyUser(User $userTitle, Request $request): Response
     {
         // Charger les rôles depuis le fichier YAML

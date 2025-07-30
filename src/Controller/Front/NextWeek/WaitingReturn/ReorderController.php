@@ -8,23 +8,19 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use App\Repository\WaitingReturnRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ReorderController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/reorder-waiting-return-next-week", name="reorder-waiting-return-next-week")
-     */
-    public function reorderWaitingReturnNextWeek(Request $request, WaitingReturnRepository $waitingReturnRow)
-    {
+    #[Route('/reorder-waiting-return-next-week', name: 'reorder-waiting-return-next-week')]
+    public function reorderWaitingReturnNextWeek(Request $request, WaitingReturnRepository $waitingReturnRow) {
         $cpt = 0;
         switch ($request->request->get("context")) {
             case '1':

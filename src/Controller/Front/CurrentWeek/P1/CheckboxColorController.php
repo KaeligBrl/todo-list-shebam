@@ -5,28 +5,24 @@ namespace App\Controller\Front\CurrentWeek\P1;
 use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CheckboxColorController  extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/semaine-actuelle/handle-checkbox-change", name="current_week_checkbox_p1")
-     */
-    public function handleCheckboxChange(Request $request)
-    {
+    #[Route('/semaine-actuelle/handle-checkbox-change', name: 'current_week_checkbox_p1')]
+    public function handleCheckboxChange(Request $request, EntityManagerInterface $entityManager) {
         // Récupérez les données de la requête AJAX
         $taskId = $request->request->get('taskId');
         $isChecked = $request->request->get('isChecked');
 
         // Recherchez l'entité correspondante en utilisant $taskId
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $entityManager;
         $entity = $entityManager->getRepository(Task::class)->find($taskId);
 
         if (!$entity) {

@@ -7,7 +7,7 @@ use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Task\AddTaskP2NextWeekType;
 use App\Form\Front\Task\ModifyTaskP2NextWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +15,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
     
-    /**
-     * @Route("/semaine-suivante/p2", name="next_week_p2")
-     */
+    #[Route('/semaine-suivante/p2', name: 'next_week_p2')]
     public function index(TaskRepository $taskList,Request $request): Response
     {
         $taskp2Add = new Task();

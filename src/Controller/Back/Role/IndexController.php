@@ -3,7 +3,7 @@
 namespace App\Controller\Back\Role;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -12,14 +12,11 @@ class IndexController extends AbstractController
 {
     private ParameterBagInterface $parameterBag;
 
-    public function __construct(ParameterBagInterface $parameterBag)
-    {
+    public function __construct(ParameterBagInterface $parameterBag) {
         $this->parameterBag = $parameterBag;
     }
 
-    /**
-     * @Route("/admin/role/", name="role_list")
-     */
+    #[Route('/admin/role/', name: 'role_list')]
     public function index(): Response
     {
         $roles = $this->getRolesFromConfig();

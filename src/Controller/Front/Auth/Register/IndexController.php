@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\Front\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -14,13 +14,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/inscription", name="register")
-     */
-    public function index(Request $request, UserPasswordEncoderInterface $encoder){
+    #[Route('/inscription', name: 'register')]
+    public function index(Request $request, UserPasswordEncoderInterface $encoder) {
 
         if ($this->getUser() instanceof UserInterface === true) {
             return $this->redirectToRoute('current_week');

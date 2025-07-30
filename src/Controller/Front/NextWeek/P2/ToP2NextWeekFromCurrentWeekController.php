@@ -5,7 +5,7 @@ namespace App\Controller\Front\NextWeek\P2;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ToP2NextWeekFromCurrentWeekController extends AbstractController

@@ -12,8 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ApiUpdateDoneController extends AbstractController
 {
     #[Route('/semaine-actuelle/api/update-task/{taskId}', name: 'update_task', methods: ['POST'])]
-    public function updateTask(Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager, $taskId)
-    {
+    public function updateTask(Request $request, TaskRepository $taskRepository, EntityManagerInterface $entityManager, $taskId) {
         try {
             $data = json_decode($request->getContent(), true);
 

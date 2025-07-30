@@ -6,7 +6,7 @@ use App\Entity\Appointment;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Form\Front\Appointment\AddAppointmentNextWeekType;
 use App\Form\Front\Appointment\ModifyAppointmentNextWeekType;
@@ -16,22 +16,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CurrentWeekDeleteController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/rendez-vous/supprimer/id={id}", name="delete_appointment_cw_back")
-     * @param Appointment $appointmentDelete
-     * return RedirectResponse
-     */
-    public function deleteQuoteCurrentWeek(Appointment $appointmentDelete): RedirectResponse
+    #[Route('/semaine-actuelle/rendez-vous/supprimer/id={id}', name: 'delete_appointment_cw_back')]
+    public function deleteQuoteCurrentWeek(Appointment $appointmentDelete, EntityManagerInterface $entityManager): RedirectResponse
     {
 
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($appointmentDelete);
-        $em->flush();
+        $em = $entityManager;
+        $entityManager->remove($appointmentDelete);
+        $entityManager->flush();
 
         return $this->redirectToRoute("current_week");;
     }

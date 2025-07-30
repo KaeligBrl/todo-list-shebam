@@ -6,21 +6,18 @@ use App\Entity\WaitingReturn;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Form\Front\WaitingReturn\ModifyWaitingReturnCurrentWeekType;
 
 class ModifyController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/attente-retour/modifier/{id}", name="current_week_modify_waiting_return")
-     */
+    #[Route('/semaine-actuelle/attente-retour/modifier/{id}', name: 'current_week_modify_waiting_return')]
     public function modifyWaitingReturnCurrentWeek(Request $request, WaitingReturn $waitingReturnModify): Response
     {
         $form = $this->createForm(ModifyWaitingReturnCurrentWeekType::class, $waitingReturnModify);

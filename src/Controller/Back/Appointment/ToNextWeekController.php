@@ -5,8 +5,9 @@ namespace App\Controller\Back\Appointment;
 use App\Entity\Appointment;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ToNextWeekController extends AbstractController
 {
@@ -16,7 +17,7 @@ class ToNextWeekController extends AbstractController
      */
     public function changeQuoteCurrentToNextWeek(AppointmentRepository $appointmentRepository, Appointment $appointment): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $entityManager;
         $repository = $entityManager->$appointmentRepository;
 
         $repository->changeAppointmentCurrentWeekToNextWeek($appointment->getId());

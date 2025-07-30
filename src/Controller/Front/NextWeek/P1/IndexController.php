@@ -10,19 +10,16 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\Task\AddTaskP1NextWeekType;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/semaine-suivante/p1", name="next_week_p1")
-     */
+    #[Route('/semaine-suivante/p1', name: 'next_week_p1')]
     public function index(TaskRepository $taskList,Request $request, AppointmentRepository $appointmentRepository): Response
     {
         $taskAdd = new Task();

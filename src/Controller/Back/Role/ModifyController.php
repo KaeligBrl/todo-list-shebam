@@ -8,20 +8,17 @@ use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Role\ModifyType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
 {
     private $routeService;
 
-    public function __construct(RouteService $routeService)
-    {
+    public function __construct(RouteService $routeService) {
         $this->routeService = $routeService;
     }
-    /**
-     * @Route("/admin/role/modifier/{roleName}", name="role_edit")
-     */
+    #[Route('/admin/role/modifier/{roleName}', name: 'role_edit')]
     public function editRole(Request $request, string $roleName): Response
     {
         // Lire le fichier roles.yaml

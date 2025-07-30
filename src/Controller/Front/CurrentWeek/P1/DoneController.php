@@ -11,8 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class DoneController extends AbstractController
 {
     #[Route('/semaine-actuelle/fait/p1/{id}', name: 'done_task_cw_p1_checkbox')]
-    public function taskDone(Task $taskdone, EntityManagerInterface $entityManager)
-    {
+    public function taskDone(Task $taskdone, EntityManagerInterface $entityManager) {
         $taskdone->setDone(($taskdone->getDone()) ? false : true);
         $entityManager->persist($taskdone);
         $entityManager->flush();

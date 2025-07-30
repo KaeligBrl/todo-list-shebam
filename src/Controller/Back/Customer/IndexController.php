@@ -4,14 +4,12 @@ namespace App\Controller\Back\Customer;
 
 use App\Repository\CustomerRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-    /**
-     * @Route("/admin/client", name="list_customer")
-     */
+    #[Route('/admin/client', name: 'list_customer')]
     public function listCustomers(CustomerRepository $customerRepository): Response
     {
         $totalCustomer = $customerRepository->getTotalCustomers();

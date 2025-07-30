@@ -23,7 +23,7 @@ class WaitingReturnRepository extends ServiceEntityRepository
     public function setChangeWaitingReturnCurrentWeekToWaitingReturnNextWeek($id)
     {
         $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 1 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
@@ -31,7 +31,7 @@ class WaitingReturnRepository extends ServiceEntityRepository
     public function setChangeWaitingReturnNextWeekToWaitingReturnCurrentWeek($id)
     {
         $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 0 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
@@ -182,7 +182,7 @@ class WaitingReturnRepository extends ServiceEntityRepository
     public function setChangeWaitingReturnToCurrentWeek()
     {
         $sql = "update App\Entity\WaitingReturn as t set t.nextweek = 0";
-        $query = $this->getEntityManager()->createQuery($sql);
+        $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
 

@@ -8,19 +8,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\IdeaBam\AddIdeaBamType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/idebam", name="ideabam")
-     */
+    #[Route('/idebam', name: 'ideabam')]
     public function index(IdeaBamRepository $ideaBamListRepository, Request $request): Response
     {
 

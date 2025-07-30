@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Form\Back\User\AddUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -14,15 +14,12 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class AddController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-    * @Route("/admin/utilisateurs/ajouter", name="user_add")
-    */
-    public function addUser(Request $request, UserPasswordEncoderInterface $encoder)
-    {
+    #[Route('/admin/utilisateurs/ajouter', name: 'user_add')]
+    public function addUser(Request $request, UserPasswordEncoderInterface $encoder) {
         $user = new User();
         $form = $this->createForm(AddUserType:: class, $user);
         $form->handleRequest($request);

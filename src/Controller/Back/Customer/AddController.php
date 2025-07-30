@@ -7,18 +7,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\Customer\AddCustomerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AddController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
     $this->entityManager = $entityManager;
     }
-    /**
-     * @Route("/admin/client/ajouter", name="add_customer_back")
-     */
+    #[Route('/admin/client/ajouter', name: 'add_customer_back')]
     public function index(Request $request): Response {
         $customerAdd = new Customer();
         $form = $this->createForm(AddCustomerType::class, $customerAdd);

@@ -6,21 +6,18 @@ use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Task\ModifyTaskP1CurrentWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/p1/modifier/{id}", name="modify_task_p1_cw")
-     */
+    #[Route('/semaine-actuelle/p1/modifier/{id}', name: 'modify_task_p1_cw')]
     public function modifyTaskP1Cw(Request $request, Task $taskModify): Response
     {
         $form = $this->createForm(ModifyTaskP1CurrentWeekType::class, $taskModify);

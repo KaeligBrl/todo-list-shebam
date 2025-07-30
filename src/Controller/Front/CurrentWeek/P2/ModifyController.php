@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Form\Front\Task\ModifyTaskP2CurrentWeekType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,14 +17,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ModifyController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager)
-    {
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-actuelle/p2/modifier/{id}", name="modify_task_cw_p2")
-     */
+    #[Route('/semaine-actuelle/p2/modifier/{id}', name: 'modify_task_cw_p2')]
     public function modifyTaskP2CurrentWeek(Request $request, Task $taskModify): Response
     {
         $form = $this->createForm(ModifyTaskP2CurrentWeekType::class, $taskModify);

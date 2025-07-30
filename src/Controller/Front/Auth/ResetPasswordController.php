@@ -11,13 +11,14 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ResetPasswordController extends AbstractController
 {
@@ -25,8 +26,7 @@ class ResetPasswordController extends AbstractController
 
     private $resetPasswordHelper;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper)
-    {
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper) {
         $this->resetPasswordHelper = $resetPasswordHelper;
     }
 
@@ -116,7 +116,7 @@ class ResetPasswordController extends AbstractController
             );
 
             $user->setPassword($encodedPassword);
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
@@ -173,9 +173,7 @@ class ResetPasswordController extends AbstractController
         return $this->redirectToRoute('app_check_email');
     }
 
-    /**
-     * @Route("/reinitialiser-le-mot-de-passe/changer-avec-succes", name="reset_password_change_message_sucess")
-     */
+    #[Route('/reinitialiser-le-mot-de-passe/changer-avec-succes', name: 'reset_password_change_message_sucess')]
     public function changePasswordMessageSuccess(): Response
     {
         return $this->render('front/reset_password/reset_password_message_success.twig');

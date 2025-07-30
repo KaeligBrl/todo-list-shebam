@@ -44,14 +44,14 @@ class IdeaBamRepository extends ServiceEntityRepository
     public function setChangeIdeabamIdeabamWaitingReturn($id)
     {
         $sql = "update App\Entity\IdeaBam as t set t.waitingReturn = 1 where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 
     public function setChangeIdeabamWaitingReturnToIdeabam($id)
     {
         $sql = "update App\Entity\IdeaBam as t set t.waitingReturn = NULL where t.id = :id";
-        $query = $this->getEntityManager()->createQuery($sql)->setParameters(['id' => $id]);
+        $query = $this->_em->createQuery($sql)->setParameters(['id' => $id]);
         return $query->getResult();
     }
 

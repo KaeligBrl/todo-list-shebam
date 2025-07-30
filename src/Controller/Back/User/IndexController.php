@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\User\ModifyUserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -17,13 +17,11 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class IndexController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-    * @Route("/admin/utilisateurs", name="user_list")
-    */
+    #[Route('/admin/utilisateurs', name: 'user_list')]
     public function index(UserRepository $userAdmin): Response
     {
         return $this->render('back/user/list.html.twig', [

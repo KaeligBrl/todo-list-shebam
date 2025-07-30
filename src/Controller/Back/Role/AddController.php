@@ -7,14 +7,12 @@ use Symfony\Component\Yaml\Yaml;
 use App\Form\Back\Role\AddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AddController extends AbstractController
 {
-    /**
-     * @Route("/admin/permissions/role/ajouter", name="role_add")
-     */
+    #[Route('/admin/permissions/role/ajouter', name: 'role_add')]
     public function addRole(Request $request): Response
     {
         $form = $this->createForm(AddType::class);

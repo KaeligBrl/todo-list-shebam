@@ -9,20 +9,18 @@ use App\Form\Back\Customer\AddCustomerType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Customer\ModifyCustomerType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager){
+    public function __construct(EntityManagerInterface $entityManager) {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/admin/client/{id}/modifier", name="modify_customer_back")
-     */
+    #[Route('/admin/client/{id}/modifier', name: 'modify_customer_back')]
     public function modifyTask(Request $request, Customer $customerModify): Response
     {
         $form = $this->createForm(ModifyCustomerType::class, $customerModify);
