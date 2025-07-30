@@ -59,7 +59,7 @@ class RouteService
             }
 
             $controller = $route->getDefault('_controller');
-            if ($this->isBackOrFrontController($controller)) {
+            if ($controller && $this->isBackOrFrontController($controller)) {
                 $routeStatus = isset($definedRoutes[$routeName]) ? $definedRoutes[$routeName] : false;
                 $filteredRoutes[] = [
                     'name' => $routeName,
