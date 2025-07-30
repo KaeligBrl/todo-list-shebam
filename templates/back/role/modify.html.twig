@@ -136,14 +136,18 @@
                 {% endfor %}
 
                 {% for cat, cat_routes in routes_by_category %}
+                    {% set cols = 2 %}
+                    {% set col_class = 'col-6' %}
                     <div class="row">
                         {% for route in cat_routes %}
-                            <div class="col-6">
+                            <div class="{{ col_class }}">
                                 <label class="color-yellow text-bold">
                                     {{ form_row(form[route.name]) }}
                                 </label>
                             </div>
-                            {% if loop.index is divisible by(2) and not loop.last %}</div><div class="row">{% endif %}
+                            {% if loop.index is divisible by(cols) and not loop.last %}
+                                </div><div class="row">
+                            {% endif %}
                         {% endfor %}
                     </div>
                 {% endfor %}
