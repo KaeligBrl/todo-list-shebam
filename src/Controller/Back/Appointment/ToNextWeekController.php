@@ -11,16 +11,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ToNextWeekController extends AbstractController
 {
-    /**
-     * @Route("/semaine-actuelle/basculer/rendez-vous/semaine-suivante/{id}", name="change_appointment_cw_to_nw_back")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-actuelle/basculer/rendez-vous/semaine-suivante/{id}', name: 'change_appointment_cw_to_nw_back')]
     public function changeQuoteCurrentToNextWeek(AppointmentRepository $appointmentRepository, Appointment $appointment): Response
     {
-        $entityManager = $entityManager;
-        $repository = $entityManager->$appointmentRepository;
-
-        $repository->changeAppointmentCurrentWeekToNextWeek($appointment->getId());
+        $appointmentRepository->changeAppointmentCurrentWeekToNextWeek($appointment->getId());
 
         return $this->redirectToRoute("next_week");
     }

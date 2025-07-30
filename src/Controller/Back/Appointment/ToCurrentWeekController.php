@@ -16,16 +16,10 @@ class ToCurrentWeekController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @Route("/semaine-suivante/basculer/rendez-vous/semaine-actuelle/id={id}", name="change_appointment_nw_to_cw_back")
-     * return RedirectResponse
-     */
+    #[Route('/semaine-suivante/basculer/rendez-vous/semaine-actuelle/id={id}', name: 'change_appointment_nw_to_cw_back')]
     public function changeQuoteCurrentToNextWeek(AppointmentRepository $appointmentRepository, Appointment $appointment): Response
     {
-        $entityManager = $entityManager;
-        $repository = $entityManager->$appointmentRepository;
-
-        $repository->setChangeAppointmentNextWeekToCurrentWeek($appointment->getId());
+        $appointmentRepository->setChangeAppointmentNextWeekToCurrentWeek($appointment->getId());
 
         return $this->redirectToRoute("next_week");
     }

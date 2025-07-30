@@ -10,12 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeleteController extends AbstractController
 {
-    /**
-    * @Route("/admin/utilisateurs/{id}/supprimer", name="user_delete")
-    * @param User $user
-    * @param EntityManagerInterface $entityManager
-    * return RedirectResponse
-    */
+    #[Route('/admin/utilisateurs/{id}/supprimer', name: 'user_delete')]
     public function deleteUser(User $user, EntityManagerInterface $entityManager): RedirectResponse
     {
         $entityManager->remove($user);

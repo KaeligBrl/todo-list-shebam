@@ -32,9 +32,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Display & process form to request a password reset.
-     *
-     * @Route("/reinitialiser-le-mot-de-passe", name="app_forgot_password_request")
      */
+    #[Route('/reinitialiser-le-mot-de-passe', name: 'app_forgot_password_request')]
     public function request(Request $request, MailerInterface $mailer): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -55,9 +54,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Confirmation page after a user has requested a password reset.
-     *
-     * @Route("/reinitialiser-le-mot-de-passe/email-envoye", name="app_check_email")
      */
+    #[Route('/reinitialiser-le-mot-de-passe/email-envoye', name: 'app_check_email')]
     public function checkEmail(): Response
     {
         // We prevent users from directly accessing this page
@@ -72,10 +70,9 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
-     *
-     * @Route("/reinitialiser-le-mot-de-passe/changer/{token}", name="app_reset_password")
      */
-    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
+    #[Route('/reinitialiser-le-mot-de-passe/changer/{token}', name: 'app_reset_password')]
+    public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager, string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
