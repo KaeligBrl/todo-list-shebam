@@ -18,10 +18,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
-
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager) {
+    private $logger;
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger) {
         $this->entityManager = $entityManager;
+        $this->logger = $logger;
     }
 
 
@@ -30,7 +31,7 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     #[Route('/generation-de-l-archive/', name: 'download')]
-    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, WaitingReturnRepository $waitingReturn, LoggerInterface $logger, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
+    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, WaitingReturnRepository $waitingReturn, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
 
         $pdfOptions = new Options();
@@ -43,9 +44,13 @@ class AdminController extends AbstractController
             'appointment' => $appointment->findBy([], ['hoursappointment' => 'DESC']),
             'waitingReturn' => $waitingReturn->findAll(),
         ]);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-        $output = $dompdf->output();
+        try {
+            $dompdf->loadHtml($html);
+            $dompdf->render();
+            $output = $dompdf->output();
+        } catch (\Exception $e) {
+            $output = '';
+        }
 
         $image = new File;
         $charactersLength = strlen($characters);
@@ -53,7 +58,7 @@ class AdminController extends AbstractController
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        $path = $this->getParameter('kernel.project_dir') . '/public/downloads/';
+        $path = $this->getParameter('kernel.project_dir') . '/public/pdf/';
 
         $dateFile = date("d-m-y");
         $fileName = 'liste-des-taches-du-' . $dateFile . '-' . $randomString . '.pdf';
@@ -71,7 +76,6 @@ class AdminController extends AbstractController
                 $fsObject->dumpFile($file, $output);
             }
         } catch (IOExceptionInterface $exception) {
-            $logger->error("Impossible de créer le fichier");
         }
 
         $image->setName($fileName);
