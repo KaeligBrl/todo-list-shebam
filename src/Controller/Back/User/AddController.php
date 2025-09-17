@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 
 class AddController extends AbstractController
@@ -19,14 +19,14 @@ class AddController extends AbstractController
     }
 
     #[Route('/admin/utilisateurs/ajouter', name: 'user_add')]
-    public function addUser(Request $request, UserPasswordEncoderInterface $encoder) {
+    public function addUser(Request $request, UserPasswordHasherInterface $hasher) {
         $user = new User();
         $form = $this->createForm(AddUserType:: class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
                 $user = $form->getData();
-                $password = $encoder->encodePassword($user,$user->getPassword());
+                $password = $hasher->hashPassword($user,$user->getPassword());
                 $user->setPassword($password);
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
