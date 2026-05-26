@@ -125,7 +125,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // Si vous stockez des données sensibles temporaires, nettoyez-les ici
         // $this->plainPassword = null;
