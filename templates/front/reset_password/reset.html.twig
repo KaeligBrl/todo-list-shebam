@@ -13,6 +13,7 @@
 
 			<div class="form-general">
 				{{ form_start(resetForm) }}
+				{{ form_errors(resetForm) }}
 				<div class="form-group mb-3">
 					<label class="text-white mb-1 auth-form-label">Mot de passe</label>
 					<div class="showHiddenPassword-wrapper">
@@ -37,7 +38,7 @@
 				<div class="text-center">
 					{{ form_widget(resetForm.submit, {'attr': {'class': 'btn btn-submit w-100 auth-submit-btn'}}) }}
 				</div>
-				{{ form_end(resetForm, {'render_rest': false}) }}
+				{{ form_end(resetForm) }}
 			</div>
 		</div>
     {% endblock %}

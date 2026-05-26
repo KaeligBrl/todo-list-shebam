@@ -1,14 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_login_register.html.twig' %}
+
 {% block title %}Lien de réinitialisation - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+
 {% block content %}
+<a href="{{ path('home') }}">
+    <img class="d-block mx-auto mb-4 auth-logo" src="{{ asset('/assets/images/logo-todo.png') }}" alt="Logo de connexion To Do List">
+</a>
 
+<div class="container-custom text-center">
+    <div class="form-general auth-success-card">
+        <h1 class="mb-2 auth-page-title">Lien envoyé</h1>
+        <div class="separator mb-4"></div>
 
-{% block body %}
-<div class="form-general text-center bg-white">
-    <h2 class="text-center mb-4">Lien envoyé</h2>
-    <p>Un email pour modifier ton mot de passe vient de t'être envoyé sur la boîte email.
-    <p class="mb-4"><span style="font-size:15px; font-style: italic;">N'oublie pas de vérifier tes spams</span></p>
-    <a href="{{ path('home') }}" class="btn-yellow-form">Connexion</a>
+        <p class="mb-2 auth-text-white">Un email pour modifier ton mot de passe vient de t'etre envoye sur ta boite email.</p>
+        <p class="mb-4 auth-text-soft auth-check-email-note">N'oublie pas de verifier tes spams.</p>
+
+        <a href="{{ path('home') }}" class="btn btn-submit w-100 auth-submit-btn">Connexion</a>
+    </div>
 </div>
-{% endblock %}
 {% endblock %}

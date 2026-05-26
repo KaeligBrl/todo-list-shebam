@@ -3,9 +3,9 @@
 namespace App\Controller\Front\Auth;
 
 use App\Entity\User;
+use Psr\Log\LoggerInterface;
 use App\Form\ChangePasswordType;
 use Symfony\Component\Mime\Address;
-use App\Form\Front\ChangePasswordFormType;
 use App\Form\Front\ResetPasswordRequestFormType;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +25,11 @@ class ResetPasswordController extends AbstractController
     use ResetPasswordControllerTrait;
 
     private $resetPasswordHelper;
+    private $logger;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper) {
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, LoggerInterface $logger) {
         $this->resetPasswordHelper = $resetPasswordHelper;
+        $this->logger = $logger;
     }
 
     /**
@@ -73,7 +75,7 @@ class ResetPasswordController extends AbstractController
      * Validates and process the reset URL that the user clicked in their email.
      */
     #[Route('/reinitialiser-le-mot-de-passe/changer/{token}', name: 'app_reset_password')]
-    public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, string $token = null): Response
+    public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, ?string $token = null): Response
     {
         if ($token) {
             // We store the token in session and remove it from the URL, to avoid the URL being
@@ -144,8 +146,17 @@ class ResetPasswordController extends AbstractController
         try {
             $resetToken = $this->resetPasswordHelper->generateResetToken($user);
         } catch (ResetPasswordExceptionInterface $e) {
+            $this->logger->warning('Reset password token generation failed', [
+                'email' => $emailFormData,
+                'reason' => $e->getReason(),
+            ]);
 
-            return $this->redirectToRoute('app_check_email');
+            $this->addFlash('reset_password_error', sprintf(
+                'Impossible de generer le lien de reinitialisation: %s',
+                $e->getReason()
+            ));
+
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         $email = (new TemplatedEmail())

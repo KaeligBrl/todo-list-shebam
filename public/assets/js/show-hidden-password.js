@@ -5,12 +5,25 @@
             return;
         }
 
+        var wrapper = toggle.closest('.showHiddenPassword-wrapper');
         var targetSelector = toggle.dataset.target;
-        if (!targetSelector) {
-            return;
+        var passwordField = null;
+
+        if (targetSelector) {
+            if (wrapper) {
+                passwordField = wrapper.querySelector(targetSelector);
+            }
+
+            if (!passwordField) {
+                passwordField = document.querySelector(targetSelector);
+            }
         }
 
-        var passwordField = document.querySelector(targetSelector);
+        // Fallback for Symfony-generated IDs that may differ from data-target.
+        if (!passwordField && wrapper) {
+            passwordField = wrapper.querySelector('input[type="password"], input[type="text"]');
+        }
+
         var icon = toggle.querySelector('i');
         if (!passwordField || !icon) {
             return;
