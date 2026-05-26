@@ -2,17 +2,11 @@
 
 namespace App\Controller\Back\User;
 
-use App\Entity\User;
 use App\Repository\UserRepository;
-use App\Form\Back\User\AddUserType;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\User\ModifyUserType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class IndexController extends AbstractController
 {
