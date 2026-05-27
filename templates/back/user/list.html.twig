@@ -19,6 +19,7 @@
 			<table class="table" data-pagination="true" data-toggle="table" data-search="true">
 				<thead class="bg-blue-dark-light">
 					<tr>
+						<th class="color-yellow" scope="col">Photo</th>
 						<th class="color-yellow" scope="col">Nom</th>
 						<th class="color-yellow" scope="col">Prénom</th>
 						<th class="color-yellow" scope="col">Adresse Mail</th>
@@ -29,6 +30,13 @@
 				<tbody class="bg-blue-dark table-borderless">
 					{% for user in user %}
 						<tr>
+							<td class="color-white text-bold">
+								{% if user.profilePicture %}
+									<img src="{{ asset(user.profilePicture) }}" alt="Photo {{ user.firstname }}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #ffd54f;">
+								{% else %}
+									<span style="display:inline-flex;width:44px;height:44px;border-radius:50%;align-items:center;justify-content:center;background:#27374d;color:#fff;font-weight:700;">{{ user.firstname|slice(0,1)|upper }}</span>
+								{% endif %}
+							</td>
 							<td class="color-white text-bold">{{user.lastname}}</td>
 							<td class="color-white text-bold">{{user.firstname}}</td>
 							<td class="color-white text-bold">{{user.email}}</td>

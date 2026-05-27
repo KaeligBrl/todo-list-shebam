@@ -9,12 +9,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class AddController extends AbstractController
 {
     private $entityManager;
-    public function __construct(EntityManagerInterface $entityManager) {
+
+    public function __construct(EntityManagerInterface $entityManager, private readonly SluggerInterface $slugger) {
         $this->entityManager = $entityManager;
     }
 
@@ -28,6 +31,10 @@ class AddController extends AbstractController
                 $user = $form->getData();
                 $password = $hasher->hashPassword($user,$user->getPassword());
                 $user->setPassword($password);
+                $profilePictureFile = $form->get('profilePictureFile')->getData();
+                if ($profilePictureFile instanceof UploadedFile) {
+                    $user->setProfilePicture($this->uploadProfilePicture($profilePictureFile));
+                }
                 $this->entityManager->persist($user);
                 $this->entityManager->flush();
                 $user = new User();
@@ -38,6 +45,23 @@ class AddController extends AbstractController
             'form_admin_user_add' => $form->createView(),
 
         ]);
+    }
+
+    private function uploadProfilePicture(UploadedFile $file): string
+    {
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/profile';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = (string) $this->slugger->slug($originalName);
+        $extension = $file->guessExtension() ?: 'bin';
+        $newFilename = $safeFilename . '-' . uniqid('', true) . '.' . $extension;
+
+        $file->move($uploadDir, $newFilename);
+
+        return 'uploads/profile/' . $newFilename;
     }
     
 }

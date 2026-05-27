@@ -3,26 +3,36 @@
 namespace App\EventListener;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Service\TaskLiveVersionService;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Events;
-use Doctrine\ORM\PersistentCollection;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[AsDoctrineListener(event: Events::onFlush)]
 class TaskLiveVersionListener
 {
-    public function __construct(private readonly TaskLiveVersionService $taskLiveVersionService)
+    public function __construct(
+        private readonly TaskLiveVersionService $taskLiveVersionService,
+        private readonly Security $security,
+    )
     {
     }
 
     public function onFlush(OnFlushEventArgs $args): void
     {
-        $unitOfWork = $args->getObjectManager()->getUnitOfWork();
+        $entityManager = $args->getObjectManager();
+        if (!$entityManager instanceof EntityManagerInterface) {
+            return;
+        }
+
+        $unitOfWork = $entityManager->getUnitOfWork();
 
         foreach ($unitOfWork->getScheduledEntityInsertions() as $entity) {
             if ($entity instanceof Task) {
-                $this->taskLiveVersionService->bump();
+                $this->taskLiveVersionService->recordChange('created', $entity, $this->getActor());
 
                 return;
             }
@@ -30,7 +40,7 @@ class TaskLiveVersionListener
 
         foreach ($unitOfWork->getScheduledEntityUpdates() as $entity) {
             if ($entity instanceof Task) {
-                $this->taskLiveVersionService->bump();
+                $this->taskLiveVersionService->recordChange('updated', $entity, $this->getActor());
 
                 return;
             }
@@ -38,26 +48,18 @@ class TaskLiveVersionListener
 
         foreach ($unitOfWork->getScheduledEntityDeletions() as $entity) {
             if ($entity instanceof Task) {
-                $this->taskLiveVersionService->bump();
+                $this->taskLiveVersionService->recordChange('deleted', $entity, $this->getActor());
 
                 return;
             }
         }
 
-        foreach ($unitOfWork->getScheduledCollectionUpdates() as $collection) {
-            if ($collection instanceof PersistentCollection && $collection->getOwner() instanceof Task) {
-                $this->taskLiveVersionService->bump();
+    }
 
-                return;
-            }
-        }
+    private function getActor(): ?User
+    {
+        $user = $this->security->getUser();
 
-        foreach ($unitOfWork->getScheduledCollectionDeletions() as $collection) {
-            if ($collection instanceof PersistentCollection && $collection->getOwner() instanceof Task) {
-                $this->taskLiveVersionService->bump();
-
-                return;
-            }
-        }
+        return $user instanceof User ? $user : null;
     }
 }

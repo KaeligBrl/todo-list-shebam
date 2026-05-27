@@ -17,10 +17,16 @@
 					</div>
 			{% endif %}
 				<div class="form-group">
+					{% if user.profilePicture %}
+						<div class="mb-3 text-center">
+							<img src="{{ asset(user.profilePicture) }}" alt="Photo de profil" style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid #ffd54f;">
+						</div>
+					{% endif %}
 					{{ form_row(form_user_modify_admin.email) }}
 					{{ form_row(form_user_modify_admin.firstname) }}
 					{{ form_row(form_user_modify_admin.lastname) }}
 					{{ form_row(form_user_modify_admin.roles) }}
+					{{ form_row(form_user_modify_admin.profilePictureFile) }}
 					{{ form_row(form_user_modify_admin.submit) }}
 				</div>
 		</div>

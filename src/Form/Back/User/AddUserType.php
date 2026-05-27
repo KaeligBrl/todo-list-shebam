@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\Image;
 
 class AddUserType extends AbstractType
 {
@@ -79,6 +81,21 @@ class AddUserType extends AbstractType
                     'placeholder' => 'Role',
                 ]
             ))
+            ->add('profilePictureFile', FileType::class, [
+                'label' => false,
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new Image([
+                        'maxSize' => '5M',
+                        'mimeTypesMessage' => 'Veuillez televerser une image valide (JPG, PNG, WEBP).',
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'form-control',
+                    'accept' => 'image/*',
+                ],
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => ['class' => 'btn-yellow-form mt-2 text-bold'],

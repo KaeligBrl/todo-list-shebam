@@ -40,6 +40,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: "string", length: 255)]
     private $lastname;
 
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private $profilePicture;
+
     #[ORM\ManyToMany(targetEntity: Task::class, mappedBy: "users")]
     private $tasks;
 
@@ -151,6 +154,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(string $lastname): static
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

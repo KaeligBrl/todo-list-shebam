@@ -11,15 +11,19 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ModifyController extends AbstractController
 {
     private $entityManager;
     private $parameterBag;
+    private SluggerInterface $slugger;
 
-    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag) {
+    public function __construct(EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag, SluggerInterface $slugger) {
         $this->entityManager = $entityManager;
         $this->parameterBag = $parameterBag;
+        $this->slugger = $slugger;
     }
 
     #[Route('/admin/utilisateurs/{id}/modifier', name: 'user_modify')]
@@ -42,6 +46,11 @@ class ModifyController extends AbstractController
             // Assurez-vous que les rôles sont stockés au format correct
             $roles = $form->get('roles')->getData(); // Récupère les rôles au format tableau
             $user->setRoles($roles); // La méthode setRoles doit accepter un tableau de chaînes
+
+            $profilePictureFile = $form->get('profilePictureFile')->getData();
+            if ($profilePictureFile instanceof UploadedFile) {
+                $user->setProfilePicture($this->uploadProfilePicture($profilePictureFile, $user->getProfilePicture()));
+            }
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
@@ -71,5 +80,28 @@ class ModifyController extends AbstractController
             }
         }
         return $choices;
+    }
+
+    private function uploadProfilePicture(UploadedFile $file, ?string $existingPath): string
+    {
+        $uploadDir = $this->parameterBag->get('kernel.project_dir') . '/public/uploads/profile';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0775, true);
+        }
+
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = (string) $this->slugger->slug($originalName);
+        $extension = $file->guessExtension() ?: 'bin';
+        $newFilename = $safeFilename . '-' . uniqid('', true) . '.' . $extension;
+        $file->move($uploadDir, $newFilename);
+
+        if ($existingPath) {
+            $existingAbsolutePath = $this->parameterBag->get('kernel.project_dir') . '/public/' . ltrim($existingPath, '/');
+            if (is_file($existingAbsolutePath)) {
+                @unlink($existingAbsolutePath);
+            }
+        }
+
+        return 'uploads/profile/' . $newFilename;
     }
 }
