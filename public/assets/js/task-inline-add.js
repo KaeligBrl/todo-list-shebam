@@ -106,6 +106,31 @@
         });
     }
 
+    function initUsersTomSelects($scope) {
+        if (typeof window.TomSelect === "undefined") {
+            return;
+        }
+
+        $scope.find("select.js-task-users-select").each(function () {
+            if (this.tomselect) {
+                return;
+            }
+
+            new TomSelect(this, {
+                plugins: ["remove_button"],
+                create: false,
+                persist: false,
+                maxOptions: null,
+                hideSelected: true,
+                closeAfterSelect: false,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
+    }
+
     function buildActionLink(action, taskId) {
         if (!action || !action.enabled) {
             return "";
@@ -271,6 +296,7 @@
         }
 
         initCustomerTomSelects($(document));
+        initUsersTomSelects($(document));
 
         $forms.each(function () {
             var rawConfig = $(this).attr("data-task-inline-config");
