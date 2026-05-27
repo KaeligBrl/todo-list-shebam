@@ -6,6 +6,7 @@ use App\Entity\Appointment;
 use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\Task\AddTaskP1NextWeekType;
 use App\Repository\AppointmentRepository;
@@ -26,16 +27,46 @@ class IndexController extends AbstractController
         $form_p1 = $this->createForm(AddTaskP1NextWeekType::class, $taskAdd);
         $notification = null;
         $form_p1->handleRequest($request);
+        $showInlineAddForm = $form_p1->isSubmitted() && !$form_p1->isValid();
 
         if ($form_p1->isSubmitted() && $form_p1->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'success' => true,
+                    'task' => [
+                        'id' => $taskAdd->getId(),
+                        'customer' => (string) $taskAdd->getCustomer(),
+                        'subject' => (string) $taskAdd->getObject(),
+                        'users' => array_map(
+                            static fn($user) => $user->getFirstname(),
+                            $taskAdd->getUsers()->toArray()
+                        ),
+                    ],
+                ]);
+            }
+
             return $this->redirectToRoute("next_week_p1");
+        }
+
+        if ($request->isXmlHttpRequest() && $form_p1->isSubmitted()) {
+            $errors = [];
+            foreach ($form_p1->getErrors(true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            return new JsonResponse([
+                'success' => false,
+                'errors' => $errors,
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('front/next_week/task/p1/list.html.twig', [
             'task' => $taskList->findBy([], ['position' => 'ASC']),
             'form_task_nw_p1_add' => $form_p1->createView(),
+            'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,
             'appointment' => $appointmentRepository
         ]);

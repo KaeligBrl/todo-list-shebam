@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    let taskdoneCheckboxes = $(".taskdone");
-    taskdoneCheckboxes.each(function () {
-        $(this).on("click", function () {
+    $(document).on("click", ".taskdone", function () {
 
             let taskId = $(this).data("taskdone");
             let trElement = $(`tr[data-taskdone="${taskId}"]`);
@@ -39,5 +37,4 @@ $(document).ready(function () {
                 }
             });
         });
-    });
 });

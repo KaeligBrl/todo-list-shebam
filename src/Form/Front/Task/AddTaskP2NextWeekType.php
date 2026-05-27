@@ -73,7 +73,11 @@ class AddTaskP2NextWeekType extends AbstractType
                     new SelectedUsers(),
                 ],
                 'multiple' => true,
-                'expanded' => true,
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'form-select form-select-sm',
+                    'size' => 4,
+                ],
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('u')
                         ->orderBy('u.firstname', 'ASC');

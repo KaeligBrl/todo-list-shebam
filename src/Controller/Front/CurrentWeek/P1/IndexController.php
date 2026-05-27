@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -25,17 +26,47 @@ class IndexController extends AbstractController
         $form_p1 = $this->createForm(AddTaskP1CurrentWeekType::class, $taskAdd);
         $notification = null;
         $form_p1->handleRequest($request);
+        $showInlineAddForm = $form_p1->isSubmitted() && !$form_p1->isValid();
 
         if ($form_p1->isSubmitted() && $form_p1->isValid()) {
             $this->entityManager->persist($taskAdd);
             $this->entityManager->flush();
+
+            if ($request->isXmlHttpRequest()) {
+                return new JsonResponse([
+                    'success' => true,
+                    'task' => [
+                        'id' => $taskAdd->getId(),
+                        'customer' => (string) $taskAdd->getCustomer(),
+                        'subject' => (string) $taskAdd->getObject(),
+                        'users' => array_map(
+                            static fn($user) => $user->getFirstname(),
+                            $taskAdd->getUsers()->toArray()
+                        ),
+                    ],
+                ]);
+            }
+
             return $this->redirectToRoute("current_week_p1");
+        }
+
+        if ($request->isXmlHttpRequest() && $form_p1->isSubmitted()) {
+            $errors = [];
+            foreach ($form_p1->getErrors(true) as $error) {
+                $errors[] = $error->getMessage();
+            }
+
+            return new JsonResponse([
+                'success' => false,
+                'errors' => $errors,
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return $this->render('front/current_week/task/p1/list.html.twig', [
             'task' => $taskList->findAllOrderByUsers(),
             'appointment' => $appointment,
             'form_task_cw_p1_add' => $form_p1->createView(),
+            'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,
         ]);
     }

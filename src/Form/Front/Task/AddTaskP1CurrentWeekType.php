@@ -70,8 +70,12 @@ class AddTaskP1CurrentWeekType extends AbstractType
                 new NotBlank(),
                 new SelectedUsers(),
             ],
-            'expanded' => true,
+            'expanded' => false,
             'multiple' => true,
+            'attr' => [
+                'class' => 'form-select form-select-sm',
+                'size' => 4,
+            ],
             'label_attr' => ['class' => 'label-form'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')

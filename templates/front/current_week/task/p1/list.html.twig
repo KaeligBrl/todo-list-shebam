@@ -29,15 +29,34 @@
             </ul> 
         </nav>
 		<div class="container text-center padding-mobile">
+            {% set showActions = false %}
+            {% set showDoneButtonCw = false %}
+            {% if userRole is not null and roles[userRole] is defined %}
+                {% set showActions =
+                    roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw or
+                    roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button or
+                    roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button or
+                    roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button or
+                    roles[userRole].p2_button_in_cw is defined and roles[userRole].p2_button_in_cw
+                %}
+                {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
+            {% endif %}
+            {% set inlineAddCols = 4 + (showActions ? 1 : 0) + (showDoneButtonCw ? 1 : 0) %}
+
             {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw %}
                 <div class="mb-4">
-                    <a class="color-yellow text-20 text-bold" href="#ajouterunetachep1"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
+                    <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddTaskP1Row"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
                 </div>
             {% endif %}
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if roles[userRole].reorder_task is defined and roles[userRole].reorder_task %} data-use-row-attr-func="true" data-reorderable-rows="true" {% endif %}>
+
+            {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw %}
+                {{ form_start(form_task_cw_p1_add, {'attr': {'id': 'inlineAddTaskP1Form'}}) }}
+            {% endif %}
+
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered">
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
-                        <th class="color-yellow text-bold" data-field="id" data-visible="false">ID</th>
+                        <th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
                         <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
                         <th class="color-yellow text-bold" data-field="subject" data-sortable="true" scope="col">Sujet</th>
                         <th  class="color-yellow text-bold"data-field="person"data-sortable="true" scope="col">Équipe</th>
@@ -67,11 +86,53 @@
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
+                    {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw and show_inline_add_form|default(false) %}
+                        <tr>
+                            <td colspan="{{ inlineAddCols }}" class="bg-blue-dark-light text-left">{{ form_errors(form_task_cw_p1_add) }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw %}
+                        <tr id="inlineAddTaskP1Row" class="bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
+                            <td class="d-none"></td>
+                            <td>
+                                {{ form_widget(form_task_cw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                            </td>
+                            <td>
+                                {{ form_widget(form_task_cw_p1_add.object, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Sujet'}}) }}
+                                <div class="d-none">
+                                    {{ form_widget(form_task_cw_p1_add.subobject1) }}
+                                    {{ form_widget(form_task_cw_p1_add.subobject2) }}
+                                    {{ form_widget(form_task_cw_p1_add.subobject3) }}
+                                </div>
+                            </td>
+                            <td>
+                                {{ form_widget(form_task_cw_p1_add.users, {'attr': {'class': 'form-select form-select-sm', 'size': '4'}}) }}
+                            </td>
+                            {% if showActions %}
+                                <td>
+                                    <div class="d-none">{{ form_widget(form_task_cw_p1_add.p1) }}</div>
+                                    {{ form_widget(form_task_cw_p1_add.submit, {'attr': {'class': 'btn-yellow-form text-bold'}}) }}
+                                    <button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddTaskP1Row">Annuler</button>
+                                </td>
+                            {% endif %}
+                            {% if showDoneButtonCw %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
+
+                        <tr id="inlineAddTaskP1Errors" class="d-none bg-blue-dark-light">
+                            <td colspan="{{ inlineAddCols }}">
+                                <div class="message-error"></div>
+                            </td>
+                        </tr>
+                    {% endif %}
+
                     {% for task in task %}
                         {% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0 %}
                             <tr class="{% if task.done == 1 %}bg-yellow-dark {% endif %}"  data-taskdone="{{task.id}}">
 
-                                <td>{{ task.id }}</td>
+                                <td class="d-none">{{ task.id }}</td>
 
                                 <td class="color-white text-bold">{{task.customer}}</td>
 
@@ -99,20 +160,21 @@
                                 %}
                                     {% if showActions %}
                                         <td>
+                                            <div style="display:inline-flex;align-items:center;column-gap:8px;">
                                             {% if roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button %}
                                             <a class="color-yellow" href="{{ path('modify_task_p1_cw', {'id': task.id}) }}">
                                                 <i class="fas fa-cog"></i>
-                                            </a>&nbsp;
+                                            </a>
                                             {% endif %}
 
                                             {% if roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw %}
                                             <a class="color-yellow" href="{{ path('to_p1_from_waiting_return_cw', {'id': task.id }) }}"><i
-                                                    class="fas fa-hourglass-start"></i></a>&nbsp;
+                                                    class="fas fa-hourglass-start"></i></a>
                                             {% endif %}
 
                                             {% if roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button  %}
                                             <a class="color-yellow" href="{{ path('change_task_p1_cw_to_p1_nw', {'id': task.id}) }}">
-                                                <i class="fas fa-redo"></i>&nbsp;
+                                                <i class="fas fa-redo"></i>
                                             </a>
                                             {% endif %}
 
@@ -126,6 +188,7 @@
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                             {% endif %}
+                                            </div>
                                         </td>
                                     {% endif %}
                                 {% endif %}
@@ -145,6 +208,10 @@
                 </tbody>
             </table>
 
+            {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw %}
+                {{ form_end(form_task_cw_p1_add) }}
+            {% endif %}
+
             {% if roles[userRole].generate_archive_task is defined and roles[userRole].generate_archive_task %}
                 {% if task is empty and appointment is empty %}
                     <div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
@@ -154,35 +221,6 @@
             {% endif %}
         </div>
 
-		<!-- POPUP -->
-		<!-- Task P1 -->
-		<div id="ajouterunetachep1" class="overlay">
-			<div class="popup bg-blue-dark-light">
-                <a class="close" href=""><i class="fas fa-times"></i></a>
-                {{ form_start(form_task_cw_p1_add) }}
-                    <div class="row">
-                        <div class="col">
-                            <div class="input">{{ form_row(form_task_cw_p1_add.customer) }}</div>
-                            {{ form_row(form_task_cw_p1_add.object) }} 
-                            {{ form_row(form_task_cw_p1_add.subobject2) }}
-                            {{ form_row(form_task_cw_p1_add.subobject1) }}
-                            {{ form_row(form_task_cw_p1_add.subobject3) }}
-                        </div>
-
-                        <div class="col">
-                            <p class="color-yellow text-bold">Personne(s)</p>
-                            <div class="bg-blue-dark text-left users">
-                                {{ form_row(form_task_cw_p1_add.users) }}
-                            </div>
-                            <div class="text-left mt-3 color-yellow">
-                                {{ form_row(form_task_cw_p1_add.p1) }}
-                                {{ form_row(form_task_cw_p1_add.submit) }}
-                            </div>
-                        </div>
-                    </div>
-                {{ form_end(form_task_cw_p1_add) }}
-			</div>
-		</div>
 	</div>
 {%  endblock %}
 
@@ -192,6 +230,108 @@
       
 
     $(() => {
+        const escapeHtml = (value) => $("<div>").text(value ?? "").html();
+        const hasActions = {{ (userRole is not null and roles[userRole] is defined and (
+            (roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw) or
+            (roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button) or
+            (roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button) or
+            (roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button) or
+            (roles[userRole].p2_button_in_cw is defined and roles[userRole].p2_button_in_cw)
+        )) ? 'true' : 'false' }};
+        const hasDone = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].button_done is defined and roles[userRole].button_done) ? 'true' : 'false' }};
+        const canModify = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button) ? 'true' : 'false' }};
+        const canWaitingReturn = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw) ? 'true' : 'false' }};
+        const canMoveNextWeek = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button) ? 'true' : 'false' }};
+        const canMoveP2 = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].p2_button_in_cw is defined and roles[userRole].p2_button_in_cw) ? 'true' : 'false' }};
+        const canDelete = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button) ? 'true' : 'false' }};
+        const urlModify = "{{ path('modify_task_p1_cw', {'id': 'TASK_ID'}) }}";
+        const urlWaitingReturn = "{{ path('to_p1_from_waiting_return_cw', {'id': 'TASK_ID'}) }}";
+        const urlToNextWeek = "{{ path('change_task_p1_cw_to_p1_nw', {'id': 'TASK_ID'}) }}";
+        const urlToP2 = "{{ path('change_task_cw_p1_to_p2', {'id': 'TASK_ID'}) }}";
+        const urlDelete = "{{ path('delete_task_cw_p1', {'id': 'TASK_ID'}) }}";
+
+        $(".js-inline-add-toggle").on("click", function (e) {
+            e.preventDefault();
+            const target = $(this).data("target");
+            $(target).removeClass("d-none");
+        });
+
+        $(".js-inline-add-cancel").on("click", function () {
+            const target = $(this).data("target");
+            $(target).addClass("d-none");
+        });
+
+        $("#inlineAddTaskP1Form").on("submit", function (e) {
+            e.preventDefault();
+
+            const $form = $(this);
+            const $errorRow = $("#inlineAddTaskP1Errors");
+            const $errorBox = $errorRow.find(".message-error");
+
+            $.ajax({
+                url: "{{ path('current_week_p1') }}",
+                method: "POST",
+                data: $form.serialize(),
+                dataType: "json",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).done((response) => {
+                if (!response.success) {
+                    return;
+                }
+
+                const id = response.task.id;
+                const users = (response.task.users || []).map((u) => `${escapeHtml(u)}<br>`).join("");
+                const actionParts = [];
+                if (canModify) {
+                    actionParts.push(`<a class="color-yellow" href="${urlModify.replace('TASK_ID', id)}"><i class="fas fa-cog"></i></a>`);
+                }
+                if (canWaitingReturn) {
+                    actionParts.push(`<a class="color-yellow" href="${urlWaitingReturn.replace('TASK_ID', id)}"><i class="fas fa-hourglass-start"></i></a>`);
+                }
+                if (canMoveNextWeek) {
+                    actionParts.push(`<a class="color-yellow" href="${urlToNextWeek.replace('TASK_ID', id)}"><i class="fas fa-redo"></i></a>`);
+                }
+                if (canMoveP2) {
+                    actionParts.push(`<a href="${urlToP2.replace('TASK_ID', id)}">P2</a>`);
+                }
+                if (canDelete) {
+                    actionParts.push(`<a class="color-yellow" href="${urlDelete.replace('TASK_ID', id)}" onclick="return confirm('Attention, vous vous apprêtez à supprimer une tâche P1')"><i class="fas fa-trash"></i></a>`);
+                }
+
+                const actionHtml = hasActions ? `<td><div style="display:inline-flex;align-items:center;column-gap:8px;">${actionParts.join('')}</div></td>` : '';
+                const doneHtml = hasDone
+                    ? `<td class="form-switch"><input type="checkbox" id="taskdone_${id}" class="taskdone" data-taskdone="${id}"></td>`
+                    : '';
+
+                const rowHtml = `
+                    <tr data-taskdone="${id}">
+                        <td class="d-none">${id}</td>
+                        <td class="color-white text-bold">${escapeHtml(response.task.customer)}</td>
+                        <td class="color-white text-bold">${escapeHtml(response.task.subject)}</td>
+                        <td class="color-white text-bold">${users}</td>
+                        ${actionHtml}
+                        ${doneHtml}
+                    </tr>
+                `;
+
+                $("#inlineAddTaskP1Errors").after(rowHtml);
+                $errorBox.empty();
+                $errorRow.addClass("d-none");
+                $form.trigger("reset");
+                $("#inlineAddTaskP1Row").addClass("d-none");
+            }).fail((xhr) => {
+                const errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)
+                    ? xhr.responseJSON.errors
+                    : ["Une erreur est survenue."];
+
+                $errorBox.html(errors.map((msg) => `<div>${escapeHtml(msg)}</div>`).join(""));
+                $errorRow.removeClass("d-none");
+                $("#inlineAddTaskP1Row").removeClass("d-none");
+            });
+        });
+
         $("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
             $.ajax({
                 url: "{{ path('reorder') }}",
