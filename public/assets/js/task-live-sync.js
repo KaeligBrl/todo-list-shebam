@@ -39,6 +39,37 @@
         return null;
     }
 
+    function getDraftRowSelectorForPage() {
+        var tableSelector = getActiveTableSelector();
+
+        if (tableSelector === "#tableOrderTaskP1") {
+            return "#inlineAddTaskP1Row";
+        }
+
+        if (tableSelector === "#tableOrderTaskP2") {
+            return "#inlineAddTaskP2Row";
+        }
+
+        return null;
+    }
+
+    function getDraftRowId(scope) {
+        return "task-live-draft-row-" + String(scope || "").replace(/[^a-zA-Z0-9_-]/g, "_");
+    }
+
+    function getTableColumnCount() {
+        var $headerCells = $("#tableOrderTaskP1 thead th, #tableOrderTaskP2 thead th");
+        return $headerCells.length > 0 ? $headerCells.length : 0;
+    }
+
+    function pageHasActionsColumn() {
+        return $("#tableOrderTaskP1 thead th:contains('Action'), #tableOrderTaskP2 thead th:contains('Action')").length > 0;
+    }
+
+    function pageHasDoneColumn() {
+        return $("#tableOrderTaskP1 thead th:contains('Fait'), #tableOrderTaskP2 thead th:contains('Fait')").length > 0;
+    }
+
     function actionLabel(action) {
         if (action === "created") {
             return "a ajoute une tache";
@@ -156,45 +187,12 @@
         };
     }
 
-    function ensureDraftIndicator() {
-        var box = document.getElementById("task-live-draft-indicator");
-        if (!box) {
-            box = document.createElement("div");
-            box.id = "task-live-draft-indicator";
-            box.style.position = "fixed";
-            box.style.left = "16px";
-            box.style.bottom = "16px";
-            box.style.zIndex = "9998";
-            box.style.background = "#1a2230";
-            box.style.color = "#ffffff";
-            box.style.border = "1px solid rgba(243,196,65,.8)";
-            box.style.borderRadius = "12px";
-            box.style.padding = "12px 14px";
-            box.style.display = "none";
-            box.style.maxWidth = "420px";
-            box.style.boxShadow = "0 10px 28px rgba(0,0,0,.30)";
-            document.body.appendChild(box);
-        }
-
-        return box;
+    function removeDraftRow(scope) {
+        var selector = "tr[data-task-live-draft-row='" + String(scope || "").replace(/'/g, "\\'") + "']";
+        $(selector).remove();
     }
 
-    function clearDraftIndicator(scope) {
-        var box = document.getElementById("task-live-draft-indicator");
-        if (!box) {
-            return;
-        }
-
-        if (scope && box.dataset.scope && box.dataset.scope !== scope) {
-            return;
-        }
-
-        box.style.display = "none";
-        box.innerHTML = "";
-        box.dataset.scope = "";
-    }
-
-    function showDraftIndicator(payload) {
+    function showDraftRow(payload) {
         var draftState = (payload && payload.draft) || {};
         var draft = draftState.draft || draftState;
         var actor = draftState.actor || {};
@@ -222,25 +220,64 @@
             lines.push("Note: " + note);
         }
 
-        var box = ensureDraftIndicator();
+        var scope = String(payload.scope || getDraftRowSelectorForPage() || "");
+        var rowId = getDraftRowId(scope);
+        var tableSelector = getActiveTableSelector();
+        if (!tableSelector) {
+            return;
+        }
+
+        var $tableBody = $(tableSelector + " tbody").first();
+        if ($tableBody.length === 0) {
+            return;
+        }
+
         var avatarHtml = actor.profile_picture_url
             ? '<img src="' + actor.profile_picture_url + '" alt="avatar" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #f3c441;">'
             : '<span style="display:inline-flex;width:40px;height:40px;border-radius:50%;align-items:center;justify-content:center;background:#31465f;color:#fff;font-weight:700;">' + buildInitials(actor) + "</span>";
 
-        box.dataset.scope = payload.scope || "";
-        box.style.display = "flex";
-        box.style.alignItems = "flex-start";
-        box.style.columnGap = "10px";
-        box.style.transition = "opacity .25s ease, transform .25s ease";
-        box.style.opacity = "1";
-        box.style.transform = "translateY(0)";
+        var subjectHtml = subject ? '<div style="font-size:13px;font-weight:700;color:#ffffff;">' + escapeHtml(subject) + '</div>' : '<div style="font-size:13px;font-weight:700;color:#ffffff;">Ajout en cours</div>';
+        var detailsHtml = lines.length ? '<div style="font-size:12px;color:#d5dfeb;margin-top:4px;">' + lines.map(function (line) { return escapeHtml(line); }).join('<br>') + '</div>' : '';
+        var actionCellHtml = pageHasActionsColumn() ? '<td class="text-center" style="font-style:italic;color:#f3c441;">Ajout en cours</td>' : '';
+        var doneCellHtml = pageHasDoneColumn() ? '<td></td>' : '';
+        var colspan = getTableColumnCount() || 6;
 
-        box.innerHTML = '' +
-            avatarHtml +
-            '<div style="line-height:1.25">' +
-                '<div style="font-weight:700;">' + escapeHtml(actorName) + ' prepare une tache</div>' +
-                '<div style="font-size:13px;color:#d5dfeb;margin-top:4px;">' + (lines.length ? lines.map(function (line) { return escapeHtml(line); }).join('<br>') : 'Ajout en cours...') + '</div>' +
-            '</div>';
+        var rowHtml = '' +
+            '<tr id="' + escapeHtml(rowId) + '" data-task-live-draft-row="' + escapeHtml(scope) + '" class="bg-blue-dark-light">' +
+                '<td class="d-none"></td>' +
+                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(customer || 'En cours') + '</td>' +
+                '<td class="color-white text-bold">' + subjectHtml + detailsHtml + '</td>' +
+                '<td class="color-white text-bold">' +
+                    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
+                        avatarHtml +
+                        '<span>' + escapeHtml(actorName || 'Quelqu\'un') + '</span>' +
+                    '</div>' +
+                '</td>' +
+                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(deadline || '') + '</td>' +
+                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(note || '') + '</td>' +
+                actionCellHtml +
+                doneCellHtml +
+            '</tr>';
+
+        var $existing = $("#" + rowId);
+        if ($existing.length > 0) {
+            $existing.replaceWith(rowHtml);
+            return;
+        }
+
+        var $errorRow = $tableBody.find("tr#inlineAddTaskP1Errors, tr#inlineAddTaskP2Errors").last();
+        if ($errorRow.length > 0) {
+            $(rowHtml).insertAfter($errorRow);
+            return;
+        }
+
+        var $inlineRow = $tableBody.find("tr#inlineAddTaskP1Row, tr#inlineAddTaskP2Row").last();
+        if ($inlineRow.length > 0) {
+            $(rowHtml).insertAfter($inlineRow);
+            return;
+        }
+
+        $tableBody.prepend(rowHtml);
     }
 
     function escapeHtml(value) {
@@ -273,15 +310,16 @@
         if (response.drafts && typeof response.drafts === "object") {
             var activeDraft = response.drafts[activeScope] || null;
             if (!activeDraft) {
-                clearDraftIndicator(activeScope);
+                removeDraftRow(activeScope);
                 return;
             }
 
             if (activeDraft.tab_id && String(activeDraft.tab_id) === String(window.__taskLiveTabId)) {
+                removeDraftRow(activeScope);
                 return;
             }
 
-            showDraftIndicator({
+            showDraftRow({
                 scope: activeScope,
                 draft: activeDraft
             });
@@ -295,15 +333,16 @@
 
         var draft = response.draft || null;
         if (!draft) {
-            clearDraftIndicator(activeScope);
+            removeDraftRow(activeScope);
             return;
         }
 
         if (draft.tab_id && String(draft.tab_id) === String(window.__taskLiveTabId)) {
+            removeDraftRow(activeScope);
             return;
         }
 
-        showDraftIndicator({
+        showDraftRow({
             scope: activeScope,
             draft: draft
         });
@@ -323,7 +362,7 @@
             return;
         }
 
-        clearDraftIndicator(activeScope);
+        removeDraftRow(activeScope);
     }
 
     function postDraftState($form, config) {
@@ -368,7 +407,7 @@
             }
         });
 
-        clearDraftIndicator(config.rowSelector);
+        removeDraftRow(config.rowSelector);
     }
 
     function bindDraftSync($form, config) {
