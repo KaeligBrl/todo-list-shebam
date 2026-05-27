@@ -16,6 +16,8 @@ class TaskLiveVersionController extends AbstractController
         $response = $this->json([
             'version' => $taskLiveVersionService->getVersion(),
             'last_change' => $taskLiveVersionService->getLastChange(),
+            'draft_version' => $taskLiveVersionService->getDraftVersion(),
+            'drafts' => $taskLiveVersionService->getDrafts(),
             'now' => (int) floor(microtime(true) * 1000),
         ]);
 
@@ -33,11 +35,28 @@ class TaskLiveVersionController extends AbstractController
             @set_time_limit(0);
 
             $lastVersion = $taskLiveVersionService->getVersion();
+            $lastDraftVersion = $taskLiveVersionService->getDraftVersion();
+            $lastDraftScopes = [];
             $startedAt = time();
 
             echo "retry: 5000\n\n";
             @ob_flush();
             flush();
+
+            $initialDrafts = $taskLiveVersionService->getDrafts();
+            foreach ($initialDrafts as $scope => $draft) {
+                $lastDraftScopes[(string) $scope] = true;
+
+                echo "event: task-draft\n";
+                echo 'data: ' . (string) json_encode([
+                    'draft_version' => $lastDraftVersion,
+                    'scope' => (string) $scope,
+                    'draft' => $draft,
+                    'now' => (int) floor(microtime(true) * 1000),
+                ], JSON_UNESCAPED_SLASHES) . "\n\n";
+                @ob_flush();
+                flush();
+            }
 
             while (!connection_aborted() && (time() - $startedAt) < 55) {
                 clearstatcache(true);
@@ -56,6 +75,43 @@ class TaskLiveVersionController extends AbstractController
                     echo 'data: ' . (string) json_encode($payload, JSON_UNESCAPED_SLASHES) . "\n\n";
                     @ob_flush();
                     flush();
+                }
+
+                $draftVersion = $taskLiveVersionService->getDraftVersion();
+                if ($draftVersion > $lastDraftVersion) {
+                    $lastDraftVersion = $draftVersion;
+                    $activeDrafts = $taskLiveVersionService->getDrafts();
+
+                    foreach ($activeDrafts as $scope => $draft) {
+                        $lastDraftScopes[(string) $scope] = true;
+
+                        echo "event: task-draft\n";
+                        echo 'data: ' . (string) json_encode([
+                            'draft_version' => $draftVersion,
+                            'scope' => (string) $scope,
+                            'draft' => $draft,
+                            'now' => (int) floor(microtime(true) * 1000),
+                        ], JSON_UNESCAPED_SLASHES) . "\n\n";
+                        @ob_flush();
+                        flush();
+                    }
+
+                    foreach (array_keys($lastDraftScopes) as $scope) {
+                        if (isset($activeDrafts[$scope])) {
+                            continue;
+                        }
+
+                        echo "event: task-draft-clear\n";
+                        echo 'data: ' . (string) json_encode([
+                            'draft_version' => $draftVersion,
+                            'scope' => (string) $scope,
+                            'now' => (int) floor(microtime(true) * 1000),
+                        ], JSON_UNESCAPED_SLASHES) . "\n\n";
+                        @ob_flush();
+                        flush();
+
+                        unset($lastDraftScopes[$scope]);
+                    }
                 }
 
                 usleep(1000000);
