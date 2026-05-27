@@ -1,0 +1,195 @@
+(function ($) {
+    "use strict";
+
+    function escapeHtml(value) {
+        return $("<div>").text(value ?? "").html();
+    }
+
+    function replaceTaskId(urlTemplate, id) {
+        return String(urlTemplate || "").replace("TASK_ID", String(id));
+    }
+
+    function escapeJsSingleQuote(value) {
+        return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    }
+
+    function buildActionLink(action, taskId) {
+        if (!action || !action.enabled) {
+            return "";
+        }
+
+        var classes = action.className ? ' class="' + escapeHtml(action.className) + '"' : "";
+        var confirmAttr = action.confirm ? ' onclick="return confirm(\'' + escapeJsSingleQuote(action.confirm) + '\')"' : "";
+        var href = replaceTaskId(action.urlTemplate, taskId);
+        var content = "";
+
+        if (action.iconClass) {
+            content = '<i class="' + escapeHtml(action.iconClass) + '"></i>';
+        } else {
+            var text = escapeHtml(action.text || "");
+            content = action.wrapText ? "<span>" + text + "</span>" : text;
+        }
+
+        return '<a' + classes + ' href="' + href + '"' + confirmAttr + '>' + content + "</a>";
+    }
+
+    function buildActionsCell(config, taskId) {
+        if (!config.hasActions) {
+            return "";
+        }
+
+        var actionParts = (config.actions || [])
+            .map(function (action) { return buildActionLink(action, taskId); })
+            .filter(function (html) { return html !== ""; });
+
+        return '<td><div style="display:inline-flex;align-items:center;column-gap:8px;">' + actionParts.join("") + "</div></td>";
+    }
+
+    function buildDoneCell(config, taskId) {
+        if (!config.hasDone) {
+            return "";
+        }
+
+        return '<td class="form-switch"><input type="checkbox" id="taskdone_' + escapeHtml(taskId) + '" class="taskdone" data-taskdone="' + escapeHtml(taskId) + '"></td>';
+    }
+
+    function buildTaskRowHtml(config, responseTask) {
+        var id = responseTask.id;
+        var users = (responseTask.users || []).map(function (user) {
+            return escapeHtml(user) + "<br>";
+        }).join("");
+
+        return [
+            '<tr data-taskdone="' + escapeHtml(id) + '">',
+            '<td class="d-none">' + escapeHtml(id) + "</td>",
+            '<td class="color-white text-bold">' + escapeHtml(responseTask.customer) + "</td>",
+            '<td class="color-white text-bold">' + escapeHtml(responseTask.subject) + "</td>",
+            '<td class="color-white text-bold">' + users + "</td>",
+            buildActionsCell(config, id),
+            buildDoneCell(config, id),
+            "</tr>"
+        ].join("");
+    }
+
+    function bindInlineAdd(formElement, config) {
+        var $form = $(formElement);
+        var $inlineRow = $(config.rowSelector);
+        var $errorRow = $(config.errorRowSelector);
+
+        $form.on("submit", function (e) {
+            e.preventDefault();
+
+            var $errorBox = $errorRow.find(".message-error");
+
+            $.ajax({
+                url: config.submitUrl,
+                method: "POST",
+                data: $form.serialize(),
+                dataType: "json",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest"
+                }
+            }).done(function (response) {
+                if (!response.success || !response.task) {
+                    return;
+                }
+
+                var rowHtml = buildTaskRowHtml(config, response.task);
+                $errorRow.after(rowHtml);
+                $errorBox.empty();
+                $errorRow.addClass("d-none");
+                $form.trigger("reset");
+                $inlineRow.addClass("d-none");
+            }).fail(function (xhr) {
+                var errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)
+                    ? xhr.responseJSON.errors
+                    : ["Une erreur est survenue."];
+
+                $errorBox.html(errors.map(function (msg) {
+                    return "<div>" + escapeHtml(msg) + "</div>";
+                }).join(""));
+
+                $errorRow.removeClass("d-none");
+                $inlineRow.removeClass("d-none");
+            });
+        });
+    }
+
+    function bindReorder(reorderUrl) {
+        if (!reorderUrl || window.__taskInlineReorderBound) {
+            return;
+        }
+
+        window.__taskInlineReorderBound = true;
+
+        $("#tableOrderTaskP1, #tableOrderTaskP2").on("reorder-row.bs.table", function (e, table) {
+            $.ajax({
+                url: reorderUrl,
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 1
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $("#tableOrderAppointment").on("reorder-row.bs.table", function (e, table) {
+            $.ajax({
+                url: reorderUrl,
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 2
+                },
+                dataType: "JSON"
+            });
+        });
+
+        $("#tableOrderQuote").on("reorder-row.bs.table", function (e, table) {
+            $.ajax({
+                url: reorderUrl,
+                method: "POST",
+                data: {
+                    table: JSON.stringify(table),
+                    context: 3
+                },
+                dataType: "JSON"
+            });
+        });
+    }
+
+    $(function () {
+        $(document).on("click", ".js-inline-add-toggle", function (e) {
+            e.preventDefault();
+            var target = $(this).data("target");
+            $(target).removeClass("d-none");
+        });
+
+        $(document).on("click", ".js-inline-add-cancel", function () {
+            var target = $(this).data("target");
+            $(target).addClass("d-none");
+        });
+
+        var $forms = $("form[data-task-inline-config]");
+        if ($forms.length === 0) {
+            return;
+        }
+
+        $forms.each(function () {
+            var rawConfig = $(this).attr("data-task-inline-config");
+            if (!rawConfig) {
+                return;
+            }
+
+            try {
+                var decodedConfig = $("<textarea>").html(rawConfig).text();
+                var config = JSON.parse(decodedConfig);
+                bindInlineAdd(this, config);
+                bindReorder(config.reorderUrl);
+            } catch (error) {
+                console.error("Config inline task invalide", error);
+            }
+        });
+    });
+})(jQuery);

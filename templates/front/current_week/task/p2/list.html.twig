@@ -44,7 +44,49 @@
                 <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddTaskP2Row"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
             </div>
 
-            {{ form_start(form_task_cw_p2_add, {'attr': {'id': 'inlineAddTaskP2Form'}}) }}
+            {% set inlineAddConfig = {
+                submitUrl: path('current_week_p2'),
+                rowSelector: '#inlineAddTaskP2Row',
+                errorRowSelector: '#inlineAddTaskP2Errors',
+                hasActions: showActions,
+                hasDone: showDoneButtonCw,
+                reorderUrl: path('reorder'),
+                actions: [
+                    {
+                        enabled: roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw,
+                        urlTemplate: path('to_p2_from_waiting_return_cw', {'id': 'TASK_ID'}),
+                        className: 'color-yellow',
+                        iconClass: 'fas fa-hourglass-start'
+                    },
+                    {
+                        enabled: roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button,
+                        urlTemplate: path('change_task_cw_to_p1', {'id': 'TASK_ID'}),
+                        className: 'color-yellow text-bold',
+                        text: 'P1',
+                        wrapText: true
+                    },
+                    {
+                        enabled: roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw,
+                        urlTemplate: path('change_task_p2_cw_to_p2_nw', {'id': 'TASK_ID'}),
+                        className: 'color-yellow',
+                        iconClass: 'fas fa-redo'
+                    },
+                    {
+                        enabled: roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button,
+                        urlTemplate: path('modify_task_cw_p2', {'id': 'TASK_ID'}),
+                        className: 'color-yellow',
+                        iconClass: 'fas fa-cog'
+                    },
+                    {
+                        enabled: roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button,
+                        urlTemplate: path('delete_task_cw_p2', {'id': 'TASK_ID'}),
+                        className: 'color-yellow',
+                        iconClass: 'fas fa-trash',
+                        confirm: 'Attention, vous vous apprêtez à supprimer une tâche P2'
+                    }
+                ]
+            } %}
+            {{ form_start(form_task_cw_p2_add, {'attr': {'id': 'inlineAddTaskP2Form', 'data-task-inline-config': inlineAddConfig|json_encode|e('html_attr')}}) }}
             
             <table id="tableOrderTaskP1" class="table mb-5 table-bordered">
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
@@ -192,154 +234,5 @@
 {%  endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	<script>
-		$(()=>{
-            const escapeHtml = (value) => $("<div>").text(value ?? "").html();
-            const hasActions = {{ (userRole is not null and roles[userRole] is defined and (
-                (roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw) or
-                (roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button) or
-                (roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw) or
-                (roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button) or
-                (roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button)
-            )) ? 'true' : 'false' }};
-            const hasDone = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].button_done is defined and roles[userRole].button_done) ? 'true' : 'false' }};
-            const canWaitingReturn = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw) ? 'true' : 'false' }};
-            const canToP1 = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button) ? 'true' : 'false' }};
-            const canToNextWeek = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw) ? 'true' : 'false' }};
-            const canModify = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button) ? 'true' : 'false' }};
-            const canDelete = {{ (userRole is not null and roles[userRole] is defined and roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button) ? 'true' : 'false' }};
-            const urlWaitingReturn = "{{ path('to_p2_from_waiting_return_cw', {'id': 'TASK_ID'}) }}";
-            const urlToP1 = "{{ path('change_task_cw_to_p1', {'id': 'TASK_ID'}) }}";
-            const urlToNextWeek = "{{ path('change_task_p2_cw_to_p2_nw', {'id': 'TASK_ID'}) }}";
-            const urlModify = "{{ path('modify_task_cw_p2', {'id': 'TASK_ID'}) }}";
-            const urlDelete = "{{ path('delete_task_cw_p2', {'id': 'TASK_ID'}) }}";
-
-			$(".js-inline-add-toggle").on("click", function (e) {
-				e.preventDefault();
-				const target = $(this).data("target");
-				$(target).removeClass("d-none");
-			});
-
-			$(".js-inline-add-cancel").on("click", function () {
-				const target = $(this).data("target");
-				$(target).addClass("d-none");
-			});
-
-            $("#inlineAddTaskP2Form").on("submit", function (e) {
-                e.preventDefault();
-
-                const $form = $(this);
-                const $errorRow = $("#inlineAddTaskP2Errors");
-                const $errorBox = $errorRow.find(".message-error");
-
-                $.ajax({
-                    url: "{{ path('current_week_p2') }}",
-                    method: "POST",
-                    data: $form.serialize(),
-                    dataType: "json",
-                    headers: {
-                        "X-Requested-With": "XMLHttpRequest"
-                    }
-                }).done((response) => {
-                    if (!response.success) {
-                        return;
-                    }
-
-                    const id = response.task.id;
-                    const users = (response.task.users || []).map((u) => `${escapeHtml(u)}<br>`).join("");
-                    const actionParts = [];
-                    if (canWaitingReturn) {
-                        actionParts.push(`<a class="color-yellow" href="${urlWaitingReturn.replace('TASK_ID', id)}"><i class="fas fa-hourglass-start"></i></a>`);
-                    }
-                    if (canToP1) {
-                        actionParts.push(`<a class="color-yellow text-bold" href="${urlToP1.replace('TASK_ID', id)}"><span>P1</span></a>`);
-                    }
-                    if (canToNextWeek) {
-                        actionParts.push(`<a class="color-yellow" href="${urlToNextWeek.replace('TASK_ID', id)}"><i class="fas fa-redo"></i></a>`);
-                    }
-                    if (canModify) {
-                        actionParts.push(`<a class="color-yellow" href="${urlModify.replace('TASK_ID', id)}"><i class="fas fa-cog"></i></a>`);
-                    }
-                    if (canDelete) {
-                        actionParts.push(`<a class="color-yellow" href="${urlDelete.replace('TASK_ID', id)}" onclick="return confirm('Attention, vous vous apprêtez à supprimer une tâche P2')"><i class="fas fa-trash"></i></a>`);
-                    }
-
-                    const actionHtml = hasActions ? `<td><div style="display:inline-flex;align-items:center;column-gap:8px;">${actionParts.join('')}</div></td>` : '';
-                    const doneHtml = hasDone
-                        ? `<td class="form-switch"><input type="checkbox" id="taskdone_${id}" class="taskdone" data-taskdone="${id}"></td>`
-                        : '';
-
-                    const rowHtml = `
-                        <tr data-taskdone="${id}">
-                            <td class="d-none">${id}</td>
-                            <td class="color-white text-bold">${escapeHtml(response.task.customer)}</td>
-                            <td class="color-white text-bold">${escapeHtml(response.task.subject)}</td>
-                            <td class="color-white text-bold">${users}</td>
-                            ${actionHtml}
-                            ${doneHtml}
-                        </tr>
-                    `;
-
-                    $("#inlineAddTaskP2Errors").after(rowHtml);
-                    $errorBox.empty();
-                    $errorRow.addClass("d-none");
-                    $form.trigger("reset");
-                    $("#inlineAddTaskP2Row").addClass("d-none");
-                }).fail((xhr) => {
-                    const errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)
-                        ? xhr.responseJSON.errors
-                        : ["Une erreur est survenue."];
-
-                    $errorBox.html(errors.map((msg) => `<div>${escapeHtml(msg)}</div>`).join(""));
-                    $errorRow.removeClass("d-none");
-                    $("#inlineAddTaskP2Row").removeClass("d-none");
-                });
-            });
-
-			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 1
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderTaskP2").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 1
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderAppointment").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 2
-					},
-					dataType: "JSON"
-				})
-			})
-			$("#tableOrderQuote").on("reorder-row.bs.table", (e, table, row, old) => {
-				$.ajax({
-					url: "{{ path('reorder')}}",
-					method: "POST",
-					data: {
-						table: JSON.stringify(table),
-						context: 3
-					},
-					dataType: "JSON"
-				})
-			})
-		})
-	</script>
+	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
 {% endblock %}
