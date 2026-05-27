@@ -134,7 +134,7 @@
                         <tr id="inlineAddTaskNwP1Row" class="bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
                             <td class="d-none"></td>
                             <td>
-                                {{ form_widget(form_task_nw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                                {{ form_widget(form_task_nw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm js-task-customer-select', 'data-customer-create-url': path('front_customer_create')}}) }}
                             </td>
                             <td>
                                 {{ form_widget(form_task_nw_p1_add.object, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Sujet'}}) }}

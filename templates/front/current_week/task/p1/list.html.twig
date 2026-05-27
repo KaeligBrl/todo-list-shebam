@@ -94,7 +94,7 @@
             {% endif %}
 
             <table id="tableOrderTaskP1" class="table mb-5 table-bordered">
-                <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
+                <thead class="bg-blue-dark-light table-borderless">
                     <tr>
                         <th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
                         <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
@@ -136,7 +136,7 @@
                         <tr id="inlineAddTaskP1Row" class="bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
                             <td class="d-none"></td>
                             <td>
-                                {{ form_widget(form_task_cw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm'}}) }}
+                                {{ form_widget(form_task_cw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm js-task-customer-select', 'data-customer-create-url': path('front_customer_create')}}) }}
                             </td>
                             <td>
                                 {{ form_widget(form_task_cw_p1_add.object, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Sujet'}}) }}

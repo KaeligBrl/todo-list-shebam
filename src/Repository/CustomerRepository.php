@@ -31,4 +31,14 @@ class CustomerRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function findOneByNameInsensitive(string $name): ?Customer
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('LOWER(c.name) = :name')
+            ->setParameter('name', mb_strtolower($name))
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

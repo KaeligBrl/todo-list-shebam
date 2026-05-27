@@ -1,6 +1,10 @@
 (function ($) {
     "use strict";
 
+    function decodeHtml(value) {
+        return $("<textarea>").html(value || "").text();
+    }
+
     function escapeHtml(value) {
         return $("<div>").text(value ?? "").html();
     }
@@ -11,6 +15,95 @@
 
     function escapeJsSingleQuote(value) {
         return String(value ?? "").replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    }
+
+    function resetCustomerSelect($form) {
+        $form.find("select.js-task-customer-select").each(function () {
+            if (this.tomselect) {
+                this.tomselect.clear(true);
+                return;
+            }
+
+            this.selectedIndex = -1;
+        });
+    }
+
+    function initCustomerTomSelects($scope) {
+        if (typeof window.TomSelect === "undefined") {
+            return;
+        }
+
+        $scope.find("select.js-task-customer-select").each(function () {
+            if (this.tomselect) {
+                return;
+            }
+
+            var createUrl = this.dataset.customerCreateUrl;
+
+            new TomSelect(this, {
+                dropdownParent: "body",
+                render: {
+                    option_create: function (data, escape) {
+                        return '<div class="create">Ajouter <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                    },
+                    no_results: function (data, escape) {
+                        return '<div class="no-results">Aucun resultat pour <strong>' + escape(data.input) + '</strong></div>';
+                    }
+                },
+                create: function (input, callback) {
+                    var customerName = String(input || "").trim();
+
+                    if (customerName === "" || !createUrl) {
+                        callback();
+                        return;
+                    }
+
+                    $.ajax({
+                        url: createUrl,
+                        method: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({ name: customerName }),
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    }).done(function (response) {
+                        if (!response || !response.success || !response.id || !response.name) {
+                            callback();
+                            return;
+                        }
+
+                        callback({
+                            value: String(response.id),
+                            text: response.name
+                        });
+                    }).fail(function () {
+                        callback();
+                        alert("Impossible de creer le client pour le moment.");
+                    });
+                },
+                persist: true,
+                maxOptions: null,
+                closeAfterSelect: true,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                },
+                onInitialize: function () {
+                    var tom = this;
+                    tom.control_input.addEventListener("keydown", function (event) {
+                        var isPlainCharacter = event.key && event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey;
+                        if (!isPlainCharacter) {
+                            return;
+                        }
+
+                        if (tom.items.length > 0) {
+                            tom.clear(true);
+                        }
+                    });
+                }
+            });
+        });
     }
 
     function buildActionLink(action, taskId) {
@@ -99,6 +192,7 @@
                 $errorBox.empty();
                 $errorRow.addClass("d-none");
                 $form.trigger("reset");
+                resetCustomerSelect($form);
                 $inlineRow.addClass("d-none");
             }).fail(function (xhr) {
                 var errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)
@@ -176,6 +270,8 @@
             return;
         }
 
+        initCustomerTomSelects($(document));
+
         $forms.each(function () {
             var rawConfig = $(this).attr("data-task-inline-config");
             if (!rawConfig) {
@@ -183,7 +279,7 @@
             }
 
             try {
-                var decodedConfig = $("<textarea>").html(rawConfig).text();
+                var decodedConfig = decodeHtml(rawConfig);
                 var config = JSON.parse(decodedConfig);
                 bindInlineAdd(this, config);
                 bindReorder(config.reorderUrl);
