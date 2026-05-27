@@ -20,6 +20,7 @@ $(document).ready(function () {
                 }),
                 success: function(response) {
                     console.log('Tâche mise à jour avec succès');
+                    window.dispatchEvent(new Event("task-live-local-change"));
                 },
                 error: function(xhr, status, error) {
                     console.error('Erreur lors de la mise à jour:', error);

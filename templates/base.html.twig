@@ -112,8 +112,10 @@
     <script>
         // Passer l'URL Symfony au JavaScript
         window.updateTaskUrl = "{{ path('update_task', {'taskId': 'TASK_ID'}) }}";
+        window.taskLiveVersionUrl = "{{ path('task_live_version') }}";
     </script>
     <script src="{{ asset('assets/js/checkbox.js') }}"></script>
+    <script src="{{ asset('assets/js/task-live-sync.js') }}?v=20260527"></script>
 {% endblock %}
 
 </body>

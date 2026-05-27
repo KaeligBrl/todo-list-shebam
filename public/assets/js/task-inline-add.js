@@ -233,6 +233,7 @@
                 resetCustomerSelect($form);
                 resetUsersSelect($form);
                 $inlineRow.addClass("d-none");
+                window.dispatchEvent(new Event("task-live-local-change"));
             }).fail(function (xhr) {
                 var errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)
                     ? xhr.responseJSON.errors
@@ -264,6 +265,8 @@
                     context: 1
                 },
                 dataType: "JSON"
+            }).done(function () {
+                window.dispatchEvent(new Event("task-live-local-change"));
             });
         });
 
@@ -276,6 +279,8 @@
                     context: 2
                 },
                 dataType: "JSON"
+            }).done(function () {
+                window.dispatchEvent(new Event("task-live-local-change"));
             });
         });
 
@@ -288,6 +293,8 @@
                     context: 3
                 },
                 dataType: "JSON"
+            }).done(function () {
+                window.dispatchEvent(new Event("task-live-local-change"));
             });
         });
     }
