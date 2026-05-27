@@ -49,6 +49,12 @@ class Task
     #[ORM\Column(type: "boolean", nullable: true)]
     private $done;
 
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private $deadline;
+
+    #[ORM\Column(type: "string", length: 1000, nullable: true)]
+    private $note;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
@@ -211,6 +217,30 @@ class Task
     public function setDone(?bool $done): self
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getDeadline(): ?\DateTimeInterface
+    {
+        return $this->deadline;
+    }
+
+    public function setDeadline(?\DateTimeInterface $deadline): self
+    {
+        $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    public function setNote(?string $note): self
+    {
+        $this->note = $note;
 
         return $this;
     }

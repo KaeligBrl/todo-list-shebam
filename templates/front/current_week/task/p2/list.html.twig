@@ -38,7 +38,7 @@
                 %}
                 {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
             {% endif %}
-            {% set inlineAddCols = 4 + (showActions ? 1 : 0) + (showDoneButtonCw ? 1 : 0) %}
+            {% set inlineAddCols = 6 + (showActions ? 1 : 0) + (showDoneButtonCw ? 1 : 0) %}
 
             <div class="mb-4">
                 <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddTaskP2Row"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une tâche</a>
@@ -95,6 +95,8 @@
                         <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
                         <th class="color-yellow text-bold" data-field="subject" data-sortable="true" scope="col">Sujet</th>
                         <th  class="color-yellow text-bold"data-field="person" data-sortable="true" scope="col">Équipe</th>
+                        <th class="color-yellow text-bold" data-field="deadline" data-sortable="true" scope="col">Deadline</th>
+                        <th class="color-yellow text-bold" data-field="note" data-sortable="true" scope="col">Note</th>
 
                         {% if userRole is not null and roles[userRole] is defined %}
                             {% set showActions =
@@ -141,6 +143,12 @@
                         <td>
                             {{ form_widget(form_task_cw_p2_add.users, {'attr': {'class': 'form-select form-select-sm js-task-users-select', 'size': '4'}}) }}
                         </td>
+                        <td>
+                            {{ form_widget(form_task_cw_p2_add.deadline, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                        </td>
+                        <td>
+                            {{ form_widget(form_task_cw_p2_add.note, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Note'}}) }}
+                        </td>
                         {% if showActions %}
                             <td>
                                 <div class="d-none">{{ form_widget(form_task_cw_p2_add.p2) }}</div>
@@ -175,6 +183,8 @@
                                         {{ task.firstname }} <br>
                                     {% endfor %}
                                 </td>
+                                <td class="color-white text-bold">{{ task.deadline ? task.deadline|date('d/m/Y H:i') : '' }}</td>
+                                <td class="color-white text-bold">{{ task.note }}</td>
 
                                 {% if userRole is not null and roles[userRole] is defined %}
                                     {% set showActions =

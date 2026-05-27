@@ -40,6 +40,8 @@ class IndexController extends AbstractController
                         'id' => $taskp2Add->getId(),
                         'customer' => (string) $taskp2Add->getCustomer(),
                         'subject' => (string) $taskp2Add->getObject(),
+                        'deadline_display' => $taskp2Add->getDeadline()?->format('d/m/Y H:i'),
+                        'note' => $taskp2Add->getNote(),
                         'users' => array_map(
                             static fn($user) => $user->getFirstname(),
                             $taskp2Add->getUsers()->toArray()

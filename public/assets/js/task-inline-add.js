@@ -28,6 +28,17 @@
         });
     }
 
+    function resetUsersSelect($form) {
+        $form.find("select.js-task-users-select").each(function () {
+            if (this.tomselect) {
+                this.tomselect.clear(true);
+                return;
+            }
+
+            this.selectedIndex = -1;
+        });
+    }
+
     function initCustomerTomSelects($scope) {
         if (typeof window.TomSelect === "undefined") {
             return;
@@ -183,6 +194,8 @@
             '<td class="color-white text-bold">' + escapeHtml(responseTask.customer) + "</td>",
             '<td class="color-white text-bold">' + escapeHtml(responseTask.subject) + "</td>",
             '<td class="color-white text-bold">' + users + "</td>",
+            '<td class="color-white text-bold">' + escapeHtml(responseTask.deadline_display || "") + "</td>",
+            '<td class="color-white text-bold">' + escapeHtml(responseTask.note || "") + "</td>",
             buildActionsCell(config, id),
             buildDoneCell(config, id),
             "</tr>"
@@ -218,6 +231,7 @@
                 $errorRow.addClass("d-none");
                 $form.trigger("reset");
                 resetCustomerSelect($form);
+                resetUsersSelect($form);
                 $inlineRow.addClass("d-none");
             }).fail(function (xhr) {
                 var errors = xhr.responseJSON && Array.isArray(xhr.responseJSON.errors)

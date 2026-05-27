@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
@@ -61,6 +62,22 @@ class AddTaskP1CurrentWeekType extends AbstractType
                 'placeholder' => 'Sous-Objet 3',
                 'class' => ' form-control'
             ]
+        ])
+        ->add('deadline', DateTimeType::class, [
+            'required' => false,
+            'label' => false,
+            'widget' => 'single_text',
+            'attr' => [
+                'class' => 'form-control form-control-sm',
+            ],
+        ])
+        ->add('note', TextType::class, [
+            'required' => false,
+            'label' => false,
+            'attr' => [
+                'placeholder' => 'Note',
+                'class' => 'form-control form-control-sm',
+            ],
         ])
         ->add('users', EntityType::class, array(
             'required' => true,
