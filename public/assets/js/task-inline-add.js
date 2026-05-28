@@ -143,6 +143,71 @@
         });
     }
 
+    function initStatusTomSelects($scope) {
+        if (typeof window.TomSelect === "undefined") {
+            return;
+        }
+
+        $scope.find("select.js-task-status-select").each(function () {
+            if (this.tomselect) {
+                return;
+            }
+
+            var createUrl = this.dataset.statusCreateUrl;
+
+            new TomSelect(this, {
+                dropdownParent: "body",
+                render: {
+                    option_create: function (data, escape) {
+                        return '<div class="create">Ajouter <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                    },
+                    no_results: function (data, escape) {
+                        return '<div class="no-results">Aucun resultat pour <strong>' + escape(data.input) + '</strong></div>';
+                    }
+                },
+                create: function (input, callback) {
+                    var statusName = String(input || "").trim();
+
+                    if (statusName === "" || !createUrl) {
+                        callback();
+                        return;
+                    }
+
+                    $.ajax({
+                        url: createUrl,
+                        method: "POST",
+                        contentType: "application/json",
+                        dataType: "json",
+                        data: JSON.stringify({ name: statusName }),
+                        headers: {
+                            "X-Requested-With": "XMLHttpRequest"
+                        }
+                    }).done(function (response) {
+                        if (!response || !response.success || !response.id || !response.name) {
+                            callback();
+                            return;
+                        }
+
+                        callback({
+                            value: String(response.id),
+                            text: response.name
+                        });
+                    }).fail(function () {
+                        callback();
+                        alert("Impossible de creer le statut pour le moment.");
+                    });
+                },
+                persist: true,
+                maxOptions: null,
+                closeAfterSelect: true,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        });
+    }
+
     function buildActionLink(action, taskId) {
         if (!action || !action.enabled) {
             return "";
@@ -197,13 +262,16 @@
         var users = (responseTask.users || []).map(function (user) {
             return escapeHtml(user) + "<br>";
         }).join("");
+        var userIds = Array.isArray(responseTask.user_ids) ? responseTask.user_ids.join(",") : "";
+        var statusId = responseTask.status_id == null ? "" : String(responseTask.status_id);
 
         return [
-            '<tr data-taskdone="' + escapeHtml(id) + '">',
+            '<tr data-taskdone="' + escapeHtml(id) + '" data-task-id="' + escapeHtml(id) + '" data-customer-id="' + escapeHtml(responseTask.customer_id || "") + '" data-object="' + escapeHtml(responseTask.subject || "") + '" data-subobject1="' + escapeHtml(responseTask.subobject1 || "") + '" data-subobject2="' + escapeHtml(responseTask.subobject2 || "") + '" data-subobject3="' + escapeHtml(responseTask.subobject3 || "") + '" data-user-ids="' + escapeHtml(userIds) + '" data-status-id="' + escapeHtml(statusId) + '" data-deadline-value="' + escapeHtml(responseTask.deadline_value || "") + '" data-note="' + escapeHtml(responseTask.note || "") + '">',
             '<td class="d-none">' + escapeHtml(id) + "</td>",
             '<td class="color-white text-bold">' + escapeHtml(responseTask.customer) + "</td>",
             '<td class="color-white text-bold">' + escapeHtml(responseTask.subject) + "</td>",
             '<td class="color-white text-bold">' + users + "</td>",
+            '<td class="color-white text-bold">' + escapeHtml(responseTask.status || "") + "</td>",
             '<td class="color-white text-bold">' + escapeHtml(responseTask.deadline_display || "") + "</td>",
             '<td class="color-white text-bold">' + escapeHtml(responseTask.note || "") + "</td>",
             buildActionsCell(config, id),
@@ -323,6 +391,7 @@
 
         // Useful outside task pages too (appointment inline add uses this class).
         initUsersTomSelects($(document));
+        initStatusTomSelects($(document));
 
         var $forms = $("form[data-task-inline-config]");
         if ($forms.length === 0) {

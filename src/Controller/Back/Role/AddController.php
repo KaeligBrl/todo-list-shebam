@@ -8,12 +8,13 @@ use App\Form\Back\Role\AddType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\NotificationContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AddController extends AbstractController
 {
     #[Route('/admin/permissions/role/ajouter', name: 'role_add')]
-    public function addRole(Request $request): Response
+    public function addRole(Request $request, NotificationContextService $notificationContext): Response
     {
         $form = $this->createForm(AddType::class);
         $form->handleRequest($request);
@@ -25,7 +26,7 @@ class AddController extends AbstractController
 
             // Valider le format du rôle (il doit commencer par 'ROLE_')
             if (strpos($newRole, 'ROLE_') !== 0) {
-                $this->addFlash('warning', 'Le rôle doit commencer par "ROLE_".');
+                $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Le rôle doit commencer par "ROLE_".'));
                 return $this->redirectToRoute('role_add');
             }
 
@@ -45,9 +46,9 @@ class AddController extends AbstractController
                 // Sauvegarder les nouveaux rôles dans roles.yaml
                 file_put_contents($rolesFilePath, Yaml::dump($rolesConfig, 2));
 
-                $this->addFlash('success', 'Le rôle a été ajouté avec succès !');
+                $this->addFlash('success', $notificationContext->format('Administration - Rôle', 'Le rôle a été ajouté avec succès !'));
             } else {
-                $this->addFlash('warning', 'Ce rôle existe déjà.');
+                $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Ce rôle existe déjà.'));
             }
 
             return $this->redirectToRoute('role_add');

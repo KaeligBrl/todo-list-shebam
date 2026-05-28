@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Status;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\TaskRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
@@ -24,6 +24,9 @@ class Task
 
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: "tasks")]
     private $customer;
+
+    #[ORM\ManyToOne(targetEntity: Status::class, inversedBy: "tasks")]
+    private $status;
 
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private $sub_object1;
@@ -118,6 +121,18 @@ class Task
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

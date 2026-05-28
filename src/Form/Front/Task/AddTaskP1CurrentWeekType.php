@@ -5,6 +5,7 @@ namespace App\Form\Front\Task;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Entity\Customer;
+use App\Entity\Status;
 use Doctrine\ORM\EntityRepository;
 use App\Form\Front\Conditions\SelectedUsers;
 use Symfony\Component\Form\AbstractType;
@@ -99,6 +100,19 @@ class AddTaskP1CurrentWeekType extends AbstractType
                     ->orderBy('u.firstname', 'ASC');
             }
         ))
+        ->add('status', EntityType::class, [
+            'required' => false,
+            'label' => false,
+            'placeholder' => 'Statut',
+            'class' => Status::class,
+            'attr' => [
+                'class' => 'form-select form-select-sm',
+            ],
+            'query_builder' => function (EntityRepository $er) {
+                return $er->createQueryBuilder('s')
+                    ->orderBy('s.name', 'ASC');
+            }
+        ])
         ->add('p1',  CheckboxType::class, [
             'required' => false,
             'label' => 'Priorité 1',

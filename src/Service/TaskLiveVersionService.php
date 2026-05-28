@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Entity\Appointment;
 use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -74,12 +75,41 @@ class TaskLiveVersionService
     {
         $version = (int) floor(microtime(true) * 1000);
         $state = $this->readState();
+        $contextLabel = $this->buildTaskContextLabel($task);
 
         $state['version'] = $version;
         $state['last_change'] = [
             'action' => $action,
+            'entity_label' => 'Tâche',
+            'context_label' => $contextLabel,
             'task_id' => $task->getId(),
             'task_subject' => $this->safeText((string) $task->getObject()),
+            'actor' => [
+                'id' => $actor?->getId(),
+                'firstname' => $this->safeText($actor?->getFirstname() ?? 'Systeme'),
+                'lastname' => $this->safeText($actor?->getLastname() ?? ''),
+                'email' => $this->safeText($actor?->getEmail() ?? ''),
+                'profile_picture_url' => $this->buildProfilePictureUrl($actor),
+            ],
+        ];
+
+        $this->writeState($state);
+
+        return $version;
+    }
+
+    public function recordAppointmentChange(string $action, Appointment $appointment, ?User $actor): int
+    {
+        $version = (int) floor(microtime(true) * 1000);
+        $state = $this->readState();
+
+        $state['version'] = $version;
+        $state['last_change'] = [
+            'action' => $action,
+            'entity_label' => 'Rendez-vous',
+            'context_label' => $this->buildAppointmentContextLabel($appointment),
+            'appointment_id' => $appointment->getId(),
+            'entity_subject' => $this->safeText((string) $appointment->getSubject()),
             'actor' => [
                 'id' => $actor?->getId(),
                 'firstname' => $this->safeText($actor?->getFirstname() ?? 'Systeme'),
@@ -229,5 +259,18 @@ class TaskLiveVersionService
         }
 
         return $normalized;
+    }
+
+    private function buildTaskContextLabel(Task $task): string
+    {
+        $scope = $task->getNextweek() ? 'Semaine suivante' : 'Semaine actuelle';
+        $priority = $task->getP1() ? 'P1' : ($task->getP2() ? 'P2' : 'Tâche');
+
+        return $scope . ' - ' . $priority;
+    }
+
+    private function buildAppointmentContextLabel(Appointment $appointment): string
+    {
+        return $appointment->getNextweek() ? 'Semaine suivante - Rendez-vous' : 'Semaine actuelle - Rendez-vous';
     }
 }

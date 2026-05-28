@@ -7,8 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Form\Front\Appointment\ModifyAppointmentCurrentWeekType;
+use App\Service\NotificationContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CurrentWeekModifyController extends AbstractController
@@ -19,7 +19,7 @@ class CurrentWeekModifyController extends AbstractController
     }
 
     #[Route('/semaine-actuelle/rendez-vous/modifier/id={id}', name: 'modify_appointment_cw')]
-    public function modifyAppointment(Request $request, Appointment $appointmentModify): Response
+    public function modifyAppointment(Request $request, Appointment $appointmentModify, NotificationContextService $notificationContext): Response
     {
         $form = $this->createForm(ModifyAppointmentCurrentWeekType::class, $appointmentModify);
         $notification = null;
@@ -29,7 +29,7 @@ class CurrentWeekModifyController extends AbstractController
             $appointmentModify = $form->getData();
             $this->entityManager->persist($appointmentModify);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été mise à jour !';
+            $notification = $notificationContext->format('Semaine actuelle - Rendez-vous', 'Le rendez-vous a bien été mise à jour !');
             $form = $this->createForm(ModifyAppointmentCurrentWeekType::class, $appointmentModify);
         }
         return $this->render('front/current_week/appointment/modify.html.twig', [

@@ -3,14 +3,12 @@
 namespace App\Controller\Back\Customer;
 
 use App\Entity\Customer;
-use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Form\Back\Customer\AddCustomerType;
+use App\Service\NotificationContextService;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Back\Customer\ModifyCustomerType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModifyController extends AbstractController
@@ -21,7 +19,7 @@ class ModifyController extends AbstractController
     }
 
     #[Route('/admin/client/{id}/modifier', name: 'modify_customer_back')]
-    public function modifyTask(Request $request, Customer $customerModify): Response
+    public function modifyTask(Request $request, Customer $customerModify, NotificationContextService $notificationContext): Response
     {
         $form = $this->createForm(ModifyCustomerType::class, $customerModify);
         $notification = null;
@@ -31,7 +29,7 @@ class ModifyController extends AbstractController
             $customerModify = $form->getData();
             $this->entityManager->persist($customerModify);
             $this->entityManager->flush();
-            $notification = 'Client mise à jour !';
+            $notification = $notificationContext->format('Administration - Client', 'Client mise à jour !');
             $form = $this->createForm(ModifyCustomerType::class, $customerModify);
         }
         return $this->render('back/customer/modify.html.twig',[

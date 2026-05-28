@@ -31,7 +31,7 @@
                     roles[userRole].task_p1_delete_nw is defined and roles[userRole].task_p1_delete_nw
                 %}
             {% endif %}
-            {% set inlineAddCols = 6 + (showActions ? 1 : 0) %}
+            {% set inlineAddCols = 7 + (showActions ? 1 : 0) %}
 
             {% if roles[userRole].add_task is defined and roles[userRole].add_task %}
                 <div class="mb-4">
@@ -86,6 +86,7 @@
                         <th class="color-yellow text-bold" data-field="customer" data-sortable="true" scope="col">Client</th>
                         <th class="color-yellow text-bold" data-field="subject"  data-sortable="true" scope="col">Sujet</th>
                         <th  class="color-yellow text-bold"data-field="person" data-sortable="true" scope="col">Équipe</th>
+                        <th class="color-yellow text-bold" data-field="status" data-sortable="true" scope="col">Statut</th>
                         <th class="color-yellow text-bold" data-field="deadline" data-sortable="true" scope="col">Deadline</th>
                         <th class="color-yellow text-bold" data-field="note" data-sortable="true" scope="col">Note</th>
                         {% if userRole is not null and roles[userRole] is defined %}
@@ -131,6 +132,9 @@
                                 {{ form_widget(form_task_nw_p1_add.users, {'attr': {'class': 'form-select form-select-sm js-task-users-select', 'size': '4'}}) }}
                             </td>
                             <td>
+                                {{ form_widget(form_task_nw_p1_add.status, {'attr': {'class': 'form-select form-select-sm js-task-status-select', 'data-status-create-url': path('front_status_create')}}) }}
+                            </td>
+                            <td>
                                 {{ form_widget(form_task_nw_p1_add.deadline, {'attr': {'class': 'form-control form-control-sm'}}) }}
                             </td>
                             <td>
@@ -174,6 +178,14 @@
                                 </select>
                             </td>
                             <td>
+                                <select class="form-select form-select-sm js-inline-edit-status js-task-status-select" data-status-create-url="{{ path('front_status_create') }}">
+                                    <option value="">Statut</option>
+                                    {% for status in statusesList %}
+                                        <option value="{{ status.id }}">{{ status.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
                                 <input type="datetime-local" class="form-control form-control-sm js-inline-edit-deadline">
                             </td>
                             <td>
@@ -208,6 +220,7 @@
                                 data-subobject2="{{ task.subObject2|default('')|e('html_attr') }}"
                                 data-subobject3="{{ task.subObject3|default('')|e('html_attr') }}"
                                 data-user-ids="{{ userIds|join(',') }}"
+                                data-status-id="{{ task.status ? task.status.id : '' }}"
                                 data-deadline-value="{{ task.deadline ? task.deadline|date('Y-m-d\\TH:i') : '' }}"
                                 data-note="{{ task.note|default('')|e('html_attr') }}">
                                 <td class="d-none">{{ task.id }}</td>
@@ -222,6 +235,7 @@
                                         {{ task.firstname }} <br>
                                     {% endfor %}
                                 </td>
+                                <td class="color-white text-bold">{{ task.status ? task.status.name : '' }}</td>
                                 <td class="color-white text-bold">{{ task.deadline ? task.deadline|date('d/m/Y H:i') : '' }}</td>
                                 <td class="color-white text-bold">{{ task.note }}</td>
                                 {% if userRole is not null and roles[userRole] is defined %}

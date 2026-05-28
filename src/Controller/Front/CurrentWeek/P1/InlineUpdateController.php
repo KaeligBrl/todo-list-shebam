@@ -5,6 +5,7 @@ namespace App\Controller\Front\CurrentWeek\P1;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Repository\CustomerRepository;
+use App\Repository\StatusRepository;
 use App\Repository\UserRepository;
 use App\Service\TaskLiveVersionService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,10 +26,12 @@ class InlineUpdateController extends AbstractController
         Request $request,
         Task $task,
         CustomerRepository $customerRepository,
+        StatusRepository $statusRepository,
         UserRepository $userRepository,
         TaskLiveVersionService $taskLiveVersionService,
     ): JsonResponse {
         $customerId = (int) ($request->request->get('customer_id') ?? 0);
+        $statusId = (int) ($request->request->get('status_id') ?? 0);
         $object = trim((string) ($request->request->get('object') ?? ''));
         $note = trim((string) ($request->request->get('note') ?? ''));
         $deadlineRaw = trim((string) ($request->request->get('deadline') ?? ''));
@@ -42,6 +45,7 @@ class InlineUpdateController extends AbstractController
         $errors = [];
 
         $customer = $customerId > 0 ? $customerRepository->find($customerId) : null;
+        $status = $statusId > 0 ? $statusRepository->find($statusId) : null;
         if (!$customer) {
             $errors[] = 'Le client est obligatoire.';
         }
@@ -86,6 +90,7 @@ class InlineUpdateController extends AbstractController
         }
 
         $task->setCustomer($customer);
+        $task->setStatus($status);
         $task->setObject($object);
         $task->setSubObject1($subobject1 !== '' ? $subobject1 : null);
         $task->setSubObject2($subobject2 !== '' ? $subobject2 : null);
@@ -115,6 +120,8 @@ class InlineUpdateController extends AbstractController
                 'id' => $task->getId(),
                 'customer' => (string) $task->getCustomer(),
                 'customer_id' => $task->getCustomer()?->getId(),
+                'status' => (string) ($task->getStatus()?->getName() ?? ''),
+                'status_id' => $task->getStatus()?->getId(),
                 'subject' => (string) $task->getObject(),
                 'subobject1' => $task->getSubObject1() ?? '',
                 'subobject2' => $task->getSubObject2() ?? '',

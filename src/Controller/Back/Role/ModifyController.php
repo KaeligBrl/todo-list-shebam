@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\NotificationContextService;
 
 class ModifyController extends AbstractController
 {
@@ -19,7 +20,7 @@ class ModifyController extends AbstractController
         $this->routeService = $routeService;
     }
     #[Route('/admin/role/modifier/{roleName}', name: 'role_edit')]
-    public function editRole(Request $request, string $roleName): Response
+    public function editRole(Request $request, string $roleName, NotificationContextService $notificationContext): Response
     {
         // Lire le fichier roles.yaml
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
@@ -188,7 +189,7 @@ class ModifyController extends AbstractController
 
             file_put_contents($rolesFilePath, Yaml::dump($roles, 4));
 
-            $this->addFlash('success', 'Rôle modifié avec succès.');
+            $this->addFlash('success', $notificationContext->format('Administration - Rôle', 'Rôle modifié avec succès.'));
 
             return $this->redirectToRoute('role_edit', ['roleName' => $roleName]);
         }

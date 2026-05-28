@@ -28,6 +28,34 @@
             </button>
                 <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNavTopBar">
                     <ul class="navbar-nav ml-auto">
+                        {% if app.user %}
+                            <li id="connected-users-topbar"
+                                class="nav-item d-flex align-items-center mr-2 {% if connectedUsers is not defined or connectedUsers|length == 0 %}d-none{% endif %}"
+                                title="Utilisateurs connectes"
+                                data-endpoint="{{ path('front_connected_users_active') }}">
+                                <span class="d-inline-flex align-items-center js-connected-users-list">
+                                    {% if connectedUsers is defined %}
+                                        {% for connectedUser in connectedUsers %}
+                                            {% set firstname = connectedUser.firstname|default('') %}
+                                            {% set lastname = connectedUser.lastname|default('') %}
+                                            {% set initials = (firstname|slice(0, 1) ~ lastname|slice(0, 1))|upper %}
+                                            <span class="d-inline-flex align-items-center justify-content-center"
+                                                  style="width:32px;height:32px;border-radius:50%;overflow:hidden;border:2px solid #21344a;background:#1a2f45;color:#fff;font-size:12px;font-weight:700;margin-left:6px;"
+                                                  title="{{ firstname }} {{ lastname }}">
+                                                {% if connectedUser.profile_picture_url %}
+                                                    <img src="{{ connectedUser.profile_picture_url }}"
+                                                         alt="{{ firstname }} {{ lastname }}"
+                                                         style="width:100%;height:100%;object-fit:cover;display:block;">
+                                                {% else %}
+                                                    {{ initials ?: '?' }}
+                                                {% endif %}
+                                            </span>
+                                        {% endfor %}
+                                    {% endif %}
+                                </span>
+                            </li>
+                        {% endif %}
+
                         <li class="nav-item">
                             <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
                         </li>
@@ -104,6 +132,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <script src="{{ asset('assets/js/motdepasse.js') }}?v=20260527"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/connected-users-live.js') }}?v=20260528a"></script>
     <script>
         // Passer l'URL Symfony au JavaScript
         window.updateTaskUrl = "{{ path('update_task', {'taskId': 'TASK_ID'}) }}";

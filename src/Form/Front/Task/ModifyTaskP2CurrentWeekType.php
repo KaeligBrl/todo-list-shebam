@@ -81,8 +81,7 @@ class ModifyTaskP2CurrentWeekType extends AbstractType
             ))
             ->add('p2',  CheckboxType::class, [
                 'required' => false,
-                'label' => 'Priorité 2',
-                'label_attr' => [ 'class' => 'label-form mb-3'],
+                'label' => false,
                 'attr' => [
                     'checked'   => 'checked'
                 ]

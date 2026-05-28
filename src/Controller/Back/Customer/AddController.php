@@ -5,6 +5,7 @@ namespace App\Controller\Back\Customer;
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Back\Customer\AddCustomerType;
+use App\Service\NotificationContextService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +18,7 @@ class AddController extends AbstractController
     $this->entityManager = $entityManager;
     }
     #[Route('/admin/client/ajouter', name: 'add_customer_back')]
-    public function index(Request $request): Response {
+    public function index(Request $request, NotificationContextService $notificationContext): Response {
         $customerAdd = new Customer();
         $form = $this->createForm(AddCustomerType::class, $customerAdd);
         $notification = null;
@@ -25,7 +26,7 @@ class AddController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($customerAdd);
             $this->entityManager->flush();
-            $notification = 'Le client a bien été ajouté';
+            $notification = $notificationContext->format('Administration - Client', 'Le client a bien été ajouté');
             $customerAdd = new Customer();
             $form = $this->createForm(AddCustomerType::class, $customerAdd);
         }

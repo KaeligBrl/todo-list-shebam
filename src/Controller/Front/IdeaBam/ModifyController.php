@@ -5,6 +5,7 @@ namespace App\Controller\Front\IdeaBam;
 use App\Entity\IdeaBam;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\IdeaBam\ModifyIdeaBamType;
+use App\Service\NotificationContextService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -17,7 +18,7 @@ class ModifyController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/idebam/modifier/{id}', name: 'modify_ideabam')]
-    public function index(IdeaBam $ideaBamModify, Request $request): Response
+    public function index(IdeaBam $ideaBamModify, Request $request, NotificationContextService $notificationContext): Response
     {
 
         $notification = null;
@@ -28,7 +29,7 @@ class ModifyController extends AbstractController
             $ideaBamModify = $form->getData();
             $this->entityManager->persist($ideaBamModify);
             $this->entityManager->flush();
-            $notification = "L'idée a bien été modifiée";
+            $notification = $notificationContext->format('Idébam', "L'idée a bien été modifiée");
             return $this->redirectToRoute("ideabam");
         }
 

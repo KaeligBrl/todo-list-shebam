@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Appointment\ModifyAppointmentNextWeekType;
+use App\Service\NotificationContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NextWeekModifyController extends AbstractController
@@ -18,7 +19,7 @@ class NextWeekModifyController extends AbstractController
     }
 
     #[Route('/semaine-suivante/rendez-vous/modifier/id={id}', name: 'modify_appointment_nw')]
-    public function modifyAppointmentNextWeek(Request $request, Appointment $appointmentModify): Response
+    public function modifyAppointmentNextWeek(Request $request, Appointment $appointmentModify, NotificationContextService $notificationContext): Response
     {
         $form = $this->createForm(ModifyAppointmentNextWeekType::class, $appointmentModify);
         $notification = null;
@@ -28,7 +29,7 @@ class NextWeekModifyController extends AbstractController
             $appointmentModify = $form->getData();
             $this->entityManager->persist($appointmentModify);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été mise à jour !';
+            $notification = $notificationContext->format('Semaine suivante - Rendez-vous', 'Le rendez-vous a bien été mise à jour !');
             $form = $this->createForm(ModifyAppointmentNextWeekType::class, $appointmentModify);
         }
         return $this->render('front/next_week/appointment/modify.html.twig', [

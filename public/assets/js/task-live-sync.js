@@ -77,14 +77,44 @@
 
     function actionLabel(action) {
         if (action === "created") {
-            return "a ajoute une tache";
+            return "ajoutee";
         }
 
         if (action === "deleted") {
-            return "a supprime une tache";
+            return "supprimee";
         }
 
-        return "a modifie une tache";
+        return "modifiee";
+    }
+
+    function getContextLabelFromPathname() {
+        var pathname = String(window.location.pathname || "").toLowerCase();
+
+        if (pathname.indexOf("/semaine-actuelle/p2") === 0) {
+            return "Semaine actuelle - P2";
+        }
+
+        if (pathname.indexOf("/semaine-actuelle/p1") === 0) {
+            return "Semaine actuelle - P1";
+        }
+
+        if (pathname.indexOf("/semaine-suivante/p2") === 0) {
+            return "Semaine suivante - P2";
+        }
+
+        if (pathname.indexOf("/semaine-suivante/p1") === 0) {
+            return "Semaine suivante - P1";
+        }
+
+        if (pathname.indexOf("/semaine-actuelle/rendez-vous") === 0) {
+            return "Semaine actuelle - Rendez-vous";
+        }
+
+        if (pathname.indexOf("/semaine-suivante/rendez-vous") === 0) {
+            return "Semaine suivante - Rendez-vous";
+        }
+
+        return "";
     }
 
     function buildInitials(actor) {
@@ -822,7 +852,12 @@
         var actor = (change && change.actor) || {};
         var actorName = [actor.firstname || "Quelqu'un", actor.lastname || ""].join(" ").trim();
         var action = actionLabel(change && change.action);
-        var subject = change && change.task_subject ? String(change.task_subject) : "";
+        var subject = change && (change.task_subject || change.entity_subject) ? String(change.task_subject || change.entity_subject) : "";
+        var entityLabel = change && change.entity_label ? String(change.entity_label) : "";
+        var contextLabel = change && change.context_label ? String(change.context_label) : "";
+        if (!contextLabel) {
+            contextLabel = getContextLabelFromPathname();
+        }
 
         var box = document.getElementById("task-live-notification");
         if (!box) {
@@ -851,12 +886,33 @@
 
         var safeActorName = $("<div>").text(actorName).html();
         var safeSubject = $("<div>").text(subject).html();
+        var safeEntityLabel = $("<div>").text(entityLabel).html();
+        var safeContextLabel = $("<div>").text(contextLabel).html();
+
+        var entityAndSubject = "";
+        if (safeEntityLabel) {
+            entityAndSubject = safeEntityLabel;
+        }
+        if (safeSubject) {
+            entityAndSubject += (entityAndSubject ? " : " : "") + safeSubject;
+        }
+
+        var notificationMessage = "";
+        if (safeContextLabel && entityAndSubject) {
+            notificationMessage = safeContextLabel + " - " + entityAndSubject + " " + action;
+        } else if (safeContextLabel) {
+            notificationMessage = safeContextLabel + " - " + action;
+        } else if (entityAndSubject) {
+            notificationMessage = entityAndSubject + " " + action;
+        } else {
+            notificationMessage = "Mise a jour";
+        }
 
         box.innerHTML = '' +
             avatarHtml +
             '<div style="line-height:1.25">' +
                 '<div style="font-weight:700;">' + safeActorName + '</div>' +
-                '<div style="font-size:13px;color:#d5dfeb;">' + action + (safeSubject ? (': ' + safeSubject) : '') + '</div>' +
+                '<div style="font-size:13px;color:#d5dfeb;">' + notificationMessage + '</div>' +
             '</div>';
 
         box.style.opacity = "1";
@@ -878,7 +934,7 @@
             }, 250);
 
             window.__taskLiveNotificationTimer = null;
-        }, 4500);
+        }, 10000);
     }
 
     function softRefreshTable() {

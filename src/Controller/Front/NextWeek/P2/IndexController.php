@@ -4,6 +4,7 @@ namespace App\Controller\Front\NextWeek\P2;
 
 use App\Entity\Task;
 use App\Repository\CustomerRepository;
+use App\Repository\StatusRepository;
 use App\Repository\TaskRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Task\AddTaskP2NextWeekType;
-use App\Form\Front\Task\ModifyTaskP2NextWeekType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IndexController extends AbstractController
@@ -28,6 +28,7 @@ class IndexController extends AbstractController
         Request $request,
         CustomerRepository $customerRepository,
         UserRepository $userRepository,
+        StatusRepository $statusRepository,
     ): Response
     {
         $taskp2Add = new Task();
@@ -46,11 +47,22 @@ class IndexController extends AbstractController
                     'task' => [
                         'id' => $taskp2Add->getId(),
                         'customer' => (string) $taskp2Add->getCustomer(),
+                        'customer_id' => $taskp2Add->getCustomer()?->getId(),
                         'subject' => (string) $taskp2Add->getObject(),
+                        'subobject1' => $taskp2Add->getSubObject1() ?? '',
+                        'subobject2' => $taskp2Add->getSubObject2() ?? '',
+                        'subobject3' => $taskp2Add->getSubObject3() ?? '',
+                        'status' => (string) ($taskp2Add->getStatus()?->getName() ?? ''),
+                        'status_id' => $taskp2Add->getStatus()?->getId(),
+                        'deadline_value' => $taskp2Add->getDeadline()?->format('Y-m-d\\TH:i') ?? '',
                         'deadline_display' => $taskp2Add->getDeadline()?->format('d/m/Y H:i'),
                         'note' => $taskp2Add->getNote(),
                         'users' => array_map(
                             static fn($user) => $user->getFirstname(),
+                            $taskp2Add->getUsers()->toArray()
+                        ),
+                        'user_ids' => array_map(
+                            static fn($user) => (int) $user->getId(),
                             $taskp2Add->getUsers()->toArray()
                         ),
                     ],
@@ -76,6 +88,7 @@ class IndexController extends AbstractController
             'task' => $taskList->findBy([], ['position' => 'ASC']),
             'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
             'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
+            'statusesList' => $statusRepository->findBy([], ['name' => 'ASC']),
             'form_task_cw_p2_add' => $form_p2->createView(),
             'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,

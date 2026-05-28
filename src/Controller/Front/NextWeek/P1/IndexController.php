@@ -2,9 +2,9 @@
 
 namespace App\Controller\Front\NextWeek\P1;
 
-use App\Entity\Appointment;
 use App\Entity\Task;
 use App\Repository\CustomerRepository;
+use App\Repository\StatusRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,6 +29,7 @@ class IndexController extends AbstractController
         AppointmentRepository $appointmentRepository,
         CustomerRepository $customerRepository,
         UserRepository $userRepository,
+        StatusRepository $statusRepository,
     ): Response
     {
         $taskAdd = new Task();
@@ -47,11 +48,22 @@ class IndexController extends AbstractController
                     'task' => [
                         'id' => $taskAdd->getId(),
                         'customer' => (string) $taskAdd->getCustomer(),
+                        'customer_id' => $taskAdd->getCustomer()?->getId(),
                         'subject' => (string) $taskAdd->getObject(),
+                        'subobject1' => $taskAdd->getSubObject1() ?? '',
+                        'subobject2' => $taskAdd->getSubObject2() ?? '',
+                        'subobject3' => $taskAdd->getSubObject3() ?? '',
+                        'status' => (string) ($taskAdd->getStatus()?->getName() ?? ''),
+                        'status_id' => $taskAdd->getStatus()?->getId(),
+                        'deadline_value' => $taskAdd->getDeadline()?->format('Y-m-d\\TH:i') ?? '',
                         'deadline_display' => $taskAdd->getDeadline()?->format('d/m/Y H:i'),
                         'note' => $taskAdd->getNote(),
                         'users' => array_map(
                             static fn($user) => $user->getFirstname(),
+                            $taskAdd->getUsers()->toArray()
+                        ),
+                        'user_ids' => array_map(
+                            static fn($user) => (int) $user->getId(),
                             $taskAdd->getUsers()->toArray()
                         ),
                     ],
@@ -77,6 +89,7 @@ class IndexController extends AbstractController
             'task' => $taskList->findBy([], ['position' => 'ASC']),
             'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
             'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
+            'statusesList' => $statusRepository->findBy([], ['name' => 'ASC']),
             'form_task_nw_p1_add' => $form_p1->createView(),
             'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,

@@ -54,6 +54,18 @@
                 }
             });
         }
+
+        var statusSelect = $row.find("select.js-inline-edit-status").get(0);
+        if (statusSelect && !statusSelect.tomselect) {
+            new TomSelect(statusSelect, {
+                dropdownParent: "body",
+                closeAfterSelect: true,
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
+        }
     }
 
     function setSingleValue($select, value) {
@@ -181,6 +193,7 @@
             var subobject2 = String($sourceRow.attr("data-subobject2") || "");
             var subobject3 = String($sourceRow.attr("data-subobject3") || "");
             var userIds = splitIds($sourceRow.attr("data-user-ids"));
+            var statusId = String($sourceRow.attr("data-status-id") || "");
 
             setSingleValue($editRow.find(".js-inline-edit-customer"), customerId);
             $editRow.find(".js-inline-edit-object").val(object);
@@ -190,6 +203,7 @@
             $editRow.find(".js-inline-edit-subobject2").val(subobject2);
             $editRow.find(".js-inline-edit-subobject3").val(subobject3);
             setMultiValue($editRow.find(".js-inline-edit-users"), userIds);
+            setSingleValue($editRow.find(".js-inline-edit-status"), statusId);
 
             $sourceRow.after($editRow);
             $editRow.after($errorRow);
@@ -222,6 +236,7 @@
                 subobject3: String($editRow.find(".js-inline-edit-subobject3").val() || ""),
                 deadline: String($editRow.find(".js-inline-edit-deadline").val() || ""),
                 note: String($editRow.find(".js-inline-edit-note").val() || ""),
+                status_id: String($editRow.find(".js-inline-edit-status").val() || ""),
                 user_ids: $editRow.find(".js-inline-edit-users").val() || []
             };
 
@@ -253,13 +268,15 @@
                 $sourceRow.attr("data-subobject3", String(taskData.subobject3 || ""));
                 $sourceRow.attr("data-deadline-value", String(taskData.deadline_value || ""));
                 $sourceRow.attr("data-note", String(taskData.note || ""));
+                $sourceRow.attr("data-status-id", String(taskData.status_id || ""));
                 $sourceRow.attr("data-user-ids", Array.isArray(taskData.user_ids) ? taskData.user_ids.join(",") : "");
 
                 $sourceRow.children("td").eq(1).text(String(taskData.customer || ""));
                 $sourceRow.children("td").eq(2).html(renderSubjectCell(taskData));
                 $sourceRow.children("td").eq(3).html(renderUsersCell(taskData));
-                $sourceRow.children("td").eq(4).text(String(taskData.deadline_display || ""));
-                $sourceRow.children("td").eq(5).text(String(taskData.note || ""));
+                $sourceRow.children("td").eq(4).text(String(taskData.status || ""));
+                $sourceRow.children("td").eq(5).text(String(taskData.deadline_display || ""));
+                $sourceRow.children("td").eq(6).text(String(taskData.note || ""));
 
                 closeEditor();
                 window.dispatchEvent(new Event("task-live-local-change"));

@@ -3,16 +3,15 @@
 namespace App\Controller\Back\Role;
 
 use Symfony\Component\Yaml\Yaml;
-use App\Form\Back\Permission\AddRoleType;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\NotificationContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class DeleteController extends AbstractController
 {
     #[Route('/admin/role/supprimer/{roleName}', name: 'role_delete')]
-    public function deleteRole(string $roleName): Response
+    public function deleteRole(string $roleName, NotificationContextService $notificationContext): Response
     {
         $rolesFilePath = $this->getParameter('kernel.project_dir') . '/config/roles.yaml';
 
@@ -21,7 +20,7 @@ class DeleteController extends AbstractController
 
         // Vérifier si le rôle existe
         if (!isset($roles['roles'][$roleName])) {
-            $this->addFlash('warning', 'Le rôle n\'existe pas.');
+            $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Le rôle n\'existe pas.'));
             return $this->redirectToRoute('role_list'); // Redirigez vers la liste des rôles
         }
 
@@ -32,7 +31,7 @@ class DeleteController extends AbstractController
         file_put_contents($rolesFilePath, Yaml::dump($roles, 2));
 
         // Ajouter un message de succès
-        $this->addFlash('success', 'Rôle supprimé avec succès.');
+        $this->addFlash('success', $notificationContext->format('Administration - Rôle', 'Rôle supprimé avec succès.'));
 
         return $this->redirectToRoute('role_list'); // Redirigez vers la liste des rôles
     }

@@ -13,6 +13,7 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Service\NotificationContextService;
 
 class ModifyController extends AbstractController
 {
@@ -27,7 +28,7 @@ class ModifyController extends AbstractController
     }
 
     #[Route('/admin/utilisateurs/{id}/modifier', name: 'user_modify')]
-    public function modifyUser(User $userTitle, Request $request): Response
+    public function modifyUser(User $userTitle, Request $request, NotificationContextService $notificationContext): Response
     {
         // Charger les rôles depuis le fichier YAML
         $rolesData = $this->getRolesData();
@@ -54,7 +55,7 @@ class ModifyController extends AbstractController
 
             $this->entityManager->persist($user);
             $this->entityManager->flush();
-            $notification = 'Informations mises à jour !';
+            $notification = $notificationContext->format('Administration - Utilisateur', 'Informations mises à jour !');
         }
 
         return $this->render('back/user/modify.html.twig', [

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\Front\Appointment\AddAppointmentCurrentWeekType;
+use App\Service\NotificationContextService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CurrentWeekAddController extends AbstractController
@@ -18,7 +19,7 @@ class CurrentWeekAddController extends AbstractController
     }
 
     #[Route('/semaine-actuelle/rendez-vous/ajouter', name: 'add_appointment_cw')]
-    public function addTaskAppointment(Request $request): Response
+    public function addTaskAppointment(Request $request, NotificationContextService $notificationContext): Response
     {
         $appointmentAdd = new Appointment();
         $form = $this->createForm(AddAppointmentCurrentWeekType::class, $appointmentAdd);
@@ -27,7 +28,7 @@ class CurrentWeekAddController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
-            $notification = 'Le rendez-vous a bien été ajoutée';
+            $notification = $notificationContext->format('Administration - Rendez-vous', 'Le rendez-vous a bien été ajoutée');
             $appointmentAdd = new Appointment();
             $form = $this->createForm(AddAppointmentCurrentWeekType::class, $appointmentAdd);
         }
