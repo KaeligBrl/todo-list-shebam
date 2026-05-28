@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --sbm-border-soft: rgba(255, 255, 255, 0.14);
+    --sbm-shadow: 0 14px 28px rgba(0, 0, 0, 0.2);
+}
+
+html,
+body {
+    font-family: 'Manrope', sans-serif;
+    min-height: 100%;
+}
+
+body.front-app,
+body.front-auth,
+body.front-reset {
+    color: inherit;
+}
+
+body.front-app {
+    animation: sbmFadeIn .38s ease-out;
+}
+
+@keyframes sbmFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body.front-app .navbar-nav .nav-link,
+body.front-app .navbar-nav .navbar-text,
+body.front-reset .navbar-nav .nav-link {
+    border-radius: 999px;
+    padding: 8px 14px !important;
+    font-weight: 700;
+    letter-spacing: .2px;
+    transition: all .2s ease;
+}
+
+body.front-app .navbar-nav .nav-link:hover,
+body.front-app .navbar-nav .navbar-text:hover,
+body.front-app .navbar-nav .active,
+body.front-app .navbar-nav .active-filters,
+body.front-reset .navbar-nav .nav-link:hover {
+    transform: translateY(-1px);
+}
+
+body.front-app #connected-users-topbar {
+    margin-right: 10px;
+    padding-right: 10px;
+    border-right: 1px dashed rgba(255, 255, 255, 0.25);
+}
+
+body.front-app main > .container {
+    margin-top: 88px !important;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--sbm-border-soft);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: var(--sbm-shadow);
+    backdrop-filter: blur(2px);
+}
+
+body.front-reset main > .container-fluid {
+    margin-top: 92px !important;
+}
+
+body.front-auth .layout-auth-offset,
+body.front-reset .container-fluid {
+    margin-top: 70px !important;
+}
+
+body.front-auth .auth-card,
+body.front-reset .auth-card {
+    border: 1px solid var(--sbm-border-soft);
+    border-radius: 16px;
+    box-shadow: var(--sbm-shadow);
+    padding: 18px;
+}
+
+body.front-auth .form-control,
+body.front-auth .form-select,
+body.front-reset .form-control,
+body.front-reset .form-select,
+body.front-app .form-control,
+body.front-app .form-select,
+body.front-app .ts-control {
+    border-radius: 10px !important;
+}
+
+body.front-auth .form-control:focus,
+body.front-auth .form-select:focus,
+body.front-reset .form-control:focus,
+body.front-reset .form-select:focus,
+body.front-app .form-control:focus,
+body.front-app .form-select:focus,
+body.front-app .ts-control.focus {
+    box-shadow: 0 0 0 .16rem rgba(255, 255, 255, .12) !important;
+}
+
+body.front-app .table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+body.front-app .table thead th {
+    border-bottom: 1px solid var(--sbm-border-soft) !important;
+}
+
+body.front-app .table tbody tr {
+    transition: background .16s ease;
+}
+
+body.front-app .table tbody tr:hover {
+    filter: brightness(1.03);
+}
+
+body.front-app .table td,
+body.front-app .table th {
+    border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.front-app .btn,
+body.front-auth .btn,
+body.front-reset .btn,
+body.front-app .btn-yellow-form {
+    border-radius: 10px !important;
+}
+
+body.front-app .btn-warning,
+body.front-auth .btn-warning,
+body.front-reset .btn-warning,
+body.front-app .btn-yellow-form,
+body.front-app a.color-yellow.text-bold {
+    font-weight: 700;
+}
+
+@media (max-width: 991px) {
+    body.front-app main > .container {
+        margin-top: 72px !important;
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    body.front-auth .layout-auth-offset,
+    body.front-reset .container-fluid {
+        margin-top: 40px !important;
+    }
+}
