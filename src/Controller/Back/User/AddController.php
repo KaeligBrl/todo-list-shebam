@@ -54,14 +54,56 @@ class AddController extends AbstractController
             mkdir($uploadDir, 0775, true);
         }
 
-        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $safeFilename = (string) $this->slugger->slug($originalName);
-        $extension = $file->guessExtension() ?: 'bin';
-        $newFilename = $safeFilename . '-' . uniqid('', true) . '.' . $extension;
+        $originalName = (string) pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $safeFilename = $this->sanitizeOriginalBaseName($originalName);
 
-        $file->move($uploadDir, $newFilename);
+        $newFilename = $safeFilename . '.webp';
+        $targetPath = $uploadDir . '/' . $newFilename;
+
+        $mimeType = (string) ($file->getMimeType() ?: '');
+        $sourcePath = $file->getPathname();
+
+        $image = match ($mimeType) {
+            'image/jpeg', 'image/jpg' => @imagecreatefromjpeg($sourcePath),
+            'image/png' => @imagecreatefrompng($sourcePath),
+            'image/gif' => @imagecreatefromgif($sourcePath),
+            'image/webp' => @imagecreatefromwebp($sourcePath),
+            default => null,
+        };
+
+        if (!$image) {
+            throw new \RuntimeException('Impossible de lire l\'image source pour conversion WebP.');
+        }
+
+        imagepalettetotruecolor($image);
+        imagealphablending($image, true);
+        imagesavealpha($image, true);
+
+        // Pas de redimensionnement: on conserve la resolution d'origine.
+        $written = @imagewebp($image, $targetPath, 100);
+        imagedestroy($image);
+
+        if ($written !== true) {
+            throw new \RuntimeException('Impossible d\'enregistrer l\'image en WebP.');
+        }
 
         return 'uploads/profile/' . $newFilename;
+    }
+
+    private function sanitizeOriginalBaseName(string $baseName): string
+    {
+        $name = trim($baseName);
+        $name = str_replace(["\\", "/"], '-', $name);
+        $name = preg_replace('/[<>:"|?*\x00-\x1F]/u', '', $name) ?? '';
+        $name = preg_replace('/([._-])[0-9a-f]{8,}(?:\.[0-9a-f]{6,}|\.[0-9]{6,})?$/i', '', $name) ?? $name;
+        $name = preg_replace('/([._-])\d{10,}$/', '', $name) ?? $name;
+        $name = rtrim($name, ". ");
+
+        if ($name !== '' && ctype_digit($name)) {
+            $name = 'image';
+        }
+
+        return $name !== '' ? $name : 'image';
     }
     
 }
