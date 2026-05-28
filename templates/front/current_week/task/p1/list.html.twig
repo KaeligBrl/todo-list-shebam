@@ -12,15 +12,10 @@
                         <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'current_week_p1' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_task_p1_cw' %}active-filters{% endif %}
                                         navbar-text text-uppercase text-margin" href="{{ path('current_week_p1') }}">Priorité 1 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i
-                                    class="color-white fas fa-hourglass-start"></i></a>
                         </li>
                         <li class="nav-item"> 
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a>
@@ -33,7 +28,6 @@
             {% set showDoneButtonCw = false %}
             {% if userRole is not null and roles[userRole] is defined %}
                 {% set showActions =
-                    roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw or
                     roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button or
                     roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button or
                     roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button or
@@ -60,15 +54,10 @@
                     actions: [
                         {
                             enabled: roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button,
-                            urlTemplate: path('modify_task_p1_cw', {'id': 'TASK_ID'}),
+                            urlTemplate: '#',
                             className: 'color-yellow',
-                            iconClass: 'fas fa-cog'
-                        },
-                        {
-                            enabled: roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw,
-                            urlTemplate: path('to_p1_from_waiting_return_cw', {'id': 'TASK_ID'}),
-                            className: 'color-yellow',
-                            iconClass: 'fas fa-hourglass-start'
+                            iconClass: 'fas fa-cog',
+                            inlineEdit: true
                         },
                         {
                             enabled: roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button,
@@ -105,7 +94,6 @@
                         
                         {% if userRole is not null and roles[userRole] is defined %}
                             {% set showActions =
-                            roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw or
                             roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button or
                             roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button or
                             roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button or
@@ -174,11 +162,71 @@
                                 <div class="message-error"></div>
                             </td>
                         </tr>
+
+                        <tr id="inlineEditTaskP1Row" class="bg-blue-dark-light d-none" data-source-task-id="">
+                            <td class="d-none"></td>
+                            <td>
+                                <select class="form-select form-select-sm js-inline-edit-customer">
+                                    <option value="">Client</option>
+                                    {% for customer in customers %}
+                                        <option value="{{ customer.id }}">{{ customer.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm js-inline-edit-object" placeholder="Sujet">
+                                <input type="hidden" class="js-inline-edit-subobject1">
+                                <input type="hidden" class="js-inline-edit-subobject2">
+                                <input type="hidden" class="js-inline-edit-subobject3">
+                            </td>
+                            <td>
+                                <select class="form-select form-select-sm js-inline-edit-users" multiple size="4">
+                                    {% for userItem in usersList %}
+                                        <option value="{{ userItem.id }}">{{ userItem.firstname }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="datetime-local" class="form-control form-control-sm js-inline-edit-deadline">
+                            </td>
+                            <td>
+                                <input type="text" class="form-control form-control-sm js-inline-edit-note" placeholder="Note">
+                            </td>
+                            {% if showActions %}
+                                <td>
+                                    <button type="button" class="btn-yellow-form text-bold js-inline-edit-save">Valider</button>
+                                    <button type="button" class="btn btn-outline-light btn-sm js-inline-edit-cancel">Annuler</button>
+                                </td>
+                            {% endif %}
+                            {% if showDoneButtonCw %}
+                                <td></td>
+                            {% endif %}
+                        </tr>
+
+                        <tr id="inlineEditTaskP1Errors" class="d-none bg-blue-dark-light">
+                            <td colspan="{{ inlineAddCols }}">
+                                <div class="message-error"></div>
+                            </td>
+                        </tr>
                     {% endif %}
 
                     {% for task in task %}
                         {% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0 %}
-                            <tr class="{% if task.done == 1 %}bg-yellow-dark {% endif %}"  data-taskdone="{{task.id}}">
+                            {% set userIds = [] %}
+                            {% for userRef in task.users %}
+                                {% set userIds = userIds|merge([userRef.id]) %}
+                            {% endfor %}
+                            <tr class="{% if task.done == 1 %}bg-yellow-dark {% endif %}"
+                                data-taskdone="{{ task.id }}"
+                                data-task-id="{{ task.id }}"
+                                data-customer-id="{{ task.customer ? task.customer.id : '' }}"
+                                data-object="{{ task.object|default('')|e('html_attr') }}"
+                                data-subobject1="{{ task.subObject1|default('')|e('html_attr') }}"
+                                data-subobject2="{{ task.subObject2|default('')|e('html_attr') }}"
+                                data-subobject3="{{ task.subObject3|default('')|e('html_attr') }}"
+                                data-user-ids="{{ userIds|join(',') }}"
+                                data-deadline-value="{{ task.deadline ? task.deadline|date('Y-m-d\\TH:i') : '' }}"
+                                data-note="{{ task.note|default('')|e('html_attr') }}">
 
                                 <td class="d-none">{{ task.id }}</td>
 
@@ -204,7 +252,6 @@
                                 {% if userRole is not null and roles[userRole] is defined %}
                                 {% set showActions =
 
-                                roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw or
                                 roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button or
                                 roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button or
                                 roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button or
@@ -214,14 +261,9 @@
                                         <td>
                                             <div style="display:inline-flex;align-items:center;column-gap:8px;">
                                             {% if roles[userRole].task_p1_modify_button is defined and roles[userRole].task_p1_modify_button %}
-                                            <a class="color-yellow" href="{{ path('modify_task_p1_cw', {'id': task.id}) }}">
+                                            <a class="color-yellow js-inline-edit-toggle" href="#" data-task-id="{{ task.id }}">
                                                 <i class="fas fa-cog"></i>
                                             </a>
-                                            {% endif %}
-
-                                            {% if roles[userRole].waiting_return_in_p1_cw is defined and roles[userRole].waiting_return_in_p1_cw %}
-                                            <a class="color-yellow" href="{{ path('to_p1_from_waiting_return_cw', {'id': task.id }) }}"><i
-                                                    class="fas fa-hourglass-start"></i></a>
                                             {% endif %}
 
                                             {% if roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button  %}
@@ -278,5 +320,9 @@
 
 {% block javascripts %}
 {{ parent() }}
+<script>
+    window.currentWeekP1InlineUpdateUrlTemplate = "{{ path('current_week_p1_inline_update', {'id': 'TASK_ID'}) }}";
+</script>
 <script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
+<script src="{{ asset('assets/js/task-inline-edit-p1.js') }}?v=20260528a"></script>
 {% endblock %}

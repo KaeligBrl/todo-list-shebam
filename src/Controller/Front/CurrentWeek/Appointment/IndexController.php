@@ -3,6 +3,7 @@
 namespace App\Controller\Front\CurrentWeek\Appointment;
 
 use App\Entity\Appointment;
+use App\Repository\UserRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
@@ -19,7 +20,11 @@ class IndexController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/semaine-actuelle/rendez-vous', name: 'current_week_appointment')]
-    public function index(AppointmentRepository $appointmentList, Request $request): Response
+    public function index(
+        AppointmentRepository $appointmentList,
+        UserRepository $userRepository,
+        Request $request,
+    ): Response
     {
         $appointmentAdd = new Appointment();
         $formappointment = $this->createForm(AddAppointmentCurrentWeekType::class, $appointmentAdd);
@@ -34,6 +39,7 @@ class IndexController extends AbstractController
 
         return $this->render('front/current_week/appointment/list.html.twig', [
             'appointment' => $appointmentList->findBy([], ['hoursappointment' => 'ASC']),
+            'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
             'form_appointment_cw_add_front' => $formappointment->createView(),
             'notification' => $notification,
         ]);

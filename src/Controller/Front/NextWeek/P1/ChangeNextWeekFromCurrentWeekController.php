@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\Task\AddTaskP1NextWeekType;
-use App\Repository\WaitingReturnRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,13 +16,12 @@ class ChangeNextWeekFromCurrentWeekController extends AbstractController
 {
 
     #[Route('/semaine-suivante/changer-vers-semaine-actuelle/', name: 'mission_nw_change_to_cw_front')]
-    public function changeTaskToCurrentWeek(TaskRepository $taskRepository, AppointmentRepository $appointmentRepository, WaitingReturnRepository $waitingReturnRepository): Response
+    public function changeTaskToCurrentWeek(TaskRepository $taskRepository, AppointmentRepository $appointmentRepository): Response
     {
         $taskRepository->setRemoveTask();
         $appointmentRepository->setRemoveAppointment();
         $taskRepository->setchangeTaskToCurrentWeek();
         $appointmentRepository->setchangeAppointmentToCurrentWeek();
-        $waitingReturnRepository->setchangeWaitingReturnToCurrentWeek();
         return $this->redirectToRoute("next_week_p1");
     }
 

@@ -29,29 +29,15 @@
                             {{ form_row(form.p2_button_in_p1_cw) }} 
                             {{ form_row(form.task_p1_cw_to_p1_nw_button) }}
                             {{ form_row(form.task_p1_modify_button) }} 
-                            {{ form_row(form.task_p1_delete_button) }}
-                            {{ form_row(form.waiting_return_in_p1_cw)}}
-                    </div>
+                            {{ form_row(form.task_p1_delete_button) }}                    </div>
                     <div class="col">
                         <p class="form-role-title text-center">Tâche P2</p>
                             {{ form_row(form.p1_button_in_p2_cw) }}
                             {{ form_row(form.task_p2_cw_to_p1_nw_button) }}
                             {{ form_row(form.task_p2_modify_button) }}
-                            {{ form_row(form.task_p2_delete_button) }}
-                            {{ form_row(form.waiting_return_in_p2_cw) }}
-                    </div>
+                            {{ form_row(form.task_p2_delete_button) }}                    </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <div class="col">
-                            <p class="form-role-title text-center">Attente Retour</p>
-                            {{ form_row(form.wainting_return_to_p1) }}
-                            {{ form_row(form.wainting_return_to_p2) }}
-                            {{ form_row(form.wainting_return_from_cw_to_nw) }}
-                            {{ form_row(form.wainting_return_modify_cw) }}
-                            {{ form_row(form.wainting_return_delete_cw) }}
-                        </div>
-                    </div>
                     <div class="col">
                         <p class="form-role-title text-center mb-4 mt-4">Rendez-vous</p>
                             {{ form_row(form.appointment_cw_to_nw) }}
@@ -67,7 +53,6 @@
                             {{ form_row(form.task_p1_nw_to_p1_cw_button) }}
                             {{ form_row(form.task_p1_modify_nw) }}
                             {{ form_row(form.task_p1_delete_nw) }}
-                            {{ form_row(form.waiting_return_in_p1_nw)}}
                     </div>
                     <div class="col">
                         <p class="form-role-title text-center">Tâche P2</p>
@@ -75,18 +60,9 @@
                             {{ form_row(form.task_p2_nw_to_p2_cw_button) }}
                             {{ form_row(form.task_p2_modify_nw) }}
                             {{ form_row(form.task_p2_delete_nw) }}
-                            {{ form_row(form.waiting_return_in_p2_nw) }}
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col">
-                        <p class="form-role-title text-center mb-4 mt-4">Attente Retour</p>
-                            {{ form_row(form.wainting_return_nw_to_p1) }}
-                            {{ form_row(form.wainting_return_nw_to_p2) }}
-                            {{ form_row(form.wainting_return_nw_to_cw) }}
-                            {{ form_row(form.wainting_return_modify_nw) }}
-                            {{ form_row(form.wainting_return_delete_nw) }}
-                    </div>
                     <div class="col">
                         <p class="form-role-title text-center mb-4 mt-4">Rendez-vous</p>
                             {{ form_row(form.appointment_nw_to_cw) }}
@@ -101,7 +77,6 @@
                         <p class="form-role-title">Fonctionnalités</p>
                             {{ form_row(form.show_switch_to_cw) }}
                             {{ form_row(form.add_task) }}
-                            {{ form_row(form.add_wainting_return) }}
                     </div>
                     <div class="col">
                             {{ form_row(form.reorder_task) }}

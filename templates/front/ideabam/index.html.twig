@@ -5,21 +5,6 @@
 
 <div class="mb-5">
     <img class="d-block mx-auto mb-3" style="width: 400px" src="{{ asset('/assets/images/logo-ideabam.png') }}" alt="Logo de connexion To Do List">
-        <nav class="navbar navbar-expand-lg">
-            <ul class="navbar-nav mx-auto " id="navbarqaqa">
-                {% if app.user %}
-            {% if userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and roles[userRole].routes.ideabam_waiting_return is defined and roles[userRole].routes.ideabam_waiting_return %}
-            <li class="nav-item">
-                <a class="
-                                                    {% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active-filters{% endif %}
-                                                    {% if app.request.attributes.get('_route') starts with 'modify_task_p1_nw' %}active-filters{% endif %}
-                                                    navbar-text text-uppercase text-margin"
-                    href="{{ path('ideabam_waiting_return') }}">Attente retour <i class="color-white fas fa-tasks"></i></a>
-            </li>
-            {% endif %}
-        {% endif %}
-            </ul>
-        </nav>
     <div class="container text-center padding-mobile">
         {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].add_ideabam is defined and
         roles[userRole].add_ideabam %}
@@ -39,7 +24,6 @@
                 <th class="color-yellow text-bold" data-field="object" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Objet</th>
                 <th class="color-yellow text-bold" data-field="person" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Personne</th>
                 {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
-                    (roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return) or
                     (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
                     (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
                 ) %}
@@ -59,14 +43,10 @@
                             {% endfor %}
                         </td>
                         {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
-                            (roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return) or
                             (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
                             (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
                         ) %}
                         <td>
-                            {% if roles[userRole].routes.ideabam_to_waiting_return is defined and roles[userRole].routes.ideabam_to_waiting_return %}
-                            <a class="color-yellow" href="{{ path('ideabam_to_waiting_return', {"id": idea.id}) }}"><i class="fas fa-hourglass-start"></i></a>&nbsp;
-                            {% endif %}
                             {% if roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam %}
                             <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
                             {% endif %}
@@ -98,7 +78,7 @@
                         {{ form_row(form_idea_add.person) }}
                     </div>
                     <div class="text-left mt-3 color-yellow">
-                        {{ form_row(form_idea_add.waitingReturn) }}
+
                         {{ form_row(form_idea_add.submit) }}
                     </div>
                 </div>

@@ -147,10 +147,19 @@
             return "";
         }
 
-        var classes = action.className ? ' class="' + escapeHtml(action.className) + '"' : "";
+        var classNames = [];
+        if (action.className) {
+            classNames.push(escapeHtml(action.className));
+        }
+        if (action.inlineEdit) {
+            classNames.push("js-inline-edit-toggle");
+        }
+
+        var classes = classNames.length > 0 ? ' class="' + classNames.join(" ") + '"' : "";
         var confirmAttr = action.confirm ? ' onclick="return confirm(\'' + escapeJsSingleQuote(action.confirm) + '\')"' : "";
-        var href = replaceTaskId(action.urlTemplate, taskId);
+        var href = action.inlineEdit ? "#" : replaceTaskId(action.urlTemplate, taskId);
         var content = "";
+        var dataAttr = action.inlineEdit ? ' data-task-id="' + escapeHtml(taskId) + '"' : "";
 
         if (action.iconClass) {
             content = '<i class="' + escapeHtml(action.iconClass) + '"></i>';
@@ -159,7 +168,7 @@
             content = action.wrapText ? "<span>" + text + "</span>" : text;
         }
 
-        return '<a' + classes + ' href="' + href + '"' + confirmAttr + '>' + content + "</a>";
+        return '<a' + classes + ' href="' + href + '"' + dataAttr + confirmAttr + '>' + content + "</a>";
     }
 
     function buildActionsCell(config, taskId) {

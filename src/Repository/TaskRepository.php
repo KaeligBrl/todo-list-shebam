@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Task;
-use App\Entity\WaitingReturn;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -118,60 +117,6 @@ class TaskRepository extends ServiceEntityRepository
         $sql = "update App\Entity\Task as t set t.nextweek = 0 ";
         $query = $this->_em->createQuery($sql);
         return $query->getResult();
-    }
-
-    public function moveP1ToWaitingReturnCw(Task $task)
-    {
-        // Créez une nouvelle instance de WaitingReturn
-        $waitingReturn = new WaitingReturn();
-        $waitingReturn->setObject($task->getObject());
-        $waitingReturn->setSubObject1($task->getSubObject1());
-        $waitingReturn->setSubObject2($task->getSubObject2());
-        $waitingReturn->setSubObject3($task->getSubObject3());
-
-        // Pour une relation ManyToMany, vous devez ajouter chaque utilisateur un par un
-        foreach ($task->getUsers() as $user) {
-            $waitingReturn->addUser($user);
-        }
-
-        $waitingReturn->setCustomer($task->getCustomer());
-        $waitingReturn->setNextweek(false);
-
-        // Supprimez la tâche de la base de données
-        $this->_em->remove($task);
-
-        // Enregistrez les changements dans la base de données
-        $this->_em->persist($waitingReturn);
-        $this->_em->flush();
-
-        return $waitingReturn;
-    }
-
-    public function moveTaskToWaitingReturnNw(Task $task)
-    {
-        // Créez une nouvelle instance de WaitingReturn
-        $waitingReturn = new WaitingReturn();
-        $waitingReturn->setObject($task->getObject());
-        $waitingReturn->setSubObject1($task->getSubObject1());
-        $waitingReturn->setSubObject2($task->getSubObject2());
-        $waitingReturn->setSubObject3($task->getSubObject3());
-
-        // Pour une relation ManyToMany, vous devez ajouter chaque utilisateur un par un
-        foreach ($task->getUsers() as $user) {
-            $waitingReturn->addUser($user);
-        }
-
-        $waitingReturn->setCustomer($task->getCustomer());
-        $waitingReturn->setNextweek(true);
-
-        // Supprimez la tâche de la base de données
-        $this->_em->remove($task);
-
-        // Enregistrez les changements dans la base de données
-        $this->_em->persist($waitingReturn);
-        $this->_em->flush();
-
-        return $waitingReturn;
     }
 
     public function findAllOrderByUsers()

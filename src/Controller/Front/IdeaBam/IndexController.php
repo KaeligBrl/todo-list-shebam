@@ -32,7 +32,7 @@ class IndexController extends AbstractController
         }
 
         return $this->render('front/ideabam/index.html.twig', [
-            'ideas' => $ideaBamListRepository->findIdeabamByWaitingReturnTrue(),
+            'ideas' => $ideaBamListRepository->findAll(),
             'form_idea_add' => $form->createView(),
         ]);
     }

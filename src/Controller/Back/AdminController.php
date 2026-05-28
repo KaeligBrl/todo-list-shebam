@@ -9,7 +9,6 @@ use Psr\Log\LoggerInterface;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
-use App\Repository\WaitingReturnRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -31,7 +30,7 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     #[Route('/generation-de-l-archive/', name: 'download')]
-    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, WaitingReturnRepository $waitingReturn, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
+    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
     {
 
         $pdfOptions = new Options();
@@ -42,7 +41,6 @@ class AdminController extends AbstractController
         $html = $this->renderView('back/current_week/file/download.html.twig', [
             'task' => $task->findAll(),
             'appointment' => $appointment->findBy([], ['hoursappointment' => 'DESC']),
-            'waitingReturn' => $waitingReturn->findAll(),
         ]);
         try {
             $dompdf->loadHtml($html);

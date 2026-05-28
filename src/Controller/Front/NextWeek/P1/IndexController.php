@@ -4,12 +4,14 @@ namespace App\Controller\Front\NextWeek\P1;
 
 use App\Entity\Appointment;
 use App\Entity\Task;
+use App\Repository\CustomerRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\Task\AddTaskP1NextWeekType;
 use App\Repository\AppointmentRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +23,13 @@ class IndexController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/semaine-suivante/p1', name: 'next_week_p1')]
-    public function index(TaskRepository $taskList,Request $request, AppointmentRepository $appointmentRepository): Response
+    public function index(
+        TaskRepository $taskList,
+        Request $request,
+        AppointmentRepository $appointmentRepository,
+        CustomerRepository $customerRepository,
+        UserRepository $userRepository,
+    ): Response
     {
         $taskAdd = new Task();
         $form_p1 = $this->createForm(AddTaskP1NextWeekType::class, $taskAdd);
@@ -67,6 +75,8 @@ class IndexController extends AbstractController
 
         return $this->render('front/next_week/task/p1/list.html.twig', [
             'task' => $taskList->findBy([], ['position' => 'ASC']),
+            'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
+            'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
             'form_task_nw_p1_add' => $form_p1->createView(),
             'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,

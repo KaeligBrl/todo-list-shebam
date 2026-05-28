@@ -25,9 +25,6 @@ class IdeaBam
     #[ORM\ManyToMany(targetEntity: User::class)]
     private $person;
 
-    #[ORM\Column(type: 'boolean', nullable: true)]
-    private $waitingReturn;
-
     public function __construct()
     {
         $this->person = new ArrayCollection();
@@ -86,15 +83,4 @@ class IdeaBam
         return $this;
     }
 
-    public function getWaitingReturn()
-    {
-        return $this->waitingReturn;
-    }
-
-    public function setWaitingReturn(?bool $waitingReturn): self
-    {
-        $this->waitingReturn = $waitingReturn;
-
-        return $this;
-    }
 }

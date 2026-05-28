@@ -33,21 +33,12 @@ class ModifyController extends AbstractController
         $currentShowP1CwToP1NwButton = $roles['roles'][$roleName]['task_p1_cw_to_p1_nw_button'] ?? false;
         $currentTaskModifyP1Button = $roles['roles'][$roleName]['task_p1_modify_button'] ?? false;
         $currentTaskDeleteP1Button = $roles['roles'][$roleName]['task_p1_delete_button'] ?? false;
-        $waintinReturnInP1Cw = $roles['roles'][$roleName]['waiting_return_in_p1_cw'] ?? false;
         
         // Current Week -> P2
         $currentP2ShowP1Button = $roles['roles'][$roleName]['p1_button_in_p2_cw'] ?? false;
         $currentTaskModifyP2Button = $roles['roles'][$roleName]['task_p2_modify_button'] ?? false;
         $currentTaskDeleteP2Button = $roles['roles'][$roleName]['task_p2_delete_button'] ?? false;
-        $waintinReturnInP2Cw = $roles['roles'][$roleName]['waiting_return_in_p2_cw'] ?? false;
         $currentP2CwToP1NwButton = $roles['roles'][$roleName]['task_p2_cw_to_p1_nw_button'] ?? false;
-
-        // Current Week -> Wainting Return
-        $waintingReturnToP1 = $roles['roles'][$roleName]['wainting_return_to_p1'] ?? false;
-        $waintingReturnToP2 = $roles['roles'][$roleName]['wainting_return_to_p2'] ?? false;
-        $waintingReturnFromCwToNw = $roles['roles'][$roleName]['wainting_return_from_cw_to_nw'] ?? false;
-        $waintingReturnModifyCw = $roles['roles'][$roleName]['wainting_return_modify_cw'] ?? false;
-        $waintingReturnDeleteCw = $roles['roles'][$roleName]['wainting_return_delete_cw'] ?? false;
 
         // Current Week -> Appointment
         $appointmentCwToNw = $roles['roles'][$roleName]['appointment_cw_to_nw'] ?? false;
@@ -55,7 +46,6 @@ class ModifyController extends AbstractController
         $appointmentDeleteCw = $roles['roles'][$roleName]['appointment_delete_cw'] ?? false;
 
         // Next WEEK -> P1
-        $waintinReturnInP1Nw = $roles['roles'][$roleName]['waiting_return_in_p1_nw'] ?? false;
         $taskP1ToP2Nw = $roles['roles'][$roleName]['task_p1_to_p2_nw'] ?? false;
         $taskP1NwToP1CwButton = $roles['roles'][$roleName]['task_p1_nw_to_p1_cw_button'] ?? false;
         $taskP1NwToModifyButton = $roles['roles'][$roleName]['task_p1_modify_nw'] ?? false;
@@ -66,14 +56,6 @@ class ModifyController extends AbstractController
         $taskP2ModifyNw= $roles['roles'][$roleName]['task_p2_modify_nw'] ?? false;
         $taskP2DeleteNw = $roles['roles'][$roleName]['task_p2_delete_nw'] ?? false;
         $taskP2NwToP2CwButton = $roles['roles'][$roleName]['task_p2_nw_to_p2_cw_button'] ?? false;
-        $waintinReturnInP2Nw = $roles['roles'][$roleName]['waiting_return_in_p2_nw'] ?? false;
-
-        // Next WEEK -> Wainting Return
-        $waintingReturnNwToP1 = $roles['roles'][$roleName]['wainting_return_nw_to_p1'] ?? false;
-        $waintingReturnNwToP2 = $roles['roles'][$roleName]['wainting_return_nw_to_p2'] ?? false;
-        $waintingReturnNwToCw = $roles['roles'][$roleName]['wainting_return_nw_to_cw'] ?? false;
-        $waintingReturnDeleteNw = $roles['roles'][$roleName]['wainting_return_delete_nw'] ?? false;
-        $waintingReturnModifyNw = $roles['roles'][$roleName]['wainting_return_modify_nw'] ?? false;
 
         // Current Week -> Appointment
         $appointmentNwToCw = $roles['roles'][$roleName]['appointment_nw_to_cw'] ?? false;
@@ -85,12 +67,10 @@ class ModifyController extends AbstractController
         $addTask = $roles['roles'][$roleName]['add_task'] ?? false;
         $reorderTask = $roles['roles'][$roleName]['reorder_task'] ?? false;
         $generateArchiveTask = $roles['roles'][$roleName]['generate_archive_task'] ?? false;
-        $addWaintingReturn = $roles['roles'][$roleName]['add_wainting_return'] ?? false;
         $btnSwitchNwToNw = $roles['roles'][$roleName]['show_switch_to_cw'] ?? false;
 
         // Ideabam
         $addIdeabam = $roles['roles'][$roleName]['add_ideabam'] ?? false;
-        $ideabamToWaitingReturn = $roles['roles'][$roleName]['ideabam_to_waiting_return'] ?? false;
         $modifyIdeabam = $roles['roles'][$roleName]['modify_ideabam'] ?? false;
         $deleteIdeabam = $roles['roles'][$roleName]['delete_ideabam'] ?? false;
 
@@ -106,41 +86,25 @@ class ModifyController extends AbstractController
             'task_p1_cw_to_p1_nw_button' => $currentShowP1CwToP1NwButton,
             'task_p1_modify_button' => $currentTaskModifyP1Button,
             'task_p1_delete_button' => $currentTaskDeleteP1Button,
-            'waiting_return_in_p1_cw' => $waintinReturnInP1Cw,
             // Current Week -> P2
             'p1_button_in_p2_cw' => $currentP2ShowP1Button,
             'task_p2_modify_button' => $currentTaskModifyP2Button,
             'task_p2_delete_button' => $currentTaskDeleteP2Button,
-            'waiting_return_in_p2_cw' => $waintinReturnInP2Cw,
             'task_p2_cw_to_p1_nw_button' => $currentP2CwToP1NwButton,
-            // Current Week -> Wainting Return
-            'wainting_return_to_p1'=> $waintingReturnToP1,
-            'wainting_return_to_p2' => $waintingReturnToP2,
-            'wainting_return_from_cw_to_nw' => $waintingReturnFromCwToNw,
-            'wainting_return_modify_cw' => $waintingReturnModifyCw,
-            'wainting_return_delete_cw' => $waintingReturnDeleteCw,
             // Current Week -> Appointment
             'appointment_cw_to_nw' => $appointmentCwToNw,
             'appointment_modify_cw' => $appointmentModifyCw,
             'appointment_delete_cw' => $appointmentDeleteCw,
             // Next WEEK -> P1
-            'waiting_return_in_p1_nw' => $waintinReturnInP1Nw,
             'task_p1_to_p2_nw' => $taskP1ToP2Nw,
             'task_p1_nw_to_p1_cw_button' => $taskP1NwToP1CwButton,
             'task_p1_modify_nw' => $taskP1NwToModifyButton,
             'task_p1_delete_nw' => $taskP1NwToDeleteButton,
             // Next WEEK -> P2
-            'waiting_return_in_p2_nw' => $waintinReturnInP2Nw,
             'task_p2_to_p1_nw' => $taskP2ToP1Nw,
             'task_p2_modify_nw' => $taskP2ModifyNw,
             'task_p2_delete_nw' => $taskP2DeleteNw,
             'task_p2_nw_to_p2_cw_button' => $taskP2NwToP2CwButton,
-            // Next WEEK -> Wainting Return
-            'wainting_return_nw_to_p1' => $waintingReturnNwToP1,
-            'wainting_return_nw_to_p2' => $waintingReturnNwToP2,
-            'wainting_return_nw_to_cw' => $waintingReturnNwToCw,
-            'wainting_return_delete_nw' => $waintingReturnDeleteNw,
-            'wainting_return_modify_nw' => $waintingReturnModifyNw,
             // Next Week -> Appointment
             'appointment_nw_to_cw' => $appointmentNwToCw,
             'appointment_modify_nw' => $appointmentModifyNw,
@@ -150,11 +114,9 @@ class ModifyController extends AbstractController
             'add_task' => $addTask,
             'generate_archive_task' => $generateArchiveTask,
             'button_done' => $buttonDone,
-            'add_wainting_return' => $addWaintingReturn,
             'show_switch_to_cw' => $btnSwitchNwToNw,
             // Ideabam
             'add_ideabam' => $addIdeabam,
-            'ideabam_to_waiting_return' => $ideabamToWaitingReturn,
             'modify_ideabam' => $modifyIdeabam, 
             'delete_ideabam' => $deleteIdeabam,
         ]);
@@ -174,43 +136,26 @@ class ModifyController extends AbstractController
                 'task_p1_cw_to_p1_nw_button' => $data['task_p1_cw_to_p1_nw_button'],
                 'task_p1_modify_button' => $data['task_p1_modify_button'],
                 'task_p1_delete_button' => $data['task_p1_delete_button'],
-                'waiting_return_in_p1_cw' => $data['waiting_return_in_p1_cw'],
                 // Current Week -> P2
                 'p1_button_in_p2_cw' => $data['p1_button_in_p2_cw'],
                 'task_p2_modify_button' => $data['task_p2_modify_button'],
                 'task_p2_delete_button' => $data['task_p2_delete_button'],
-                'waiting_return_in_p2_cw' => $data['waiting_return_in_p2_cw'],
                 'task_p2_cw_to_p1_nw_button' => $data['task_p2_cw_to_p1_nw_button'],
-                // Current Week -> Wainting Return
-                'wainting_return_to_p1' => $data['wainting_return_to_p1'],
-                'wainting_return_to_p2' => $data['wainting_return_to_p2'],
-                'wainting_return_from_cw_to_nw' => $data['wainting_return_from_cw_to_nw'],
-                'wainting_return_modify_cw' => $data['wainting_return_modify_cw'],
-                'wainting_return_delete_cw' => $data['wainting_return_delete_cw'],
                 // Current Week -> Appointment
                 'appointment_cw_to_nw' => $data['appointment_cw_to_nw'],
                 'appointment_modify_cw' => $data['appointment_modify_cw'],
                 'appointment_delete_cw' => $data['appointment_delete_cw'],
                 // Next WEEK -> P1
-                'waiting_return_in_p1_nw' => $data['waiting_return_in_p1_nw'],
                 'task_p1_to_p2_nw' => $data['task_p1_to_p2_nw'],
                 'task_p1_nw_to_p1_cw_button' => $data['task_p1_nw_to_p1_cw_button'],
                 'task_p1_modify_nw' => $data['task_p1_modify_nw'],
                 'task_p1_delete_nw' => $data['task_p1_delete_nw'],
                 // Next WEEK -> P2
-                'waiting_return_in_p2_nw' => $data['waiting_return_in_p2_nw'],
                 'task_p2_to_p1_nw' => $data['task_p2_to_p1_nw'],
                 'task_p2_modify_nw' => $data['task_p2_modify_nw'],
                 'task_p2_delete_nw' => $data['task_p2_delete_nw'],
                 'task_p2_nw_to_p2_cw_button' => $data['task_p2_nw_to_p2_cw_button'],
 
-                // Next WEEK -> Wainting Return
-                'wainting_return_nw_to_p1' =>  $data['wainting_return_nw_to_p1'],
-                'wainting_return_nw_to_p2' =>  $data['wainting_return_nw_to_p2'],
-                'wainting_return_nw_to_cw' => $data['wainting_return_nw_to_cw'],
-                'wainting_return_nw' => $data['wainting_return_nw_to_cw'],
-                'wainting_return_modify_nw' => $data['wainting_return_modify_nw'],
-                'wainting_return_delete_nw' => $data['wainting_return_delete_nw'],
 
                 // Next  -> Appointment
                 'appointment_nw_to_cw' => $data['appointment_nw_to_cw'],
@@ -222,12 +167,10 @@ class ModifyController extends AbstractController
                 'reorder_task' => $data['reorder_task'],
                 'add_task' => $data['add_task'],
                 'generate_archive_task' => $data['generate_archive_task'],
-                'add_wainting_return' => $data['add_wainting_return'],
                 'show_switch_to_cw' => $data['show_switch_to_cw'],
 
                 // Ideabam
                 'add_ideabam' => $data['add_ideabam'],
-                'ideabam_to_waiting_return' => $data['ideabam_to_waiting_return'],
                 'modify_ideabam' => $data['modify_ideabam'],
                 'delete_ideabam' => $data['delete_ideabam'],
             ];

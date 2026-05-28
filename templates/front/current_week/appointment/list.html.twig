@@ -16,27 +16,31 @@
                         <li class="nav-item"> 
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
                         </li>
-						<li class="nav-item">
-							<a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i
-									class="color-white fas fa-hourglass-start"></i></a>
-						</li>
                         <li class="nav-item"> 
                             <a class="
                                         {% if app.request.attributes.get('_route') starts with 'current_week_appointment' %}active-filters{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_appointment_cw' %}active-filters{% endif %}
                                         navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
                         </li>
             </ul> 
         </nav>
 		<div class="container text-center padding-dopdown-mobile">
+			{% set showActions = false %}
+			{% if userRole is not null and roles[userRole] is defined %}
+				{% set showActions =
+					roles[userRole].appointment_cw_to_nw is defined and roles[userRole].appointment_cw_to_nw or
+					roles[userRole].appointment_modify_cw is defined and roles[userRole].appointment_modify_cw or
+					roles[userRole].appointment_delete_cw is defined and roles[userRole].appointment_delete_cw
+				%}
+			{% endif %}
+			{% set inlineEditCols = 4 + (showActions ? 1 : 0) %}
 
                 <div class="mb-4">
                     <a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
                 </div>
-            <table id="tableOrderAppointment" class="table table-bordered" data-toggle="table">
+			<table id="tableOrderAppointment" class="table mb-5 table-bordered" data-toggle="table">
                 <thead class="bg-blue-dark-light table-borderless">
                     <tr>
-                        <th data-field="id" data-visible="false">ID</th>
+						<th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
                         <th class="color-yellow text-bold" scope="col">Date et heure</th>
                         <th class="color-yellow text-bold" scope="col">Client</th>
                         <th class="color-yellow text-bold" scope="col">Objet</th>
@@ -52,22 +56,61 @@
 						{% if showActions %}
 							<th class="color-yellow" scope="col">Action</th>
 						{% endif %}
-						
-
 						{% endif %}
                     </tr>
                 </thead>
                 <tbody class="bg-blue-dark">
+					<tr id="inlineEditAppointmentCwRow" class="bg-blue-dark-light d-none" data-source-id="">
+						<td class="d-none"></td>
+						<td>
+							<input type="datetime-local" class="form-control form-control-sm js-inline-edit-appt-hours">
+						</td>
+						<td>
+							<input type="text" class="form-control form-control-sm js-inline-edit-appt-name" placeholder="Client">
+						</td>
+						<td>
+							<input type="text" class="form-control form-control-sm js-inline-edit-appt-subject" placeholder="Sujet">
+						</td>
+						<td>
+							<select class="form-select form-select-sm js-inline-edit-appt-users" multiple size="4">
+								{% for userItem in usersList %}
+									<option value="{{ userItem.id }}">{{ userItem.firstname }}</option>
+								{% endfor %}
+							</select>
+						</td>
+						{% if showActions %}
+							<td>
+								<button type="button" class="btn-yellow-form text-bold js-inline-edit-appt-save">Valider</button>
+								<button type="button" class="btn btn-outline-light btn-sm js-inline-edit-appt-cancel">Annuler</button>
+							</td>
+						{% endif %}
+					</tr>
+
+					<tr id="inlineEditAppointmentCwErrors" class="d-none bg-blue-dark-light">
+						<td colspan="{{ inlineEditCols }}">
+							<div class="message-error"></div>
+						</td>
+					</tr>
+
                     {% for appointment in appointment %}
                         {% if appointment.nextweek == 0 %}					
-                            <tr class="bg-white-shebam">
-                                <td class="color-white text-bold">{{appointment.id}}</td>
+							{% set userIds = [] %}
+							{% for appointmentUser in appointment.user %}
+								{% set userIds = userIds|merge([appointmentUser.id]) %}
+							{% endfor %}
+							<tr class="bg-white-shebam"
+								data-appointment-id="{{ appointment.id }}"
+								data-name="{{ appointment.name|default('')|e('html_attr') }}"
+								data-subject="{{ appointment.subject|default('')|e('html_attr') }}"
+								data-hours-value="{{ appointment.hoursappointment ? appointment.hoursappointment|date('Y-m-d\\TH:i') : '' }}"
+								data-user-ids="{{ userIds|join(',') }}">
+								<td class="d-none">{{appointment.id}}</td>
                                 <td class="color-white text-bold">{{ appointment.hoursappointment|date("d-m-Y")  }} à {{appointment.hoursappointment|date('H:i')}}</td>
                                 <td class="color-white text-bold">{{appointment.name}}</td>
                                 <td class="color-white text-bold">{{appointment.subject}}</td>
                                 <td class="color-white text-bold">
-                                {% for appointment in appointment.user %}
-                                    {{ appointment.firstname }} <br>
+								{% for appointmentUser in appointment.user %}
+									{{ appointmentUser.firstname }} <br>
                                 {% endfor %}
                                 </td>
 
@@ -79,18 +122,20 @@
 								roles[userRole].appointment_delete_cw is defined and roles[userRole].appointment_delete_cw
 								%}
 								{% if showActions %}
-									<td class="color-yellow">
+									<td>
+										<div style="display:inline-flex;align-items:center;column-gap:8px;" class="color-yellow">
 										{% if roles[userRole].appointment_cw_to_nw is defined and roles[userRole].appointment_cw_to_nw %}
-											<a class="color-yellow" href="{{ path('change_cw_to_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-redo"></i></a>&nbsp;
+											<a class="color-yellow" href="{{ path('change_cw_to_nw_appointment', {"id": appointment.id}) }}"><i class="fas fa-redo"></i></a>
 										{% endif %}
 											
 										{% if roles[userRole].appointment_modify_cw is defined and roles[userRole].appointment_modify_cw %}
-											<a class="color-yellow" href="{{ path('modify_cw_appointment', {"id": appointment.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+											<a class="color-yellow js-inline-edit-appointment-toggle" href="#" data-id="{{ appointment.id }}"><i class="fas fa-cog"></i></a>
 										{% endif %}
 
 										{% if roles[userRole].appointment_delete_cw is defined and roles[userRole].appointment_delete_cw %}
 											<a class="color-yellow" href="{{ path('delete_cw_appointment', {"id": appointment.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un rendez-vous')"><i class="fas fa-trash"></i></a>
 										{% endif %}
+										</div>
 									</td>
 								{% endif %}
 							{% endif %}
@@ -131,6 +176,14 @@
 {%  endblock %}
 {% block javascripts %}
 	{{ parent() }}
+	<script>
+		window.appointmentInlineEditConfig = {
+			updateUrlTemplate: "{{ path('current_week_appointment_inline_update', {'id': 'ITEM_ID'}) }}",
+			rowSelector: "#inlineEditAppointmentCwRow",
+			errorRowSelector: "#inlineEditAppointmentCwErrors"
+		};
+	</script>
+	<script src="{{ asset('assets/js/appointment-inline-edit.js') }}?v=20260528a"></script>
 	<script>
 		$(()=>{
 			$("#tableOrderTaskP1").on("reorder-row.bs.table", (e, table, row, old) => {

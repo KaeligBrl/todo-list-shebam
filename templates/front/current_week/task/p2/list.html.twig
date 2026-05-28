@@ -18,9 +18,6 @@
                                         navbar-text text-uppercase text-margin" href="{{ path('current_week_p2') }}">Priorité 2 <i class="color-white fas fa-tasks"></i></a>
                         </li>
                         <li class="nav-item"> 
-                            <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_waiting_return') }}">Attente retour <i class="color-white fas fa-hourglass-start"></i></a>
-                        </li>
-                        <li class="nav-item"> 
                             <a class="navbar-text text-uppercase text-margin" href="{{ path('current_week_appointment') }}">Rendez-vous <i class="color-white far fa-calendar-check"></i></a></a>
                         </li>
             </ul>
@@ -30,10 +27,8 @@
             {% set showDoneButtonCw = false %}
             {% if userRole is not null and roles[userRole] is defined %}
                 {% set showActions =
-                    roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw or
                     roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button or
                     roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw or
-                    roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button or
                     roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button
                 %}
                 {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
@@ -53,12 +48,6 @@
                 reorderUrl: path('reorder'),
                 actions: [
                     {
-                        enabled: roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw,
-                        urlTemplate: path('to_p2_from_waiting_return_cw', {'id': 'TASK_ID'}),
-                        className: 'color-yellow',
-                        iconClass: 'fas fa-hourglass-start'
-                    },
-                    {
                         enabled: roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button,
                         urlTemplate: path('change_task_cw_to_p1', {'id': 'TASK_ID'}),
                         className: 'color-yellow text-bold',
@@ -70,12 +59,6 @@
                         urlTemplate: path('change_task_p2_cw_to_p2_nw', {'id': 'TASK_ID'}),
                         className: 'color-yellow',
                         iconClass: 'fas fa-redo'
-                    },
-                    {
-                        enabled: roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button,
-                        urlTemplate: path('modify_task_cw_p2', {'id': 'TASK_ID'}),
-                        className: 'color-yellow',
-                        iconClass: 'fas fa-cog'
                     },
                     {
                         enabled: roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button,
@@ -100,10 +83,8 @@
 
                         {% if userRole is not null and roles[userRole] is defined %}
                             {% set showActions =
-                            roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw or
                             roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button or
                             roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw or
-                            roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button or
                             roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button
                             %}
 
@@ -189,29 +170,19 @@
                                 {% if userRole is not null and roles[userRole] is defined %}
                                     {% set showActions =
                                     
-                                    roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw or
                                     roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button or
                                     roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw or
-                                    roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button or
                                     roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button
                                     %}
                                     {% if showActions %}
                                         <td>
                                             <div style="display:inline-flex;align-items:center;column-gap:8px;">
-                                            {% if roles[userRole].waiting_return_in_p2_cw is defined and roles[userRole].waiting_return_in_p2_cw %}
-                                            <a class="color-yellow" href="{{ path('to_p2_from_waiting_return_cw', {"id": task.id }) }}"><i class="fas fa-hourglass-start"></i></a>
-                                            {% endif %}
-
                                             {% if roles[userRole].task_p2_cw_to_p1_nw_button is defined and roles[userRole].task_p2_cw_to_p1_nw_button %}
                                                 <a class="color-yellow text-bold" href="{{ path('change_task_cw_to_p1', {"id": task.id}) }}"><span>P1</span></a>
                                             {% endif %}
 
                                             {% if roles[userRole].p1_button_in_p2_cw is defined and roles[userRole].p1_button_in_p2_cw %}
                                                 <a class="color-yellow" href="{{ path('change_task_p2_cw_to_p2_nw', {"id": task.id}) }}"><i class="fas fa-redo"></i></a>
-                                            {% endif %}
-
-                                            {% if roles[userRole].task_p2_modify_button is defined and roles[userRole].task_p2_modify_button %}
-                                                <a class="color-yellow" href="{{ path('modify_task_cw_p2', {"id": task.id}) }}"><i class="fas fa-cog"></i></a>
                                             {% endif %}
 
                                             {% if roles[userRole].task_p2_delete_button is defined and roles[userRole].task_p2_delete_button %}

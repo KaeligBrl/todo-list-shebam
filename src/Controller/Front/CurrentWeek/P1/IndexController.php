@@ -3,9 +3,11 @@
 namespace App\Controller\Front\CurrentWeek\P1;
 
 use App\Entity\Task;
+use App\Repository\CustomerRepository;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,13 @@ class IndexController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/semaine-actuelle/p1', name: 'current_week_p1')]
-    public function index(TaskRepository $taskList, AppointmentRepository $appointment, Request $request): Response
+    public function index(
+        TaskRepository $taskList,
+        AppointmentRepository $appointment,
+        CustomerRepository $customerRepository,
+        UserRepository $userRepository,
+        Request $request
+    ): Response
     {
         $taskAdd = new Task();
         $form_p1 = $this->createForm(AddTaskP1CurrentWeekType::class, $taskAdd);
@@ -67,6 +75,8 @@ class IndexController extends AbstractController
         return $this->render('front/current_week/task/p1/list.html.twig', [
             'task' => $taskList->findAllOrderByUsers(),
             'appointment' => $appointment,
+            'customers' => $customerRepository->findBy([], ['name' => 'ASC']),
+            'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
             'form_task_cw_p1_add' => $form_p1->createView(),
             'show_inline_add_form' => $showInlineAddForm,
             'notification' => $notification,
