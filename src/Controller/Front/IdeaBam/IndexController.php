@@ -4,6 +4,7 @@ namespace App\Controller\Front\IdeaBam;
 
 use App\Entity\IdeaBam;
 use App\Repository\IdeaBamRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\Front\IdeaBam\AddIdeaBamType;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class IndexController extends AbstractController
         $this->entityManager = $entityManager;
     }
     #[Route('/idebam', name: 'ideabam')]
-    public function index(IdeaBamRepository $ideaBamListRepository, Request $request): Response
+    public function index(IdeaBamRepository $ideaBamListRepository, UserRepository $userRepository, Request $request): Response
     {
 
         $ideaBamAdd = new IdeaBam();
@@ -33,6 +34,7 @@ class IndexController extends AbstractController
 
         return $this->render('front/ideabam/index.html.twig', [
             'ideas' => $ideaBamListRepository->findAll(),
+            'usersList' => $userRepository->findBy([], ['firstname' => 'ASC']),
             'form_idea_add' => $form->createView(),
         ]);
     }

@@ -159,6 +159,9 @@ body.front-app .team-users-stack {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 body.front-app .team-user-chip {

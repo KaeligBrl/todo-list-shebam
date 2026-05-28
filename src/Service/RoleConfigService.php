@@ -24,6 +24,12 @@ class RoleConfigService
     public function isRouteAccessible(string $role, string $routeName): bool
     {
         $routes = $this->getRoutesForRole($role);
+
+        // Reuse existing Idebam modify permission for inline update endpoint.
+        if ($routeName === 'ideabam_inline_update') {
+            return $routes['modify_ideabam'] ?? false;
+        }
+
         return $routes[$routeName] ?? false;
     }
 

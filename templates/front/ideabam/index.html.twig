@@ -9,7 +9,7 @@
         {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].add_ideabam is defined and
         roles[userRole].add_ideabam %}
         <div class="mb-4">
-            <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddIdeabamPanel"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
+            <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddIdeabamRow"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
         </div>
         {% endif %}
         {% set today = date() %}
@@ -18,39 +18,105 @@
 
     <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" 
         {% if app.user and userRole is not null and roles[userRole] is defined %} data-use-row-attr-func="true" {% endif %}>
+        {% set canModifyIdeabam = app.user and userRole is not null and roles[userRole] is defined and ((roles[userRole].modify_ideabam is defined and roles[userRole].modify_ideabam) or (roles[userRole].routes is defined and roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam)) %}
+        {% set canDeleteIdeabam = app.user and userRole is not null and roles[userRole] is defined and ((roles[userRole].delete_ideabam is defined and roles[userRole].delete_ideabam) or (roles[userRole].routes is defined and roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)) %}
+        {% set showActions = canModifyIdeabam or canDeleteIdeabam %}
         <thead class="bg-blue-dark-light table-borderless" style="border-right-style: none;">
             <tr style="border-right-style: none;">
                 <th class="color-yellow text-bold" data-field="subject" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Idée</th>
                 <th class="color-yellow text-bold" data-field="object" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Objet</th>
                 <th class="color-yellow text-bold" data-field="person" {% if app.user and userRole is not null and roles[userRole] is defined %} data-sortable="true" {% endif %} scope="col">Personne</th>
-                {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
-                    (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
-                    (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
-                ) %}
+                {% if showActions %}
                 <th class="color-yellow" scope="col">Action</th>
                 {% endif %}
             </tr>
         </thead>
         <tbody class="bg-blue-dark">
+            {% set inlineEditCols = 3 + (showActions ? 1 : 0) %}
+            <tr id="inlineEditIdeabamRow" class="bg-blue-dark-light d-none" data-source-id="">
+                <td>
+                    <input type="text" class="form-control form-control-sm js-inline-edit-ideabam-subject" placeholder="Idée">
+                </td>
+                <td>
+                    <input type="text" class="form-control form-control-sm js-inline-edit-ideabam-object" placeholder="Objet">
+                </td>
+                <td>
+                    <select class="form-select form-select-sm js-inline-edit-ideabam-users" multiple size="4">
+                        {% for userItem in usersList %}
+                            <option value="{{ userItem.id }}">{{ userItem.firstname }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                {% if showActions %}
+                    <td>
+                        <button type="button" class="btn-yellow-form text-bold js-inline-edit-ideabam-save">Valider</button>
+                        <button type="button" class="btn btn-outline-light btn-sm js-inline-edit-ideabam-cancel">Annuler</button>
+                    </td>
+                {% endif %}
+            </tr>
+
+            <tr id="inlineEditIdeabamErrors" class="d-none bg-blue-dark-light">
+                <td colspan="{{ inlineEditCols }}">
+                    <div class="message-error"></div>
+                </td>
+            </tr>
+
+            {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].add_ideabam is defined and roles[userRole].add_ideabam %}
+            <tr id="inlineAddIdeabamRow" class="bg-blue-dark-light d-none">
+                <td colspan="{{ inlineEditCols }}">
+                    {{ form_start(form_idea_add) }}
+                    <div class="row g-2 align-items-end">
+                        <div class="col-lg-4">
+                            {{ form_row(form_idea_add.subject) }}
+                        </div>
+                        <div class="col-lg-4">
+                            {{ form_row(form_idea_add.object) }}
+                        </div>
+                        <div class="col-lg-4">
+                            <p class="color-yellow text-bold mb-2">Personne(s)</p>
+                            <div class="bg-blue-dark text-left users p-2 rounded">
+                                {{ form_row(form_idea_add.person) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-end mt-3" style="column-gap:8px;">
+                        {{ form_row(form_idea_add.submit) }}
+                        <button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddIdeabamRow">Annuler</button>
+                    </div>
+                    {{ form_end(form_idea_add) }}
+                </td>
+            </tr>
+            {% endif %}
             {% for idea in ideas %}
                
-                    <tr>
+                    {% set personIds = [] %}
+                    {% set personProfiles = {} %}
+                    {% for personRef in idea.person %}
+                        {% set personIds = personIds|merge([personRef.id]) %}
+                        {% set personProfiles = personProfiles|merge({ (personRef.id): personRef.profilePicture|default('') }) %}
+                    {% endfor %}
+                    <tr data-ideabam-id="{{ idea.id }}" data-subject="{{ idea.subject|default('')|e('html_attr') }}" data-object="{{ idea.object|default('')|e('html_attr') }}" data-person-ids="{{ personIds|join(',') }}" data-person-profiles="{{ personProfiles|json_encode|e('html_attr') }}">
                         <td class="color-white text-bold">{{ idea.subject }}</td>
                         <td class="color-white text-bold">{{ idea.object }}</td>
                         <td class="color-white text-bold">
-                            {% for person in idea.person %}
-                                {{ person.firstname }} <br>
-                            {% endfor %}
+                            <div class="team-users-stack">
+                                {% for person in idea.person %}
+                                    <span class="team-user-chip" title="{{ person.firstname }} {{ person.lastname|default('') }}">
+                                        {% if person.profilePicture %}
+                                            <img class="team-user-avatar" src="{{ asset(person.profilePicture) }}" alt="{{ person.firstname }}">
+                                        {% else %}
+                                            <span class="team-user-fallback">{{ person.firstname|slice(0, 1)|upper }}</span>
+                                        {% endif %}
+                                    </span>
+                                {% endfor %}
+                            </div>
                         </td>
-                        {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].routes is defined and (
-                            (roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam) or
-                            (roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam)
-                        ) %}
+                        {% if showActions %}
                         <td>
-                            {% if roles[userRole].routes.modify_ideabam is defined and roles[userRole].routes.modify_ideabam %}
-                            <a class="color-yellow" href="{{ path('modify_ideabam', {"id": idea.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
+                            {% if canModifyIdeabam %}
+                            <a class="color-yellow js-inline-edit-ideabam-toggle" href="#" data-id="{{ idea.id }}"><i class="fas fa-cog"></i></a>&nbsp;
                             {% endif %}
-                            {% if roles[userRole].routes.delete_ideabam is defined and roles[userRole].routes.delete_ideabam %}
+                            {% if canDeleteIdeabam %}
                             <a class="color-yellow" href="{{ path('delete_ideabam', {"id": idea.id}) }}" onclick="return confirm('Attention vous vous apprêtez à supprimer l\'idée')"><i class="fas fa-trash"></i></a>
                             {% endif %}
                         </td>
@@ -61,35 +127,18 @@
         </tbody>
     </table>
 
-    <div id="inlineAddIdeabamPanel" class="bg-blue-dark-light p-3 rounded d-none mb-4">
-        <div class="text-right mb-2">
-            <button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddIdeabamPanel">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-            {{ form_start(form_idea_add) }}
-            <div class="row">
-                <div class="col">
-                    {{ form_row(form_idea_add.subject) }}
-                    {{ form_row(form_idea_add.object) }}
-                </div>
-                <div class="col">
-                    <p class="color-yellow text-bold">Personne(s)</p>
-                    <div class="bg-blue-dark text-left users">
-                        {{ form_row(form_idea_add.person) }}
-                    </div>
-                    <div class="text-left mt-3 color-yellow">
-
-                        {{ form_row(form_idea_add.submit) }}
-                    </div>
-                </div>
-            </div>
-            {{ form_end(form_idea_add) }}
-    </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
 <script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
+<script>
+    window.ideabamInlineEditConfig = {
+        updateUrlTemplate: "{{ path('ideabam_inline_update', {'id': 'IDEA_ID'}) }}",
+        rowSelector: "#inlineEditIdeabamRow",
+        errorRowSelector: "#inlineEditIdeabamErrors"
+    };
+</script>
+<script src="{{ asset('assets/js/ideabam-inline-edit.js') }}?v=20260528a"></script>
 {% endblock %}
