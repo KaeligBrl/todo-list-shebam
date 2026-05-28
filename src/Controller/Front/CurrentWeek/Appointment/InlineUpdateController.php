@@ -102,7 +102,10 @@ class InlineUpdateController extends AbstractController
                 'hours_value' => $appointment->getHoursappointment()?->format('Y-m-d\\TH:i') ?? '',
                 'hours_display' => $appointment->getHoursappointment()?->format('d-m-Y \\a H:i') ?? '',
                 'users' => array_map(
-                    static fn(User $user): string => $user->getFirstname(),
+                    static fn(User $user): array => [
+                        'firstname' => $user->getFirstname() ?? '',
+                        'profile_picture' => $user->getProfilePicture() ?? '',
+                    ],
                     $appointment->getUser()->toArray()
                 ),
                 'user_ids' => array_map(

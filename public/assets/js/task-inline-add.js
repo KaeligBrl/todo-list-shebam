@@ -9,6 +9,59 @@
         return $("<div>").text(value ?? "").html();
     }
 
+    function initials(value) {
+        var text = String(value || "").trim();
+        if (text === "") {
+            return "?";
+        }
+
+        return text.charAt(0).toUpperCase();
+    }
+
+    function normalizeAvatarPath(path) {
+        var value = String(path || "").trim();
+        if (value === "") {
+            return "";
+        }
+
+        if (value.indexOf("http://") === 0 || value.indexOf("https://") === 0 || value.indexOf("/") === 0) {
+            return value;
+        }
+
+        return "/" + value;
+    }
+
+    function renderUsersCell(users) {
+        var userList = Array.isArray(users) ? users : [];
+
+        if (userList.length === 0) {
+            return "";
+        }
+
+        var parts = userList.map(function (user) {
+            var name = "";
+            var profilePicture = "";
+
+            if (typeof user === "string") {
+                name = user;
+            } else if (user && typeof user === "object") {
+                name = String(user.firstname || user.name || "");
+                profilePicture = String(user.profile_picture || user.profilePicture || "");
+            }
+
+            var safeName = escapeHtml(name);
+            var title = safeName !== "" ? ' title="' + safeName + '"' : "";
+
+            if (String(profilePicture).trim() !== "") {
+                return '<span class="team-user-chip"' + title + '><img class="team-user-avatar" src="' + escapeHtml(normalizeAvatarPath(profilePicture)) + '" alt="' + safeName + '"></span>';
+            }
+
+            return '<span class="team-user-chip"' + title + '><span class="team-user-fallback">' + escapeHtml(initials(name)) + "</span></span>";
+        });
+
+        return '<div class="team-users-stack">' + parts.join("") + "</div>";
+    }
+
     function replaceTaskId(urlTemplate, id) {
         return String(urlTemplate || "").replace("TASK_ID", String(id));
     }
@@ -259,9 +312,7 @@
 
     function buildTaskRowHtml(config, responseTask) {
         var id = responseTask.id;
-        var users = (responseTask.users || []).map(function (user) {
-            return escapeHtml(user) + "<br>";
-        }).join("");
+        var users = renderUsersCell(responseTask.users || []);
         var userIds = Array.isArray(responseTask.user_ids) ? responseTask.user_ids.join(",") : "";
         var statusId = responseTask.status_id == null ? "" : String(responseTask.status_id);
 

@@ -130,7 +130,10 @@ class InlineUpdateController extends AbstractController
                 'deadline_display' => $task->getDeadline()?->format('d/m/Y H:i') ?? '',
                 'note' => $task->getNote() ?? '',
                 'users' => array_map(
-                    static fn(User $user): string => $user->getFirstname(),
+                    static fn(User $user): array => [
+                        'firstname' => $user->getFirstname() ?? '',
+                        'profile_picture' => $user->getProfilePicture() ?? '',
+                    ],
                     $task->getUsers()->toArray()
                 ),
                 'user_ids' => array_map(

@@ -5,6 +5,28 @@
         return $("<div>").text(value ?? "").html();
     }
 
+    function initials(value) {
+        var text = String(value || "").trim();
+        if (text === "") {
+            return "?";
+        }
+
+        return text.charAt(0).toUpperCase();
+    }
+
+    function normalizeAvatarPath(path) {
+        var value = String(path || "").trim();
+        if (value === "") {
+            return "";
+        }
+
+        if (value.indexOf("http://") === 0 || value.indexOf("https://") === 0 || value.indexOf("/") === 0) {
+            return value;
+        }
+
+        return "/" + value;
+    }
+
     function replaceTaskId(urlTemplate, taskId) {
         return String(urlTemplate || "").replace("TASK_ID", String(taskId || ""));
     }
@@ -130,9 +152,33 @@
 
     function renderUsersCell(taskData) {
         var users = Array.isArray(taskData.users) ? taskData.users : [];
-        return users.map(function (name) {
-            return escapeHtml(name) + " <br>";
-        }).join("");
+
+        if (users.length === 0) {
+            return "";
+        }
+
+        var chips = users.map(function (user) {
+            var name = "";
+            var profilePicture = "";
+
+            if (typeof user === "string") {
+                name = user;
+            } else if (user && typeof user === "object") {
+                name = String(user.firstname || user.name || "");
+                profilePicture = String(user.profile_picture || user.profilePicture || "");
+            }
+
+            var safeName = escapeHtml(name);
+            var title = safeName !== "" ? ' title="' + safeName + '"' : "";
+
+            if (String(profilePicture).trim() !== "") {
+                return '<span class="team-user-chip"' + title + '><img class="team-user-avatar" src="' + escapeHtml(normalizeAvatarPath(profilePicture)) + '" alt="' + safeName + '"></span>';
+            }
+
+            return '<span class="team-user-chip"' + title + '><span class="team-user-fallback">' + escapeHtml(initials(name)) + "</span></span>";
+        });
+
+        return '<div class="team-users-stack">' + chips.join("") + "</div>";
     }
 
     function bindInlineEditP1() {

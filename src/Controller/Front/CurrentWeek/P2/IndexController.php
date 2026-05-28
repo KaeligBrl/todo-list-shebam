@@ -2,6 +2,7 @@
 
 namespace App\Controller\Front\CurrentWeek\P2;
 
+use App\Entity\User;
 use App\Entity\Task;
 use App\Repository\StatusRepository;
 use App\Repository\TaskRepository;
@@ -51,7 +52,10 @@ class IndexController extends AbstractController
                         'deadline_display' => $taskp2Add->getDeadline()?->format('d/m/Y H:i'),
                         'note' => $taskp2Add->getNote(),
                         'users' => array_map(
-                            static fn($user) => $user->getFirstname(),
+                            static fn(User $user): array => [
+                                'firstname' => $user->getFirstname() ?? '',
+                                'profile_picture' => $user->getProfilePicture() ?? '',
+                            ],
                             $taskp2Add->getUsers()->toArray()
                         ),
                         'user_ids' => array_map(

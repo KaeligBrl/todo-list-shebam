@@ -238,9 +238,18 @@
                                     {% if task.subobject1 is empty %}{% else %}{{task.subobject3}}{% endif %}
                                 </td>
 
-                                <td class="color-white text-bold">{% for task in task.users %}
-                                        {{ task.firstname }} <br>
-                                    {% endfor %}
+                                <td class="color-white text-bold">
+                                    <div class="team-users-stack">
+                                        {% for userItem in task.users %}
+                                            <span class="team-user-chip" title="{{ userItem.firstname }} {{ userItem.lastname|default('') }}">
+                                                {% if userItem.profilePicture %}
+                                                    <img class="team-user-avatar" src="{{ asset(userItem.profilePicture) }}" alt="{{ userItem.firstname }}">
+                                                {% else %}
+                                                    <span class="team-user-fallback">{{ userItem.firstname|slice(0, 1)|upper }}</span>
+                                                {% endif %}
+                                            </span>
+                                        {% endfor %}
+                                    </div>
                                 </td>
 
                                 <td class="color-white text-bold">{{ task.status ? task.status.name : '' }}</td>

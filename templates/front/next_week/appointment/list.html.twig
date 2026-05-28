@@ -143,9 +143,17 @@
                                 <td class="color-white text-bold">{{appointment.name}}</td>
                                 <td class="color-white text-bold">{{appointment.subject}}</td>
                                 <td class="color-white text-bold">
+								<div class="team-users-stack">
 								{% for appointmentUser in appointment.user %}
-									{{ appointmentUser.firstname }} <br>
+									<span class="team-user-chip" title="{{ appointmentUser.firstname }} {{ appointmentUser.lastname|default('') }}">
+										{% if appointmentUser.profilePicture %}
+											<img class="team-user-avatar" src="{{ asset(appointmentUser.profilePicture) }}" alt="{{ appointmentUser.firstname }}">
+										{% else %}
+											<span class="team-user-fallback">{{ appointmentUser.firstname|slice(0, 1)|upper }}</span>
+										{% endif %}
+									</span>
                                 {% endfor %}
+								</div>
                                 </td>
 
 								{% if userRole is not null and roles[userRole] is defined %}
