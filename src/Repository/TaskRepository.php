@@ -107,7 +107,7 @@ class TaskRepository extends ServiceEntityRepository
 
     public function setRemoveTask()
     {
-        $sql = "delete from App\Entity\Task as t where t.nextweek = 0 or t.done = 1";
+        $sql = "delete from App\Entity\Task as t where t.nextweek = 0";
         $query = $this->_em->createQuery($sql);
         return $query->getResult();
     }
@@ -125,7 +125,6 @@ class TaskRepository extends ServiceEntityRepository
             ->leftJoin('t.users', 'u')
             ->addSelect('u')
             ->orderBy('u.firstname', 'ASC')
-            ->addOrderBy('t.done', 'ASC')
             ->addOrderBy('t.position', 'ASC')
             ->getQuery()
             ->getResult();

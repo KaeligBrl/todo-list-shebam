@@ -179,13 +179,6 @@ class ModifyType extends AbstractType
                 'required' => false,
                 'data' => $options['appointment_delete_nw'],
             ])
-            // Global
-            ->add('button_done', CheckboxType::class, [
-                'label' => 'Bouton "Fait"',
-                'label_attr' => ['class' => 'color-yellow text-bold'],
-                'required' => false,
-                'data' => $options['button_done'],
-            ])
             ->add('add_task', CheckboxType::class, [
                 'label' => 'Ajouter une tâche',
                 'label_attr' => ['class' => 'color-yellow text-bold'],

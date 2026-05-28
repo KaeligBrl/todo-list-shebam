@@ -25,7 +25,6 @@
         </nav>
 		<div class="container text-center padding-mobile">
             {% set showActions = false %}
-            {% set showDoneButtonCw = false %}
             {% if userRole is not null and roles[userRole] is defined %}
                 {% set showActions =
                     roles[userRole].task_p1_delete_button is defined and roles[userRole].task_p1_delete_button or
@@ -33,9 +32,9 @@
                     roles[userRole].task_p1_cw_to_p1_nw_button is defined and roles[userRole].task_p1_cw_to_p1_nw_button or
                     roles[userRole].p2_button_in_cw is defined and roles[userRole].p2_button_in_cw
                 %}
-                {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
             {% endif %}
-            {% set inlineAddCols = 6 + (showActions ? 1 : 0) + (showDoneButtonCw ? 1 : 0) %}
+
+            {% set inlineAddCols = 6 + (showActions ? 1 : 0) %}
 
             {% if roles[userRole].add_task_cw is defined and roles[userRole].add_task_cw %}
                 <div class="mb-4">
@@ -49,7 +48,6 @@
                     rowSelector: '#inlineAddTaskP1Row',
                     errorRowSelector: '#inlineAddTaskP1Errors',
                     hasActions: showActions,
-                    hasDone: showDoneButtonCw,
                     reorderUrl: path('reorder'),
                     actions: [
                         {
@@ -104,12 +102,7 @@
                                 <th class="color-yellow" scope="col">Action</th>
                             {% endif %}
 
-                            {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done
-                            %}
                         
-                            {% if showDoneButtonCw %}
-                                <th class="color-yellow" scope="col">Fait</th>
-                            {% endif %}
                         {% endif %}
                         
                         
@@ -151,9 +144,6 @@
                                     {{ form_widget(form_task_cw_p1_add.submit, {'attr': {'class': 'btn-yellow-form text-bold'}}) }}
                                     <button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddTaskP1Row">Annuler</button>
                                 </td>
-                            {% endif %}
-                            {% if showDoneButtonCw %}
-                                <td></td>
                             {% endif %}
                         </tr>
 
@@ -198,9 +188,6 @@
                                     <button type="button" class="btn btn-outline-light btn-sm js-inline-edit-cancel">Annuler</button>
                                 </td>
                             {% endif %}
-                            {% if showDoneButtonCw %}
-                                <td></td>
-                            {% endif %}
                         </tr>
 
                         <tr id="inlineEditTaskP1Errors" class="d-none bg-blue-dark-light">
@@ -216,8 +203,7 @@
                             {% for userRef in task.users %}
                                 {% set userIds = userIds|merge([userRef.id]) %}
                             {% endfor %}
-                            <tr class="{% if task.done == 1 %}bg-yellow-dark {% endif %}"
-                                data-taskdone="{{ task.id }}"
+                            <tr
                                 data-task-id="{{ task.id }}"
                                 data-customer-id="{{ task.customer ? task.customer.id : '' }}"
                                 data-object="{{ task.object|default('')|e('html_attr') }}"
@@ -285,17 +271,6 @@
                                             </div>
                                         </td>
                                     {% endif %}
-                                {% endif %}
-
-                           
-                                {% set showDoneButtonCw = roles[userRole].button_done is defined and roles[userRole].button_done %}
-                                {% if showDoneButtonCw %}
-                                    <td class="form-switch">
-                                        {% if roles[userRole].button_done is defined and roles[userRole].button_done %}
-                                            <input type="checkbox" id="taskdone" class="taskdone" {{ (task.done) ? 'checked' : ''}} data-taskdone="{{task.id}}">
-                                        {% endif %}
-                                    </td>
-                                </tr>
                                 {% endif %}
                         {% endif %}
                     {% endfor %}

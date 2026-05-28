@@ -26,11 +26,13 @@ class IndexController extends AbstractController
     ): Response
     {
         $appointmentAdd = new Appointment();
+        $appointmentAdd->setNextweek(true);
         $formappointment = $this->createForm(AddAppointmentNextWeekType::class, $appointmentAdd);
         $notification = null;
         $formappointment->handleRequest($request);
 
         if ($formappointment->isSubmitted() && $formappointment->isValid()) {
+            $appointmentAdd->setNextweek(true);
             $this->entityManager->persist($appointmentAdd);
             $this->entityManager->flush();
             return $this->redirectToRoute("next_week_appointment");

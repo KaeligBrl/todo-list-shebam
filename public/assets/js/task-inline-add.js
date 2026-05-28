@@ -128,6 +128,7 @@
             }
 
             new TomSelect(this, {
+                dropdownParent: "body",
                 plugins: ["remove_button"],
                 create: false,
                 persist: false,
@@ -312,13 +313,16 @@
         $(document).on("click", ".js-inline-add-toggle", function (e) {
             e.preventDefault();
             var target = $(this).data("target");
-            $(target).removeClass("d-none");
+            $(target).removeClass("d-none").show();
         });
 
         $(document).on("click", ".js-inline-add-cancel", function () {
             var target = $(this).data("target");
-            $(target).addClass("d-none");
+            $(target).hide().addClass("d-none");
         });
+
+        // Useful outside task pages too (appointment inline add uses this class).
+        initUsersTomSelects($(document));
 
         var $forms = $("form[data-task-inline-config]");
         if ($forms.length === 0) {
@@ -326,7 +330,6 @@
         }
 
         initCustomerTomSelects($(document));
-        initUsersTomSelects($(document));
 
         $forms.each(function () {
             var rawConfig = $(this).attr("data-task-inline-config");

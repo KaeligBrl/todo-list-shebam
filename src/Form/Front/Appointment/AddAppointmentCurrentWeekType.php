@@ -53,7 +53,7 @@ class AddAppointmentCurrentWeekType extends AbstractType
                 new SelectedUsers(),
             ],
             'multiple' => true,
-            'expanded' => true,
+            'expanded' => false,
             'label_attr' => ['class' => 'label-form'],
             'query_builder' => function (EntityRepository $er) {
                 return $er->createQueryBuilder('u')

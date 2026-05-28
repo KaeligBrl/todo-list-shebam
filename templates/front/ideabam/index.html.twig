@@ -9,7 +9,7 @@
         {% if app.user and userRole is not null and roles[userRole] is defined and roles[userRole].add_ideabam is defined and
         roles[userRole].add_ideabam %}
         <div class="mb-4">
-            <a class="color-yellow text-20 text-bold" href="#ajouteruneidebam"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
+            <a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddIdeabamPanel"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter une idée</a>
         </div>
         {% endif %}
         {% set today = date() %}
@@ -61,11 +61,12 @@
         </tbody>
     </table>
 
-    <!-- POPUP -->
-
-    <div id="ajouteruneidebam" class="overlay">
-        <div class="popup bg-blue-dark-light">
-            <a class="close" href=""><i class="fas fa-times"></i></a>
+    <div id="inlineAddIdeabamPanel" class="bg-blue-dark-light p-3 rounded d-none mb-4">
+        <div class="text-right mb-2">
+            <button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddIdeabamPanel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
             {{ form_start(form_idea_add) }}
             <div class="row">
                 <div class="col">
@@ -84,7 +85,11 @@
                 </div>
             </div>
             {{ form_end(form_idea_add) }}
-        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
 {% endblock %}

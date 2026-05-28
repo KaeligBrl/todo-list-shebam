@@ -35,9 +35,10 @@
 			{% set inlineEditCols = 4 + (showActions ? 1 : 0) %}
 
                 <div class="mb-4">
-                    <a class="color-yellow text-20 text-bold" href="#ajouterunrendezvous"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
+					<a class="color-yellow text-20 text-bold js-inline-add-toggle" href="#" data-target="#inlineAddAppointmentCwRow"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un rendez-vous</a>
                 </div>
-			<table id="tableOrderAppointment" class="table mb-5 table-bordered" data-toggle="table">
+			{{ form_start(form_appointment_cw_add_front, {'attr': {'id': 'inlineAddAppointmentCwForm'}}) }}
+			<table id="tableOrderAppointment" class="table mb-5 table-bordered">
                 <thead class="bg-blue-dark-light table-borderless">
                     <tr>
 						<th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
@@ -92,8 +93,39 @@
 						</td>
 					</tr>
 
+					<tr id="inlineAddAppointmentCwRow" class="bg-blue-dark-light d-none">
+						<td class="d-none"></td>
+						<td>
+							{{ form_widget(form_appointment_cw_add_front.hoursappointment, {'attr': {'class': 'form-control form-control-sm'}}) }}
+						</td>
+						<td>
+							{{ form_widget(form_appointment_cw_add_front.name, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Client'}}) }}
+						</td>
+						<td>
+							{{ form_widget(form_appointment_cw_add_front.subject, {'attr': {'class': 'form-control form-control-sm', 'placeholder': 'Sujet'}}) }}
+						</td>
+						<td>
+							{{ form_widget(form_appointment_cw_add_front.user, {'attr': {'class': 'form-select form-select-sm js-task-users-select', 'size': '4'}}) }}
+						</td>
+						{% if showActions %}
+							<td>
+								{{ form_widget(form_appointment_cw_add_front.submit, {'attr': {'class': 'btn-yellow-form text-bold'}}) }}
+								<button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddAppointmentCwRow">Annuler</button>
+							</td>
+						{% endif %}
+						{% if not showActions %}
+							<td>
+								{{ form_widget(form_appointment_cw_add_front.submit, {'attr': {'class': 'btn-yellow-form text-bold'}}) }}
+								<button type="button" class="btn btn-outline-light btn-sm js-inline-add-cancel" data-target="#inlineAddAppointmentCwRow">Annuler</button>
+							</td>
+						{% endif %}
+						</td>
+					</tr>
+
+                    {% set hasAppointmentRows = false %}
                     {% for appointment in appointment %}
                         {% if appointment.nextweek == 0 %}					
+							{% set hasAppointmentRows = true %}
 							{% set userIds = [] %}
 							{% for appointmentUser in appointment.user %}
 								{% set userIds = userIds|merge([appointmentUser.id]) %}
@@ -142,40 +174,20 @@
                             </tr>
                         {% endif %}
                     {% endfor %}
+					{% if not hasAppointmentRows %}
+						<tr>
+							<td colspan="{{ inlineEditCols + 1 }}" class="color-white text-bold text-center">Aucun rendez-vous.</td>
+						</tr>
+					{% endif %}
                 </tbody>
             </table>
-		</div>
-
-		<!-- POPUP -->
-		<!-- Appointment -->
-		<div id="ajouterunrendezvous" class="overlay">
-			<div class="popup bg-blue-dark-light">
-			<a class="close" href=""><i class="fas fa-times"></i></a>
-					{{ form_start(form_appointment_cw_add_front) }}
-						<div class="row">
-							<div class="col">
-								{{ form_row(form_appointment_cw_add_front.name) }}
-								{{ form_row(form_appointment_cw_add_front.subject) }}
-								<div class="text-bold color-yellow text-left">
-									{{ form_row(form_appointment_cw_add_front.hoursappointment) }}
-								</div>
-							</div>
-							<div class="col">
-								<p class="text-left color-yellow text-bold">Personne(s)</p>
-								<div class="bg-black-light text-left users mb-3">
-									{{ form_row(form_appointment_cw_add_front.user) }}
-								</div>
-								{{ form_row(form_appointment_cw_add_front.submit) }}
-							</div>
-						</div>
-					{{ form_end(form_appointment_cw_add_front) }}
-				</div>
-			</div>
+			{{ form_end(form_appointment_cw_add_front) }}
 		</div>
 	</div>
 {%  endblock %}
 {% block javascripts %}
 	{{ parent() }}
+	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260528c"></script>
 	<script>
 		window.appointmentInlineEditConfig = {
 			updateUrlTemplate: "{{ path('current_week_appointment_inline_update', {'id': 'ITEM_ID'}) }}",

@@ -208,3 +208,6 @@ textarea.settings-form-control {resize: vertical;}
 .success-notice-actions {margin-top: 15px;}
 .btn-inline-link {display: inline-block;text-decoration: none;}
 .form-label-gotham {font-family: 'Gotham';}
+
+/* TomSelect dropdown should always appear above tables/cards. */
+.ts-dropdown {z-index: 3000 !important;}

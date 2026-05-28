@@ -46,9 +46,6 @@ class Task
     #[ORM\Column(type: "boolean", nullable: true)]
     private $nextweek;
 
-    #[ORM\Column(type: "boolean", nullable: true)]
-    private $done;
-
     #[ORM\Column(type: "datetime", nullable: true)]
     private $deadline;
 
@@ -205,18 +202,6 @@ class Task
     public function setNextweek(?bool $nextweek): self
     {
         $this->nextweek = $nextweek;
-
-        return $this;
-    }
-
-    public function getDone(): ?bool
-    {
-        return $this->done;
-    }
-
-    public function setDone(?bool $done): self
-    {
-        $this->done = $done;
 
         return $this;
     }

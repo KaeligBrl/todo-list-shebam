@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 
 class AddAppointmentNextWeekType extends AbstractType
@@ -48,7 +47,7 @@ class AddAppointmentNextWeekType extends AbstractType
             ->add('user', EntityType::class, array(
                 'required' => true,
                 'label' => false,
-                'expanded' => true,
+                'expanded' => false,
                 'class' => User::class,
                 'constraints' => [
                     new NotBlank(),
@@ -61,15 +60,6 @@ class AddAppointmentNextWeekType extends AbstractType
                         ->orderBy('u.firstname', 'ASC');
                 }
             ))
-            ->add('nextweek',  CheckboxType::class, [
-                'required' => false,
-                'label' => 'Semaine Suivante',
-                'label_attr' => ['class' => 'color-yellow mb-3'],
-                'attr' => [
-                    'placeholder' => 'Semaine Suivante',
-                    'checked'   => 'checked'                    
-                ]
-            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
                 'attr' => ['class' => 'btn-yellow-form text-bold text-20'],

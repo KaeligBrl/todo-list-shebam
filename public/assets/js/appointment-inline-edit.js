@@ -30,6 +30,7 @@
         var usersSelect = $row.find("select.js-inline-edit-appt-users").get(0);
         if (usersSelect && !usersSelect.tomselect) {
             new TomSelect(usersSelect, {
+                dropdownParent: "body",
                 plugins: ["remove_button"],
                 create: false,
                 persist: false,
