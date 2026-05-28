@@ -143,7 +143,18 @@ class TaskLiveVersionService
             return null;
         }
 
-        return '/' . ltrim($actor->getProfilePicture(), '/');
+        $path = str_replace('\\', '/', (string) $actor->getProfilePicture());
+        $path = trim($path);
+
+        if ($path === '') {
+            return null;
+        }
+
+        if (preg_match('#^https?://#i', $path) === 1) {
+            return $path;
+        }
+
+        return '/' . ltrim($path, '/');
     }
 
     private function readState(): array

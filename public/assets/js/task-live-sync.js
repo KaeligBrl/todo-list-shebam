@@ -15,6 +15,25 @@
 
     var draftContexts = {};
 
+    function scheduleRemoteDraftExpiry(scope) {
+        var key = String(scope || "");
+        if (!key) {
+            return;
+        }
+
+        if (!draftContexts[key]) {
+            draftContexts[key] = {};
+        }
+
+        if (draftContexts[key].remoteTimer) {
+            window.clearTimeout(draftContexts[key].remoteTimer);
+        }
+
+        draftContexts[key].remoteTimer = window.setTimeout(function () {
+            clearRemoteDraftRow(key);
+        }, 20000);
+    }
+
     function hasTaskTableOnPage() {
         return $("#tableOrderTaskP1, #tableOrderTaskP2").length > 0;
     }
@@ -40,34 +59,20 @@
     }
 
     function getDraftRowSelectorForPage() {
-        var tableSelector = getActiveTableSelector();
+        var candidates = [
+            "#inlineAddTaskP1Row",
+            "#inlineAddTaskP2Row",
+            "#inlineAddTaskNwP1Row",
+            "#inlineAddTaskNwP2Row"
+        ];
 
-        if (tableSelector === "#tableOrderTaskP1") {
-            return "#inlineAddTaskP1Row";
-        }
-
-        if (tableSelector === "#tableOrderTaskP2") {
-            return "#inlineAddTaskP2Row";
+        for (var i = 0; i < candidates.length; i += 1) {
+            if ($(candidates[i]).length > 0) {
+                return candidates[i];
+            }
         }
 
         return null;
-    }
-
-    function getDraftRowId(scope) {
-        return "task-live-draft-row-" + String(scope || "").replace(/[^a-zA-Z0-9_-]/g, "_");
-    }
-
-    function getTableColumnCount() {
-        var $headerCells = $("#tableOrderTaskP1 thead th, #tableOrderTaskP2 thead th");
-        return $headerCells.length > 0 ? $headerCells.length : 0;
-    }
-
-    function pageHasActionsColumn() {
-        return $("#tableOrderTaskP1 thead th:contains('Action'), #tableOrderTaskP2 thead th:contains('Action')").length > 0;
-    }
-
-    function pageHasDoneColumn() {
-        return $("#tableOrderTaskP1 thead th:contains('Fait'), #tableOrderTaskP2 thead th:contains('Fait')").length > 0;
     }
 
     function actionLabel(action) {
@@ -114,8 +119,12 @@
     }
 
     function getDraftScopeForPage() {
-        var tableSelector = getActiveTableSelector();
+        var explicitScope = getDraftRowSelectorForPage();
+        if (explicitScope) {
+            return explicitScope;
+        }
 
+        var tableSelector = getActiveTableSelector();
         if (tableSelector === "#tableOrderTaskP1") {
             return "#inlineAddTaskP1Row";
         }
@@ -125,6 +134,50 @@
         }
 
         return null;
+    }
+
+    function ensureRemoteInlineRow(scope) {
+        var $row = $(scope);
+        if ($row.length > 0) {
+            return $row;
+        }
+
+        var tableSelector = getActiveTableSelector();
+        if (!tableSelector) {
+            return $();
+        }
+
+        var $tbody = $(tableSelector + " tbody").first();
+        if ($tbody.length === 0) {
+            return $();
+        }
+
+        var rowId = String(scope || "").replace(/^#/, "");
+        var rowHtml = '' +
+            '<tr id="' + escapeHtml(rowId) + '" class="bg-blue-dark-light" data-live-synthetic="1">' +
+                '<td class="d-none"></td>' +
+                '<td><input type="text" class="form-control form-control-sm js-live-remote-customer" disabled></td>' +
+                '<td><input type="text" class="form-control form-control-sm js-live-remote-subject" disabled></td>' +
+                '<td><input type="text" class="form-control form-control-sm js-live-remote-users" disabled></td>' +
+                '<td><input type="text" class="form-control form-control-sm js-live-remote-deadline" disabled></td>' +
+                '<td><input type="text" class="form-control form-control-sm js-live-remote-note" disabled></td>' +
+            '</tr>';
+
+        $tbody.prepend(rowHtml);
+        return $(scope);
+    }
+
+    function isLocalInlineRowBusy(scope) {
+        var $row = $(String(scope || ""));
+        if ($row.length === 0) {
+            return false;
+        }
+
+        if ($row.attr("data-live-local-editing") === "1") {
+            return true;
+        }
+
+        return $row.find(":focus").length > 0;
     }
 
     function getFormValue($form, selector) {
@@ -181,107 +234,310 @@
             subobject2: getFormValue($form, "input[name$='[subobject2]']"),
             subobject3: getFormValue($form, "input[name$='[subobject3]']"),
             users: getSelectedText($form, "select.js-task-users-select", true),
+            deadline_value: getFormValue($form, "input[name$='[deadline]']"),
             deadline_display: formatDraftDeadline(getFormValue($form, "input[name$='[deadline]']")),
             note: getFormValue($form, "textarea[name$='[note]'], input[name$='[note]']"),
             visible: !$form.find("tr").first().hasClass("d-none")
         };
     }
 
-    function removeDraftRow(scope) {
-        var selector = "tr[data-task-live-draft-row='" + String(scope || "").replace(/'/g, "\\'") + "']";
-        $(selector).remove();
+    function setSingleSelectByText($select, text) {
+        if (!$select || $select.length === 0) {
+            return;
+        }
+
+        var target = String(text || "").trim().toLowerCase();
+        if (target === "") {
+            if ($select[0].tomselect) {
+                $select[0].tomselect.clear(true);
+            } else {
+                $select.val("");
+            }
+            return;
+        }
+
+        var matchedValue = "";
+        $select.find("option").each(function () {
+            if (String($(this).text() || "").trim().toLowerCase() === target) {
+                matchedValue = String($(this).attr("value") || "");
+                return false;
+            }
+
+            return true;
+        });
+
+        if ($select[0].tomselect) {
+            $select[0].tomselect.clear(true);
+            if (matchedValue !== "") {
+                $select[0].tomselect.addItem(matchedValue, true);
+            }
+            return;
+        }
+
+        $select.val(matchedValue);
     }
 
-    function showDraftRow(payload) {
+    function setMultiSelectByText($select, values) {
+        if (!$select || $select.length === 0) {
+            return;
+        }
+
+        var wanted = Array.isArray(values)
+            ? values.map(function (value) { return String(value || "").trim().toLowerCase(); }).filter(function (value) { return value !== ""; })
+            : [];
+
+        var matchedValues = [];
+        $select.find("option").each(function () {
+            var label = String($(this).text() || "").trim().toLowerCase();
+            if (wanted.indexOf(label) !== -1) {
+                matchedValues.push(String($(this).attr("value") || ""));
+            }
+        });
+
+        if ($select[0].tomselect) {
+            $select[0].tomselect.clear(true);
+            matchedValues.forEach(function (value) {
+                if (value !== "") {
+                    $select[0].tomselect.addItem(value, true);
+                }
+            });
+            return;
+        }
+
+        $select.val(matchedValues);
+    }
+
+    function renderDraftActorBadge($row, actor, actorName) {
+        if (!$row || $row.length === 0) {
+            return;
+        }
+
+        var scope = String($row.attr("id") || "");
+        if (!scope) {
+            return;
+        }
+
+        var $table = $row.closest("table");
+        if ($table.length === 0) {
+            return;
+        }
+
+        var tableOffset = $table.offset();
+        var rowOffset = $row.offset();
+        if (!tableOffset || !rowOffset) {
+            return;
+        }
+
+        var badgeSelector = '.js-live-draft-avatar[data-scope="' + escapeHtml(scope) + '"]';
+        var $badge = $(badgeSelector).first();
+        if ($badge.length === 0) {
+            $badge = $('<div class="js-live-draft-avatar" aria-hidden="true"></div>');
+            $badge.attr("data-scope", scope);
+            $(document.body).append($badge);
+        }
+
+        var badgeSize = 34;
+        var top = rowOffset.top + ($row.outerHeight() / 2) - (badgeSize / 2);
+        var left = tableOffset.left - 44;
+
+        $badge.css({
+            position: "absolute",
+            left: left + "px",
+            top: top + "px",
+            width: badgeSize + "px",
+            height: badgeSize + "px",
+            borderRadius: "50%",
+            border: "2px solid #f3c441",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, .28)",
+            overflow: "hidden",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#31465f",
+            zIndex: "30",
+            pointerEvents: "none"
+        });
+
+        $badge.attr("title", (actorName || "Quelqu'un") + " ajoute une tache");
+        $badge.empty();
+
+        function renderFallback() {
+            $badge.empty();
+            var $fallback = $('<span></span>');
+            $fallback.text(buildInitials(actor));
+            $fallback.css({
+                color: "#ffffff",
+                fontSize: "12px",
+                fontWeight: "700",
+                lineHeight: "1"
+            });
+            $badge.append($fallback);
+        }
+
+        if (actor && actor.profile_picture_url) {
+            var $img = $('<img alt="avatar">');
+            $img.attr("src", String(actor.profile_picture_url));
+            $img.css({
+                width: "100%",
+                height: "100%",
+                objectFit: "cover"
+            });
+            $img.on("error", function () {
+                renderFallback();
+            });
+            $badge.append($img);
+            return;
+        }
+
+        renderFallback();
+    }
+
+    function setRowLockedState($row, locked) {
+        if (!$row || $row.length === 0) {
+            return;
+        }
+
+        $row.find("input, textarea, select, button").prop("disabled", !!locked);
+
+        $row.find("select").each(function () {
+            if (!this.tomselect) {
+                return;
+            }
+
+            if (locked) {
+                this.tomselect.blur();
+                this.tomselect.close();
+                this.tomselect.disable();
+                return;
+            }
+
+            this.tomselect.enable();
+        });
+    }
+
+    function applyDraftToInlineRow(payload) {
         var draftState = (payload && payload.draft) || {};
         var draft = draftState.draft || draftState;
         var actor = draftState.actor || {};
         var actorName = [actor.firstname || "Quelqu'un", actor.lastname || ""].join(" ").trim();
+        var scope = String(payload.scope || getDraftRowSelectorForPage() || "");
+        if (!scope) {
+            return;
+        }
+
+        var $row = $(scope);
+        if ($row.length === 0) {
+            $row = ensureRemoteInlineRow(scope);
+            if ($row.length === 0) {
+                return;
+            }
+        }
+
         var customer = draft.customer || "";
         var subject = draft.subject || "";
-        var users = Array.isArray(draft.users) ? draft.users.join(", ") : "";
-        var deadline = draft.deadline_display || "";
+        var deadlineValue = draft.deadline_value || "";
         var note = draft.note || "";
 
-        var lines = [];
-        if (customer) {
-            lines.push("Client: " + customer);
-        }
-        if (subject) {
-            lines.push("Sujet: " + subject);
-        }
-        if (users) {
-            lines.push("Equipe: " + users);
-        }
-        if (deadline) {
-            lines.push("Deadline: " + deadline);
-        }
-        if (note) {
-            lines.push("Note: " + note);
+        if ($row.attr("data-live-synthetic") !== "1" && $row.hasClass("d-none")) {
+            $row.attr("data-live-was-hidden", "1");
         }
 
-        var scope = String(payload.scope || getDraftRowSelectorForPage() || "");
-        var rowId = getDraftRowId(scope);
-        var tableSelector = getActiveTableSelector();
-        if (!tableSelector) {
-            return;
+        $row.removeClass("d-none");
+        $row.attr("data-live-remote-draft", "1");
+        $row.attr("data-live-remote-scope", scope);
+        $row.css("outline", "1px dashed rgba(243,196,65,.7)");
+        scheduleRemoteDraftExpiry(scope);
+
+        // Cote observateur: on retire les actions pour eviter toute confusion.
+        $row.find("button").addClass("d-none");
+
+        if ($row.find("select.js-task-customer-select").length > 0) {
+            setSingleSelectByText($row.find("select.js-task-customer-select").first(), customer);
+        } else {
+            $row.find(".js-live-remote-customer").val(customer);
         }
 
-        var $tableBody = $(tableSelector + " tbody").first();
-        if ($tableBody.length === 0) {
-            return;
+        if ($row.find("select.js-task-users-select").length > 0) {
+            setMultiSelectByText($row.find("select.js-task-users-select").first(), draft.users || []);
+        } else {
+            $row.find(".js-live-remote-users").val(Array.isArray(draft.users) ? draft.users.join(", ") : "");
         }
 
-        var avatarHtml = actor.profile_picture_url
-            ? '<img src="' + actor.profile_picture_url + '" alt="avatar" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid #f3c441;">'
-            : '<span style="display:inline-flex;width:40px;height:40px;border-radius:50%;align-items:center;justify-content:center;background:#31465f;color:#fff;font-weight:700;">' + buildInitials(actor) + "</span>";
-
-        var subjectHtml = subject ? '<div style="font-size:13px;font-weight:700;color:#ffffff;">' + escapeHtml(subject) + '</div>' : '<div style="font-size:13px;font-weight:700;color:#ffffff;">Ajout en cours</div>';
-        var detailsHtml = lines.length ? '<div style="font-size:12px;color:#d5dfeb;margin-top:4px;">' + lines.map(function (line) { return escapeHtml(line); }).join('<br>') + '</div>' : '';
-        var actionCellHtml = pageHasActionsColumn() ? '<td class="text-center" style="font-style:italic;color:#f3c441;">Ajout en cours</td>' : '';
-        var doneCellHtml = pageHasDoneColumn() ? '<td></td>' : '';
-        var colspan = getTableColumnCount() || 6;
-
-        var rowHtml = '' +
-            '<tr id="' + escapeHtml(rowId) + '" data-task-live-draft-row="' + escapeHtml(scope) + '" class="bg-blue-dark-light">' +
-                '<td class="d-none"></td>' +
-                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(customer || 'En cours') + '</td>' +
-                '<td class="color-white text-bold">' + subjectHtml + detailsHtml + '</td>' +
-                '<td class="color-white text-bold">' +
-                    '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
-                        avatarHtml +
-                        '<span>' + escapeHtml(actorName || 'Quelqu\'un') + '</span>' +
-                    '</div>' +
-                '</td>' +
-                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(deadline || '') + '</td>' +
-                '<td class="color-white text-bold" style="opacity:.72;">' + escapeHtml(note || '') + '</td>' +
-                actionCellHtml +
-                doneCellHtml +
-            '</tr>';
-
-        var $existing = $("#" + rowId);
-        if ($existing.length > 0) {
-            $existing.replaceWith(rowHtml);
-            return;
+        if ($row.find("input[name$='[object]']").length > 0) {
+            $row.find("input[name$='[object]']").val(subject);
+        } else {
+            $row.find(".js-live-remote-subject").val(subject);
         }
 
-        var $errorRow = $tableBody.find("tr#inlineAddTaskP1Errors, tr#inlineAddTaskP2Errors").last();
-        if ($errorRow.length > 0) {
-            $(rowHtml).insertAfter($errorRow);
-            return;
+        if ($row.find("input[name$='[deadline]']").length > 0) {
+            $row.find("input[name$='[deadline]']").val(deadlineValue);
+        } else {
+            $row.find(".js-live-remote-deadline").val(draft.deadline_display || "");
         }
 
-        var $inlineRow = $tableBody.find("tr#inlineAddTaskP1Row, tr#inlineAddTaskP2Row").last();
-        if ($inlineRow.length > 0) {
-            $(rowHtml).insertAfter($inlineRow);
-            return;
+        if ($row.find("textarea[name$='[note]'], input[name$='[note]']").length > 0) {
+            $row.find("textarea[name$='[note]'], input[name$='[note]']").val(note);
+        } else {
+            $row.find(".js-live-remote-note").val(note);
         }
 
-        $tableBody.prepend(rowHtml);
+        renderDraftActorBadge($row, actor, actorName);
+
+        setRowLockedState($row, true);
     }
 
     function escapeHtml(value) {
         return $("<div>").text(value ?? "").html();
+    }
+
+    function clearRemoteDraftRow(scope) {
+        var $row = $(String(scope || ""));
+        if ($row.length === 0) {
+            return;
+        }
+
+        var key = String(scope || "");
+        var ctx = draftContexts[key] || null;
+        if (ctx && ctx.remoteTimer) {
+            window.clearTimeout(ctx.remoteTimer);
+            ctx.remoteTimer = null;
+        }
+
+        if ($row.attr("data-live-remote-draft") !== "1") {
+            return;
+        }
+
+        if ($row.attr("data-live-synthetic") === "1") {
+            $row.remove();
+            return;
+        }
+
+        var wasHidden = $row.attr("data-live-was-hidden") === "1";
+
+        $row.removeAttr("data-live-remote-draft");
+        $row.removeAttr("data-live-remote-scope");
+        $row.removeAttr("data-live-was-hidden");
+        $row.css("outline", "");
+        $('.js-live-draft-avatar[data-scope="' + escapeHtml($row.attr("id") || "") + '"]').remove();
+        $row.find("button").removeClass("d-none");
+        setRowLockedState($row, false);
+
+        if ($row.attr("data-live-synthetic") === "1") {
+            $row.remove();
+            return;
+        }
+
+        if (wasHidden && !isLocalInlineRowBusy(scope)) {
+            $row.find("input[type='text'], input[type='datetime-local'], textarea").val("");
+            $row.find("select").each(function () {
+                if (this.tomselect) {
+                    this.tomselect.clear(true);
+                } else {
+                    this.selectedIndex = -1;
+                }
+            });
+            $row.addClass("d-none");
+        }
     }
 
     function handleDraftPayload(response) {
@@ -310,16 +566,16 @@
         if (response.drafts && typeof response.drafts === "object") {
             var activeDraft = response.drafts[activeScope] || null;
             if (!activeDraft) {
-                removeDraftRow(activeScope);
+                clearRemoteDraftRow(activeScope);
                 return;
             }
 
             if (activeDraft.tab_id && String(activeDraft.tab_id) === String(window.__taskLiveTabId)) {
-                removeDraftRow(activeScope);
+                clearRemoteDraftRow(activeScope);
                 return;
             }
 
-            showDraftRow({
+            applyDraftToInlineRow({
                 scope: activeScope,
                 draft: activeDraft
             });
@@ -333,16 +589,16 @@
 
         var draft = response.draft || null;
         if (!draft) {
-            removeDraftRow(activeScope);
+            clearRemoteDraftRow(activeScope);
             return;
         }
 
         if (draft.tab_id && String(draft.tab_id) === String(window.__taskLiveTabId)) {
-            removeDraftRow(activeScope);
+            clearRemoteDraftRow(activeScope);
             return;
         }
 
-        showDraftRow({
+        applyDraftToInlineRow({
             scope: activeScope,
             draft: draft
         });
@@ -362,7 +618,7 @@
             return;
         }
 
-        removeDraftRow(activeScope);
+        clearRemoteDraftRow(activeScope);
     }
 
     function postDraftState($form, config) {
@@ -388,9 +644,32 @@
         });
     }
 
-    function clearDraftState($form, config) {
-        if (!window.taskLiveDraftUrl || !$form || !$form.length) {
+    function requestDraftClear(config, useKeepalive) {
+        if (!window.taskLiveDraftUrl || !config || !config.rowSelector) {
             return;
+        }
+
+        var payload = {
+            scope: config.rowSelector,
+            tab_id: window.__taskLiveTabId
+        };
+
+        if (useKeepalive && window.fetch) {
+            try {
+                window.fetch(window.taskLiveDraftUrl, {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    credentials: "same-origin",
+                    keepalive: true,
+                    body: JSON.stringify(payload)
+                });
+                return;
+            } catch (error) {
+                // Fallback jQuery plus bas.
+            }
         }
 
         $.ajax({
@@ -398,16 +677,21 @@
             method: "DELETE",
             contentType: "application/json",
             dataType: "json",
-            data: JSON.stringify({
-                scope: config.rowSelector,
-                tab_id: window.__taskLiveTabId
-            }),
+            data: JSON.stringify(payload),
             headers: {
                 "X-Requested-With": "XMLHttpRequest"
             }
         });
+    }
 
-        removeDraftRow(config.rowSelector);
+    function clearDraftState($form, config) {
+        if (!window.taskLiveDraftUrl || !$form || !$form.length) {
+            return;
+        }
+
+        requestDraftClear(config, false);
+
+        clearRemoteDraftRow(config.rowSelector);
     }
 
     function bindDraftSync($form, config) {
@@ -422,6 +706,15 @@
         function isFormVisible() {
             var $row = $(config.rowSelector);
             return $row.length > 0 && !$row.hasClass("d-none");
+        }
+
+        function markLocalEditing(active) {
+            var $row = $(config.rowSelector);
+            if ($row.length === 0) {
+                return;
+            }
+
+            $row.attr("data-live-local-editing", active ? "1" : "0");
         }
 
         function syncDraft() {
@@ -468,12 +761,28 @@
             heartbeatTimer = null;
         }
 
+        function clearDraftOnPageExit() {
+            if (!isFormVisible() && !hasLocalDraft) {
+                return;
+            }
+
+            requestDraftClear(config, true);
+        }
+
+        // Nettoie un brouillon stale du meme onglet apres refresh.
+        requestDraftClear(config, false);
+
+        window.addEventListener("pagehide", clearDraftOnPageExit);
+        window.addEventListener("beforeunload", clearDraftOnPageExit);
+
         $form.on("input change", "input, textarea, select", function () {
+            markLocalEditing(true);
             scheduleDraftSync();
             startHeartbeat();
         });
 
         $form.on("focusin", "input, textarea, select", function () {
+            markLocalEditing(true);
             startHeartbeat();
         });
 
@@ -486,6 +795,7 @@
         $(document).on("click", ".js-inline-add-cancel", function () {
             if ($(this).data("target") === config.rowSelector) {
                 hasLocalDraft = false;
+                markLocalEditing(false);
                 stopHeartbeat();
                 clearDraftState($form, config);
             }
@@ -494,12 +804,14 @@
         window.addEventListener("task-live-local-change", function () {
             if (!isFormVisible() && hasLocalDraft) {
                 hasLocalDraft = false;
+                markLocalEditing(false);
                 stopHeartbeat();
                 clearDraftState($form, config);
             }
         });
 
         $form.on("submit", function () {
+            markLocalEditing(false);
             if (isFormVisible()) {
                 scheduleDraftSync();
             }
@@ -636,6 +948,12 @@
             }
 
             currentVersion = nextVersion;
+
+            // Quand une vraie modif arrive, on purge le draft distant affiche localement.
+            var activeScope = getDraftScopeForPage();
+            if (activeScope) {
+                clearRemoteDraftRow(activeScope);
+            }
 
             var change = response.last_change || null;
             var actorId = change && change.actor ? Number(change.actor.id || 0) : 0;
