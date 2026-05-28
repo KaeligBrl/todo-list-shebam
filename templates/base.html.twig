@@ -106,7 +106,17 @@
                                     title="Aller sur la vie d'agence" href="{{ path('ideabam') }}">Idébam</a>
                             </li>
                             <li>
-                                <a class="{% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %} navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
+                                <a class="
+                                    {% if app.request.attributes.get('_route') starts with 'admin_' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'add_customer_back' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'user_' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'role_' %}active{% endif %}
+                                    {% if app.request.attributes.get('_route') starts with 'download_' %}active{% endif %}
+                                    navbar-text color-blue-dark text-uppercase"
+                                   title="Aller sur l'administration"
+                                   href="{{ path('admin_dashboard') }}">Administration</a>
                             </li>
                     {% endif %}
                 {% endif %}

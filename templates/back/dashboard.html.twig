@@ -1,0 +1,68 @@
+{% extends 'back/admin.html.twig' %}
+
+{% block title %}Administration - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Tableau de bord{% endblock %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="col-md-6 col-xl-3 mb-3">
+            <div class="p-3 bg-blue-dark-light" style="border:1px solid #f3c44140;border-radius:10px;">
+                <div class="text-muted">Clients</div>
+                <div class="h2 color-yellow text-bold mb-0">{{ stats.customers|default(0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-3">
+            <div class="p-3 bg-blue-dark-light" style="border:1px solid #f3c44140;border-radius:10px;">
+                <div class="text-muted">Utilisateurs</div>
+                <div class="h2 color-yellow text-bold mb-0">{{ stats.users|default(0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-3">
+            <div class="p-3 bg-blue-dark-light" style="border:1px solid #f3c44140;border-radius:10px;">
+                <div class="text-muted">Roles</div>
+                <div class="h2 color-yellow text-bold mb-0">{{ stats.roles|default(0) }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xl-3 mb-3">
+            <div class="p-3 bg-blue-dark-light" style="border:1px solid #f3c44140;border-radius:10px;">
+                <div class="text-muted">Telechargements</div>
+                <div class="h2 color-yellow text-bold mb-0">{{ stats.downloads|default(0) }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{{ path('list_customer') }}" class="d-block text-decoration-none">
+                <div class="p-4 bg-blue-dark-light text-center h-100" style="border:1px solid #f3c441;border-radius:10px;">
+                    <div class="color-yellow mb-2"><i class="fas fa-building fa-2x"></i></div>
+                    <div class="color-white text-bold">Gerer les clients</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{{ path('user_list') }}" class="d-block text-decoration-none">
+                <div class="p-4 bg-blue-dark-light text-center h-100" style="border:1px solid #f3c441;border-radius:10px;">
+                    <div class="color-yellow mb-2"><i class="fas fa-users fa-2x"></i></div>
+                    <div class="color-white text-bold">Gerer l'equipe</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{{ path('role_list') }}" class="d-block text-decoration-none">
+                <div class="p-4 bg-blue-dark-light text-center h-100" style="border:1px solid #f3c441;border-radius:10px;">
+                    <div class="color-yellow mb-2"><i class="fas fa-user-shield fa-2x"></i></div>
+                    <div class="color-white text-bold">Gerer les roles</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-3">
+            <a href="{{ path('download_list') }}" class="d-block text-decoration-none">
+                <div class="p-4 bg-blue-dark-light text-center h-100" style="border:1px solid #f3c441;border-radius:10px;">
+                    <div class="color-yellow mb-2"><i class="fas fa-file-download fa-2x"></i></div>
+                    <div class="color-white text-bold">Historique des exports</div>
+                </div>
+            </a>
+        </div>
+    </div>
+{% endblock %}

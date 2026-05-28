@@ -1,17 +1,19 @@
 {% extends 'back/admin.html.twig' %}
 
 {% block title %}Liste des clients - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Clients{% endblock %}
 
-{% block body %}
-	{% block content %}
-		<div class="container">
-				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-					<div class="mb-4 text-center padding-dopdown-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('add_customer_back') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un client</a>
-					</div>
-				{% endif %}
+{% block admin_toolbar %}
+    <div class="admin-toolbar">
+        <input type="search" class="form-control js-admin-filter-input" placeholder="Filtrer les clients...">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-warning btn-sm text-bold" href="{{ path('add_customer_back') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un client</a>
+        {% endif %}
+    </div>
+{% endblock %}
 
-			<table id="testaa" class="table table-bordered" data-toggle="table" data-pagination="true" data-search="true">
+{% block content %}
+			<table id="testaa" class="table table-bordered js-admin-table" data-toggle="table" data-pagination="true" data-search="true">
 				<thead class="bg-blue-dark-light">
 					<tr>
 						<th class="color-yellow" scope="col">Nom du client</th>
@@ -23,17 +25,14 @@
 						<tr>
 							<td class="color-white text-bold">{{customer.name}}</td>
 							<td>
-								<a class="color-yellow" href="{{ path('modify_customer_back', {"id": customer.id}) }}"><i class="fas fa-cog"></i></a>&nbsp;
-								
-								<a class="color-yellow" href="{{ path('delete_customer_back', {"id": customer.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
+								<a class="admin-icon-btn" href="{{ path('modify_customer_back', {"id": customer.id}) }}" title="Modifier"><i class="fas fa-cog"></i></a>
+								<a class="admin-icon-btn" href="{{ path('delete_customer_back', {"id": customer.id}) }}" title="Supprimer" onclick="return confirm('Attention vous vous apprettez à supprimer un client')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-			<p class="text-center text-bold color-white">Si tu supprimes un client, penses à verifier avant si une tâche ne lui est pas attribuée.</p>
-		</div>
-	{% endblock %}
+			<p class="text-center text-bold admin-note-text mt-3">Si tu supprimes un client, penses à verifier avant si une tâche ne lui est pas attribuée.</p>
 {% endblock %}
 
 

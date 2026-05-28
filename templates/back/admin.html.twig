@@ -20,112 +20,136 @@
         <link href="{{ asset('assets/css/back/admin-template.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
-<body>
-    <header>
-        <nav class="navbar-expand-lg text-right navbar-dark bg-yellow pr-2">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavTopBar" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:#e6e6ff"></i></span>
-        </button>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNavTopBar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://projetsclients.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Projets Clients</i></a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="http://rappels.shebam.fr/" target="new" style="color: var(--color-blue-dark)">&nbsp; Rappels Clients</i></a>
-                    </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}" style="color: var(--color-blue-dark)"><i class="fas fa-unlock"></i>&nbsp; Déconnexion</i></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<body class="admin-layout-body">
+    {% set routeName = app.request.attributes.get('_route')|default('') %}
+    {% set breadcrumbSection = 'Administration' %}
+    {% set breadcrumbPage = 'Tableau de bord' %}
 
-        <nav class="navbar navbar-expand-lg bg-blue-dark">
-            <a href="{{ path('current_week_p1') }}">
-                <img class="d-block mx-auto" style="width: 142px" src="{{ asset('/assets/images/logo-todo.png') }}"
-                    alt="Logo de connexion To Do List">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="" role="button" ><i class="fa fa-bars" aria-hidden="true" style="color:#e6e6ff"></i></span>
-            </button>
-            <div class="collapse navbar-collapse bg-blue-dark text-center p-4" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'current_week_p1' %}activecurrent{% endif %} navbar-text text-uppercase text-border" href="{{ path('current_week_p1') }}">Semaine actuelle</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="{% if app.request.attributes.get('_route') starts with 'next_week_p1' %}active{% endif %} navbar-text color-blue-dark text-uppercase" href="{{ path('next_week_p1') }}">Semaine suivante</a>
-                        </li>
-                        <li>
-                            <a class="
-                                        {% if app.request.attributes.get('_route') starts with 'list_customer' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'user_list' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'download_list' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'changelog' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'list_customer_back' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'add_customer_back' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'user_add' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'user_modify' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'add_changelog' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'role_list' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'role_add' %}active{% endif %}
-                                        {% if app.request.attributes.get('_route') starts with 'role_edit' %}active{% endif %}
-                                        navbar-text color-blue-dark text-uppercase" title="Aller sur l'administration" href="{{ path('list_customer') }}">Administration</a>
-                        </li>
-                    {% endif %}
-                {% endif %}
-                </ul> 
+    {% if routeName starts with 'list_customer' or routeName starts with 'add_customer_back' or routeName starts with 'modify_customer_back' %}
+        {% set breadcrumbSection = 'Clients' %}
+        {% if routeName starts with 'add_customer_back' %}
+            {% set breadcrumbPage = 'Ajouter' %}
+        {% elseif routeName starts with 'modify_customer_back' %}
+            {% set breadcrumbPage = 'Modifier' %}
+        {% else %}
+            {% set breadcrumbPage = 'Liste' %}
+        {% endif %}
+    {% elseif routeName starts with 'user_' %}
+        {% set breadcrumbSection = 'Equipe' %}
+        {% if routeName starts with 'user_add' %}
+            {% set breadcrumbPage = 'Ajouter' %}
+        {% elseif routeName starts with 'user_modify' %}
+            {% set breadcrumbPage = 'Modifier' %}
+        {% else %}
+            {% set breadcrumbPage = 'Liste' %}
+        {% endif %}
+    {% elseif routeName starts with 'role_' %}
+        {% set breadcrumbSection = 'Roles' %}
+        {% if routeName starts with 'role_add' %}
+            {% set breadcrumbPage = 'Ajouter' %}
+        {% elseif routeName starts with 'role_edit' %}
+            {% set breadcrumbPage = 'Modifier' %}
+        {% else %}
+            {% set breadcrumbPage = 'Liste' %}
+        {% endif %}
+    {% elseif routeName starts with 'download_' %}
+        {% set breadcrumbSection = 'Telechargements' %}
+        {% set breadcrumbPage = 'Historique' %}
+    {% endif %}
+
+    <div class="admin-layout">
+        <aside id="adminSidebar" class="admin-sidebar">
+            <div class="admin-sidebar-head">
+                <a class="d-flex align-items-center" href="{{ path('admin_dashboard') }}">
+                    <img class="d-block" style="width: 126px" src="{{ asset('/assets/images/logo-todo.png') }}" alt="Logo To Do List">
+                </a>
+                <button type="button" class="btn btn-link d-lg-none p-0 admin-sidebar-close" id="adminSidebarClose" aria-label="Fermer le menu">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
-        </nav>
-            
-    </header>
-    <main role="main">
-        <div class="container padding-dopdown-mobile" style="margin-top: 50px;">
-            <nav class="navbar navbar-expand-lg">
-                <ul class="navbar-nav mx-auto" id="navbarqaqa">
-                {% if app.user %}
-                    {% if is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item"> 
-                                <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'list_customer' %} text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'add_customer_back' %} text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'modify_customer_back' %} text-border-admin-active{% endif %}
-                                            navbar-text text-uppercase text-border-admin" href="{{ path('list_customer') }}">Clients</a>
-                            </li>
-                            <li class="nav-item"> 
-                                <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'user_list' %}text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'user_add' %}text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'user_modify' %}text-border-admin-active{% endif %}                                             
-                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('user_list') }}">Équipe</a>
-                            </li>
-                            <li class="nav-item"> 
-                                <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'role_list' %}text-border-admin-active{% endif %}
-                                            {% if app.request.attributes.get('_route') starts with 'role_add' %}text-border-admin-active{% endif %}        
-                                            {% if app.request.attributes.get('_route') starts with 'role_edit' %}text-border-admin-active{% endif %}                                          
-                                            navbar-text color-blue-dark text-uppercase text-border-admin" href="{{ path('role_list') }}">Role</a>
-                            </li>
-                            <li>
-                                <a class="
-                                            {% if app.request.attributes.get('_route') starts with 'download_list' %}text-border-admin-active{% endif %}
-                                            navbar-text color-blue-dark text-uppercase text-border-admin" title="Aller sur l'administration" href="{{ path('download_list') }}">Téléchargement</a>
-                            </li>
+
+            {% if app.user %}
+                {% set profilePicturePath = app.user.profilePicture|default('') %}
+                {% set profilePictureUrl = profilePicturePath ? asset(profilePicturePath) : null %}
+                <div class="admin-user-mini-profile">
+                    <div class="admin-user-avatar-wrap">
+                        {% if profilePictureUrl %}
+                            <img class="admin-user-avatar" src="{{ profilePictureUrl }}" alt="Avatar {{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }}">
+                        {% else %}
+                            <span class="admin-user-avatar admin-user-avatar-fallback">{{ (app.user.firstname|default('')|slice(0,1) ~ app.user.lastname|default('')|slice(0,1))|upper ?: '?' }}</span>
+                        {% endif %}
+                        <span class="admin-user-status-dot" title="Connecte"></span>
+                    </div>
+                    <div class="admin-user-text">
+                        <div class="admin-user-name">{{ app.user.firstname|default('') }} {{ app.user.lastname|default('') }}</div>
+                        <div class="admin-user-email">{{ app.user.email|default('') }}</div>
+                        <div class="admin-user-role">{{ app.user.roles|first|replace({'ROLE_': ''}) }}</div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="admin-sidebar-label">Navigation</div>
+            <nav class="admin-sidebar-nav">
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'admin_' %}active{% endif %}" href="{{ path('admin_dashboard') }}">
+                    <i class="fas fa-th-large"></i><span>Tableau de bord</span>
+                </a>
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'list_customer' or app.request.attributes.get('_route') starts with 'add_customer_back' or app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}" href="{{ path('list_customer') }}">
+                    <i class="fas fa-building"></i><span>Clients</span>
+                </a>
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'user_' %}active{% endif %}" href="{{ path('user_list') }}">
+                    <i class="fas fa-users"></i><span>Equipe</span>
+                </a>
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'role_' %}active{% endif %}" href="{{ path('role_list') }}">
+                    <i class="fas fa-user-shield"></i><span>Roles</span>
+                </a>
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'download_' %}active{% endif %}" href="{{ path('download_list') }}">
+                    <i class="fas fa-file-download"></i><span>Telechargements</span>
+                </a>
+            </nav>
+
+            <div class="admin-sidebar-footer">
+                <a class="admin-side-ghost" href="{{ path('current_week_p1') }}">Retour Front</a>
+                <a class="admin-side-ghost" href="{{ path('app_logout') }}"><i class="fas fa-unlock"></i>&nbsp;Deconnexion</a>
+            </div>
+        </aside>
+
+        <div id="adminSidebarOverlay" class="admin-sidebar-overlay"></div>
+
+        <main role="main" class="admin-main">
+            <header class="admin-main-topbar">
+                <button type="button" class="btn btn-link admin-sidebar-toggle" id="adminSidebarToggle" aria-label="Ouvrir le menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="admin-main-context">Espace administration</div>
+                <button type="button" class="btn btn-link admin-theme-toggle" id="adminThemeToggle" aria-label="Activer le theme clair" title="Changer le theme">
+                    <i class="fas fa-moon"></i>
+                    <span>Theme</span>
+                </button>
+                <nav class="admin-breadcrumb" aria-label="breadcrumb">
+                    <ol>
+                        <li><a href="{{ path('admin_dashboard') }}">Admin</a></li>
+                        <li><span>{{ breadcrumbSection }}</span></li>
+                        <li><strong>{{ breadcrumbPage }}</strong></li>
+                    </ol>
+                </nav>
+            </header>
+
+            <div class="container-fluid admin-shell py-4">
+                <section class="admin-page-header mb-3">
+                    <h1 class="admin-page-title mb-0">{% block admin_page_title %}Administration{% endblock %}</h1>
+                    {% if app.user %}
+                        <div class="admin-page-subtitle">Gestion interne de la plateforme</div>
                     {% endif %}
-                {% endif %}
-                </ul> 
-            </nav>        
-        </div>
-        <div class="container-fluid" style="margin-top: 60px;">
-            {% block content %}{% endblock %}
-        </div>
-    </main>
+                </section>
+
+                {% block admin_toolbar %}{% endblock %}
+
+                <section class="admin-content-card">
+                    {% block content %}{% endblock %}
+                </section>
+            </div>
+        </main>
+    </div>
 
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -137,6 +161,7 @@
     <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/reorder-rows/bootstrap-table-reorder-rows.min.js"></script>
     <script src="{{ asset('assets/js/motdepasse.js') }}?v=20260527"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/js/back-admin-ui.js') }}?v=20260528a"></script>
 
 {% endblock %}
 

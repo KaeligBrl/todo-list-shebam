@@ -1,22 +1,19 @@
 {% extends 'back/admin.html.twig' %}
 
 {% block title %}Liste de l'équipe - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Equipe{% endblock %}
 
-{% block body %}
-	<div class="d-flex flex-row">
-		{% block title_back_page %}Liste de l'équipe{% endblock %}
-	</div>
+{% block admin_toolbar %}
+    <div class="admin-toolbar">
+        <input type="search" class="form-control js-admin-filter-input" placeholder="Filtrer l'equipe...">
+        {% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-warning btn-sm text-bold" href="{{ path('user_add') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un utilisateur</a>
+        {% endif %}
+    </div>
+{% endblock %}
 
-
-	{% block content %}
-		<div class="container">
-				{% if is_granted('IS_AUTHENTICATED_FULLY') and is_granted('ROLE_ADMIN')%}
-					<div class="mb-4 text-center padding-dopdown-mobile">
-						<a class="color-yellow text-20 text-bold" href="{{ path('user_add') }}"><i class="fas fa-plus-circle"></i>&nbsp; Ajouter un utilisateur</a>
-					</div>
-				{% endif %}
-
-			<table class="table" data-pagination="true" data-toggle="table" data-search="true">
+{% block content %}
+			<table class="table js-admin-table" data-pagination="true" data-toggle="table" data-search="true">
 				<thead class="bg-blue-dark-light">
 					<tr>
 						<th class="color-yellow" scope="col">Photo</th>
@@ -53,15 +50,12 @@
 								{% endfor %}
 							</td>
 							<td>
-								<a class="color-yellow" href="{{ path('user_modify', {"id": user.id}) }}"><i class="fas fa-cog"></i>&nbsp;
-								
-								<a class="color-yellow" href="{{ path('user_delete', {"id": user.id}) }}" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
+								<a class="admin-icon-btn" href="{{ path('user_modify', {"id": user.id}) }}" title="Modifier"><i class="fas fa-cog"></i></a>
+								<a class="admin-icon-btn" href="{{ path('user_delete', {"id": user.id}) }}" title="Supprimer" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
-		</div>
-	{% endblock %}
 {% endblock %}
 

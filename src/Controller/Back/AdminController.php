@@ -5,12 +5,17 @@ namespace App\Controller\Back;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\File;
+use App\Service\RoleService;
 use Psr\Log\LoggerInterface;
+use App\Repository\FileRepository;
+use App\Repository\UserRepository;
 use App\Repository\TaskRepository;
+use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +27,24 @@ class AdminController extends AbstractController
     public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger) {
         $this->entityManager = $entityManager;
         $this->logger = $logger;
+    }
+
+    #[Route('/admin', name: 'admin_dashboard')]
+    public function dashboard(
+        CustomerRepository $customerRepository,
+        UserRepository $userRepository,
+        FileRepository $fileRepository,
+        RoleService $roleService
+    ): Response
+    {
+        return $this->render('back/dashboard.html.twig', [
+            'stats' => [
+                'customers' => count($customerRepository->findAll()),
+                'users' => count($userRepository->findAll()),
+                'roles' => count($roleService->getRoles()),
+                'downloads' => count($fileRepository->findAll()),
+            ],
+        ]);
     }
 
 
