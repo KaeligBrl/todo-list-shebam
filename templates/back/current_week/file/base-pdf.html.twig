@@ -2,9 +2,143 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/root.css') }}">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: DejaVu Sans, Arial, sans-serif;
+            color: #173247;
+            background: #f4f7fb;
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .pdf-shell {
+            background: #ffffff;
+            border: 1px solid #d9e3ef;
+            border-radius: 8px;
+            padding: 18px;
+        }
+
+        .pdf-header {
+            border-bottom: 2px solid #d7e3f2;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .pdf-title {
+            margin: 0;
+            color: #00263a;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .pdf-subtitle {
+            margin-top: 4px;
+            color: #3f5f7a;
+            font-size: 12px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .summary-table td {
+            width: 33.33%;
+            border: 1px solid #d7e3f2;
+            padding: 8px;
+            text-align: center;
+            background: #f7fbff;
+            color: #24425b;
+        }
+
+        .summary-value {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f2e45;
+        }
+
+        .summary-label {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            color: #4f6b84;
+        }
+
+        .section-block {
+            margin-top: 16px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            margin: 0;
+            background: #00263a;
+            color: #ffd600;
+            padding: 7px 10px;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 4px 4px 0 0;
+            text-transform: uppercase;
+        }
+
+        table.pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #d7e3f2;
+            border-top: none;
+        }
+
+        .pdf-table thead th {
+            background: #0a3e5e;
+            color: #ffe680;
+            text-align: left;
+            padding: 7px 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid #0f4f77;
+        }
+
+        .pdf-table tbody td {
+            padding: 7px 8px;
+            color: #ffffff;
+            border-bottom: 1px solid #336482;
+            vertical-align: top;
+            background: #0f4b70;
+        }
+
+        .pdf-table tbody tr.alt td {
+            background: #0b425f;
+        }
+
+        .muted {
+            color: #c2d9eb;
+        }
+
+        .line-item {
+            margin-bottom: 2px;
+        }
+
+        .line-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .empty-note {
+            padding: 10px;
+            border: 1px dashed #9fb6cd;
+            background: #f9fbfe;
+            color: #4d6982;
+        }
+    </style>
 </head>
     <body>
         {% block body %}{% endblock %}

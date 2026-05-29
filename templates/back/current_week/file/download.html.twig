@@ -1,99 +1,164 @@
 {% extends 'back/current_week/file/base-pdf.html.twig' %}
 
 {% block body %}
-    <h3 class="text-center mb-3" style="color: #00263A;"> Liste téléchargée le {{ "now"|date("d/m/Y") }}</h3><br>
-    <div class="mb-5"></div>
-    <div class="text-center p-3" style="background-color: #00263A; color: #FFD600; font-weight: bold;">Priorité 1</div>
-    <table class="table" data-toggle="table">
-        <thead style="background-color: #00263A; color: #FFD600">
-            <tr>
-                <th scope="col">Sujet</th>
-                <th scope="col">Objet</th>
-                <th scope="col">Personne(s) Désignée(s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in task %}
-            	{% if task.p1 == 1 and task.p2 == 0 and task.nextweek == 0  %}
-                    <tr style="background: #023D5C">
-                        <td style="color: #ffffff">{{task.customer}}</td>
-                        <td style="color: #ffffff">
-                            {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
-                            {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-                            {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
-                            {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
-                        </td>
-                        <td style="color: #ffffff">{% for task in task.users %}
-                                {{ task.firstname }} <br>
-                            {% endfor %}
-                        </td>
+    {% set p1Count = 0 %}
+    {% set p2Count = 0 %}
+    {% set appointmentCount = 0 %}
+
+    {% for taskItem in task %}
+        {% if taskItem.p1 == 1 and taskItem.p2 == 0 and taskItem.nextweek == 0 %}
+            {% set p1Count = p1Count + 1 %}
+        {% endif %}
+
+        {% if taskItem.p1 == 0 and taskItem.p2 == 1 and taskItem.nextweek == 0 %}
+            {% set p2Count = p2Count + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    {% for appointmentItem in appointment %}
+        {% if appointmentItem.nextweek == 0 %}
+            {% set appointmentCount = appointmentCount + 1 %}
+        {% endif %}
+    {% endfor %}
+
+    <div class="pdf-shell">
+        <header class="pdf-header">
+            <h1 class="pdf-title">Liste des taches hebdomadaire</h1>
+            <div class="pdf-subtitle">Export du {{ "now"|date("d/m/Y") }} a {{ "now"|date("H:i") }}</div>
+
+            <table class="summary-table">
+                <tr>
+                    <td>
+                        <span class="summary-value">{{ p1Count }}</span>
+                        <span class="summary-label">Taches Priorite 1</span>
+                    </td>
+                    <td>
+                        <span class="summary-value">{{ p2Count }}</span>
+                        <span class="summary-label">Taches Priorite 2</span>
+                    </td>
+                    <td>
+                        <span class="summary-value">{{ appointmentCount }}</span>
+                        <span class="summary-label">Rendez-vous</span>
+                    </td>
+                </tr>
+            </table>
+        </header>
+
+        <section class="section-block">
+            <h2 class="section-title">Priorite 1</h2>
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th style="width: 24%;">Client</th>
+                        <th style="width: 50%;">Objet</th>
+                        <th style="width: 26%;">Equipe</th>
                     </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    {% set p1HasRows = false %}
+                    {% for taskItem in task %}
+                        {% if taskItem.p1 == 1 and taskItem.p2 == 0 and taskItem.nextweek == 0 %}
+                            {% set p1HasRows = true %}
+                            <tr class="{{ loop.index is even ? 'alt' : '' }}">
+                                <td>{{ taskItem.customer }}</td>
+                                <td>
+                                    {% if taskItem.object %}<div class="line-item">{{ taskItem.object }}</div>{% endif %}
+                                    {% if taskItem.subobject1 %}<div class="line-item muted">{{ taskItem.subobject1 }}</div>{% endif %}
+                                    {% if taskItem.subobject2 %}<div class="line-item muted">{{ taskItem.subobject2 }}</div>{% endif %}
+                                    {% if taskItem.subobject3 %}<div class="line-item muted">{{ taskItem.subobject3 }}</div>{% endif %}
+                                </td>
+                                <td>
+                                    {% for userItem in taskItem.users %}
+                                        <div class="line-item">{{ userItem.firstname }}</div>
+                                    {% else %}
+                                        <span class="muted">Non assigne</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if not p1HasRows %}
+                <div class="empty-note">Aucune tache priorite 1 sur la semaine actuelle.</div>
+            {% endif %}
+        </section>
 
-    <div class="mb-5"></div>
-
-    <div style="background-color: #00263A; color: #FFD600; font-weight: bold;" class="text-center p-3">Priorité 2</div>
-    <table class="table" data-toggle="table">
-        <thead style="background-color: #00263A; color: #FFD600">
-            <tr>
-                <th scope="col">Sujet</th>
-                <th scope="col">Objet</th>
-                <th scope="col">Personne(s) Désignée(s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for task in task %}
-                {% if task.p1 == 0 and task.p2 == 1 and task.nextweek == 0 %}
-                    <tr style="background: #023D5C">
-                        <td style="color: #ffffff">{{task.customer}}</td>
-                        <td style="color: #ffffff">
-                            {% if task.object is empty %}{% else %}{{task.object}}<br>{% endif %}
-                            {% if task.subobject1 is empty %}{% else %}{{task.subobject1}}<br>{% endif %} 
-                            {% if task.subobject2 is empty %}{% else %}{{task.subobject2}}<br>{% endif %}
-                            {% if task.subobject3 is empty %}{% else %}{{task.subobject3}}<br>{% endif %}
-                        </td>
-                        <td style="color: #ffffff">{% for task in task.users %}
-                                {{ task.firstname }} <br>
-                            {% endfor %}
-                        </td>
+        <section class="section-block">
+            <h2 class="section-title">Priorite 2</h2>
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th style="width: 24%;">Client</th>
+                        <th style="width: 50%;">Objet</th>
+                        <th style="width: 26%;">Equipe</th>
                     </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                    {% set p2HasRows = false %}
+                    {% for taskItem in task %}
+                        {% if taskItem.p1 == 0 and taskItem.p2 == 1 and taskItem.nextweek == 0 %}
+                            {% set p2HasRows = true %}
+                            <tr class="{{ loop.index is even ? 'alt' : '' }}">
+                                <td>{{ taskItem.customer }}</td>
+                                <td>
+                                    {% if taskItem.object %}<div class="line-item">{{ taskItem.object }}</div>{% endif %}
+                                    {% if taskItem.subobject1 %}<div class="line-item muted">{{ taskItem.subobject1 }}</div>{% endif %}
+                                    {% if taskItem.subobject2 %}<div class="line-item muted">{{ taskItem.subobject2 }}</div>{% endif %}
+                                    {% if taskItem.subobject3 %}<div class="line-item muted">{{ taskItem.subobject3 }}</div>{% endif %}
+                                </td>
+                                <td>
+                                    {% for userItem in taskItem.users %}
+                                        <div class="line-item">{{ userItem.firstname }}</div>
+                                    {% else %}
+                                        <span class="muted">Non assigne</span>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if not p2HasRows %}
+                <div class="empty-note">Aucune tache priorite 2 sur la semaine actuelle.</div>
+            {% endif %}
+        </section>
 
-    <div class="mb-5"></div>
-
-    <div style="background-color: #00263A; color: #FFD600; font-weight: bold;" class="text-center p-3">Rendez-vous</div>
-    <table class="table" data-toggle="table">
-        <thead style="background-color: #00263A; color: #FFD600 ">
-            <tr>
-                <th scope="col">Sujet</th>
-                <th scope="col">Objet</th>
-                <th>Personne(s) Désignée(s)</th>
-                <th scope="col">Date et heure</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for appointment in appointment %}
-                {% if appointment.nextweek == 0 %}
-                    <tr style="background: #023D5C">
-                        <td style="color: #ffffff">{{appointment.name}}</td>
-                        <td style="color: #ffffff">{{appointment.subject}}</td>
-                        <td style="color: #ffffff">
-                        {% for appointment in appointment.user %}
-                            {{ appointment.firstname }} <br>
-                        {% endfor %}
-                        </td>
-                        <td style="color: #ffffff">{{ appointment.hoursappointment|date('d-m-Y')  }} à {{appointment.hoursappointment|date('H:i')}}</td>
+        <section class="section-block">
+            <h2 class="section-title">Rendez-vous</h2>
+            <table class="pdf-table">
+                <thead>
+                    <tr>
+                        <th style="width: 22%;">Client</th>
+                        <th style="width: 34%;">Objet</th>
+                        <th style="width: 22%;">Equipe</th>
+                        <th style="width: 22%;">Date et heure</th>
                     </tr>
-                {% endif %}
-            {% endfor %}
-        </tbody>
-    </table>
-
-
+                </thead>
+                <tbody>
+                    {% set appointmentHasRows = false %}
+                    {% for appointmentItem in appointment %}
+                        {% if appointmentItem.nextweek == 0 %}
+                            {% set appointmentHasRows = true %}
+                            <tr class="{{ loop.index is even ? 'alt' : '' }}">
+                                <td>{{ appointmentItem.name }}</td>
+                                <td>{{ appointmentItem.subject }}</td>
+                                <td>
+                                    {% for userItem in appointmentItem.user %}
+                                        <div class="line-item">{{ userItem.firstname }}</div>
+                                    {% else %}
+                                        <span class="muted">Non assigne</span>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ appointmentItem.hoursappointment|date('d/m/Y') }} a {{ appointmentItem.hoursappointment|date('H:i') }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% if not appointmentHasRows %}
+                <div class="empty-note">Aucun rendez-vous sur la semaine actuelle.</div>
+            {% endif %}
+        </section>
+    </div>
 {% endblock %}
