@@ -2,6 +2,8 @@
 
 namespace App\Controller\Back\Download;
 
+use App\Entity\File;
+use App\Service\DownloadPdfGenerator;
 use App\Repository\FileRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -34,6 +36,21 @@ class IndexController extends AbstractController
 
         return $this->render('back/current_week/file/list.html.twig', [
             'files_view' => $filesView,
+        ]);
+    }
+
+    #[Route('/admin/telechargement/{id}/voir', name: 'view_download', methods: ['GET'])]
+    public function viewDownload(File $download, DownloadPdfGenerator $downloadPdfGenerator): Response
+    {
+        $pdfContent = $downloadPdfGenerator->renderCurrentWeekPdf();
+        $fileName = 'export-' . $download->getId() . '-' . $download->getCreatedAt()?->format('d-m-y-H-i') . '.pdf';
+
+        return new Response($pdfContent, Response::HTTP_OK, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
+            'Content-Length' => (string) strlen($pdfContent),
+            'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+            'Pragma' => 'no-cache',
         ]);
     }
 }
