@@ -2,23 +2,18 @@
 
 namespace App\Controller\Back;
 
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use App\Entity\File;
 use App\Service\RoleService;
 use Psr\Log\LoggerInterface;
 use App\Repository\FileRepository;
 use App\Repository\UserRepository;
-use App\Repository\TaskRepository;
 use App\Repository\CustomerRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\AppointmentRepository;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\Process\Process;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
@@ -54,43 +49,12 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     #[Route('/generation-de-l-archive/', name: 'download', methods: ['POST'])]
-    public function archivedBtn(Request $request, TaskRepository $task, AppointmentRepository $appointment): RedirectResponse
+    public function archivedBtn(Request $request): RedirectResponse
     {
         if (!$this->isCsrfTokenValid('generate_download', (string) $request->request->get('_token'))) {
             $this->addFlash('danger', 'Token CSRF invalide pour la generation du telechargement.');
 
             return $this->redirectToRoute('current_week_p1');
-        }
-
-
-        $pdfOptions = new Options();
-        $pdfOptions->set('defaultFont', 'Gotham');
-        $pdfOptions->setIsRemoteEnabled(true);
-        $dompdf = new Dompdf($pdfOptions);
-        $dompdf->setPaper('A3', 'landscape');
-        $html = $this->renderView('back/current_week/file/download.html.twig', [
-            'task' => $task->findAll(),
-            'appointment' => $appointment->findBy([], ['hoursappointment' => 'DESC']),
-        ]);
-
-        try {
-            $dompdf->loadHtml($html);
-            $dompdf->render();
-            $output = $dompdf->output();
-        } catch (\Exception $e) {
-            $this->logger->error('Erreur generation PDF des telechargements', [
-                'exception' => $e,
-            ]);
-            $this->addFlash('danger', 'La generation du PDF a echoue.');
-
-            return $this->redirectToRoute('download_list');
-        }
-
-        if (trim($output) === '') {
-            $this->logger->error('Generation PDF vide pour les telechargements');
-            $this->addFlash('danger', 'Le fichier PDF genere est vide.');
-
-            return $this->redirectToRoute('download_list');
         }
 
         $image = new File;
@@ -101,37 +65,50 @@ class AdminController extends AbstractController
             $randomString = (string) random_int(100000, 999999);
         }
 
-        $path = $this->getParameter('kernel.project_dir') . '/public/pdf/';
-
         $dateFile = date("d-m-y");
         $fileName = 'liste-des-taches-du-' . $dateFile . '-' . $randomString . '.pdf';
 
-        $fsObject = new Filesystem();
+        $image->setName($fileName);
+        $image->setStatus('queued');
+        $image->setSize(null);
+        $image->setErrorMessage(null);
+        $this->entityManager->persist($image);
+        $this->entityManager->flush();
+
+        $consolePath = $this->getParameter('kernel.project_dir') . '/bin/console';
+        $environment = (string) $this->getParameter('kernel.environment');
+        $preferredPhpBinary = 'C:/wamp64/bin/php/php8.4.15/php.exe';
+        $phpBinary = is_file($preferredPhpBinary) ? $preferredPhpBinary : PHP_BINARY;
 
         try {
-            if (!$fsObject->exists($path)) {
-                $fsObject->mkdir($path, 0755);
-            }
-
-            $file = $path . $fileName;
-            $fsObject->dumpFile($file, $output);
-            $fsObject->chmod($file, 0644);
-        } catch (IOExceptionInterface $exception) {
-            $this->logger->error('Erreur ecriture fichier PDF des telechargements', [
-                'exception' => $exception,
-                'path' => $path,
-                'filename' => $fileName,
+            $process = new Process([
+                $phpBinary,
+                $consolePath,
+                'app:download:process',
+                (string) $image->getId(),
+                '--env=' . $environment,
+                '--no-interaction',
             ]);
-            $this->addFlash('danger', 'Impossible d\'enregistrer le fichier PDF.');
+
+            $process->setTimeout(null);
+            $process->disableOutput();
+            $process->start();
+        } catch (\Throwable $e) {
+            $image->setStatus('failed');
+            $image->setErrorMessage('Echec du lancement du traitement: ' . $e->getMessage());
+            $this->entityManager->flush();
+
+            $this->logger->error('Impossible de lancer le traitement asynchrone du telechargement', [
+                'exception' => $e,
+                'file_id' => $image->getId(),
+            ]);
+
+            $this->addFlash('danger', 'Impossible de lancer la generation asynchrone.');
 
             return $this->redirectToRoute('download_list');
         }
 
-        $image->setName($fileName);
-        $this->entityManager->persist($image);
-        $this->entityManager->flush();
-
-        $this->addFlash('success', 'Telechargement genere avec succes.');
+        $this->addFlash('success', 'Generation lancee. Le statut se mettra a jour automatiquement.');
 
         return $this->redirectToRoute("download_list");
     }

@@ -19,6 +19,15 @@ class File
     #[ORM\Column(type: 'datetime')]
     private $created_at;
 
+    #[ORM\Column(type: 'string', length: 20, options: ['default' => 'queued'])]
+    private string $status = 'queued';
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private ?int $size = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $error_message = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +60,42 @@ class File
     public function __construct()
     {
         $this->setCreatedAt(new \DateTime());
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getSize(): ?int
+    {
+        return $this->size;
+    }
+
+    public function setSize(?int $size): self
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    public function getErrorMessage(): ?string
+    {
+        return $this->error_message;
+    }
+
+    public function setErrorMessage(?string $errorMessage): self
+    {
+        $this->error_message = $errorMessage;
+
+        return $this;
     }
 
 }
