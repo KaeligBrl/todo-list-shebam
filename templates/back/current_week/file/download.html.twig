@@ -25,6 +25,7 @@
         <header class="pdf-header">
             <h1 class="pdf-title">Liste des taches hebdomadaire</h1>
             <div class="pdf-subtitle">Export du {{ "now"|date("d/m/Y") }} a {{ "now"|date("H:i") }}</div>
+            <div class="pdf-meta">Semaine actuelle · Edition de suivi · Support reunion d'equipe</div>
 
             <table class="summary-table">
                 <tr>
@@ -46,6 +47,7 @@
 
         <section class="section-block">
             <h2 class="section-title">Priorite 1</h2>
+            <div class="section-intro">Taches a suivre en priorite immediate pendant la semaine en cours.</div>
             <table class="pdf-table">
                 <thead>
                     <tr>
@@ -86,6 +88,7 @@
 
         <section class="section-block">
             <h2 class="section-title">Priorite 2</h2>
+            <div class="section-intro">Sujets secondaires a maintenir visibles pour arbitrage ou planification.</div>
             <table class="pdf-table">
                 <thead>
                     <tr>
@@ -126,6 +129,7 @@
 
         <section class="section-block">
             <h2 class="section-title">Rendez-vous</h2>
+            <div class="section-intro">Vue rapide des echanges planifies et des personnes mobilisees.</div>
             <table class="pdf-table">
                 <thead>
                     <tr>
@@ -159,6 +163,33 @@
             {% if not appointmentHasRows %}
                 <div class="empty-note">Aucun rendez-vous sur la semaine actuelle.</div>
             {% endif %}
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">Synthese reunion</h2>
+            <div class="section-intro">Zone reservee pour valider les arbitrages, responsabilites et points a suivre.</div>
+            <table class="signature-grid">
+                <tr>
+                    <td>
+                        <div class="signature-card">
+                            <div class="signature-title">Decision / commentaire</div>
+                            <div class="signature-line">Note de reunion</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="signature-card">
+                            <div class="signature-title">Referent</div>
+                            <div class="signature-line">Nom et validation</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="signature-card">
+                            <div class="signature-title">Echeance</div>
+                            <div class="signature-line">Date cible</div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </section>
     </div>
 {% endblock %}

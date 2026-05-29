@@ -3,18 +3,83 @@
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
     <style>
+        @page {
+            margin: 96px 28px 84px;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
             font-family: DejaVu Sans, Arial, sans-serif;
             color: #173247;
             background: #f4f7fb;
             font-size: 11px;
             line-height: 1.45;
+        }
+
+        .pdf-page-header {
+            position: fixed;
+            top: -72px;
+            left: 0;
+            right: 0;
+            height: 56px;
+            padding: 0 4px 10px;
+            border-bottom: 1px solid #c9d9ea;
+        }
+
+        .pdf-page-header-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pdf-page-header-table td {
+            vertical-align: middle;
+        }
+
+        .pdf-brand-mark {
+            width: 108px;
+            height: auto;
+        }
+
+        .pdf-page-kicker {
+            text-align: right;
+            color: #54718b;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .pdf-page-footer {
+            position: fixed;
+            bottom: -58px;
+            left: 0;
+            right: 0;
+            height: 42px;
+            border-top: 1px solid #c9d9ea;
+            color: #5a738b;
+            font-size: 10px;
+            padding-top: 8px;
+        }
+
+        .pdf-page-footer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pdf-page-footer-table td {
+            vertical-align: middle;
+        }
+
+        .pdf-page-number:before {
+            content: counter(page);
+        }
+
+        .pdf-page-count:before {
+            content: counter(pages);
         }
 
         .pdf-shell {
@@ -41,6 +106,14 @@
             margin-top: 4px;
             color: #3f5f7a;
             font-size: 12px;
+        }
+
+        .pdf-meta {
+            margin-top: 8px;
+            color: #4f6b84;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
         }
 
         .summary-table {
@@ -77,6 +150,12 @@
             margin-top: 16px;
             margin-bottom: 20px;
             page-break-inside: avoid;
+        }
+
+        .section-intro {
+            margin: 8px 0 0;
+            color: #607b93;
+            font-size: 10px;
         }
 
         .section-title {
@@ -138,9 +217,59 @@
             background: #f9fbfe;
             color: #4d6982;
         }
+
+        .signature-grid {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 14px 0;
+            margin-top: 14px;
+        }
+
+        .signature-card {
+            border: 1px solid #d7e3f2;
+            background: #fbfdff;
+            padding: 12px;
+            height: 86px;
+        }
+
+        .signature-title {
+            font-size: 10px;
+            color: #537089;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            margin-bottom: 22px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #9ab3c8;
+            padding-top: 6px;
+            color: #35516a;
+            font-size: 10px;
+        }
     </style>
 </head>
     <body>
+        <div class="pdf-page-header">
+            <table class="pdf-page-header-table">
+                <tr>
+                    <td>
+                        <img class="pdf-brand-mark" src="{{ absolute_url(asset('assets/images/logo-todo.png')) }}" alt="To Do List">
+                    </td>
+                    <td class="pdf-page-kicker">Export hebdomadaire interne</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="pdf-page-footer">
+            <table class="pdf-page-footer-table">
+                <tr>
+                    <td>To Do List Shebam</td>
+                    <td style="text-align: center;">Document genere automatiquement</td>
+                    <td style="text-align: right;">Page <span class="pdf-page-number"></span>/<span class="pdf-page-count"></span></td>
+                </tr>
+            </table>
+        </div>
+
         {% block body %}{% endblock %}
     </body>
 </html>
