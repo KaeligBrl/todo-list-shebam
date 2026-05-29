@@ -21,6 +21,7 @@ security:
             logout:
                 path: /logout
             custom_authenticator: App\Security\AppCustomAuthenticator
+            entry_point: App\Security\AppCustomAuthenticator
 
             remember_me:
                 secret: '%kernel.secret%'
@@ -28,7 +29,14 @@ security:
                 path: /
                 always_remember_me: true
 
-    access_control: []
+    access_control:
+        # Routes publiques (non authentifié autorisé)
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+        - { path: ^/logout, roles: PUBLIC_ACCESS }
+        - { path: ^/inscription, roles: PUBLIC_ACCESS }
+        - { path: ^/reinitialiser-le-mot-de-passe, roles: PUBLIC_ACCESS }
+        # Tout le reste nécessite une authentification
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:
