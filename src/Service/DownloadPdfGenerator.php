@@ -17,7 +17,7 @@ class DownloadPdfGenerator
     ) {
     }
 
-    public function generateCurrentWeekPdf(string $absoluteTargetPath): int
+    public function renderCurrentWeekPdf(): string
     {
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Gotham');
@@ -38,6 +38,13 @@ class DownloadPdfGenerator
         if (trim($output) === '') {
             throw new \RuntimeException('Le PDF genere est vide.');
         }
+
+        return $output;
+    }
+
+    public function generateCurrentWeekPdf(string $absoluteTargetPath): int
+    {
+        $output = $this->renderCurrentWeekPdf();
 
         $filesystem = new Filesystem();
         $directory = \dirname($absoluteTargetPath);
