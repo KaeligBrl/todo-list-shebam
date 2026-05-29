@@ -53,7 +53,7 @@ class AdminController extends AbstractController
     // -------------------------------------------
 
     #[Route('/generation-de-l-archive/', name: 'download')]
-    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment, $length = 2, $characters = 'abcdefghijklmnopqrstuvwxyz0123456789'): RedirectResponse
+    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment): RedirectResponse
     {
 
         $pdfOptions = new Options();
@@ -65,20 +65,35 @@ class AdminController extends AbstractController
             'task' => $task->findAll(),
             'appointment' => $appointment->findBy([], ['hoursappointment' => 'DESC']),
         ]);
+
         try {
             $dompdf->loadHtml($html);
             $dompdf->render();
             $output = $dompdf->output();
         } catch (\Exception $e) {
-            $output = '';
+            $this->logger->error('Erreur generation PDF des telechargements', [
+                'exception' => $e,
+            ]);
+            $this->addFlash('danger', 'La generation du PDF a echoue.');
+
+            return $this->redirectToRoute('download_list');
+        }
+
+        if (trim($output) === '') {
+            $this->logger->error('Generation PDF vide pour les telechargements');
+            $this->addFlash('danger', 'Le fichier PDF genere est vide.');
+
+            return $this->redirectToRoute('download_list');
         }
 
         $image = new File;
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+
+        try {
+            $randomString = bin2hex(random_bytes(6));
+        } catch (\Exception $e) {
+            $randomString = (string) random_int(100000, 999999);
         }
+
         $path = $this->getParameter('kernel.project_dir') . '/public/pdf/';
 
         $dateFile = date("d-m-y");
@@ -88,15 +103,21 @@ class AdminController extends AbstractController
 
         try {
             if (!$fsObject->exists($path)) {
-                $fsObject->mkdir($path);
+                $fsObject->mkdir($path, 0755);
             }
+
             $file = $path . $fileName;
-            if (!$fsObject->exists($file)) {
-                $fsObject->touch($file);
-                $fsObject->chmod($file, 0777);
-                $fsObject->dumpFile($file, $output);
-            }
+            $fsObject->dumpFile($file, $output);
+            $fsObject->chmod($file, 0644);
         } catch (IOExceptionInterface $exception) {
+            $this->logger->error('Erreur ecriture fichier PDF des telechargements', [
+                'exception' => $exception,
+                'path' => $path,
+                'filename' => $fileName,
+            ]);
+            $this->addFlash('danger', 'Impossible d\'enregistrer le fichier PDF.');
+
+            return $this->redirectToRoute('download_list');
         }
 
         $image->setName($fileName);

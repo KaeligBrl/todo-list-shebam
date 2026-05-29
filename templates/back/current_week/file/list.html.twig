@@ -25,8 +25,11 @@
 							<td  class="color-white text-bold">{{ file.name }}</td>
 							<td  class="color-white text-bold">{{ file.createdat|date("d-m-Y", "Europe/Paris")}} à {{file.createdat|date("H:i", "Europe/Paris")}}</td>
                             <td>
-								<a class="admin-icon-btn" href="{{ asset("pdf/" ~ file.name) }}" target="new" title="Voir"><i class="fas fa-eye"></i></a>
-								<a class="admin-icon-btn" href="{{ path('delete_download', {"id": file.id}) }}" title="Supprimer" onclick="return confirm('Attention vous vous apprettez à supprimer un téléchargement')"><i class="fas fa-trash"></i></a>
+								<a class="admin-icon-btn" href="{{ asset("pdf/" ~ file.name) }}" target="_blank" rel="noopener" title="Voir"><i class="fas fa-eye"></i></a>
+								<form action="{{ path('delete_download', {'id': file.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Attention vous vous appretez a supprimer un telechargement')">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete_download_' ~ file.id) }}">
+									<button type="submit" class="admin-icon-btn border-0 p-0" style="background: transparent;" title="Supprimer"><i class="fas fa-trash"></i></button>
+								</form>
                             </td>
 						</tr>
 					{% endfor %}
