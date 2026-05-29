@@ -76,49 +76,15 @@
 						}
 					}
 
-					if (selectAll) {
-						selectAll.addEventListener('change', function () {
-							var items = getItems();
-							items.forEach(function (item) {
-								item.checked = selectAll.checked;
-							});
-							updateState();
-						});
+				document.addEventListener('change', function (event) {
+					if (event.target.classList.contains('js-customer-select-all')) {
+						var items = getItems();
+						items.forEach(function (item) { item.checked = event.target.checked; });
+						updateState();
+					} else if (event.target.classList.contains('js-customer-select-item')) {
+						updateState();
 					}
-
-					document.addEventListener('change', function (event) {
-						if (event.target && event.target.matches(itemSelector)) {
-							updateState();
-						}
-					});
-
-					function setInlineMode(row, isEditing) {
-						if (!row) {
-							return;
-						}
-
-						var text = row.querySelector('.js-customer-name-text');
-						var input = row.querySelector('.js-customer-name-input');
-						var editButton = row.querySelector('.js-customer-edit-toggle');
-						var saveButton = row.querySelector('.js-customer-edit-save');
-						var cancelButton = row.querySelector('.js-customer-edit-cancel');
-
-						if (!text || !input || !editButton || !saveButton || !cancelButton) {
-							return;
-						}
-
-						text.classList.toggle('d-none', isEditing);
-						input.classList.toggle('d-none', !isEditing);
-						editButton.classList.toggle('d-none', isEditing);
-						saveButton.classList.toggle('d-none', !isEditing);
-						cancelButton.classList.toggle('d-none', !isEditing);
-
-						if (isEditing) {
-							input.value = text.textContent.trim();
-							input.focus();
-							input.select();
-						}
-					}
+				});
 
 					function saveInline(row) {
 						var text = row.querySelector('.js-customer-name-text');
