@@ -1,26 +1,131 @@
 {% extends 'back/admin.html.twig' %}
 
 {% block title %}Ajouter un utilisateur - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Ajouter un utilisateur{% endblock %}
 
-{% block body %}
-	<div>
-		{% block title_back_page %}Ajouter un utilisateur{% endblock %}
+{% block admin_toolbar %}
+	<div class="admin-toolbar">
+		<a class="btn btn-outline-secondary btn-sm" href="{{ path('user_list') }}">Retour à l'equipe</a>
+		<span class="text-muted small">Créer un nouvel utilisateur pour l'espace administration</span>
 	</div>
-		{% block content %}
-			<div class="form-back">
-					{{ form_start(form_admin_user_add) }}
-				<div class="form-group">
-					{{ form_row(form_admin_user_add.firstname) }}
-					{{ form_row(form_admin_user_add.lastname) }}
-					{{ form_row(form_admin_user_add.email) }}
-					{{ form_row(form_admin_user_add.password) }}
-					{{ form_row(form_admin_user_add.roles) }}
-					{{ form_row(form_admin_user_add.profilePictureFile) }}
-					{{ form_row(form_admin_user_add.submit) }}
+{% endblock %}
+
+{% block content %}
+	{{ form_start(form_admin_user_add, {'attr': {'class': 'mb-0'}}) }}
+		<div class="row">
+			<div class="col-lg-4 mb-3 mb-lg-0">
+				<div class="p-3 h-100" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					<div class="text-center mb-3">
+						<span style="display:inline-flex;width:96px;height:96px;border-radius:50%;align-items:center;justify-content:center;background:#27374d;color:#fff;font-size:30px;font-weight:700;border:2px solid #ffd54f;">+</span>
+					</div>
+					<div class="text-center color-white text-bold">Nouvel utilisateur</div>
+					<div class="text-center text-muted small mb-3">Renseigne l'identité, le compte et l'illustration du profil.</div>
+					<div class="text-muted small">Le mot de passe est encodé automatiquement avant enregistrement.</div>
 				</div>
-					{{ form_end(form_admin_user_add) }}
 			</div>
-	{% endblock %}
+
+			<div class="col-lg-8">
+				<div class="p-3" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Adresse mail</label>
+						{{ form_widget(form_admin_user_add.email) }}
+					</div>
+
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label class="color-yellow text-bold mb-2">Prenom</label>
+							{{ form_widget(form_admin_user_add.firstname) }}
+						</div>
+						<div class="form-group col-md-6">
+							<label class="color-yellow text-bold mb-2">Nom</label>
+							{{ form_widget(form_admin_user_add.lastname) }}
+						</div>
+					</div>
+
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Mot de passe</label>
+						<div class="showHiddenPassword-wrapper">
+							{{ form_widget(form_admin_user_add.password.first, {'attr': {'id': form_admin_user_add.password.first.vars.id, 'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}
+							<span class="showHiddenPassword-toggle" data-target="#{{ form_admin_user_add.password.first.vars.id }}" role="button" aria-label="Afficher ou masquer le mot de passe" title="Afficher ou masquer le mot de passe">
+								<i class="fa fa-eye-slash"></i>
+							</span>
+						</div>
+						{{ form_errors(form_admin_user_add.password.first) }}
+					</div>
+
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Confirmation du mot de passe</label>
+						<div class="showHiddenPassword-wrapper">
+							{{ form_widget(form_admin_user_add.password.second, {'attr': {'id': form_admin_user_add.password.second.vars.id, 'class': 'form-control', 'placeholder': 'Confirmation du mot de passe'}}) }}
+							<span class="showHiddenPassword-toggle" data-target="#{{ form_admin_user_add.password.second.vars.id }}" role="button" aria-label="Afficher ou masquer le mot de passe" title="Afficher ou masquer le mot de passe">
+								<i class="fa fa-eye-slash"></i>
+							</span>
+						</div>
+						{{ form_errors(form_admin_user_add.password.second) }}
+					</div>
+					{% do form_admin_user_add.password.setRendered %}
+
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Role</label>
+						{{ form_widget(form_admin_user_add.roles) }}
+					</div>
+
+					<div class="form-group mb-4">
+						<label class="color-yellow text-bold mb-2">Photo de profil</label>
+						<div class="admin-upload-field p-3" style="border:1px dashed rgba(255,255,255,.28);border-radius:10px;background:rgba(255,255,255,.02);">
+							<input
+								type="file"
+								id="{{ form_admin_user_add.profilePictureFile.vars.id }}"
+								name="{{ form_admin_user_add.profilePictureFile.vars.full_name }}"
+								class="js-profile-file-input"
+								hidden
+								style="display:none;"
+								accept="image/*"
+							>
+
+							<div class="d-flex align-items-center flex-wrap">
+								<label for="{{ form_admin_user_add.profilePictureFile.vars.id }}" class="btn btn-warning btn-sm mb-0 mr-2 text-bold" style="cursor:pointer;">
+									<i class="fas fa-upload"></i>&nbsp;Choisir une image
+								</label>
+								<span class="small text-muted js-profile-file-name">Aucun fichier selectionne</span>
+							</div>
+							{{ form_errors(form_admin_user_add.profilePictureFile) }}
+							{% do form_admin_user_add.profilePictureFile.setRendered %}
+							<div class="small text-muted mt-2">Formats acceptes: JPG, PNG, WEBP (max 5 Mo).</div>
+						</div>
+					</div>
+
+					<div class="d-flex align-items-center">
+						{{ form_widget(form_admin_user_add.submit) }}
+						<a href="{{ path('user_list') }}" class="btn btn-link text-muted ml-2">Annuler</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ form_end(form_admin_user_add) }}
+
+	<script>
+		(function () {
+			var input = document.querySelector('.js-profile-file-input');
+			var fileName = document.querySelector('.js-profile-file-name');
+
+			if (!input || !fileName) {
+				return;
+			}
+
+			input.addEventListener('change', function () {
+				if (input.files && input.files.length > 0) {
+					fileName.textContent = input.files[0].name;
+					fileName.classList.remove('text-muted');
+					fileName.classList.add('color-white');
+				} else {
+					fileName.textContent = 'Aucun fichier selectionne';
+					fileName.classList.add('text-muted');
+					fileName.classList.remove('color-white');
+				}
+			});
+		})();
+	</script>
 {% endblock %}
 
 
