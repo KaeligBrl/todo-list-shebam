@@ -46,6 +46,13 @@
 
 					<hr style="border-color:rgba(255,255,255,.1);">
 
+					<div class="mb-3">
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="js-all-perms-select-all">
+							<label class="form-check-label" for="js-all-perms-select-all">Tout sélectionner / désélectionner</label>
+						</div>
+					</div>
+
 					<h6 class="color-yellow text-bold mt-4 mb-3">Semaine Actuelle</h6>
 					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Tâche P1 ──</p>
 					<div class="row mb-3">
@@ -141,7 +148,7 @@
 					<h6 class="color-yellow text-bold mt-4 mb-3">Accès aux URLs</h6>
 					<div class="row mb-3">
 						{% for route in routes %}
-							<div class="col-md-6">
+							<div class="col-md-6 js-route-checkbox-col">
 								{{ form_row(form[route.name]) }}
 							</div>
 						{% endfor %}
@@ -151,6 +158,38 @@
 						{{ form_widget(form.submit) }}
 						<a href="{{ path('role_list') }}" class="btn btn-link text-muted ml-2">Annuler</a>
 					</div>
+
+					<script>
+						(function () {
+							var selectAll = document.getElementById('js-all-perms-select-all');
+							if (!selectAll) { return; }
+
+							function getAllCheckboxes() {
+								return Array.prototype.slice.call(
+									document.querySelectorAll('input[type="checkbox"]:not(#js-all-perms-select-all)')
+								);
+							}
+
+							function updateSelectAll() {
+								var boxes = getAllCheckboxes();
+								var checkedCount = boxes.filter(function (b) { return b.checked; }).length;
+								selectAll.checked = boxes.length > 0 && checkedCount === boxes.length;
+								selectAll.indeterminate = checkedCount > 0 && checkedCount < boxes.length;
+							}
+
+							selectAll.addEventListener('change', function () {
+								getAllCheckboxes().forEach(function (b) { b.checked = selectAll.checked; });
+							});
+
+							document.addEventListener('change', function (event) {
+								if (event.target !== selectAll && event.target.type === 'checkbox') {
+									updateSelectAll();
+								}
+							});
+
+							updateSelectAll();
+						})();
+					</script>
 				</div>
 			</div>
 		</div>

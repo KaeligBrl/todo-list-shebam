@@ -437,3 +437,7 @@
         max-width: 100%;
     }
 }
+
+.admin-layout-body .form-check-label {
+    color: var(--adm-text-primary);
+}

@@ -79,7 +79,7 @@
                 {{ form_start(form_task_nw_p1_add, {'attr': {'id': 'inlineAddTaskNwP1Form', 'data-task-inline-config': inlineAddConfig|json_encode|e('html_attr')}}) }}
             {% endif %}
 
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered">
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if userRole is not null and roles[userRole] is defined and roles[userRole].reorder_task is defined and roles[userRole].reorder_task %}data-reorderable-rows="true"{% endif %}>
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
@@ -107,13 +107,13 @@
                 </thead>
                 <tbody class="bg-blue-dark">
                     {% if roles[userRole].add_task is defined and roles[userRole].add_task and show_inline_add_form|default(false) %}
-                        <tr>
+                        <tr class="nodrag nodrop">
                             <td colspan="{{ inlineAddCols }}" class="bg-blue-dark-light text-left">{{ form_errors(form_task_nw_p1_add) }}</td>
                         </tr>
                     {% endif %}
 
                     {% if roles[userRole].add_task is defined and roles[userRole].add_task %}
-                        <tr id="inlineAddTaskNwP1Row" class="bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
+                        <tr id="inlineAddTaskNwP1Row" class="nodrag nodrop bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
                             <td class="d-none"></td>
                             <td>
                                 {{ form_widget(form_task_nw_p1_add.customer, {'attr': {'class': 'form-select form-select-sm js-task-customer-select', 'data-customer-create-url': path('front_customer_create')}}) }}
@@ -213,6 +213,7 @@
                                 {% set userIds = userIds|merge([userRef.id]) %}
                             {% endfor %}
                             <tr
+                                id="task-{{ task.id }}"
                                 data-task-id="{{ task.id }}"
                                 data-customer-id="{{ task.customer ? task.customer.id : '' }}"
                                 data-object="{{ task.object|default('')|e('html_attr') }}"
@@ -306,6 +307,6 @@
     <script>
         window.nextWeekP1InlineUpdateUrlTemplate = "{{ path('next_week_p1_inline_update', {'id': 'TASK_ID'}) }}";
     </script>
-	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
+	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260529"></script>
     <script src="{{ asset('assets/js/task-inline-edit-nextweek-p1.js') }}?v=20260528a"></script>
 {% endblock %}

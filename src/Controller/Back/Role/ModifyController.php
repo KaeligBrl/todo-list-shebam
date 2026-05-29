@@ -171,7 +171,6 @@ class ModifyController extends AbstractController
                 'appointment_delete_nw' => $data['appointment_delete_nw'],
 
                 // Global
-                'button_done' => $data['button_done'],
                 'reorder_task' => $data['reorder_task'],
                 'add_task' => $data['add_task'],
                 'generate_archive_task' => $data['generate_archive_task'],

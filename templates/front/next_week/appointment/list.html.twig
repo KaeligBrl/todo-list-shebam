@@ -38,7 +38,7 @@
                 </div>
 
 			{{ form_start(form_appointment_nw_add, {'attr': {'id': 'inlineAddAppointmentNwForm'}}) }}
-			<table id="tableOrderAppointment" class="table mb-5 table-bordered">
+			<table id="tableOrderAppointment" class="table mb-5 table-bordered" data-toggle="table" {% if userRole is not null and roles[userRole] is defined and roles[userRole].reorder_task is defined and roles[userRole].reorder_task %}data-reorderable-rows="true"{% endif %}>
                 <thead class="bg-blue-dark-light table-borderless">
                     <tr>
 						<th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
@@ -95,7 +95,7 @@
 						</td>
 					</tr>
 
-					<tr id="inlineAddAppointmentNwRow" class="bg-blue-dark-light d-none">
+					<tr id="inlineAddAppointmentNwRow" class="nodrag nodrop bg-blue-dark-light d-none">
 						<td class="d-none"></td>
 						<td>
 							{{ form_widget(form_appointment_nw_add.hoursappointment, {'attr': {'class': 'form-control form-control-sm'}}) }}
@@ -132,7 +132,7 @@
 							{% for appointmentUser in appointment.user %}
 								{% set userIds = userIds|merge([appointmentUser.id]) %}
 							{% endfor %}
-							<tr class="bg-white-shebam"
+						<tr id="appt-{{ appointment.id }}" class="bg-white-shebam"
 								data-appointment-id="{{ appointment.id }}"
 								data-name="{{ appointment.name|default('')|e('html_attr') }}"
 								data-subject="{{ appointment.subject|default('')|e('html_attr') }}"
@@ -198,7 +198,7 @@
 {%  endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260528c"></script>
+	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260529"></script>
 	<script>
 		window.appointmentInlineEditConfig = {
 			updateUrlTemplate: "{{ path('next_week_appointment_inline_update', {'id': 'ITEM_ID'}) }}",

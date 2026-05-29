@@ -69,7 +69,7 @@
             } %}
             {{ form_start(form_task_cw_p2_add, {'attr': {'id': 'inlineAddTaskP2Form', 'data-task-inline-config': inlineAddConfig|json_encode|e('html_attr')}}) }}
             
-            <table id="tableOrderTaskP1" class="table mb-5 table-bordered">
+            <table id="tableOrderTaskP1" class="table mb-5 table-bordered" data-toggle="table" {% if userRole is not null and roles[userRole] is defined and roles[userRole].reorder_task is defined and roles[userRole].reorder_task %}data-reorderable-rows="true"{% endif %}>
                 <thead class="bg-blue-dark-light table-borderless" border-right-style: none;>
                     <tr style="border-right-style: none;">
                         <th class="color-yellow text-bold d-none" data-field="id" data-visible="false">ID</th>
@@ -96,12 +96,12 @@
                 </thead>
                 <tbody class="bg-blue-dark">
                     {% if show_inline_add_form|default(false) %}
-                        <tr>
+                        <tr class="nodrag nodrop">
                             <td colspan="{{ inlineAddCols }}" class="bg-blue-dark-light text-left">{{ form_errors(form_task_cw_p2_add) }}</td>
                         </tr>
                     {% endif %}
 
-                    <tr id="inlineAddTaskP2Row" class="bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
+                    <tr id="inlineAddTaskP2Row" class="nodrag nodrop bg-blue-dark-light {% if not show_inline_add_form|default(false) %}d-none{% endif %}">
                         <td class="d-none"></td>
                         <td>
                             {{ form_widget(form_task_cw_p2_add.customer, {'attr': {'class': 'form-select form-select-sm js-task-customer-select', 'data-customer-create-url': path('front_customer_create')}}) }}
@@ -143,7 +143,7 @@
 
                     {% for task in task %}
                         {% if task.p1 == 0 and task.p2 == 1 and task.nextweek == 0 %}
-                            <tr>
+                            <tr id="task-{{ task.id }}">
                                 <td class="d-none">{{ task.id }}</td>
                                 <td class="color-white text-bold">{{task.customer}}</td>
                                 <td class="color-white text-bold">
@@ -206,5 +206,5 @@
 {%  endblock %}
 {% block javascripts %}
 	{{ parent() }}
-	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
+	<script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260529"></script>
 {% endblock %}

@@ -134,6 +134,27 @@
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/TableDnD/1.0.3/jquery.tablednd.min.js"></script>
+    <script>
+        // Patch TableDnD to skip display:none rows (firstChild text nodes have no offsetHeight)
+        if ($.tableDnD) {
+            var _origFDTR = $.tableDnD.findDropTargetRow;
+            $.tableDnD.findDropTargetRow = function (b, c) {
+                var rows = this.currentTable.rows;
+                var f = this.currentTable.tableDnDConfig;
+                for (var i = 0; i < rows.length; i++) {
+                    var h = rows[i];
+                    if (!h.offsetHeight) continue; // skip display:none rows
+                    var g = this.getPosition(h).y;
+                    var d = parseInt(h.offsetHeight) / 2;
+                    if (c > g - d && c < g + d) {
+                        if (b.is(h) || (f.onAllowDrop && !f.onAllowDrop(b, h)) || $(h).hasClass('nodrop')) return null;
+                        return h;
+                    }
+                }
+                return null;
+            };
+        }
+    </script>
     <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>

@@ -22,16 +22,18 @@ class ReorderController extends AbstractController
         $cpt = 0;
         switch ($request->request->get("context")) {
             case '1':
-                foreach (json_decode($request->request->get("table"), true /* est-ce que je veux un tableau assoc oui (par défaut false) */) as $row) {
-                    $task = $taskRow->find($row['id']); //on récupère la task
-                    $task->setPosition($cpt); //on definit la position
-                    $cpt++; //on ajoute une rangée
+                foreach (json_decode($request->request->get("table"), true) as $row) {
+                    $task = $taskRow->find($row['id']);
+                    if (!$task) { $cpt++; continue; }
+                    $task->setPosition($cpt);
+                    $cpt++;
                 }
             break;
 
             case '2':
                 foreach (json_decode($request->request->get("table"), true) as $row) {
                     $appt = $appointmentRow->find($row['id']);
+                    if (!$appt) { $cpt++; continue; }
                     $appt->setPosition($cpt);
                     $cpt++;
                 }

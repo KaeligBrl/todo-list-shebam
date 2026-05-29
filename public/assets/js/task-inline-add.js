@@ -386,11 +386,15 @@
         window.__taskInlineReorderBound = true;
 
         $("#tableOrderTaskP1, #tableOrderTaskP2").on("reorder-row.bs.table", function (e, table) {
+            var cleanTable = table
+                .filter(function (row) { return row && row._id && /^task-\d+$/.test(row._id); })
+                .map(function (row) { return { id: parseInt(row._id.replace('task-', ''), 10) }; });
+            if (!cleanTable.length) return;
             $.ajax({
                 url: reorderUrl,
                 method: "POST",
                 data: {
-                    table: JSON.stringify(table),
+                    table: JSON.stringify(cleanTable),
                     context: 1
                 },
                 dataType: "JSON"
@@ -400,11 +404,15 @@
         });
 
         $("#tableOrderAppointment").on("reorder-row.bs.table", function (e, table) {
+            var cleanTable = table
+                .filter(function (row) { return row && row._id && /^appt-\d+$/.test(row._id); })
+                .map(function (row) { return { id: parseInt(row._id.replace('appt-', ''), 10) }; });
+            if (!cleanTable.length) return;
             $.ajax({
                 url: reorderUrl,
                 method: "POST",
                 data: {
-                    table: JSON.stringify(table),
+                    table: JSON.stringify(cleanTable),
                     context: 2
                 },
                 dataType: "JSON"
