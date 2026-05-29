@@ -6,7 +6,6 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Repository\TaskRepository;
 use App\Repository\AppointmentRepository;
-use Symfony\Component\Filesystem\Filesystem;
 
 class DownloadPdfGenerator
 {
@@ -40,22 +39,5 @@ class DownloadPdfGenerator
         }
 
         return $output;
-    }
-
-    public function generateCurrentWeekPdf(string $absoluteTargetPath): int
-    {
-        $output = $this->renderCurrentWeekPdf();
-
-        $filesystem = new Filesystem();
-        $directory = \dirname($absoluteTargetPath);
-
-        if (!$filesystem->exists($directory)) {
-            $filesystem->mkdir($directory, 0755);
-        }
-
-        $filesystem->dumpFile($absoluteTargetPath, $output);
-        $filesystem->chmod($absoluteTargetPath, 0644);
-
-        return \strlen($output);
     }
 }

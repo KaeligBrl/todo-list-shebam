@@ -20,15 +20,10 @@ class DeleteController extends AbstractController
             return $this->redirectToRoute('download_list');
         }
 
-        $fileName = $this->getParameter('kernel.project_dir') . '/public/pdf/' . $downloadDelete->getName();
-        if (file_exists($fileName)) {
-            unlink($fileName);
-        }
-
         $entityManager->remove($downloadDelete);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Telechargement supprime.');
+        $this->addFlash('success', 'Export supprime de l\'historique.');
 
         return $this->redirectToRoute("download_list");
     }

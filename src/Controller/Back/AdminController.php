@@ -2,12 +2,14 @@
 
 namespace App\Controller\Back;
 
+use App\Entity\File;
 use App\Service\DownloadPdfGenerator;
 use App\Service\RoleService;
 use Psr\Log\LoggerInterface;
 use App\Repository\FileRepository;
 use App\Repository\UserRepository;
 use App\Repository\CustomerRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +17,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
     private $logger;
-    public function __construct(LoggerInterface $logger) {
+    public function __construct(EntityManagerInterface $entityManager, LoggerInterface $logger) {
+        $this->entityManager = $entityManager;
         $this->logger = $logger;
     }
 
@@ -66,6 +70,14 @@ class AdminController extends AbstractController
 
         $dateFile = date('d-m-y-H-i');
         $fileName = 'liste-des-taches-du-' . $dateFile . '.pdf';
+
+        $historyItem = new File();
+        $historyItem->setName('Export PDF hebdomadaire');
+        $historyItem->setStatus('done');
+        $historyItem->setSize(strlen($pdfContent));
+        $historyItem->setErrorMessage(null);
+        $this->entityManager->persist($historyItem);
+        $this->entityManager->flush();
 
         return new Response($pdfContent, Response::HTTP_OK, [
             'Content-Type' => 'application/pdf',
