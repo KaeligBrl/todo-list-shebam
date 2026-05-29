@@ -77,14 +77,14 @@
 
     function actionLabel(action) {
         if (action === "created") {
-            return "ajoutee";
+            return "ajoutée";
         }
 
         if (action === "deleted") {
-            return "supprimee";
+            return "supprimée";
         }
 
-        return "modifiee";
+        return "modiféee";
     }
 
     function getContextLabelFromPathname() {
