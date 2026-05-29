@@ -81,7 +81,7 @@ class AdminController extends AbstractController
 
         return new Response($pdfContent, Response::HTTP_OK, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"',
             'Content-Length' => (string) strlen($pdfContent),
             'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
             'Pragma' => 'no-cache',

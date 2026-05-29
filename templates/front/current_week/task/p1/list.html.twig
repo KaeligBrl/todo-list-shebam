@@ -320,6 +320,11 @@
             {% endif %}
         </div>
 
+    <div class="js-download-toast" role="status" aria-live="polite" aria-atomic="true" style="position:fixed;right:16px;bottom:16px;z-index:9999;background:#13263a;color:#ffffff;border:1px solid #f3c441;border-radius:12px;padding:12px 14px;display:flex;align-items:center;column-gap:10px;max-width:340px;box-shadow:0 8px 28px rgba(0,0,0,.35);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .25s ease, transform .25s ease;">
+        <span class="js-download-toast-icon" style="display:inline-flex;width:40px;height:40px;border-radius:50%;align-items:center;justify-content:center;background:#31465f;color:#fff;font-size:16px;font-weight:700;flex:0 0 auto;">✓</span>
+        <span class="js-download-toast-text" style="line-height:1.25;font-weight:700;">Téléchargement terminé.</span>
+	</div>
+
 	</div>
 {%  endblock %}
 
@@ -334,22 +339,103 @@
             return;
         }
 
-        form.addEventListener('submit', function () {
-            var button = form.querySelector('.js-generate-download-btn');
-            var label = form.querySelector('.js-generate-download-label');
-            var loading = form.querySelector('.js-generate-download-loading');
+        var button = form.querySelector('.js-generate-download-btn');
+        var label = form.querySelector('.js-generate-download-label');
+        var loading = form.querySelector('.js-generate-download-loading');
+        var toast = document.querySelector('.js-download-toast');
+        var toastText = toast ? toast.querySelector('.js-download-toast-text') : null;
+        var toastTimer = null;
 
+        function setLoadingState(isLoading) {
             if (button) {
-                button.setAttribute('disabled', 'disabled');
-                button.classList.add('disabled');
+                if (isLoading) {
+                    button.setAttribute('disabled', 'disabled');
+                    button.classList.add('disabled');
+                } else {
+                    button.removeAttribute('disabled');
+                    button.classList.remove('disabled');
+                }
             }
 
             if (label) {
-                label.classList.add('d-none');
+                label.classList.toggle('d-none', isLoading);
             }
 
             if (loading) {
-                loading.classList.remove('d-none');
+                loading.classList.toggle('d-none', !isLoading);
+            }
+        }
+
+        function showToast(text, isError) {
+            if (!toast) {
+                return;
+            }
+
+            if (toastTimer) {
+                window.clearTimeout(toastTimer);
+            }
+
+            toast.style.borderColor = isError ? '#dc3545' : '#f3c441';
+            toast.style.background = '#13263a';
+            if (toastText) {
+                toastText.textContent = text;
+            }
+
+            var toastIcon = toast.querySelector('.js-download-toast-icon');
+            if (toastIcon) {
+                toastIcon.textContent = isError ? '!' : '✓';
+                toastIcon.style.background = isError ? '#5a2330' : '#31465f';
+            }
+
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+
+            toastTimer = window.setTimeout(function () {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-8px)';
+            }, 10000);
+        }
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            setLoadingState(true);
+
+            if (button && button.dataset.loading === 'true') {
+                return;
+            }
+
+            if (button) {
+                button.dataset.loading = 'true';
+            }
+
+            try {
+                var formData = new FormData(form);
+                var response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'same-origin'
+                });
+
+                var contentType = response.headers.get('Content-Type') || '';
+                if (!response.ok || contentType.indexOf('application/pdf') === -1) {
+                    throw new Error('invalid_response');
+                }
+
+                await response.blob();
+
+                showToast("L'export a bien été généré. Vous pouvez retrouver cet export dans /admin/telechargements.", false);
+            } catch (error) {
+                showToast('Impossible de générer l export. Réessaie dans un instant.', true);
+            } finally {
+                if (button) {
+                    delete button.dataset.loading;
+                }
+
+                setLoadingState(false);
             }
         });
     })();
