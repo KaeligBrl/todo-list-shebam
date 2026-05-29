@@ -56,10 +56,6 @@
 							</td>
                             <td>
 								<a class="admin-icon-btn" href="{{ path('view_download', {'id': file.id}) }}" target="_blank" rel="noopener" title="Consulter"><i class="fas fa-eye"></i></a>
-								<form action="{{ path('delete_download', {'id': file.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Attention vous vous appretez a supprimer un telechargement')">
-									<input type="hidden" name="_token" value="{{ csrf_token('delete_download_' ~ file.id) }}">
-									<button type="submit" class="admin-icon-btn border-0 p-0" style="background: transparent;" title="Supprimer"><i class="fas fa-trash"></i></button>
-								</form>
                             </td>
 						</tr>
 					{% endfor %}

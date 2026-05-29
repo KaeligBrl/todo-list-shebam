@@ -42,25 +42,9 @@ class DeleteController extends AbstractController
 
         $entityManager->flush();
 
-        $this->addFlash('success', $deletedCount . ' export(s) supprime(s) de l\'historique.');
+        $this->addFlash('success', $deletedCount . " export(s) supprimé(s) de l'historique.");
 
         return $this->redirectToRoute('download_list');
     }
 
-    #[Route('/admin/telechargement/{id}/supprimer', name: 'delete_download', methods: ['POST'])]
-    public function deleteStatus(File $downloadDelete, Request $request, EntityManagerInterface $entityManager): RedirectResponse
-    {
-        if (!$this->isCsrfTokenValid('delete_download_' . $downloadDelete->getId(), (string) $request->request->get('_token'))) {
-            $this->addFlash('danger', 'Token CSRF invalide.');
-
-            return $this->redirectToRoute('download_list');
-        }
-
-        $entityManager->remove($downloadDelete);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Export supprime de l\'historique.');
-
-        return $this->redirectToRoute("download_list");
-    }
 }

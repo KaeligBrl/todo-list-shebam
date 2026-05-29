@@ -25,11 +25,9 @@
     {% set breadcrumbSection = 'Administration' %}
     {% set breadcrumbPage = 'Tableau de bord' %}
 
-    {% if routeName starts with 'list_customer' or routeName starts with 'add_customer_back' or routeName starts with 'modify_customer_back' %}
+    {% if routeName starts with 'list_customer' or routeName starts with 'modify_customer_back' %}
         {% set breadcrumbSection = 'Clients' %}
-        {% if routeName starts with 'add_customer_back' %}
-            {% set breadcrumbPage = 'Ajouter' %}
-        {% elseif routeName starts with 'modify_customer_back' %}
+        {% if routeName starts with 'modify_customer_back' %}
             {% set breadcrumbPage = 'Modifier' %}
         {% else %}
             {% set breadcrumbPage = 'Liste' %}
@@ -93,7 +91,7 @@
                 <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'admin_' %}active{% endif %}" href="{{ path('admin_dashboard') }}">
                     <i class="fas fa-th-large"></i><span>Tableau de bord</span>
                 </a>
-                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'list_customer' or app.request.attributes.get('_route') starts with 'add_customer_back' or app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}" href="{{ path('list_customer') }}">
+                <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'list_customer' or app.request.attributes.get('_route') starts with 'modify_customer_back' %}active{% endif %}" href="{{ path('list_customer') }}">
                     <i class="fas fa-building"></i><span>Clients</span>
                 </a>
                 <a class="admin-side-link {% if app.request.attributes.get('_route') starts with 'user_' %}active{% endif %}" href="{{ path('user_list') }}">
