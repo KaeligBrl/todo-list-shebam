@@ -6,6 +6,7 @@ use App\Service\RouteService;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -32,7 +33,15 @@ class ModifyType extends AbstractType
                 'label' => 'Description du rôle',
                 'label_attr' => ['class' => 'color-yellow text-bold mb-3'],
                 'data' => $options['label'],
-                'constraints' => [new NotBlank()],
+                'constraints' => [
+                    new NotBlank(['message' => 'La description du rôle ne peut pas être vide']),
+                    new Length([
+                        'min' => 3,
+                        'max' => 100,
+                        'minMessage' => 'La description doit contenir au moins {{ limit }} caractères',
+                        'maxMessage' => 'La description ne peut pas dépasser {{ limit }} caractères',
+                    ]),
+                ],
             ])
             // Current WEEK -> P1
             ->add('p2_button_in_p1_cw', CheckboxType::class, [

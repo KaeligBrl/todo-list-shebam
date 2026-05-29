@@ -4,7 +4,6 @@ namespace App\Controller\Front\CurrentWeek\Appointment;
 
 use App\Entity\Appointment;
 use App\Repository\UserRepository;
-use App\Repository\TaskRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\HttpFoundation\Request;

@@ -128,9 +128,16 @@ class ModifyController extends AbstractController
      
             $data = $form->getData();
             
+            // Vérifier que la description du rôle n'est pas vide
+            $roleLabel = trim($data['label'] ?? '');
+            if (empty($roleLabel)) {
+                $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'La description du rôle ne peut pas être vide.'));
+                return $this->redirectToRoute('role_edit', ['roleName' => $roleName]);
+            }
+
             // Supposons que vous ayez déjà récupéré toutes les données de $data et $allRouteService
             $roles['roles'][$data['role']] = [
-                'label' => $data['label'],
+                'label' => $roleLabel,
                 // Current Week -> P1
                 'add_task_cw' => $data['add_task_cw'],
                 'p2_button_in_p1_cw' => $data['p2_button_in_p1_cw'],

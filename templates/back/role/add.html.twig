@@ -1,29 +1,55 @@
 {% extends 'back/admin.html.twig' %}
 
-{% block title %}Liste des roles - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block title %}Ajouter un rôle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Ajouter un rôle{% endblock %}
 
-{% block body %}
-    {% block content %}
-    
-        <div class="d-flex justify-content-center color-white">
-            <h1>Ajouter un rôle</h1>
-        </div>
-        
-
-        
-        {{ form_start(form) }}
-        <div class="form-back">
-                        {% for message in app.flashes('success') %}
-                        <div class="alert alert-success">{{ message }}</div>
-                        {% endfor %}
-                        
-                        {% for message in app.flashes('warning') %}
-                        <div class="alert alert-warning">{{ message }}</div>
-                        {% endfor %}
-            {{ form_row(form.role) }}
-            {{ form_row(form.label) }}
-            {{ form_row(form.submit) }}
-        </div>
-        {{ form_end(form) }}
-    {% endblock %}
+{% block admin_toolbar %}
+	<div class="admin-toolbar">
+		<a class="btn btn-outline-secondary btn-sm" href="{{ path('role_list') }}">Retour à la liste</a>
+		<span class="text-muted small">Créer un nouveau rôle dans l'application</span>
+	</div>
 {% endblock %}
+
+{% block content %}
+	{{ form_start(form, {'attr': {'class': 'mb-0'}}) }}
+		<div class="row">
+			<div class="col-lg-4 mb-3 mb-lg-0">
+				<div class="p-3 h-100" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					<div class="text-center mb-3">
+						<span style="display:inline-flex;width:96px;height:96px;border-radius:50%;align-items:center;justify-content:center;background:#27374d;color:#fff;font-size:30px;font-weight:700;border:2px solid #ffd54f;">+</span>
+					</div>
+					<div class="text-center color-white text-bold">Nouveau rôle</div>
+					<div class="text-center text-muted small mb-3">Crée un nouveau rôle pour l'application</div>
+					<div class="text-muted small">Définis le nom unique et le label lisible du nouveau rôle.</div>
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<div class="p-3" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success mb-3">{{ message }}</div>
+					{% endfor %}
+					{% for message in app.flashes('warning') %}
+						<div class="alert alert-warning mb-3">{{ message }}</div>
+					{% endfor %}
+
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Nom du rôle</label>
+						{{ form_widget(form.role) }}
+					</div>
+
+					<div class="form-group mb-4">
+						<label class="color-yellow text-bold mb-2">Description</label>
+						{{ form_widget(form.label) }}
+					</div>
+
+					<div class="d-flex align-items-center">
+						{{ form_widget(form.submit) }}
+						<a href="{{ path('role_list') }}" class="btn btn-link text-muted ml-2">Annuler</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ form_end(form) }}
+{% endblock %}
+

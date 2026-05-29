@@ -1,133 +1,158 @@
 {% extends 'back/admin.html.twig' %}
 
 {% block title %}Modifier le rôle - {% block title_base %}{{ parent() }}{% endblock %}{% endblock %}
+{% block admin_page_title %}Modifier le rôle{% endblock %}
 
-{% block body %}
-    {% block content %}
-        <div class="d-flex justify-content-center color-white">
-            <h1>Modifier le rôle : {{ roleName }}</h1>
-        </div>
+{% block admin_toolbar %}
+	<div class="admin-toolbar">
+		<a class="btn btn-outline-secondary btn-sm" href="{{ path('role_list') }}">Retour à la liste</a>
+		<span class="text-muted small">Edition des permissions pour {{ roleName }}</span>
+	</div>
+{% endblock %}
 
-        {{ form_start(form) }}
-        <div class="form-back" style="max-width: 1050px !important">
+{% block content %}
+	{{ form_start(form, {'attr': {'class': 'mb-0'}}) }}
+		<div class="row">
+			<div class="col-lg-4 mb-3 mb-lg-0">
+				<div class="p-3 h-100" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					<div class="text-center mb-3">
+						<span style="display:inline-flex;width:96px;height:96px;border-radius:50%;align-items:center;justify-content:center;background:#27374d;color:#fff;font-size:24px;font-weight:700;border:2px solid #ffd54f;"><i class="fas fa-lock"></i></span>
+					</div>
+					<div class="text-center color-white text-bold">{{ roleName }}</div>
+					<div class="text-center text-muted small mb-3">{{ form.label.vars.value }}</div>
+					<div class="text-muted small">Gère les permissions associées à ce rôle pour contrôler l'accès aux fonctionnalités de l'application.</div>
+				</div>
+			</div>
 
-        {% for message in app.flashes('success') %}
-        <div class="alert alert-success">{{ message }}</div>
-        {% endfor %}
-        
-        {% for message in app.flashes('warning') %}
-        <div class="alert alert-warning">{{ message }}</div>
-        {% endfor %}
-            {{ form_row(form.role) }}
-            {{ form_row(form.label) }}
-            <div class="inputRole">
-                <p class="form-role-title text-center mb-4">Semaine Actuelle</p>
-                <div class="row mb-4">
-                    <div class="col">
-                        <p class="form-role-title text-center">Tâche P1</p>
-                            {{ form_row(form.add_task_cw) }}
-                            {{ form_row(form.p2_button_in_p1_cw) }} 
-                            {{ form_row(form.task_p1_cw_to_p1_nw_button) }}
-                            {{ form_row(form.task_p1_modify_button) }} 
-                            {{ form_row(form.task_p1_delete_button) }}                    </div>
-                    <div class="col">
-                        <p class="form-role-title text-center">Tâche P2</p>
-                            {{ form_row(form.p1_button_in_p2_cw) }}
-                            {{ form_row(form.task_p2_cw_to_p1_nw_button) }}
-                            {{ form_row(form.task_p2_modify_button) }}
-                            {{ form_row(form.task_p2_delete_button) }}                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p class="form-role-title text-center mb-4 mt-4">Rendez-vous</p>
-                            {{ form_row(form.appointment_cw_to_nw) }}
-                            {{ form_row(form.appointment_modify_cw) }}
-                            {{ form_row(form.appointment_delete_cw) }}
-                    </div>
-                </div>
-                <p class="form-role-title text-center mb-4 mt-4">Semaine Suivante</p>
-                <div class="row">
-                    <div class="col">
-                        <p class="form-role-title text-center">Tâche P1</p>
-                            {{ form_row(form.task_p1_to_p2_nw)}}
-                            {{ form_row(form.task_p1_nw_to_p1_cw_button) }}
-                            {{ form_row(form.task_p1_modify_nw) }}
-                            {{ form_row(form.task_p1_delete_nw) }}
-                    </div>
-                    <div class="col">
-                        <p class="form-role-title text-center">Tâche P2</p>
-                            {{ form_row(form.task_p2_to_p1_nw)}}
-                            {{ form_row(form.task_p2_nw_to_p2_cw_button) }}
-                            {{ form_row(form.task_p2_modify_nw) }}
-                            {{ form_row(form.task_p2_delete_nw) }}
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p class="form-role-title text-center mb-4 mt-4">Rendez-vous</p>
-                            {{ form_row(form.appointment_nw_to_cw) }}
-                            {{ form_row(form.appointment_modify_nw) }}
-                            {{ form_row(form.appointment_delete_nw) }}
-                    </div>
-                </div>
-                
-                <p class="form-role-title text-center mb-4 mt-4">Global</p>
-                <div class="row">
-                    <div class="col">
-                        <p class="form-role-title">Fonctionnalités</p>
-                            {{ form_row(form.show_switch_to_cw) }}
-                            {{ form_row(form.add_task) }}
-                    </div>
-                    <div class="col">
-                            {{ form_row(form.reorder_task) }}
-                            {{ form_row(form.generate_archive_task) }}
+			<div class="col-lg-8">
+				<div class="p-3" style="border:1px solid rgba(255,255,255,.08);border-radius:12px;background:rgba(255,255,255,.02);">
+					{% for message in app.flashes('success') %}
+						<div class="alert alert-success mb-3">{{ message }}</div>
+					{% endfor %}
+					
+					{% for message in app.flashes('warning') %}
+						<div class="alert alert-warning mb-3">{{ message }}</div>
+					{% endfor %}
 
-                    </div>
-                </div>
-                <p class="form-role-title text-center mb-4 mt-4">Idébam</p>
-                <div class="row">
-                    <div class="col">
-                        {{ form_row(form.add_ideabam) }}
-                        {{ form_row(form.modify_ideabam) }}
-                        {{ form_row(form.delete_ideabam) }}
-                    </div>
-                    <div class="col">
-                    </div>
-                </div>
+					<div class="form-group mb-3">
+						<label class="color-yellow text-bold mb-2">Nom du rôle</label>
+						{{ form_widget(form.role) }}
+					</div>
 
-            </div>
-                <p class="form-role-title text-center mb-4 mt-4">Accès aux URLS</p>
-                {% set last_category = null %}
-                {% set routes_by_category = {} %}
-                {# Regrouper les routes par controller #}
-                {% for route in routes %}
-                    {% set cat = attribute(route, 'controller') %}
-                    {% if routes_by_category[cat] is not defined %}
-                        {% set routes_by_category = routes_by_category|merge({ (cat): [route] }) %}
-                    {% else %}
-                        {% set routes_by_category = routes_by_category|merge({ (cat): routes_by_category[cat]|merge([route]) }) %}
-                    {% endif %}
-                {% endfor %}
+					<div class="form-group mb-4">
+						<label class="color-yellow text-bold mb-2">Description</label>
+						{{ form_widget(form.label) }}
+					</div>
 
-                {% for cat, cat_routes in routes_by_category %}
-                    {% set cols = 2 %}
-                    {% set col_class = 'col-6' %}
-                    <div class="row">
-                        {% for route in cat_routes %}
-                            <div class="{{ col_class }}">
-                                <label class="color-yellow text-bold">
-                                    {{ form_row(form[route.name]) }}
-                                </label>
-                            </div>
-                            {% if loop.index is divisible by(cols) and not loop.last %}
-                                </div><div class="row">
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                {% endfor %}
-            <div class="d-flex justify-content-center mt-3">{{ form_row(form.submit) }}</div>
+					<hr style="border-color:rgba(255,255,255,.1);">
 
-        </div>
-        {{ form_end(form) }}
-    {% endblock %}
+					<h6 class="color-yellow text-bold mt-4 mb-3">Semaine Actuelle</h6>
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Tâche P1 ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.add_task_cw) }}</div>
+						<div class="col-md-6">{{ form_row(form.p2_button_in_p1_cw) }}</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p1_cw_to_p1_nw_button) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p1_modify_button) }}</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-md-6">{{ form_row(form.task_p1_delete_button) }}</div>
+					</div>
+
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Tâche P2 ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.p1_button_in_p2_cw) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p2_cw_to_p1_nw_button) }}</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p2_modify_button) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p2_delete_button) }}</div>
+					</div>
+
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin:.75rem 0;">── Rendez-vous ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.appointment_cw_to_nw) }}</div>
+						<div class="col-md-6">{{ form_row(form.appointment_modify_cw) }}</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-md-6">{{ form_row(form.appointment_delete_cw) }}</div>
+					</div>
+
+					<hr style="border-color:rgba(255,255,255,.1);">
+
+					<h6 class="color-yellow text-bold mt-4 mb-3">Semaine Suivante</h6>
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Tâche P1 ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p1_to_p2_nw) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p1_nw_to_p1_cw_button) }}</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p1_modify_nw) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p1_delete_nw) }}</div>
+					</div>
+
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin:.75rem 0;">── Tâche P2 ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p2_to_p1_nw) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p2_nw_to_p2_cw_button) }}</div>
+					</div>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.task_p2_modify_nw) }}</div>
+						<div class="col-md-6">{{ form_row(form.task_p2_delete_nw) }}</div>
+					</div>
+
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin:.75rem 0;">── Rendez-vous ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.appointment_nw_to_cw) }}</div>
+						<div class="col-md-6">{{ form_row(form.appointment_modify_nw) }}</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-md-6">{{ form_row(form.appointment_delete_nw) }}</div>
+					</div>
+
+					<hr style="border-color:rgba(255,255,255,.1);">
+
+					<h6 class="color-yellow text-bold mt-4 mb-3">Global</h6>
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Fonctionnalités ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.show_switch_to_cw) }}</div>
+						<div class="col-md-6">{{ form_row(form.add_task) }}</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-md-6">{{ form_row(form.reorder_task) }}</div>
+						<div class="col-md-6">{{ form_row(form.generate_archive_task) }}</div>
+					</div>
+
+					<hr style="border-color:rgba(255,255,255,.1);">
+
+					<h6 class="color-yellow text-bold mt-4 mb-3">Idébam</h6>
+					<p style="text-align:center;color:#adb5bd;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.75rem;">── Idées ──</p>
+					<div class="row mb-3">
+						<div class="col-md-6">{{ form_row(form.add_ideabam) }}</div>
+						<div class="col-md-6">{{ form_row(form.modify_ideabam) }}</div>
+					</div>
+					<div class="row mb-4">
+						<div class="col-md-6">{{ form_row(form.delete_ideabam) }}</div>
+					</div>
+
+					<hr style="border-color:rgba(255,255,255,.1);">
+
+					<h6 class="color-yellow text-bold mt-4 mb-3">Accès aux URLs</h6>
+					<div class="row mb-3">
+						{% for route in routes %}
+							<div class="col-md-6">
+								{{ form_row(form[route.name]) }}
+							</div>
+						{% endfor %}
+					</div>
+
+					<div class="d-flex align-items-center mt-4">
+						{{ form_widget(form.submit) }}
+						<a href="{{ path('role_list') }}" class="btn btn-link text-muted ml-2">Annuler</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{{ form_end(form) }}
 {% endblock %}

@@ -4,37 +4,95 @@
 {% block admin_page_title %}Roles et permissions{% endblock %}
 
 {% block admin_toolbar %}
-    <div class="admin-toolbar">
-        <input type="search" class="form-control js-admin-filter-input" placeholder="Filtrer les roles...">
-        <a class="btn btn-warning btn-sm text-bold" href="{{ path('role_add') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un role</a>
-    </div>
+	<div class="admin-toolbar">
+		<input type="search" class="form-control js-admin-filter-input" placeholder="Filtrer les roles...">
+		<a class="btn btn-warning btn-sm text-bold" href="{{ path('role_add') }}"><i class="fas fa-plus-circle"></i>&nbsp;Ajouter un role</a>
+	</div>
 {% endblock %}
 
 {% block content %}
-    <table class="table js-admin-table" data-pagination="true" data-toggle="table" data-search="true">
-        <thead class="bg-blue-dark-light">
-            <tr>
-                <th class="color-yellow" scope="col">Role</th>
-                <th class="color-yellow" scope="col">Description</th>
-                <th class="color-yellow" scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody class="bg-blue-dark table-borderless">
-            {% for role, properties in roles %}
-                <tr>
-                    <td class="color-white text-bold">{{ role }}</td>
-                    <td class="color-white text-bold">{{ properties.label }}</td>
-                    <td>
-                        <a class="admin-icon-btn" href="{{ path('role_edit', { roleName: role }) }}" title="Modifier">
-                            <i class="fas fa-cog"></i>
-                        </a>
-                        <a class="admin-icon-btn" href="{{ path('role_delete', { roleName: role }) }}" title="Supprimer"
-                           onclick="return confirm('Attention vous vous apprêtez à supprimer un rôle')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+	<form id="bulk-delete-role-form" action="{{ path('role_delete_batch') }}" method="post" class="mb-3 d-flex align-items-center" onsubmit="return confirm('Attention vous vous apprêtez à supprimer plusieurs rôles')">
+		<input type="hidden" name="_token" value="{{ csrf_token('delete_role_batch') }}">
+		<button type="submit" class="btn btn-danger btn-sm js-bulk-delete-role-btn" disabled>Supprimer la selection</button>
+		<span class="ml-2 text-muted small js-bulk-delete-role-count">0 selection</span>
+	</form>
+	<table class="table js-admin-table" data-pagination="true" data-toggle="table" data-search="true">
+		<thead class="bg-blue-dark-light">
+			<tr>
+				<th class="color-yellow" scope="col" style="width:44px;">
+					<input type="checkbox" class="js-role-select-all" title="Tout sélectionner" aria-label="Tout sélectionner">
+				</th>
+				<th class="color-yellow" scope="col">Role</th>
+				<th class="color-yellow" scope="col">Description</th>
+				<th class="color-yellow" scope="col">Action</th>
+			</tr>
+		</thead>
+		<tbody class="bg-blue-dark table-borderless">
+			{% for role, properties in roles %}
+				<tr>
+					<td class="align-middle">
+						<input type="checkbox" class="js-role-select-item" name="role_ids[]" value="{{ role }}" form="bulk-delete-role-form">
+					</td>
+					<td class="color-white text-bold">{{ role }}</td>
+					<td class="color-white text-bold">
+						{% if properties.label is defined and properties.label is not empty %}
+							{{ properties.label }}
+						{% else %}
+							<span class="text-warning" title="Label manquant">⚠️ Label vide</span>
+						{% endif %}
+					</td>
+					<td>
+						<a class="admin-icon-btn" href="{{ path('role_edit', { roleName: role }) }}" title="Modifier">
+							<i class="fas fa-cog"></i>
+						</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<script>
+		(function () {
+			var selectAll = document.querySelector('.js-role-select-all');
+			var itemSelector = '.js-role-select-item';
+			var submitButton = document.querySelector('.js-bulk-delete-role-btn');
+			var counter = document.querySelector('.js-bulk-delete-role-count');
+
+			if (!selectAll || !submitButton || !counter) {
+				return;
+			}
+
+			function getItems() {
+				return Array.prototype.slice.call(document.querySelectorAll(itemSelector));
+			}
+
+			function updateState() {
+				var items = getItems();
+				var checkedCount = items.filter(function (item) {
+					return item.checked;
+				}).length;
+
+				submitButton.disabled = checkedCount === 0;
+				counter.textContent = checkedCount + (checkedCount > 1 ? ' selections' : ' selection');
+
+				selectAll.checked = items.length > 0 && checkedCount === items.length;
+				selectAll.indeterminate = checkedCount > 0 && checkedCount < items.length;
+			}
+
+			// Utiliser la délégation d'événements pour écouter les changements
+			document.addEventListener('change', function (event) {
+				if (event.target.classList.contains('js-role-select-all')) {
+					var items = getItems();
+					items.forEach(function (item) {
+						item.checked = event.target.checked;
+					});
+					updateState();
+				} else if (event.target.classList.contains('js-role-select-item')) {
+					updateState();
+				}
+			});
+
+			updateState();
+		})();
+	</script>
 {% endblock %}

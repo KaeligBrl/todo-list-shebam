@@ -13,9 +13,17 @@
 {% endblock %}
 
 {% block content %}
+			<form id="bulk-delete-user-form" action="{{ path('user_delete_batch') }}" method="post" class="mb-3 d-flex align-items-center" onsubmit="return confirm('Attention vous vous appretez a supprimer plusieurs utilisateurs')">
+				<input type="hidden" name="_token" value="{{ csrf_token('delete_user_batch') }}">
+				<button type="submit" class="btn btn-danger btn-sm js-bulk-delete-user-btn" disabled>Supprimer la selection</button>
+				<span class="ml-2 text-muted small js-bulk-delete-user-count">0 selection</span>
+			</form>
 			<table class="table js-admin-table" data-pagination="true" data-toggle="table" data-search="true">
 				<thead class="bg-blue-dark-light">
 					<tr>
+						<th class="color-yellow" scope="col" style="width:44px;">
+							<input type="checkbox" class="js-user-select-all" title="Tout selectionner" aria-label="Tout selectionner">
+						</th>
 						<th class="color-yellow" scope="col">Photo</th>
 						<th class="color-yellow" scope="col">Nom</th>
 						<th class="color-yellow" scope="col">Prénom</th>
@@ -27,6 +35,9 @@
 				<tbody class="bg-blue-dark table-borderless">
 					{% for user in user %}
 						<tr>
+							<td class="align-middle">
+								<input type="checkbox" class="js-user-select-item" name="user_ids[]" value="{{ user.id }}" form="bulk-delete-user-form" aria-label="Selectionner l utilisateur {{ user.id }}">
+							</td>
 							<td class="color-white text-bold">
 								{% if user.profilePicture %}
 									<img src="{{ asset(user.profilePicture) }}" alt="Photo {{ user.firstname }}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid #ffd54f;">
@@ -51,11 +62,60 @@
 							</td>
 							<td>
 								<a class="admin-icon-btn" href="{{ path('user_modify', {"id": user.id}) }}" title="Modifier"><i class="fas fa-cog"></i></a>
-								<a class="admin-icon-btn" href="{{ path('user_delete', {"id": user.id}) }}" title="Supprimer" onclick="return confirm('Attention vous vous apprettez à supprimer un utilisateur')"><i class="fas fa-trash"></i></a>
 							</td>
 						</tr>
 					{% endfor %}
 				</tbody>
 			</table>
+
+			<script>
+				(function () {
+					var selectAll = document.querySelector('.js-user-select-all');
+					var itemSelector = '.js-user-select-item';
+					var submitButton = document.querySelector('.js-bulk-delete-user-btn');
+					var counter = document.querySelector('.js-bulk-delete-user-count');
+
+					if (!submitButton || !counter) {
+						return;
+					}
+
+					function getItems() {
+						return Array.prototype.slice.call(document.querySelectorAll(itemSelector));
+					}
+
+					function updateState() {
+						var items = getItems();
+						var checkedCount = items.filter(function (item) {
+							return item.checked;
+						}).length;
+
+						submitButton.disabled = checkedCount === 0;
+						counter.textContent = checkedCount + (checkedCount > 1 ? ' selections' : ' selection');
+
+						if (selectAll) {
+							selectAll.checked = items.length > 0 && checkedCount === items.length;
+							selectAll.indeterminate = checkedCount > 0 && checkedCount < items.length;
+						}
+					}
+
+					if (selectAll) {
+						selectAll.addEventListener('change', function () {
+							var items = getItems();
+							items.forEach(function (item) {
+								item.checked = selectAll.checked;
+							});
+							updateState();
+						});
+					}
+
+					document.addEventListener('change', function (event) {
+						if (event.target && event.target.matches(itemSelector)) {
+							updateState();
+						}
+					});
+
+					updateState();
+				})();
+			</script>
 {% endblock %}
 

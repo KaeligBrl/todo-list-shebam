@@ -21,12 +21,24 @@ class AddController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $newRole = $data['role'];
-            $roleLabel = $data['label']; // Nouveau champ pour le label du rôle
+            $newRole = trim($data['role']);
+            $roleLabel = trim($data['label']); // Nouveau champ pour le label du rôle
+
+            // Vérifier que le rôle et le label ne sont pas vides
+            if (empty($newRole) || empty($roleLabel)) {
+                $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Le nom et la description du rôle sont obligatoires.'));
+                return $this->redirectToRoute('role_add');
+            }
 
             // Valider le format du rôle (il doit commencer par 'ROLE_')
             if (strpos($newRole, 'ROLE_') !== 0) {
                 $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Le rôle doit commencer par "ROLE_".'));
+                return $this->redirectToRoute('role_add');
+            }
+
+            // Vérifier que le rôle ne contient que des caractères valides
+            if (!preg_match('/^ROLE_[A-Z0-9_]+$/', $newRole)) {
+                $this->addFlash('warning', $notificationContext->format('Administration - Rôle', 'Le rôle ne peut contenir que des majuscules, chiffres et tirets bas.'));
                 return $this->redirectToRoute('role_add');
             }
 
