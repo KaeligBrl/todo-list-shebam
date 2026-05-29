@@ -144,6 +144,14 @@
 
                 {% block admin_toolbar %}{% endblock %}
 
+                {% for type, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type == 'danger' ? 'danger' : (type == 'warning' ? 'warning' : 'success') }} mt-3 mb-0" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
                 <section class="admin-content-card">
                     {% block content %}{% endblock %}
                 </section>

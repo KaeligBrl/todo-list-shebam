@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AppointmentRepository;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -52,9 +53,15 @@ class AdminController extends AbstractController
     // ----------- Download All Missions ---------
     // -------------------------------------------
 
-    #[Route('/generation-de-l-archive/', name: 'download')]
-    public function archivedBtn(TaskRepository $task, AppointmentRepository $appointment): RedirectResponse
+    #[Route('/generation-de-l-archive/', name: 'download', methods: ['POST'])]
+    public function archivedBtn(Request $request, TaskRepository $task, AppointmentRepository $appointment): RedirectResponse
     {
+        if (!$this->isCsrfTokenValid('generate_download', (string) $request->request->get('_token'))) {
+            $this->addFlash('danger', 'Token CSRF invalide pour la generation du telechargement.');
+
+            return $this->redirectToRoute('current_week_p1');
+        }
+
 
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Gotham');
@@ -123,6 +130,8 @@ class AdminController extends AbstractController
         $image->setName($fileName);
         $this->entityManager->persist($image);
         $this->entityManager->flush();
+
+        $this->addFlash('success', 'Telechargement genere avec succes.');
 
         return $this->redirectToRoute("download_list");
     }

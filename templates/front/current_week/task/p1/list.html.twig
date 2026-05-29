@@ -309,7 +309,13 @@
                 {% if task is empty and appointment is empty %}
                     <div style="pointer-events: none" class="mt-3 text-center color-yellow"><span>Il faut au moins une donnée pour générer le téléchargement</span></div>
                 {% else %}			
-                    <a class="mt-3 text-center btn-yellow btn" href="{{ path('download') }}">Générer le téléchargement</a>
+                    <form method="post" action="{{ path('download') }}" class="mt-3 text-center js-generate-download-form">
+                        <input type="hidden" name="_token" value="{{ csrf_token('generate_download') }}">
+                        <button type="submit" class="btn-yellow btn js-generate-download-btn">
+                            <span class="js-generate-download-label">Générer le téléchargement</span>
+                            <span class="js-generate-download-loading d-none">Génération en cours...</span>
+                        </button>
+                    </form>
                 {% endif %}
             {% endif %}
         </div>
@@ -321,6 +327,32 @@
 {{ parent() }}
 <script>
     window.currentWeekP1InlineUpdateUrlTemplate = "{{ path('current_week_p1_inline_update', {'id': 'TASK_ID'}) }}";
+
+    (function () {
+        var form = document.querySelector('.js-generate-download-form');
+        if (!form) {
+            return;
+        }
+
+        form.addEventListener('submit', function () {
+            var button = form.querySelector('.js-generate-download-btn');
+            var label = form.querySelector('.js-generate-download-label');
+            var loading = form.querySelector('.js-generate-download-loading');
+
+            if (button) {
+                button.setAttribute('disabled', 'disabled');
+                button.classList.add('disabled');
+            }
+
+            if (label) {
+                label.classList.add('d-none');
+            }
+
+            if (loading) {
+                loading.classList.remove('d-none');
+            }
+        });
+    })();
 </script>
 <script src="{{ asset('assets/js/task-inline-add.js') }}?v=20260527"></script>
 <script src="{{ asset('assets/js/task-inline-edit-p1.js') }}?v=20260528a"></script>

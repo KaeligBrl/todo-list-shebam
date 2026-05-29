@@ -16,14 +16,31 @@
 					<tr>
                         <th class="color-yellow" scope="col">Nom</th>
 						<th class="color-yellow" scope="col">Date de téléchargement</th>
+						<th class="color-yellow" scope="col">Taille</th>
+						<th class="color-yellow" scope="col">Statut</th>
 						<th class="color-yellow" scope="col">Action</th>
 					</tr>
 				</thead>
 				<tbody class="bg-blue-dark table-borderless">
-					{% for file in file %}
+					{% for row in files_view %}
+						{% set file = row.entity %}
 						<tr>
 							<td  class="color-white text-bold">{{ file.name }}</td>
 							<td  class="color-white text-bold">{{ file.createdat|date("d-m-Y", "Europe/Paris")}} à {{file.createdat|date("H:i", "Europe/Paris")}}</td>
+							<td class="color-white text-bold">
+								{% if row.size is not null %}
+									{{ (row.size / 1024)|number_format(1, ',', ' ') }} Ko
+								{% else %}
+									-
+								{% endif %}
+							</td>
+							<td class="color-white text-bold">
+								{% if row.exists %}
+									<span class="badge badge-success">Disponible</span>
+								{% else %}
+									<span class="badge badge-warning">Manquant</span>
+								{% endif %}
+							</td>
                             <td>
 								<a class="admin-icon-btn" href="{{ asset("pdf/" ~ file.name) }}" target="_blank" rel="noopener" title="Voir"><i class="fas fa-eye"></i></a>
 								<form action="{{ path('delete_download', {'id': file.id}) }}" method="post" class="d-inline" onsubmit="return confirm('Attention vous vous appretez a supprimer un telechargement')">
